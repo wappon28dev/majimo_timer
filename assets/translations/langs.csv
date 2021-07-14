@@ -1,0 +1,7 @@
+string,en_US,ja_JP
+title,Title for English,日本語のタイトル
+ok,OKAY,はい
+cancel,CANCEL,キャンセル
+fullname,My name is {first} {family}.,私の名前は {family} {first} です。
+value,Score: {},点数は {} でした。
+greetings,Welcome to Majimo_timer!,まじもタイマーへようこそ！
