@@ -4,15 +4,17 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   easy_localization: ^3.0.0
   easy_localization_loader: ^1.0.0
-
+  slide_digital_clock: ^1.0.0
   cupertino_icons: ^1.0.2
+flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -24,3 +26,13 @@ flutter:
 
   assets:
     - assets/translations/langs.csv
+
+  fonts:
+    - family: M-plus
+      fonts:
+        - asset: assets/fonts/MPLUS1p-Bold.ttf
+        - asset: assets/fonts/MPLUS1p-Medium.ttf
+          style: normal
+          weight: 400
+
+intl: ^0.15.8
