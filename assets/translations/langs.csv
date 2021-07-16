@@ -3,4 +3,9 @@ app_name,Majimo-Timer,まじもタイマー
 ok,OK,はい
 cancel,CANCEL,キャンセル
 greetings,Welcome to Majimo_timer!,まじもタイマーへようこそ！
-date,"""${DateFormat.yMMMd('en_US').format(DateTime.now())}""","""${DateFormat.yMMMd('ja_JP').format(DateTime.now())}"""
+lang,en_US,ja_JP
+1st,Alarm,じこく
+2nd,Timer,じかん
+3rd,Goal,もくひょう
+4th,Record,きろく
+change,change 12/24h,12/24 時間表示
