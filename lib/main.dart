@@ -8,6 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import './home.dart';
+import 'package:delayed_widget/delayed_widget.dart';
+
 // import 'package:bottom_bar/bottom_bar.dart';
 // import 'package:fabexdateformatter/fabexdateformatter.dart';
 // import 'package:intl/intl.dart';  // d: temp
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      home: HomePage(),
+      home: Front(),
       // g: ----easy_localizationの設定----  ここまで
       // g: ----テーマの設定----  ここから
       // c: ライトモードのとき
@@ -49,6 +51,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         accentColor: Colors.blue,
         fontFamily: 'M-plus',
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        // ↓ これ！ デフォルト値は以下です。
+        pageTransitionsTheme: const PageTransitionsTheme(
+            builders: <TargetPlatform, PageTransitionsBuilder>{
+              TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
+            }),
       ),
 
       // c: ダークモードのとき
@@ -57,6 +65,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         accentColor: Colors.blue,
         fontFamily: 'M-plus',
+        pageTransitionsTheme: const PageTransitionsTheme(
+            builders: <TargetPlatform, PageTransitionsBuilder>{
+              TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
+            }),
       ),
 
       // c: テーマの選択 --> [light, dark, system]
@@ -67,8 +79,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class Front extends StatefulWidget {
+  Front({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _FrontState createState() => _FrontState();
+}
+
 // s: 縦か横を判断する
-class HomePage extends StatelessWidget {
+class _FrontState extends State<Front> {
+  bool ht = true;
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -91,111 +114,128 @@ class HomePage extends StatelessWidget {
 
         // g: ----変数の指定----  ここから
         String appname = tr('app_name');
-    bool ht = false;
     // g: ----変数の指定----  ここまで
     // 縦向きの場合
+
     return Scaffold(
-        // g: ----ウィジェット実体----  ここから
-        body: Scaffold(
-      // c: appbarの定義
-      appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
-        title: Text(appname,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            )),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.settings_outlined),
+      // g: ----ウィジェット実体----  ここから
+      body: Scaffold(
+        // c: appbarの定義
+        appBar: AppBar(
+          leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+          title: Text(appname,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              )),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.settings_outlined),
+            ),
+          ],
+          backgroundColor: Colors.deepOrange,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
           ),
-        ],
-        backgroundColor: Colors.deepOrange,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
+          brightness: Brightness.dark,
         ),
-      ),
 
-      drawer: Drawer(child: Center(child: Text("Drawer"))), // d: ドロワーのテスト
-      // body-columnです
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(
-            width: double.infinity,
-            height: 30,
-          ),
+        drawer: Drawer(child: Center(child: Text("Drawer"))), // d: ドロワーのテスト
+        // body-columnです
 
-          // g: ----デジタル時計----  ここから
-          DigitalClock(
-            digitAnimationStyle: Curves.easeOutExpo,
-            is24HourTimeFormat: ht,
-            areaDecoration: BoxDecoration(
-              color: Colors.transparent,
-            ),
-            hourMinuteDigitTextStyle: TextStyle(
-              fontFamily: 'M-plus',
-              fontSize: 70,
-              height: 1,
-            ),
-            hourMinuteDigitDecoration: BoxDecoration(color: Colors.transparent),
-            amPmDigitTextStyle: TextStyle(
-              fontFamily: 'M-plus',
-              fontSize: 20,
-              height: 2,
-            ),
-            secondDigitTextStyle: TextStyle(
-              fontFamily: 'M-plus',
-              fontSize: 30,
-              height: 1.5,
-              // :
-            ),
-            secondDigitDecoration: BoxDecoration(color: Colors.transparent),
-          ),
-          // g: ----デジタル時計----  ここまで
-          SizedBox(
-            width: double.infinity,
-            height: 0,
-          ),
-          /*
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            DelayedWidget(
+              delayDuration: Duration(milliseconds: 500), // Not required
+              animationDuration: Duration(milliseconds: 200), // Not required
+              animation: DelayedAnimations.SLIDE_FROM_BOTTOM, // Not required
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    width: double.infinity,
+                    height: 30,
+                  ),
+                  _digitaiclock(),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 0,
+                  ),
+                  /*
               memo: >> tr('lang') -> ["ja_JP", "en_US"]
             */
-          (tr('lang') == "ja_JP") ? Text(japanDate) : Text(americanDate),
-          SizedBox(height: 10),
-          Text('greetings'.tr(),
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  (tr('lang') == "ja_JP")
+                      ? Text(japanDate)
+                      : Text(americanDate),
+                  SizedBox(height: 10),
+                  Text('greetings'.tr(),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
 
-          // Text("${fabexFormatter.dateTimeNowToTimeOfDay(DateTime.now())}")
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            child: Text('change'.tr()),
-            style: ElevatedButton.styleFrom(
-              primary: Colors.orange,
-              onPrimary: Colors.white,
+                  // Text("${fabexFormatter.dateTimeNowToTimeOfDay(DateTime.now())}")
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    child: Text('change'.tr()),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.orange,
+                      onPrimary: Colors.white,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
             ),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      // g: ----FAB----  ここから
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).accentColor,
-        child: Icon(Icons.arrow_forward),
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) {
-            return Home();
-          }),
+          ],
+        ),
+        // g: ----FAB----  ここから
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).accentColor,
+          child: Icon(Icons.arrow_forward),
+          onPressed: () {
+            pushWithReloadByReturn(context);
+          },
         ),
       ),
-    )); // g: ----ウィジェット実体----  ここまで
+    ); // g: ----ウィジェット実体----  ここまで
+  }
+
+  Widget _digitaiclock() {
+    // g: ----デジタル時計----  ここから
+    return DigitalClock(
+      digitAnimationStyle: Curves.easeOutExpo,
+      is24HourTimeFormat: ht,
+      areaDecoration: BoxDecoration(
+        color: Colors.transparent,
+      ),
+      hourMinuteDigitTextStyle: TextStyle(
+        fontFamily: 'M-plus',
+        fontSize: 70,
+        height: 1,
+      ),
+      hourMinuteDigitDecoration: BoxDecoration(color: Colors.transparent),
+      amPmDigitTextStyle: TextStyle(
+        fontFamily: 'M-plus',
+        fontSize: 20,
+        height: 2,
+      ),
+      secondDigitTextStyle: TextStyle(
+        fontFamily: 'M-plus',
+        fontSize: 30,
+        height: 1.5,
+        // :
+      ),
+      secondDigitDecoration: BoxDecoration(color: Colors.transparent),
+    );
+    // g: ----デジタル時計----  ここまで
   }
 
 // s: よこ
@@ -209,17 +249,18 @@ class HomePage extends StatelessWidget {
   }
 }
 
+void pushWithReloadByReturn(BuildContext context) async {
+  final result = await Navigator.push(
+    context,
+    new MaterialPageRoute<bool>(
+      builder: (BuildContext context) => Home(min: 1, max: 360),
+    ),
+  );
+}
+
 
 
 /*
-
-
-
-
-
-
-
-
 
 
 void main() async {

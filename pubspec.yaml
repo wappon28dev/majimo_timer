@@ -16,7 +16,11 @@ dependencies:
   provider: ^4.0.2
   fabexdateformatter: ^1.0.5
   bottom_bar: ^1.2.3+1
-
+  animated_text_kit: ^4.2.1
+  animations: ^2.0.1
+  auto_animated: ^3.0.0
+  delayed_widget: ^1.1.1
+  expandable_slider: "^1.0.0"
 dev_dependencies:
   flutter_test:
     sdk: flutter
