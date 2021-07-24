@@ -99,7 +99,7 @@ class _HomeState extends State<Home> {
   void _onChanged(double newValue) {
     setState(() {
       _value = newValue;
-      _saveDouble('value', _value)(); // Shared Preferenceに値を保存する。
+      _saveDouble('value', _value); // Shared Preferenceに値を保存する。
     });
   }
 
@@ -112,7 +112,7 @@ class _HomeState extends State<Home> {
     var prefs = await SharedPreferences.getInstance();
     setState(() {
       _ht = prefs.getBool('ht') ?? true;
-      _value = prefs.getBool('value') ?? 60;
+      _value = prefs.getDouble('value') ?? 60;
     });
   }
 
