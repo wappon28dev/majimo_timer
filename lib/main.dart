@@ -9,6 +9,8 @@ import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import './home.dart';
 import 'package:delayed_widget/delayed_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 // import 'package:bottom_bar/bottom_bar.dart';
 // import 'package:fabexdateformatter/fabexdateformatter.dart';
@@ -90,7 +92,26 @@ class Front extends StatefulWidget {
 
 // s: 縦か横を判断する
 class _FrontState extends State<Front> {
-  bool ht = true;
+  double temp;
+  bool _ht = true;
+
+  _saveBool(String key, bool value) async {
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, value);
+  }
+
+  _restoreValues() async {
+    var prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _ht = prefs.getBool('ht') ?? true;
+    });
+  }
+
+  @override
+  void initState() {
+    _restoreValues();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,15 +169,17 @@ class _FrontState extends State<Front> {
         drawer: Drawer(child: Center(child: Text("Drawer"))), // d: ドロワーのテスト
         // body-columnです
 
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            DelayedWidget(
-              delayDuration: Duration(milliseconds: 500), // Not required
-              animationDuration: Duration(milliseconds: 200), // Not required
-              animation: DelayedAnimations.SLIDE_FROM_BOTTOM, // Not required
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+        body: SafeArea(
+          child: AnimationLimiter(
+            child: Column(
+              children: AnimationConfiguration.toStaggeredList(
+                duration: const Duration(milliseconds: 375),
+                childAnimationBuilder: (widget) => SlideAnimation(
+                  horizontalOffset: 0,
+                  child: FadeInAnimation(
+                    child: widget,
+                  ),
+                ),
                 children: <Widget>[
                   SizedBox(
                     width: double.infinity,
@@ -183,18 +206,38 @@ class _FrontState extends State<Front> {
                     height: 20,
                   ),
                   ElevatedButton(
-                    child: Text('change'.tr()),
+                    child: Text('change12'.tr()),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
                       onPrimary: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        _ht = false;
+                        _saveBool('ht', false);
+                      });
+                    },
                   ),
+                  ElevatedButton(
+                    child: Text('change24'.tr()),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.orange,
+                      onPrimary: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _ht = true;
+                        _saveBool('ht', true);
+                      });
+                    },
+                  ),
+                  (_ht) ? Text("24h format") : Text("12h format"),
                 ],
               ),
             ),
-          ],
+          ),
         ),
+
         // g: ----FAB----  ここから
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(
@@ -212,7 +255,7 @@ class _FrontState extends State<Front> {
     // g: ----デジタル時計----  ここから
     return DigitalClock(
       digitAnimationStyle: Curves.easeOutExpo,
-      is24HourTimeFormat: ht,
+      is24HourTimeFormat: _ht,
       areaDecoration: BoxDecoration(
         color: Colors.transparent,
       ),
@@ -253,7 +296,7 @@ void pushWithReloadByReturn(BuildContext context) async {
   final result = await Navigator.push(
     context,
     new MaterialPageRoute<bool>(
-      builder: (BuildContext context) => Home(min: 1, max: 360),
+      builder: (BuildContext context) => Home(),
     ),
   );
 }

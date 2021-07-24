@@ -8,4 +8,5 @@ lang,en_US,ja_JP
 2nd,Timer,じかん
 3rd,Goal,もくひょう
 4th,Record,きろく
-change,change 12/24h,12/24 時間表示
+change12,change 12 h format,12時間表示
+change24,change 24 h format,24時間表示

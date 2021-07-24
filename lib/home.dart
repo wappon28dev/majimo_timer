@@ -3,9 +3,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:expandable_slider/expandable_slider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:animations/animations.dart';
 // import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -62,10 +64,10 @@ class MyApp extends StatelessWidget {
 }
 
 class Home extends StatefulWidget {
-  const Home({@required this.max, @required this.min});
+  const Home();
 
-  final double max;
-  final double min;
+  final double max = 120;
+  final double min = 0;
 
   @override
   _HomeState createState() => _HomeState();
@@ -75,17 +77,13 @@ String japanDate = DateFormat("MM/dd").format(DateTime.now());
 String americanDate = DateFormat.yMMMMd('en_US').format(DateTime.now());
 
 class _HomeState extends State<Home> {
-  bool ht = true;
+  bool _ht = true;
   int _currentPage = 0;
   final _pageController = PageController();
 
   double _value;
 
-  @override
-  void initState() {
-    _value = widget.min;
-    super.initState();
-  }
+  // Shared Preferenceに値を保存されているデータを読み込んで_counterにセットする。
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +96,31 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _onChanged(double newValue) => setState(() => _value = newValue);
+  void _onChanged(double newValue) {
+    setState(() {
+      _value = newValue;
+      _saveDouble('value', _value)(); // Shared Preferenceに値を保存する。
+    });
+  }
+
+  _saveDouble(String key, double value) async {
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setDouble(key, value);
+  }
+
+  _restoreValues() async {
+    var prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _ht = prefs.getBool('ht') ?? true;
+      _value = prefs.getBool('value') ?? 60;
+    });
+  }
+
+  @override
+  void initState() {
+    _restoreValues();
+    super.initState();
+  }
 
   // s: たて
   Widget _buildVertical(BuildContext context) {
@@ -108,51 +130,17 @@ class _HomeState extends State<Home> {
         children: [
           Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                DelayedWidget(
-                  child: _first(),
-                  delayDuration: Duration(milliseconds: 350), // Not required
-                  animationDuration:
-                      Duration(milliseconds: 200), // Not required
-                  animation:
-                      DelayedAnimations.SLIDE_FROM_BOTTOM, // Not required
-                ),
-              ]),
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                DelayedWidget(
-                  delayDuration: Duration(milliseconds: 350), // Not required
-                  animationDuration:
-                      Duration(milliseconds: 200), // Not required
-                  animation:
-                      DelayedAnimations.SLIDE_FROM_BOTTOM, // Not required
-                  child: _second(),
-                ),
-              ]),
+              children: <Widget>[_first()]),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              DelayedWidget(
-                delayDuration: Duration(milliseconds: 350), // Not required
-                animationDuration: Duration(milliseconds: 200), // Not required
-                animation: DelayedAnimations.SLIDE_FROM_BOTTOM, // Not required
-                child: _third(),
-              ),
-            ],
+            children: <Widget>[_second()],
           ),
           Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                DelayedWidget(
-                  child: _fourth(),
-                  delayDuration: Duration(milliseconds: 350), // Not required
-                  animationDuration:
-                      Duration(milliseconds: 200), // Not required
-                  animation:
-                      DelayedAnimations.SLIDE_FROM_BOTTOM, // Not required
-                ),
-              ]),
+              children: <Widget>[_third()]),
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[_fourth()]),
         ],
         onPageChanged: (index) {
           setState(() => _currentPage = index);
@@ -206,121 +194,230 @@ class _HomeState extends State<Home> {
 
   // ignore: non_constant_identifier_names
   Widget _first() {
-    var listItem = ['one', 'two', 'three'];
-    return Column(crossAxisAlignment: CrossAxisAlignment.center, children: <
-        Widget>[
-      SizedBox(height: 40),
-      SizedBox(
-        height: 40,
-        width: double.infinity,
-        child: Stack(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  child: SizedBox(height: 26, child: _digitaiclock()),
+    var listItem = ['はるき', 'たくみ', 'ゆうた', 'ゆうと', 'りょうた', 'かのふ'];
+    var caption = [
+      'モテるし頭が良いコアラ',
+      'ダグい. それだけだ',
+      '最近は海辺へ行ったらしい',
+      'みんな大好きカピバラちゃん',
+      'ドッジボールとビターステップ',
+      '歴史的仮名遣いの使われ手'
+    ];
+    return SafeArea(
+        child: AnimationLimiter(
+            child: Column(
+                children: AnimationConfiguration.toStaggeredList(
+                    duration: const Duration(milliseconds: 375),
+                    childAnimationBuilder: (widget) => SlideAnimation(
+                          horizontalOffset: 0,
+                          child: FadeInAnimation(
+                            child: widget,
+                          ),
+                        ),
+                    children: <Widget>[
+          SizedBox(height: 20),
+          SizedBox(
+            height: 40,
+            width: double.infinity,
+            child: Stack(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      child: SizedBox(height: 30, child: _digitaiclock()),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Center(
-              child: SizedBox(height: 31, child: Text("時刻モード")),
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Text("      "),
-              SizedBox(height: 30),
-              (tr('lang') == "ja_JP") ? Text(japanDate) : Text(americanDate),
-            ]),
-          ],
-        ),
-      ),
-      SizedBox(
-        height: 500,
-        width: double.infinity,
-        child: ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: Colors.black38),
+                Center(
+                  child: SizedBox(
+                    height: 31,
+                    child: new Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9.0, vertical: 2.0),
+                        decoration: BoxDecoration(
+                          color: Colors.lightBlueAccent.shade200,
+                          border: Border.all(
+                              color: Colors.lightBlueAccent.shade200, width: 3),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text("時間モード",
+                            style: TextStyle(color: Colors.white))),
                   ),
                 ),
-                child: ListTile(
-                  leading: const Icon(Icons.flight_land),
-                  title: Text('$index'),
-                  subtitle: Text('&listItem'),
-                  onTap: () {/* react to the tile being tapped */},
-                ));
-          },
-          itemCount: listItem.length,
-        ),
-      ),
-    ]);
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text("      "),
+                      SizedBox(height: 40),
+                      (tr('lang') == "ja_JP")
+                          ? Text(japanDate)
+                          : Text(americanDate),
+                    ]),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 500,
+            width: double.infinity,
+            child: ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: const Duration(milliseconds: 375),
+                    child: SlideAnimation(
+                        verticalOffset: 50.0,
+                        child: FadeInAnimation(
+                            child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: Colors.black38),
+                            ),
+                          ),
+                          child: ListTile(
+                            leading: const Icon(Icons.star),
+                            title: Text(listItem[index]),
+                            subtitle: Text(caption[index],
+                                style: TextStyle(fontSize: 14)),
+                            onTap: () {/* react to the tile being tapped */},
+                          ),
+                        ))));
+              },
+              itemCount: listItem.length,
+            ),
+          ),
+          (_ht) ? Text("debug: 24h format") : Text("debug: 12h format"),
+          Text("  _saveBool(String key, bool value) async\n"
+              "    var prefs = await SharedPreferences.getInstance();\n"
+              "    prefs.setBool(key, value);")
+        ]))));
   }
 
   Widget _second() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: 40),
-          Text("時間モード"),
-          Center(
-            child: Center(
-              child: Text(_value.toStringAsFixed(0),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 100)),
+    return SafeArea(
+      child: AnimationLimiter(
+        child: Column(
+          children: AnimationConfiguration.toStaggeredList(
+            duration: const Duration(milliseconds: 375),
+            childAnimationBuilder: (widget) => SlideAnimation(
+              horizontalOffset: 0,
+              child: FadeInAnimation(
+                child: widget,
+              ),
             ),
+            children: <Widget>[
+              SizedBox(height: 20),
+              new Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 9.0, vertical: 2.0),
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent.shade200,
+                    border:
+                        Border.all(color: Colors.redAccent.shade200, width: 3),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text("時間モード", style: TextStyle(color: Colors.white))),
+              Center(
+                child: Center(
+                  child: Text(_value.toStringAsFixed(0),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 100)),
+                ),
+              ),
+              ExpandableSlider.adaptive(
+                value: _value,
+                onChanged: _onChanged,
+                min: 0,
+                max: 120,
+                estimatedValueStep: 5,
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => _onChanged(15),
+                      child: const Text("15分"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _onChanged(30),
+                      child: const Text("30分"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _onChanged(45),
+                      child: const Text("45分"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _onChanged(60),
+                      child: const Text("60分"),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          ExpandableSlider.adaptive(
-            value: _value,
-            onChanged: _onChanged,
-            min: 0,
-            max: 120,
-            estimatedValueStep: 5,
-          ),
-          SizedBox(height: 20),
-          SizedBox(
-            height: 50,
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () => _onChanged(15),
-                  child: const Text("15分"),
-                ),
-                ElevatedButton(
-                  onPressed: () => _onChanged(30),
-                  child: const Text("30分"),
-                ),
-                ElevatedButton(
-                  onPressed: () => _onChanged(45),
-                  child: const Text("45分"),
-                ),
-                ElevatedButton(
-                  onPressed: () => _onChanged(60),
-                  child: const Text("60分"),
-                ),
-              ],
-            ),
-          )
-        ]);
+        ),
+      ),
+    );
   }
 
   Widget _third() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: 40),
-          Text("目標モード"),
-        ]);
+    return SafeArea(
+        child: AnimationLimiter(
+            child: Column(
+                children: AnimationConfiguration.toStaggeredList(
+                    duration: const Duration(milliseconds: 375),
+                    childAnimationBuilder: (widget) => SlideAnimation(
+                          horizontalOffset: 0,
+                          child: FadeInAnimation(
+                            child: widget,
+                          ),
+                        ),
+                    children: <Widget>[
+          SizedBox(height: 20),
+          new Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 9.0, vertical: 2.0),
+              decoration: BoxDecoration(
+                color: Colors.greenAccent.shade200,
+                border:
+                    Border.all(color: Colors.greenAccent.shade200, width: 3),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text("目標モード")),
+        ]))));
   }
 
   Widget _fourth() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: 40),
-          Text("あいすけえ１号（咳をしても一人）"),
+    return SafeArea(
+        child: AnimationLimiter(
+            child: Column(
+                children: AnimationConfiguration.toStaggeredList(
+                    duration: const Duration(milliseconds: 375),
+                    childAnimationBuilder: (widget) => SlideAnimation(
+                          horizontalOffset: 0,
+                          child: FadeInAnimation(
+                            child: widget,
+                          ),
+                        ),
+                    children: <Widget>[
+          SizedBox(height: 20),
+          new Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 9.0, vertical: 2.0),
+              decoration: BoxDecoration(
+                color: Colors.orangeAccent.shade200,
+                border:
+                    Border.all(color: Colors.orangeAccent.shade200, width: 3),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text("記録モード", style: TextStyle(color: Colors.white))),
+          SizedBox(
+            height: 40,
+          ),
           SizedBox(
             height: 500,
             width: double.infinity,
@@ -341,12 +438,14 @@ class _HomeState extends State<Home> {
               ),
             ),
           )
-        ]);
+        ]))));
   }
 
   Widget _digitaiclock() {
     // g: ----デジタル時計----  ここから
     return DigitalClock(
+      digitAnimationStyle: Curves.easeOutExpo,
+      is24HourTimeFormat: _ht,
       areaDecoration: BoxDecoration(
         color: Colors.transparent,
       ),
