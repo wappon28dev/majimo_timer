@@ -23,6 +23,7 @@ dependencies:
   expandable_slider: "^1.0.0"
   shared_preferences: ^2.0.6
   flutter_staggered_animations: "^1.0.0"
+  day_night_time_picker: ^1.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -38,8 +39,14 @@ flutter:
     - family: M-plus
       fonts:
         - asset: assets/fonts/MPLUS1p-Bold.ttf
+          style: normal
+          weight: 500
+
         - asset: assets/fonts/MPLUS1p-Medium.ttf
           style: normal
           weight: 400
+        - asset: assets/sun.png
+        - asset: assets/moon.png
+
 
 intl: ^0.15.8

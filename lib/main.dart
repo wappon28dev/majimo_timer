@@ -92,7 +92,6 @@ class Front extends StatefulWidget {
 
 // s: 縦か横を判断する
 class _FrontState extends State<Front> {
-  double temp;
   bool _ht = true;
 
   _saveBool(String key, bool value) async {
@@ -170,6 +169,7 @@ class _FrontState extends State<Front> {
         // body-columnです
 
         body: SafeArea(
+            child: SingleChildScrollView(
           child: AnimationLimiter(
             child: Column(
               children: AnimationConfiguration.toStaggeredList(
@@ -205,6 +205,17 @@ class _FrontState extends State<Front> {
                   SizedBox(
                     height: 20,
                   ),
+                  Text("24h format"),
+                  Switch(
+                    value: _ht,
+                    onChanged: (newVal) {
+                      setState(() {
+                        _ht = newVal;
+                        _saveBool('ht', _ht);
+                      });
+                    },
+                  ),
+
                   ElevatedButton(
                     child: Text('change12'.tr()),
                     style: ElevatedButton.styleFrom(
@@ -232,11 +243,37 @@ class _FrontState extends State<Front> {
                     },
                   ),
                   (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
+                  (_ht) ? Text("24h format") : Text("12h format"),
                 ],
               ),
             ),
           ),
-        ),
+        )),
 
         // g: ----FAB----  ここから
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
