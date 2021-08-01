@@ -1,67 +1,42 @@
-// Programmed & Designed by wappon_28_dev, sakana
-// コメントは各コードの上に記載
-// s: セクション, g: ----グループ----, c: コード, d:デバッグ
-
-// s: パッケージのインポート
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
-import 'package:slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/preferences.dart';
+import './digital_clock/slide_digital_clock.dart';
 import './home.dart';
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-// import 'package:bottom_bar/bottom_bar.dart';
-// import 'package:fabexdateformatter/fabexdateformatter.dart';
-// import 'package:intl/intl.dart';  // d: temp
-// import 'package:intl/date_symbol_data_local.dart';  //d: temp
-
-//s: アプリ実行時に読まれる -> async; 必要なときに同期するやつ
 void main() async {
-  // g: ----easy_localizationの初期宣言----  ここから
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
   runApp(EasyLocalization(
-      // c: 使用可能な言語の列挙
       supportedLocales: [Locale('en', 'US'), Locale('ja', 'JP')],
-      // c: デフォルトの言語
       fallbackLocale: Locale('en', 'US'),
-      // startLocale: Locale('en', 'US'), // d: 言語を強制する設定
+      // startLocale: Locale('en', 'US'),
       path: 'assets/translations/langs.csv',
       assetLoader: CsvAssetLoader(),
       child: MyApp()));
-  // g: ----easy_localizationの初期宣言----  ここまで
 }
 
-//s: 静的ウィジェット
 class MyApp extends StatelessWidget {
   @override
-
-  // s: テーマの設定
   Widget build(BuildContext context) {
     return MaterialApp(
-      // g: ----easy_localizationの設定----  ここから
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       home: Front(),
-      // g: ----easy_localizationの設定----  ここまで
-      // g: ----テーマの設定----  ここから
-      // c: ライトモードのとき
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
         accentColor: Colors.blue,
         fontFamily: 'M-plus',
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        // ↓ これ！ デフォルト値は以下です。
         pageTransitionsTheme: const PageTransitionsTheme(
             builders: <TargetPlatform, PageTransitionsBuilder>{
               TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
             }),
       ),
-
-      // c: ダークモードのとき
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.deepOrange,
@@ -72,11 +47,8 @@ class MyApp extends StatelessWidget {
               TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
             }),
       ),
-
-      // c: テーマの選択 --> [light, dark, system]
       themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: false, // これを追加するだけ
-      // g: ----テーマの設定----  ここまで
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -90,10 +62,9 @@ class Front extends StatefulWidget {
   _FrontState createState() => _FrontState();
 }
 
-// s: 縦か横を判断する
-class _FrontState extends State<Front> {
-  bool _ht = true;
+bool _ht;
 
+class _FrontState extends State<Front> {
   _saveBool(String key, bool value) async {
     var prefs = await SharedPreferences.getInstance();
     prefs.setBool(key, value);
@@ -123,24 +94,16 @@ class _FrontState extends State<Front> {
     );
   }
 
-// s: たて
   Widget _buildVertical(BuildContext context) {
     String japanDate = DateFormat("yyyy年 MM月 dd日 E曜日").format(DateTime.now());
-    String americanDate = DateFormat.yMMMMd('en_US').format(DateTime.now());
+    String americanDate =
+        DateFormat('EEEE, MMM d, yyyy').format(DateTime.now());
 
     @override
-        // d: FabexFormatterの初期宣言
-        // FabexFormatter fabexFormatter = FabexFormatter();
-
-        // g: ----変数の指定----  ここから
-        String appname = tr('app_name');
-    // g: ----変数の指定----  ここまで
-    // 縦向きの場合
+    String appname = tr('app_name');
 
     return Scaffold(
-      // g: ----ウィジェット実体----  ここから
       body: Scaffold(
-        // c: appbarの定義
         appBar: AppBar(
           leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
           title: Text(appname,
@@ -151,7 +114,15 @@ class _FrontState extends State<Front> {
           centerTitle: true,
           actions: <Widget>[
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                if (mounted) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Prefer(),
+                      ));
+                }
+              },
               icon: Icon(Icons.settings_outlined),
             ),
           ],
@@ -164,10 +135,7 @@ class _FrontState extends State<Front> {
           ),
           brightness: Brightness.dark,
         ),
-
-        drawer: Drawer(child: Center(child: Text("Drawer"))), // d: ドロワーのテスト
-        // body-columnです
-
+        drawer: Drawer(child: Center(child: Text("Drawer"))),
         body: SafeArea(
             child: SingleChildScrollView(
           child: AnimationLimiter(
@@ -200,8 +168,6 @@ class _FrontState extends State<Front> {
                   Text('greetings'.tr(),
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-
-                  // Text("${fabexFormatter.dateTimeNowToTimeOfDay(DateTime.now())}")
                   SizedBox(
                     height: 20,
                   ),
@@ -215,7 +181,6 @@ class _FrontState extends State<Front> {
                       });
                     },
                   ),
-
                   ElevatedButton(
                     child: Text('change12'.tr()),
                     style: ElevatedButton.styleFrom(
@@ -243,53 +208,32 @@ class _FrontState extends State<Front> {
                     },
                   ),
                   (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
-                  (_ht) ? Text("24h format") : Text("12h format"),
                 ],
               ),
             ),
           ),
         )),
-
-        // g: ----FAB----  ここから
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).accentColor,
           child: Icon(Icons.arrow_forward),
           onPressed: () {
-            pushWithReloadByReturn(context);
+            if (mounted) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Home(),
+                  ));
+            }
           },
         ),
       ),
-    ); // g: ----ウィジェット実体----  ここまで
+    );
   }
 
   Widget _digitaiclock() {
-    // g: ----デジタル時計----  ここから
+    _restoreValues();
+
     return DigitalClock(
       digitAnimationStyle: Curves.easeOutExpo,
       is24HourTimeFormat: _ht,
@@ -311,16 +255,12 @@ class _FrontState extends State<Front> {
         fontFamily: 'M-plus',
         fontSize: 30,
         height: 1.5,
-        // :
       ),
       secondDigitDecoration: BoxDecoration(color: Colors.transparent),
     );
-    // g: ----デジタル時計----  ここまで
   }
 
-// s: よこ
   Widget _buildHorizontal(BuildContext context) {
-    // 横向きの場合
     return Container(
       alignment: Alignment.center,
       color: Colors.pink,
@@ -329,14 +269,6 @@ class _FrontState extends State<Front> {
   }
 }
 
-void pushWithReloadByReturn(BuildContext context) async {
-  final result = await Navigator.push(
-    context,
-    new MaterialPageRoute<bool>(
-      builder: (BuildContext context) => Home(),
-    ),
-  );
-}
 
 
 
@@ -349,12 +281,12 @@ void main() async {
 
   runApp(EasyLocalization(
       supportedLocales: [Locale('en', 'US'), Locale('ja', 'JP')],
-      fallbackLocale: Locale('en', 'US'), // デフォルトの言語
-      // startLocale: Locale('en', 'US'), // 端末の言語を強制的に設定する場合
+      fallbackLocale: Locale('en', 'US'), 
+      
       path: 'assets/translations/langs.csv',
-      // path: 'assets/translations/',  // JSONの場合
+      
       assetLoader: CsvAssetLoader(),
-      // assetLoader: JsonAssetLoader() // JSONの場合
+      
       child: MyApp()));
 }
 
@@ -369,7 +301,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// This widget is the root of your application.
+
 @override
 Widget build(BuildContext context) {
   return MaterialApp(
@@ -407,11 +339,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: DoNothingAction(),
-      //   tooltip: 'Increment',
-      //   child: Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
+      
+      
+      
+      
+      
     );
   }
 }

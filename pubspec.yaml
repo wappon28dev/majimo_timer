@@ -4,16 +4,14 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: '>=2.10.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  easy_localization: ^3.0.0
-  easy_localization_loader: ^1.0.0
   slide_digital_clock: ^1.0.0
   cupertino_icons: ^1.0.2
-  provider: ^4.0.2
+  provider: ^5.0.0
   fabexdateformatter: ^1.0.5
   bottom_bar: ^1.2.3+1
   animated_text_kit: ^4.2.1
@@ -21,9 +19,14 @@ dependencies:
   auto_animated: ^3.0.0
   delayed_widget: ^1.1.1
   expandable_slider: "^1.0.0"
-  shared_preferences: ^2.0.6
   flutter_staggered_animations: "^1.0.0"
   day_night_time_picker: ^1.0.2
+  easy_localization: ^2.3.3
+  easy_localization_loader: any
+  shared_preferences: any
+  preferences: any
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
