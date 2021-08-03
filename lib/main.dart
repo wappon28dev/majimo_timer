@@ -62,7 +62,7 @@ class Front extends StatefulWidget {
   _FrontState createState() => _FrontState();
 }
 
-bool _ht;
+bool _cf;
 
 class _FrontState extends State<Front> {
   _saveBool(String key, bool value) async {
@@ -73,7 +73,7 @@ class _FrontState extends State<Front> {
   _restoreValues() async {
     var prefs = await SharedPreferences.getInstance();
     setState(() {
-      _ht = prefs.getBool('ht') ?? true;
+      _cf = prefs.getBool('cf') ?? true;
     });
   }
 
@@ -173,11 +173,11 @@ class _FrontState extends State<Front> {
                   ),
                   Text("24h format"),
                   Switch(
-                    value: _ht,
+                    value: _cf,
                     onChanged: (newVal) {
                       setState(() {
-                        _ht = newVal;
-                        _saveBool('ht', _ht);
+                        _cf = newVal;
+                        _saveBool('cf', _cf);
                       });
                     },
                   ),
@@ -189,8 +189,8 @@ class _FrontState extends State<Front> {
                     ),
                     onPressed: () {
                       setState(() {
-                        _ht = false;
-                        _saveBool('ht', false);
+                        _cf = false;
+                        _saveBool('cf', false);
                       });
                     },
                   ),
@@ -202,12 +202,12 @@ class _FrontState extends State<Front> {
                     ),
                     onPressed: () {
                       setState(() {
-                        _ht = true;
-                        _saveBool('ht', true);
+                        _cf = true;
+                        _saveBool('cf', true);
                       });
                     },
                   ),
-                  (_ht) ? Text("24h format") : Text("12h format"),
+                  // (_cf) ? Text("24h format") : Text("12h format"),
                 ],
               ),
             ),
@@ -236,7 +236,7 @@ class _FrontState extends State<Front> {
 
     return DigitalClock(
       digitAnimationStyle: Curves.easeOutExpo,
-      is24HourTimeFormat: _ht,
+      is24HourTimeFormat: _cf,
       areaDecoration: BoxDecoration(
         color: Colors.transparent,
       ),
@@ -273,6 +273,13 @@ class _FrontState extends State<Front> {
 
 
 /*
+      //@audit-ok 直った
+      //@note 原因：スペースの問題  ->  カッコで括る
+      // _intcurrentTime = _currentTime.toStringAsFixed(0);
+
+      _currentTime = prefs.getDouble('currentTime') ?? 60;
+      _intcurrentTime =
+          (prefs.getDouble('currentTime') ?? 60).toStringAsFixed(0);
 
 
 void main() async {

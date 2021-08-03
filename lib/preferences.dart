@@ -31,17 +31,10 @@ class Prefer extends StatefulWidget {
 class MyTheme extends ChangeNotifier {
   ThemeData current = ThemeData.light();
   bool _isDark = false;
-
-  // とりあえずトグルでテーマを切り替える関数だけ定義しています
-  toggle() {
-    _isDark = !_isDark;
-    current = _isDark ? ThemeData.dark() : ThemeData.light();
-    notifyListeners();
-  }
 }
 
 class _PreferState extends State<Prefer> {
-  bool _ht;
+  bool _cf;
   double _value;
   bool _iosStyle;
   bool _interval5;
@@ -54,7 +47,7 @@ class _PreferState extends State<Prefer> {
   _restoreValues() async {
     var prefs = await SharedPreferences.getInstance();
     setState(() {
-      _ht = prefs.getBool('ht') ?? true;
+      _cf = prefs.getBool('cf') ?? true;
       _iosStyle = prefs.getBool('iosstyle') ?? false;
       _value = prefs.getDouble('value') ?? 60;
     });
