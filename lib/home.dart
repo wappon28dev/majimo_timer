@@ -30,13 +30,14 @@ String japanDate = DateFormat("MM/dd").format(DateTime.now());
 String americanDate = DateFormat.yMMMMd('en_US').format(DateTime.now());
 
 class _HomeState extends State<Home> {
-  bool _ht = true;
+  bool _cf;
   int _currentPage = 0;
   final _pageController = PageController();
-  double _value;
   TimeOfDay _time = TimeOfDay.now().replacing(minute: 30);
   bool _iosStyle = true;
   bool _interval5 = true;
+  double _currentTime;
+  String _intcurrentTime;
 
   void onTimeChanged(TimeOfDay newTime) {
     setState(() {
@@ -57,8 +58,9 @@ class _HomeState extends State<Home> {
 
   void _onChanged(double newValue) {
     setState(() {
-      _value = newValue;
-      _saveDouble('value', _value);
+      _currentTime = newValue;
+      _intcurrentTime = _currentTime.toStringAsFixed(0);
+      _saveDouble('currenttime', _currentTime);
     });
   }
 
@@ -75,9 +77,16 @@ class _HomeState extends State<Home> {
   _restoreValues() async {
     var prefs = await SharedPreferences.getInstance();
     setState(() {
-      _ht = prefs.getBool('ht') ?? true;
+      _cf = prefs.getBool('cf') ?? true;
       _iosStyle = prefs.getBool('iosstyle') ?? false;
-      _value = prefs.getDouble('value') ?? 60;
+      _currentTime = prefs.getDouble('currenttime') ?? 60;
+      //@audit-ok 直った
+      //@note 原因：スペースの問題  ->  カッコで括る
+      // _intcurrentTime = _currentTime.toStringAsFixed(0);
+
+      _currentTime = prefs.getDouble('currenttime') ?? 60;
+      _intcurrentTime =
+          (prefs.getDouble('currenttime') ?? 60).toStringAsFixed(0);
     });
   }
 
@@ -242,7 +251,7 @@ class _HomeState extends State<Home> {
             value: _time,
             onChange: onTimeChanged,
             iosStylePicker: _iosStyle,
-            is24HrFormat: _ht,
+            is24HrFormat: _cf,
             minMinute: 0,
             maxMinute: 59,
             onChangeDateTime: (DateTime dateTime) {
@@ -301,7 +310,7 @@ class _HomeState extends State<Home> {
                   itemCount: listItem.length,
                 ),
               )),
-          (_ht) ? Text("debug: 24h format") : Text("debug: 12h format"),
+          // (_ht) ? Text("debug: 24h format") : Text("debug: 12h format"),
           Text("  _saveBool(String key, bool value) async\n"
               "    var prefs = await SharedPreferences.getInstance();\n"
               "    prefs.setBool(key, value);"),
@@ -334,13 +343,13 @@ class _HomeState extends State<Home> {
                   child: Text("時間モード", style: TextStyle(color: Colors.white))),
               Center(
                 child: Center(
-                  child: Text(_value.toStringAsFixed(0),
+                  child: Text(_intcurrentTime ?? "null",
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 100)),
                 ),
               ),
               ExpandableSlider.adaptive(
-                value: _value,
+                value: _currentTime,
                 onChanged: _onChanged,
                 min: 0,
                 max: 120,
@@ -516,7 +525,7 @@ class _HomeState extends State<Home> {
   Widget _digitaiclock() {
     return DigitalClock(
       digitAnimationStyle: Curves.easeOutExpo,
-      is24HourTimeFormat: _ht,
+      is24HourTimeFormat: _cf,
       areaDecoration: BoxDecoration(
         color: Colors.transparent,
       ),
