@@ -25,8 +25,11 @@ dependencies:
   easy_localization_loader: any
   shared_preferences: any
   preferences: any
-
-
+  material_dialogs: ^1.1.0
+  swipeable_page_route: ^0.2.2
+  syncfusion_flutter_sliders: ^19.2.51
+  duration_picker: ^1.0.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

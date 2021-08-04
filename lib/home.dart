@@ -1,15 +1,14 @@
 import 'package:day_night_time_picker/lib/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import './digital_clock/slide_digital_clock.dart';
-import 'package:delayed_widget/delayed_widget.dart';
-import 'package:expandable_slider/expandable_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:duration_picker/duration_picker.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -318,17 +317,19 @@ class _HomeState extends State<Home> {
   }
 
   Widget _second() {
+    double width = MediaQuery.of(context).size.width;
+
     return SafeArea(
-      child: AnimationLimiter(
-        child: Column(
-          children: AnimationConfiguration.toStaggeredList(
+        child: AnimationLimiter(
+      child: Column(
+        children: AnimationConfiguration.toStaggeredList(
             duration: const Duration(milliseconds: 375),
             childAnimationBuilder: (widget) => SlideAnimation(
-              horizontalOffset: 0,
-              child: FadeInAnimation(
-                child: widget,
-              ),
-            ),
+                  horizontalOffset: 0,
+                  child: FadeInAnimation(
+                    child: widget,
+                  ),
+                ),
             children: <Widget>[
               SizedBox(height: 20),
               new Container(
@@ -341,51 +342,68 @@ class _HomeState extends State<Home> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text("時間モード", style: TextStyle(color: Colors.white))),
-              Center(
-                child: Center(
-                  child: Text(_intcurrentTime ?? "null",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 100)),
-                ),
+              Column(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () async {
+                      var resultingDuration = await showDurationPicker(
+                        context: context,
+                        initialTime: Duration(minutes: 30),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            '次の時間を指定しました！ : ' + resultingDuration.toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                fontFamily: 'M-Plus')),
+                        backgroundColor: Colors.blue,
+                        duration: Duration(seconds: 3),
+                      ));
+                    },
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: _intcurrentTime ?? "null",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 100),
+                          ),
+                          TextSpan(
+                              text: " 分",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 50)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  //   child: Text((_intcurrentTime ?? "null") + "分",
+                  //       style: TextStyle(
+                  //           fontWeight: FontWeight.bold, fontSize: 100)),
+                  // ),
+                  SizedBox(
+                    height: 50,
+                    width: width - 15,
+                    child: SfSlider(
+                      min: 0.0,
+                      max: 120.0,
+                      value: _currentTime,
+                      interval: 15,
+                      stepSize: 5,
+                      minorTicksPerInterval: 3,
+                      showLabels: true,
+                      showTicks: true,
+                      onChanged: (dynamic newValue) {
+                        _onChanged(newValue);
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                ],
               ),
-              ExpandableSlider.adaptive(
-                value: _currentTime,
-                onChanged: _onChanged,
-                min: 0,
-                max: 120,
-                estimatedValueStep: 5,
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                height: 50,
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => _onChanged(15),
-                      child: const Text("15分"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => _onChanged(30),
-                      child: const Text("30分"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => _onChanged(45),
-                      child: const Text("45分"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => _onChanged(60),
-                      child: const Text("60分"),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+            ]),
       ),
-    );
+    ));
   }
 
   Widget _third() {

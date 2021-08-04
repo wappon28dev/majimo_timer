@@ -7,6 +7,8 @@ import './home.dart';
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,9 +35,12 @@ class MyApp extends StatelessWidget {
         fontFamily: 'M-plus',
         visualDensity: VisualDensity.adaptivePlatformDensity,
         pageTransitionsTheme: const PageTransitionsTheme(
-            builders: <TargetPlatform, PageTransitionsBuilder>{
-              TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
-            }),
+          builders: <TargetPlatform, PageTransitionsBuilder>{
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -43,9 +48,12 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.blue,
         fontFamily: 'M-plus',
         pageTransitionsTheme: const PageTransitionsTheme(
-            builders: <TargetPlatform, PageTransitionsBuilder>{
-              TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
-            }),
+          builders: <TargetPlatform, PageTransitionsBuilder>{
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
       ),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
@@ -118,8 +126,20 @@ class _FrontState extends State<Front> {
                 if (mounted) {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => Prefer(),
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Prefer(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          return OpenUpwardsPageTransitionsBuilder()
+                              .buildTransitions(
+                                  MaterialPageRoute(
+                                      builder: (context) => Prefer()),
+                                  context,
+                                  animation,
+                                  secondaryAnimation,
+                                  child);
+                        },
                       ));
                 }
               },
@@ -135,7 +155,6 @@ class _FrontState extends State<Front> {
           ),
           brightness: Brightness.dark,
         ),
-        drawer: Drawer(child: Center(child: Text("Drawer"))),
         body: SafeArea(
             child: SingleChildScrollView(
           child: AnimationLimiter(
@@ -179,6 +198,15 @@ class _FrontState extends State<Front> {
                         _cf = newVal;
                         _saveBool('cf', _cf);
                       });
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('24時間表記？ : $newVal',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                fontFamily: 'M-Plus')),
+                        backgroundColor: Colors.blue,
+                        duration: Duration(seconds: 2),
+                      ));
                     },
                   ),
                   ElevatedButton(
@@ -219,11 +247,12 @@ class _FrontState extends State<Front> {
           child: Icon(Icons.arrow_forward),
           onPressed: () {
             if (mounted) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Home(),
-                  ));
+              Navigator.of(context).push(SwipeablePageRoute(
+                backGestureDetectionStartOffset:
+                    -30, //@note scl23 -> double -30
+                canOnlySwipeFromEdge: true,
+                builder: (BuildContext context) => Home(),
+              ));
             }
           },
         ),
@@ -233,7 +262,11 @@ class _FrontState extends State<Front> {
 
   Widget _digitaiclock() {
     _restoreValues();
-
+    if (_cf) {
+      print("clock_true");
+    } else {
+      print("clock_false");
+    }
     return DigitalClock(
       digitAnimationStyle: Curves.easeOutExpo,
       is24HourTimeFormat: _cf,
