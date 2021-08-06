@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
+import 'package:flutter/services.dart';
 import 'package:majimo_timer/preferences.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import './digital_clock/slide_digital_clock.dart';
 import './home.dart';
 import 'package:delayed_widget/delayed_widget.dart';
@@ -31,23 +36,24 @@ class MyApp extends StatelessWidget {
       home: Front(),
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
+        primaryColor: Colors.deepOrange,
         accentColor: Colors.blue,
         fontFamily: 'M-plus',
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        pageTransitionsTheme: const PageTransitionsTheme(
+        pageTransitionsTheme: PageTransitionsTheme(
           builders: <TargetPlatform, PageTransitionsBuilder>{
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-            TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
           },
         ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.deepOrange,
+        primaryColor: Colors.deepOrange,
         accentColor: Colors.blue,
         fontFamily: 'M-plus',
-        pageTransitionsTheme: const PageTransitionsTheme(
+        pageTransitionsTheme: PageTransitionsTheme(
           builders: <TargetPlatform, PageTransitionsBuilder>{
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
@@ -73,6 +79,34 @@ class Front extends StatefulWidget {
 bool _cf;
 
 class _FrontState extends State<Front> {
+  static const _platform =
+      const MethodChannel("jp.wappon_28.majimo_timer/test");
+
+  String _label1 = '';
+
+  void _calljava() async {
+    // var paramMap = <String, dynamic>{
+    //   'a': 7,
+    //   'b': 8,
+    // };
+    // var resMap = <dynamic, dynamic>{};
+
+    // try {
+    //   resMap = await _platform.invokeMethod(
+    //     "test",
+    //     paramMap,
+    //   );
+    //   var calcResult = resMap["calcResult"];
+    //   var deviceName = resMap["deviceName"];
+
+    //   setState(() {
+    //     _label1 = "$calcResult ($deviceName)";
+    //   });
+    // } catch (e) {
+    //   print(e);
+    // }
+  }
+
   _saveBool(String key, bool value) async {
     var prefs = await SharedPreferences.getInstance();
     prefs.setBool(key, value);
@@ -235,7 +269,76 @@ class _FrontState extends State<Front> {
                       });
                     },
                   ),
+                  ElevatedButton(
+                    child: Text('dialog'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.orange,
+                      onPrimary: Colors.white,
+                    ),
+                    onPressed: () {
+                      Dialogs.bottomMaterialDialog(
+                          msg: "Are you sure? you can\'t undo this action",
+                          title: 'Delete',
+                          color: Colors.black,
+                          context: context,
+                          actions: [
+                            IconsOutlineButton(
+                              onPressed: () {},
+                              text: 'Cancel',
+                              iconData: Icons.cancel_sharp,
+                              textStyle: TextStyle(color: Colors.grey),
+                              iconColor: Colors.grey,
+                            ),
+                            IconsButton(
+                              onPressed: () {},
+                              text: 'Delete',
+                              iconData: Icons.delete,
+                              color: Colors.red,
+                              textStyle: TextStyle(color: Colors.white),
+                              iconColor: Colors.white,
+                            ),
+                          ]);
+                    },
+                  ),
                   // (_cf) ? Text("24h format") : Text("12h format"),
+                  SizedBox(height: 20),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      FloatingActionButton.extended(
+                        icon: Icon(Icons.alarm),
+                        label: Text('1st'.tr()),
+                        backgroundColor: Colors.blue,
+                        onPressed: () {},
+                      ),
+                      FloatingActionButton.extended(
+                        icon: Icon(Icons.hourglass_top),
+                        label: Text('2nd'.tr()),
+                        backgroundColor: Colors.deepOrangeAccent.shade200,
+                        onPressed: () {},
+                      ),
+                      FloatingActionButton.extended(
+                        icon: Icon(Icons.flag),
+                        label: Text('3rd'.tr()),
+                        backgroundColor: Colors.greenAccent.shade700,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+
+                  ElevatedButton(
+                    child: Text("       call_Java      "),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.orange,
+                      onPrimary: Colors.white,
+                    ),
+                    onPressed: () {
+                      _calljava();
+                    },
+                  ),
+                  Text(_label1)
                 ],
               ),
             ),

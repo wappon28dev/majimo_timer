@@ -4,11 +4,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:majimo_timer/main.dart';
 import './digital_clock/slide_digital_clock.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:duration_picker/duration_picker.dart';
+// import 'package:flutter_duration_picker/flutter_duration_picker.dart';
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
+import 'package:animated_background/animated_background.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -28,7 +31,7 @@ class Home extends StatefulWidget {
 String japanDate = DateFormat("MM/dd").format(DateTime.now());
 String americanDate = DateFormat.yMMMMd('en_US').format(DateTime.now());
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool _cf;
   int _currentPage = 0;
   final _pageController = PageController();
@@ -37,6 +40,8 @@ class _HomeState extends State<Home> {
   bool _interval5 = true;
   double _currentTime;
   String _intcurrentTime;
+  Animation<double> _animation;
+  AnimationController _animationController;
 
   void onTimeChanged(TimeOfDay newTime) {
     setState(() {
@@ -92,6 +97,14 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _restoreValues();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 260),
+    );
+
+    final curvedAnimation =
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
     super.initState();
   }
 
@@ -345,22 +358,6 @@ class _HomeState extends State<Home> {
               Column(
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () async {
-                      var resultingDuration = await showDurationPicker(
-                        context: context,
-                        initialTime: Duration(minutes: 30),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            '次の時間を指定しました！ : ' + resultingDuration.toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'M-Plus')),
-                        backgroundColor: Colors.blue,
-                        duration: Duration(seconds: 3),
-                      ));
-                    },
                     child: Text.rich(
                       TextSpan(
                         children: [
@@ -376,6 +373,23 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                     ),
+                    onTap: () async {
+                      // var resultingDuration = await showDurationPicker(
+                      //   context: context,
+                      //   initialTime: Duration(minutes: 30),
+                      //   snapToMins: 1,
+                      // );
+                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      //   content: Text(
+                      //       '次の時間を指定しました！ : ' + resultingDuration.toString(),
+                      //       style: TextStyle(
+                      //           fontWeight: FontWeight.bold,
+                      //           fontSize: 13,
+                      //           fontFamily: 'M-Plus')),
+                      //   backgroundColor: Colors.blue,
+                      //   duration: Duration(seconds: 3),
+                      // ));
+                    },
                   ),
                   //   child: Text((_intcurrentTime ?? "null") + "分",
                   //       style: TextStyle(
@@ -390,6 +404,7 @@ class _HomeState extends State<Home> {
                       value: _currentTime,
                       interval: 15,
                       stepSize: 5,
+                      activeColor: Theme.of(context).primaryColor,
                       minorTicksPerInterval: 3,
                       showLabels: true,
                       showTicks: true,
@@ -399,6 +414,28 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   SizedBox(height: 20),
+                  CustomRadioButton(
+                      elevation: 0,
+                      absoluteZeroSpacing: true,
+                      unSelectedColor: Theme.of(context).canvasColor,
+                      buttonLables: [
+                        'Student',
+                        'Parent',
+                        'Teacher',
+                      ],
+                      buttonValues: [
+                        "STUDENT",
+                        "PARENT",
+                        "TEACHER",
+                      ],
+                      buttonTextStyle: ButtonTextStyle(
+                          selectedColor: Colors.white,
+                          unSelectedColor: Colors.white,
+                          textStyle: TextStyle(fontSize: 16)),
+                      radioButtonValue: (value) {
+                        print(value);
+                      },
+                      selectedColor: Theme.of(context).primaryColor),
                 ],
               ),
             ]),
@@ -566,3 +603,64 @@ class _HomeState extends State<Home> {
     );
   }
 }
+// SizedBox(
+//     height: 500,
+//     child: Center(
+//       child: FloatingActionBubble(
+//         icon: AnimatedIcons.menu_arrow,
+//         // Menu items
+//         items: <Bubble>[
+//           // Floating action menu item
+//           Bubble(
+//             title: "Settings",
+//             iconColor: Colors.white,
+//             bubbleColor: Colors.blue,
+//             icon: Icons.settings,
+//             titleStyle:
+//                 TextStyle(fontSize: 16, color: Colors.white),
+//             onPress: () {
+//               _animationController.reverse();
+//             },
+//           ),
+//           // Floating action menu item
+//           Bubble(
+//             title: "Profile",
+//             iconColor: Colors.white,
+//             bubbleColor: Colors.blue,
+//             icon: Icons.people,
+//             titleStyle:
+//                 TextStyle(fontSize: 16, color: Colors.white),
+//             onPress: () {
+//               _animationController.reverse();
+//             },
+//           ),
+//           //Floating action menu item
+//           Bubble(
+//             title: "Home",
+//             iconColor: Colors.white,
+//             bubbleColor: Colors.blue,
+//             icon: Icons.home,
+//             titleStyle:
+//                 TextStyle(fontSize: 16, color: Colors.white),
+//             onPress: () {
+//               Navigator.push(
+//                   context,
+//                   new MaterialPageRoute(
+//                       builder: (BuildContext context) =>
+//                           Front()));
+//               _animationController.reverse();
+//             },
+//           ),
+//         ],
+
+//         // animation controller
+//         animation: _animation,
+
+//         // On pressed change animation state
+//         onPress: () => _animationController.isCompleted
+//             ? _animationController.reverse()
+//             : _animationController.forward(),
+
+//         // Floating Action button Icon color
+//         iconColor: Colors.blue,
+//       ),))

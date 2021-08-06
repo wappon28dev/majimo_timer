@@ -28,8 +28,9 @@ dependencies:
   material_dialogs: ^1.1.0
   swipeable_page_route: ^0.2.2
   syncfusion_flutter_sliders: ^19.2.51
-  duration_picker: ^1.0.1
-  
+  flutter_duration_picker: "^1.0.0"
+  custom_radio_grouped_button: any
+  animated_background: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
