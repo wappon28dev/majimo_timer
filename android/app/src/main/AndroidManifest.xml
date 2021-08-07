@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jp.wappon_28.majimo_timer">
+    package="jp.wappon_28_dev.majimo_timer">
    <application
-        android:label="majimo_timer"
+        android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
