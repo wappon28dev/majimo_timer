@@ -1,0 +1,56 @@
+name: majimo_timer
+description: A new Flutter project.
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.14.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flare_flutter: ^3.0.2
+  flutter_native_splash: ^1.2.4
+  easy_localization: ^3.0.0
+  easy_localization_loader: ^1.0.0
+  flutter_hooks: ^0.18.0
+  hooks_riverpod: ^0.14.0+5
+  rive_splash_screen: ^0.1.0
+  slide_digital_clock: ^1.0.2
+  draggable_home: ^1.0.2
+  settings_ui: ^1.0.0
+  cupertino_back_gesture: ^0.1.0
+  quds_ui_kit: ^0.0.7+5
+  flag: ^5.0.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+
+flutter_native_splash:
+  image: assets/splash/splash.png
+  color: "448AFF"
+
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/splash/splash.flr
+    - assets/translations/langs.csv
+  fonts:
+    - family: M-plus-B
+      fonts:
+        - asset: assets/fonts/MPLUS1p-Bold.ttf
+          style: normal
+          weight: 500
+          
+    - family: M-plus-M
+      fonts:
+        - asset: assets/fonts/MPLUS1p-Medium.ttf
+          style: normal
+          weight: 400
