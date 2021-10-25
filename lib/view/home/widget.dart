@@ -1,15 +1,17 @@
-import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../main.dart';
+import 'package:majimo_timer/view/home/model.dart';
+import '/model/theme.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
+import '../../main.dart';
+import '/plugin/draggable_home.dart';
+import './header.dart';
 
 @override
 Widget buildVertical(BuildContext context) {
-  final is24 = useProvider(clockChanger).is24;
-
+  var animation = context.read(colorChanger).animation;
   return DraggableHome(
     title: Text(
       'app_name'.tr(),
@@ -40,41 +42,25 @@ Widget buildVertical(BuildContext context) {
       ],
     ),
     body: [
-      const SizedBox(height: 20),
-      TextButton(
-          onPressed: () {
-            context.read(clockChanger).is24changer(true);
-          },
-          child: const Text("24hmode")),
-      TextButton(
-          onPressed: () {
-            context.read(clockChanger).is24changer(false);
-          },
-          child: const Text("12hmode")),
-      listView(),
+      lap(context),
     ],
     fullyStretchable: true,
-    expandedBody: Center(
-      child: Column(children: [
-        DigitalClock(
-          digitAnimationStyle: Curves.easeOutExpo,
-          is24HourTimeFormat: is24,
-          areaDecoration: const BoxDecoration(
-            color: Colors.transparent,
-          ),
-          hourMinuteDigitTextStyle:
-              const TextStyle(fontSize: 50, color: Colors.white),
-          hourMinuteDigitDecoration:
-              const BoxDecoration(color: Colors.transparent),
-          amPmDigitTextStyle:
-              const TextStyle(fontSize: 10, height: 2, color: Colors.white),
-          secondDigitTextStyle:
-              const TextStyle(fontSize: 20, height: 1.5, color: Colors.white),
-          secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
-          areaAligment: AlignmentDirectional.center,
-        ),
-      ]),
-    ),
+    expandedBody: AnimatedBuilder(
+        animation: animation,
+        builder: (context, snapshot) {
+          return Container(
+              alignment: Alignment.center,
+              color: animation.value,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    child: largeclock(context),
+                  ),
+                ],
+              ));
+        }),
   );
 }
 
@@ -104,24 +90,46 @@ Widget smallclock() {
   );
 }
 
+Widget largeclock(BuildContext context) {
+  return DigitalClock(
+    digitAnimationStyle: Curves.easeOutExpo,
+    is24HourTimeFormat: context.read(clockChanger).is24,
+    areaDecoration: const BoxDecoration(
+      color: Colors.transparent,
+    ),
+    hourMinuteDigitTextStyle:
+        const TextStyle(fontSize: 50, color: Colors.white),
+    hourMinuteDigitDecoration: const BoxDecoration(color: Colors.transparent),
+    amPmDigitTextStyle:
+        const TextStyle(fontSize: 10, height: 2, color: Colors.white),
+    secondDigitTextStyle:
+        const TextStyle(fontSize: 20, height: 1.5, color: Colors.white),
+    secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
+    areaAligment: AlignmentDirectional.center,
+  );
+}
+
 // ignore: avoid_unnecessary_containers
 Container headerWidget(BuildContext context) => Container(
-      child: DigitalClock(
-        digitAnimationStyle: Curves.easeOutExpo,
-        is24HourTimeFormat: useProvider(clockChanger).is24,
-        areaDecoration: const BoxDecoration(
-          color: Colors.transparent,
+      color: MyTheme.getcolor("orange"),
+      child: Container(
+        child: DigitalClock(
+          digitAnimationStyle: Curves.easeOutExpo,
+          is24HourTimeFormat: useProvider(clockChanger).is24,
+          areaDecoration: const BoxDecoration(
+            color: Colors.transparent,
+          ),
+          hourMinuteDigitTextStyle:
+              const TextStyle(fontSize: 50, color: Colors.white),
+          hourMinuteDigitDecoration:
+              const BoxDecoration(color: Colors.transparent),
+          amPmDigitTextStyle:
+              const TextStyle(fontSize: 10, height: 2, color: Colors.white),
+          secondDigitTextStyle:
+              const TextStyle(fontSize: 20, height: 1.5, color: Colors.white),
+          secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
+          areaAligment: AlignmentDirectional.center,
         ),
-        hourMinuteDigitTextStyle:
-            const TextStyle(fontSize: 50, color: Colors.white),
-        hourMinuteDigitDecoration:
-            const BoxDecoration(color: Colors.transparent),
-        amPmDigitTextStyle:
-            const TextStyle(fontSize: 10, height: 2, color: Colors.white),
-        secondDigitTextStyle:
-            const TextStyle(fontSize: 20, height: 1.5, color: Colors.white),
-        secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
-        areaAligment: AlignmentDirectional.center,
       ),
     );
 

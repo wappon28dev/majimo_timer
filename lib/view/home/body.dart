@@ -16,6 +16,7 @@ class HomePage extends HookWidget {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLandscape = orientation == Orientation.landscape;
     final theme = useProvider(themeChanger).theme;
+
     return MaterialApp(
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,

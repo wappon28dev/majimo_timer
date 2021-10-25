@@ -89,7 +89,8 @@ SettingsTile dia2(BuildContext context) {
                     },
                   ),
                   const SizedBox(height: 10),
-                  Text('restart'.tr()),
+                  Text('restart'.tr(),
+                      style: const TextStyle(color: Color(0xFF777777))),
                   const SizedBox(height: 10)
                 ],
               ),

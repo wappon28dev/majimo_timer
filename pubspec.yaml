@@ -26,6 +26,10 @@ dependencies:
   cupertino_back_gesture: ^0.1.0
   quds_ui_kit: ^0.0.7+5
   flag: ^5.0.1
+  auto_size_text_pk: ^3.0.0-nullsafety
+  ezanimation: ^0.5.0
+  fullscreen: ^1.0.3
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

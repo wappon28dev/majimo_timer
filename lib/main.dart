@@ -14,9 +14,10 @@ import 'view/setting/model.dart';
 import '/model/pref.dart';
 
 //global
-final themeChanger = ChangeNotifierProvider((_) => ThemeChanger());
-final clockChanger = ChangeNotifierProvider((_) => ClockChanger());
-final langChanger = ChangeNotifierProvider((_) => LangChanger());
+final themeChanger = ChangeNotifierProvider((ref) => ThemeChanger());
+final clockChanger = ChangeNotifierProvider((ref) => ClockChanger());
+final langChanger = ChangeNotifierProvider((ref) => LangChanger());
+final colorChanger = Provider((ref) => ColorChanger());
 getBool({required PrefKey key}) => PrefManager.getBool(key: key);
 getInt({required PrefKey key}) => PrefManager.getInt(key: key);
 setBool({required PrefKey key, required bool value}) =>
