@@ -4,10 +4,10 @@ ok,はい,OK
 cancel,キャンセル,CANCEL
 greetings,まじもタイマーへようこそ！,Welcome to Majimo_timer!
 lang,ja_JP,en_US
-1st,じこく,Alarm
-2nd,じかん,Timer
-3rd,もくひょう,Goal
-4th,きろく,Record
+alarm,じこく,Alarm
+timer,じかん,Timer
+goal,もくひょう,Goal
+record,きろく,Record
 prefer,まじもタイマーの設定,Preferences of Majimo-Timer
 sec1,時刻と表示,Clock and View
 pref1,言語の変更,Change language

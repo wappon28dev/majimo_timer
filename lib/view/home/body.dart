@@ -10,6 +10,7 @@ import '../../main.dart';
 
 class HomePage extends HookWidget {
   const HomePage({Key? key}) : super(key: key);
+  static getcolor(String colorname) => MyTheme.getcolor(colorname);
 
   @override
   Widget build(BuildContext context) {

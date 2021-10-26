@@ -25,7 +25,7 @@ setBool({required PrefKey key, required bool value}) =>
 setInt({required PrefKey key, required int value}) =>
     PrefManager.setInt(key: key, value: value);
 remove({required Type key}) => PrefManager.remove(key: key);
-
+ 
 /// テーマの変更・記憶を行うStateNotifier
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

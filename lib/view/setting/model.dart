@@ -63,27 +63,42 @@ class ThemeChanger with ChangeNotifier {
     print("save int theme = " + theme.toString());
   }
 
-  thememode() {
-    if (_theme == ThemeMode.light) {
-      return 'light'.tr();
+  gettheme({required int mode}) {
+    // int mode : 0 => return text,
+    //            1 => return icon,
+    //            2 => return int (theme number)
+    if (mode == 0) {
+      if (_theme == ThemeMode.light) {
+        return 'light'.tr();
+      }
+      if (_theme == ThemeMode.dark) {
+        return 'dark'.tr();
+      }
+      if (_theme == ThemeMode.system) {
+        return 'system'.tr();
+      }
     }
-    if (_theme == ThemeMode.dark) {
-      return 'dark'.tr();
+    if (mode == 1) {
+      if (_theme == ThemeMode.system) {
+        return Icons.settings_brightness;
+      }
+      if (_theme == ThemeMode.light) {
+        return Icons.brightness_7;
+      }
+      if (_theme == ThemeMode.dark) {
+        return Icons.nights_stay;
+      }
     }
-    if (_theme == ThemeMode.system) {
-      return 'system'.tr();
-    }
-  }
-
-  thememodeicon() {
-    if (_theme == ThemeMode.system) {
-      return Icons.settings_brightness;
-    }
-    if (_theme == ThemeMode.light) {
-      return Icons.brightness_7;
-    }
-    if (_theme == ThemeMode.dark) {
-      return Icons.nights_stay;
+    if (mode == 2) {
+      if (_theme == ThemeMode.system) {
+        return 0;
+      }
+      if (_theme == ThemeMode.light) {
+        return 1;
+      }
+      if (_theme == ThemeMode.dark) {
+        return 2;
+      }
     }
   }
 }

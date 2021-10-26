@@ -8,10 +8,9 @@ import '../../main.dart';
 import 'package:flag/flag.dart';
 
 SettingsTile dia1(BuildContext context) {
-  String thememode = context.read(themeChanger).thememode();
+  String thememode = context.read(themeChanger).gettheme(mode: 0);
   void changelang({required int lang}) =>
       context.read(langChanger).changelang(context: context, lang: lang);
-
   return SettingsTile(
     title: 'pref1'.tr(),
     subtitle: thememode,
@@ -102,8 +101,8 @@ SettingsTile dia2(BuildContext context) {
 SettingsTile dia3(BuildContext context) {
   void changetheme({required int theme}) =>
       context.read(themeChanger).changetheme(theme: theme);
-  String thememode = context.read(themeChanger).thememode();
-  IconData icon = context.read(themeChanger).thememodeicon();
+  String thememode = context.read(themeChanger).gettheme(mode: 0);
+  IconData icon = context.read(themeChanger).gettheme(mode: 1);
 
   return SettingsTile(
     title: 'pref3'.tr(),
