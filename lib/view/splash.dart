@@ -2,36 +2,50 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/view/home/body.dart';
-import 'package:rive_splash_screen/rive_splash_screen.dart';
+import 'package:lottie/lottie.dart';
 
-class AppSplashPage extends StatefulWidget {
-  const AppSplashPage({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _AppSplashPageState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _AppSplashPageState extends State<AppSplashPage> {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: (5)),
+      vsync: this,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async => false,
         child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.blueAccent,
-            child: FlareActor(
-              'assets/splash/splash.flr',
-              alignment: Alignment.center,
-              fit: BoxFit.contain,
-              animation: 'all',
-              callback: (name) {
-                //main.dartからのprovider of riverpod 例外が起きたぁ
-                SchedulerBinding.instance?.addPostFrameCallback((_) {
-                  Navigator.of(context).pushReplacementNamed("/home");
-                });
-              },
-            )));
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.blueAccent,
+          child: Lottie.asset(
+            'assets/splash/splash.json',
+            controller: _controller,
+            height: MediaQuery.of(context).size.height * 1,
+            animate: true,
+            onLoaded: (composition) {
+              _controller
+                ..duration = composition.duration
+                ..forward().whenComplete(
+                    () => Navigator.of(context).pushReplacementNamed("/home"));
+            },
+          ),
+        ));
   }
 }

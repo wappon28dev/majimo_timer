@@ -1,3 +1,4 @@
+import 'package:flare_flutter/base/math/aabb.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,9 +18,10 @@ class Setting extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = useProvider(themeChanger).theme;
-    final is24 = useProvider(clockChanger).is24;
-
+    final thememanager = useProvider(themeManager);
+    final theme = useProvider(themeManager).theme;
+    final clockmanager = useProvider(clockManager);
+    final langmanager = useProvider(langManager);
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -29,53 +31,42 @@ class Setting extends HookWidget {
       themeMode: theme,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: appbar(context),
-        body: SettingsList(sections: [
-          CustomSection(
-              child: const SizedBox(
-            height: 20,
-          )),
-          SettingsSection(
-            title: 'sec1'.tr(),
-            titleTextStyle:
-                const TextStyle(color: Colors.deepOrange, fontSize: 15),
-            subtitle: const Text('tes'),
-            tiles: [dia1(context), dia2(context), dia3(context)],
-          ),
-          CustomSection(
-              child: SizedBox(
-            height: 10,
-          )),
-          SettingsSection(
-            title: 'Account',
-            tiles: [
-              SettingsTile(title: 'Phone number', leading: Icon(Icons.phone)),
-              SettingsTile(title: 'Email', leading: Icon(Icons.email)),
-              SettingsTile(title: 'Sign out', leading: Icon(Icons.exit_to_app)),
-            ],
-          ),
-          SettingsSection(
-            title: 'Misc',
-            tiles: [
-              SettingsTile(
-                  title: 'Terms of Service', leading: Icon(Icons.description)),
-              SettingsTile(
-                  title: 'Open source licenses',
-                  leading: Icon(Icons.collections_bookmark)),
-            ],
-          ),
-          CustomSection(
-            child: Column(
+          appBar: appbar(context),
+          body: SingleChildScrollView(
+              child: Column(children: [
+            const SizedBox(height: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Version: 2.4.0 (287)',
-                  style: TextStyle(color: Color(0xFF777777)),
-                ),
+                Text("　" + 'sec1'.tr(),
+                    style: TextStyle(color: MyTheme.getcolor("orange"))),
               ],
             ),
-          )
-        ]),
-      ),
+            ListTile(
+              title: Text('pref1'.tr()),
+              subtitle: Text(langmanager.get(mode: 0)),
+              leading: const Icon(Icons.language),
+              onTap: () {
+                dia1(context);
+              },
+            ),
+            ListTile(
+              title: Text('pref2'.tr()),
+              subtitle: Text(clockmanager.is24get(mode: 0)),
+              leading: clockmanager.is24get(mode: 1),
+              onTap: () {
+                dia2(context);
+              },
+            ),
+            ListTile(
+              title: Text('pref3'.tr()),
+              subtitle: Text(thememanager.get(mode: 0)),
+              leading: thememanager.get(mode: 1),
+              onTap: () {
+                dia3(context);
+              },
+            ),
+          ]))),
     );
   }
 }

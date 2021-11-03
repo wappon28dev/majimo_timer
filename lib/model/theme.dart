@@ -4,6 +4,11 @@ import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/model/pref.dart';
+import 'package:majimo_timer/view/home/body.dart';
+import 'package:majimo_timer/view/home/model.dart';
+import 'package:majimo_timer/view/setting/body.dart';
+import 'package:majimo_timer/view/setting/model.dart';
 import '../../main.dart';
 
 // テーマ変更用の状態クラス
@@ -59,5 +64,18 @@ class MyTheme extends ChangeNotifier {
       case ("darkblue"):
         return const Color.fromRGBO(0, 32, 96, 1);
     }
+  }
+
+  static isLight() {
+    int themenum = 1;
+    if (themenum == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static getwidth(context) {
+    return MediaQuery.of(context).size;
   }
 }

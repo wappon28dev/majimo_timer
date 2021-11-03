@@ -19,7 +19,6 @@ dependencies:
   easy_localization_loader: ^1.0.0
   flutter_hooks: ^0.18.0
   hooks_riverpod: ^0.14.0+5
-  rive_splash_screen: ^0.1.0
   slide_digital_clock: ^1.0.2
   draggable_home: ^1.0.2
   settings_ui: ^1.0.0
@@ -30,7 +29,7 @@ dependencies:
   ezanimation: ^0.5.0
   fullscreen: ^1.0.3
   dismissible_page: ^0.6.3
-  
+  lottie: ^1.2.1  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -45,7 +44,9 @@ flutter_native_splash:
 flutter:
   uses-material-design: true
   assets:
-    - assets/splash/splash.flr
+    - assets/splash/splash.json
+    - assets/splash/wolf.json
+    - assets/splash/sun.json
     - assets/translations/langs.csv
   fonts:
     - family: M-plus-B

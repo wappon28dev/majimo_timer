@@ -11,69 +11,7 @@ import '/plugin/draggable_home.dart';
 import 'alarm/body.dart';
 import 'timer/body.dart';
 import 'goal/body.dart';
-
-@override
-Widget buildVertical(BuildContext context) {
-  var animation = context.read(colorChanger).animation;
-  return DraggableHome(
-    title: Text(
-      'app_name'.tr(),
-      style: const TextStyle(fontWeight: FontWeight.bold),
-    ),
-    actions: [
-      IconButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed("/setting");
-        },
-        icon: const Icon(Icons.settings),
-        color: Colors.white,
-      ),
-    ],
-    headerWidget: headerWidget(context),
-    headerBottomBar: Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        IconButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed("/setting");
-          },
-          icon: const Icon(Icons.settings),
-          color: Colors.white,
-        ),
-      ],
-    ),
-    body: [
-      content(context),
-    ],
-    fullyStretchable: true,
-    expandedBody: AnimatedBuilder(
-        animation: animation,
-        builder: (context, snapshot) {
-          return Container(
-              alignment: Alignment.center,
-              color: animation.value,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    child: largeclock(context),
-                  ),
-                ],
-              ));
-        }),
-  );
-}
-
-Widget buildHorizontal(BuildContext context) {
-  return Container(
-    alignment: Alignment.center,
-    color: Colors.blue,
-    child: const Text("ヨコ", style: TextStyle(fontSize: 32)),
-  );
-}
+import 'package:lottie/lottie.dart';
 
 // ignore: avoid_unnecessary_containers
 Container headerWidget(BuildContext context) => Container(
@@ -81,7 +19,7 @@ Container headerWidget(BuildContext context) => Container(
       child: Container(
         child: DigitalClock(
           digitAnimationStyle: Curves.easeOutExpo,
-          is24HourTimeFormat: useProvider(clockChanger).is24,
+          is24HourTimeFormat: useProvider(clockManager).is24,
           areaDecoration: const BoxDecoration(
             color: Colors.transparent,
           ),
@@ -111,8 +49,8 @@ Widget content(BuildContext context) {
           button(tag: "goal", color: "green", context: context),
         ],
       ),
+      Text("hoge", style: Theme.of(context).textTheme.headline4),
       const SizedBox(height: 20),
-      listView(),
     ],
   );
 }
@@ -199,21 +137,50 @@ Widget smallclock() {
   );
 }
 
-Widget largeclock(BuildContext context) {
+Widget largeclock(BuildContext context, Color color) {
   return DigitalClock(
     digitAnimationStyle: Curves.easeOutExpo,
-    is24HourTimeFormat: context.read(clockChanger).is24,
+    is24HourTimeFormat: context.read(clockManager).is24,
     areaDecoration: const BoxDecoration(
       color: Colors.transparent,
     ),
-    hourMinuteDigitTextStyle:
-        const TextStyle(fontSize: 50, color: Colors.white),
+    hourMinuteDigitTextStyle: TextStyle(fontSize: 50, color: color),
     hourMinuteDigitDecoration: const BoxDecoration(color: Colors.transparent),
-    amPmDigitTextStyle:
-        const TextStyle(fontSize: 10, height: 2, color: Colors.white),
-    secondDigitTextStyle:
-        const TextStyle(fontSize: 20, height: 1.5, color: Colors.white),
+    amPmDigitTextStyle: TextStyle(fontSize: 10, height: 2, color: color),
+    secondDigitTextStyle: TextStyle(fontSize: 20, height: 1.5, color: color),
     secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
     areaAligment: AlignmentDirectional.center,
   );
+}
+
+Widget expand(BuildContext context) {
+  var color = context.read(colorManager).color;
+  var opacity = context.read(colorManager).opacity;
+  var clockcolor = ColorManager.get(0);
+  var value = ColorManager.get(2);
+
+  return AnimatedBuilder(
+      animation: color,
+      builder: (context, snapshot) {
+        return Container(
+            alignment: Alignment.center,
+            color: color.value,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  AnimatedOpacity(
+                      opacity: opacity.value,
+                      duration: const Duration(seconds: 1),
+                      child: Lottie.asset(value)),
+                ]),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    largeclock(context, clockcolor),
+                  ],
+                )
+              ],
+            ));
+      });
 }

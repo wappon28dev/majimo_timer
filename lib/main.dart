@@ -14,10 +14,10 @@ import 'view/setting/model.dart';
 import '/model/pref.dart';
 
 //global
-final themeChanger = ChangeNotifierProvider((ref) => ThemeChanger());
-final clockChanger = ChangeNotifierProvider((ref) => ClockChanger());
-final langChanger = ChangeNotifierProvider((ref) => LangChanger());
-final colorChanger = Provider((ref) => ColorChanger());
+final themeManager = ChangeNotifierProvider((ref) => ThemeManager());
+final clockManager = ChangeNotifierProvider((ref) => ClockManager());
+final langManager = ChangeNotifierProvider((ref) => LangManager());
+final colorManager = Provider((ref) => ColorManager());
 getBool({required PrefKey key}) => PrefManager.getBool(key: key);
 getInt({required PrefKey key}) => PrefManager.getInt(key: key);
 setBool({required PrefKey key, required bool value}) =>
@@ -25,7 +25,7 @@ setBool({required PrefKey key, required bool value}) =>
 setInt({required PrefKey key, required int value}) =>
     PrefManager.setInt(key: key, value: value);
 remove({required Type key}) => PrefManager.remove(key: key);
- 
+
 /// テーマの変更・記憶を行うStateNotifier
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,16 +41,15 @@ void main() async {
 
 class MyApp extends HookWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     restore(BuildContext context) async {
       final is24 = await getBool(key: PrefKey.clockStyle);
       final theme = await getInt(key: PrefKey.appTheme);
       final lang = await getInt(key: PrefKey.changeLanguage);
-      context.read(clockChanger).is24changer(is24);
-      context.read(themeChanger).changetheme(theme: theme);
-      context.read(langChanger).changelang(context: context, lang: lang);
+      context.read(clockManager).is24change(value: is24);
+      context.read(themeManager).change(theme: theme);
+      context.read(langManager).change(context: context, lang: lang);
       print("restore bool is24 = " + is24.toString());
       print("restore int theme = " + theme.toString());
       print("restore int lang = " + theme.toString());
@@ -59,7 +58,6 @@ class MyApp extends HookWidget {
     useEffect(() {
       restore(context);
     });
-
     return BackGestureWidthTheme(
         backGestureWidth: BackGestureWidth.fraction(1 / 2),
         child: MaterialApp(
@@ -68,13 +66,13 @@ class MyApp extends HookWidget {
           locale: context.locale,
           theme: MyTheme.lightTheme,
           darkTheme: MyTheme.darkTheme,
-          themeMode: context.read(themeChanger).theme,
+          themeMode: context.read(themeManager).theme,
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           routes: <String, WidgetBuilder>{
-            '/': (context) => const AppSplashPage(),
+            '/': (context) => const SplashScreen(),
             '/home': (context) => const HomePage(),
-            '/setting': (context) => const Setting(),
+            '/setting': (context) => Setting(),
           },
         ));
   }
