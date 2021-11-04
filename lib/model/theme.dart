@@ -12,7 +12,7 @@ import 'package:majimo_timer/view/setting/model.dart';
 import '../../main.dart';
 
 // テーマ変更用の状態クラス
-class MyTheme extends ChangeNotifier {
+class MyTheme {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     primarySwatch: Colors.deepOrange,
@@ -56,7 +56,7 @@ class MyTheme extends ChangeNotifier {
       case ("blue"):
         return const Color.fromRGBO(0, 163, 255, 1);
       case ("red"):
-        return const Color.fromRGBO(255, 101, 76, 0.9);
+        return const Color.fromRGBO(255, 101, 76, 1);
       case ("green"):
         return const Color.fromRGBO(95, 216, 49, 1);
       case ("orange"):
@@ -66,16 +66,16 @@ class MyTheme extends ChangeNotifier {
     }
   }
 
-  static isLight() {
-    int themenum = 1;
-    if (themenum == 1) {
+  static isLight(BuildContext context) {
+    bool isLightMode =
+        MediaQuery.of(context).platformBrightness == Brightness.light;
+    int themenum = context.read(themeManager).get(mode: 2);
+    if (themenum == 1 && isLightMode) {
+      context.read(colorManager).define(value: true);
       return true;
     } else {
+      context.read(colorManager).define(value: false);
       return false;
     }
-  }
-
-  static getwidth(context) {
-    return MediaQuery.of(context).size;
   }
 }

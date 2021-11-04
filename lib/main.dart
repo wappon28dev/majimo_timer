@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'model/theme.dart';
+import 'view/home/alarm/model.dart';
 import 'view/home/model.dart';
 import 'view/setting/model.dart';
 import '/model/pref.dart';
@@ -17,7 +18,7 @@ import '/model/pref.dart';
 final themeManager = ChangeNotifierProvider((ref) => ThemeManager());
 final clockManager = ChangeNotifierProvider((ref) => ClockManager());
 final langManager = ChangeNotifierProvider((ref) => LangManager());
-final colorManager = Provider((ref) => ColorManager());
+final colorManager = ChangeNotifierProvider((ref) => ColorManager());
 getBool({required PrefKey key}) => PrefManager.getBool(key: key);
 getInt({required PrefKey key}) => PrefManager.getInt(key: key);
 setBool({required PrefKey key, required bool value}) =>
@@ -25,6 +26,7 @@ setBool({required PrefKey key, required bool value}) =>
 setInt({required PrefKey key, required int value}) =>
     PrefManager.setInt(key: key, value: value);
 remove({required Type key}) => PrefManager.remove(key: key);
+final providerContainer = ProviderContainer();
 
 /// テーマの変更・記憶を行うStateNotifier
 void main() async {
@@ -72,7 +74,7 @@ class MyApp extends HookWidget {
           routes: <String, WidgetBuilder>{
             '/': (context) => const SplashScreen(),
             '/home': (context) => const HomePage(),
-            '/setting': (context) => Setting(),
+            '/setting': (context) => const Setting(),
           },
         ));
   }
