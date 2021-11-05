@@ -4,7 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum PrefKey {
   changeLanguage, //int 0 = system, 1 = Japanese, 2 = English
   clockStyle, //bool true = 24h, false = 12h
-  appTheme //int 0 = system, 1 = light, 2 = dark
+  appTheme, //int 0 = system, 1 = light, 2 = dark
+  alarmHour, //int alarm timeOfDay
+  alarmMinute, //int alarm timeOfDay
 }
 
 // extension TypeExtension on ValueKey {
@@ -23,7 +25,7 @@ class PrefManager {
     return result;
   }
 
-  static getInt({required PrefKey key}) async {
+  static Future<int> getInt({required PrefKey key}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int result = prefs.getInt(key.toString()) ?? 0;
     return result;

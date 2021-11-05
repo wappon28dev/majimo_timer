@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:majimo_timer/model/theme.dart';
-import 'package:majimo_timer/view/setting/model.dart';
 import 'package:quds_ui_kit/screens/quds_screens.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:easy_localization/easy_localization.dart';

@@ -3,12 +3,10 @@ import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/plugin/draggable_home.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
-import 'model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import '../../main.dart';
 
 class HomePage extends HookWidget {
   const HomePage({Key? key}) : super(key: key);

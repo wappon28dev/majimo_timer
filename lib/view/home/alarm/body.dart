@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
-import '../model.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../widget.dart';
 import 'widget.dart' as a;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'model.dart';
 
 class AlarmPage extends HookWidget {
   const AlarmPage({Key? key}) : super(key: key);

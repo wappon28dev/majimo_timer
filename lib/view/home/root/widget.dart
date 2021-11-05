@@ -3,20 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/view/home/model.dart';
+import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/pref.dart';
+import 'package:majimo_timer/plugin/let_log.dart';
+import 'package:majimo_timer/view/home/alarm/body.dart';
+import 'package:majimo_timer/view/home/goal/body.dart';
+import 'package:majimo_timer/view/home/timer/body.dart';
 import '/model/theme.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
-import '../../main.dart';
 import '/plugin/draggable_home.dart';
-import 'alarm/body.dart';
 import 'body.dart';
-import 'timer/body.dart';
-import 'goal/body.dart';
 import 'package:lottie/lottie.dart';
 
 Widget buildVertical(BuildContext context) {
   final clockmanager = useProvider(clockManager);
   final colormanager = useProvider(colorManager);
+  final alarmmanager = useProvider(alarmManager);
   final width = MediaQuery.of(context).size.width;
 
   Container headerWidget(BuildContext context) => Container(
@@ -107,6 +109,19 @@ Widget buildVertical(BuildContext context) {
             button(tag: "goal", color: "green", context: context),
           ],
         ),
+        TextButton(
+            onPressed: () {
+              const value = TimeOfDay(hour: 12, minute: 12);
+              alarmmanager.change(value: value);
+            },
+            child: const Text("a")),
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed("/debug");
+              Logger.i("- from majimo_timer/lib/view/home/root/widget.dart \n" +
+                  " > debug page opened");
+            },
+            child: const Text("show console")),
         const SizedBox(height: 20),
       ],
     );

@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:majimo_timer/view/home/body.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
+import 'package:majimo_timer/view/debug/body.dart';
 import 'package:majimo_timer/view/setting/body.dart';
 import 'package:majimo_timer/view/splash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'plugin/let_log.dart';
+import 'model/manager.dart';
 import 'model/theme.dart';
-import 'view/home/alarm/model.dart';
-import 'view/home/model.dart';
-import 'view/setting/model.dart';
 import '/model/pref.dart';
+import 'view/home/root/body.dart';
 
 //global
 final themeManager = ChangeNotifierProvider((ref) => ThemeManager());
 final clockManager = ChangeNotifierProvider((ref) => ClockManager());
 final langManager = ChangeNotifierProvider((ref) => LangManager());
 final colorManager = ChangeNotifierProvider((ref) => ColorManager());
+final alarmManager = ChangeNotifierProvider((ref) => AlarmManager());
 getBool({required PrefKey key}) => PrefManager.getBool(key: key);
 getInt({required PrefKey key}) => PrefManager.getInt(key: key);
 setBool({required PrefKey key, required bool value}) =>
@@ -26,7 +28,6 @@ setBool({required PrefKey key, required bool value}) =>
 setInt({required PrefKey key, required int value}) =>
     PrefManager.setInt(key: key, value: value);
 remove({required Type key}) => PrefManager.remove(key: key);
-final providerContainer = ProviderContainer();
 
 /// テーマの変更・記憶を行うStateNotifier
 void main() async {
@@ -39,6 +40,7 @@ void main() async {
     assetLoader: CsvAssetLoader(),
     child: const ProviderScope(child: MyApp()),
   ));
+  Logger.i(" -- Start Majimo_Timer -- ");
 }
 
 class MyApp extends HookWidget {
@@ -49,12 +51,22 @@ class MyApp extends HookWidget {
       final is24 = await getBool(key: PrefKey.clockStyle);
       final theme = await getInt(key: PrefKey.appTheme);
       final lang = await getInt(key: PrefKey.changeLanguage);
+      final alarmHour = await getInt(key: PrefKey.alarmHour) ?? 12;
+      final alarmMinute = await getInt(key: PrefKey.alarmMinute) ?? 12;
       context.read(clockManager).is24change(value: is24);
       context.read(themeManager).change(theme: theme);
       context.read(langManager).change(context: context, lang: lang);
-      print("restore bool is24 = " + is24.toString());
-      print("restore int theme = " + theme.toString());
-      print("restore int lang = " + theme.toString());
+      context
+          .read(alarmManager)
+          .change(value: TimeOfDay(hour: alarmHour, minute: alarmMinute));
+      Logger.r(" >> restore bool is24 = " +
+          is24.toString() +
+          "\n >> restore int theme = " +
+          theme.toString() +
+          "\n >> restore int lang = " +
+          theme.toString() +
+          "\n >> restore TimeOfDay value = " +
+          TimeOfDay(hour: alarmHour, minute: alarmMinute).toString());
     }
 
     useEffect(() {
@@ -75,6 +87,7 @@ class MyApp extends HookWidget {
             '/': (context) => const SplashScreen(),
             '/home': (context) => const HomePage(),
             '/setting': (context) => const Setting(),
+            '/debug': (context) => const Debug(),
           },
         ));
   }

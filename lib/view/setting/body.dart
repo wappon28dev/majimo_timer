@@ -2,7 +2,6 @@ import 'package:flare_flutter/base/math/aabb.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:majimo_timer/view/home/body.dart';
 import 'package:majimo_timer/view/setting/widget.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../main.dart';
 import '../../model/theme.dart';
-import '../setting/model.dart';
 import '../setting/widget.dart';
 
 class Setting extends HookWidget {

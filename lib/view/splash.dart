@@ -1,9 +1,4 @@
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/view/home/body.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {

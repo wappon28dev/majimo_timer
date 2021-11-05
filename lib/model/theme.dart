@@ -5,10 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/pref.dart';
-import 'package:majimo_timer/view/home/body.dart';
-import 'package:majimo_timer/view/home/model.dart';
 import 'package:majimo_timer/view/setting/body.dart';
-import 'package:majimo_timer/view/setting/model.dart';
 import '../../main.dart';
 
 // テーマ変更用の状態クラス

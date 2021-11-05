@@ -3,7 +3,6 @@ library draggable_home;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/view/home/model.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:fullscreen/fullscreen.dart';
