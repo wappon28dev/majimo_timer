@@ -13,8 +13,6 @@ import 'package:day_night_time_picker/day_night_time_picker.dart';
 Widget buildVertical(BuildContext context) {
   final clockmanager = useProvider(clockManager);
   final alarmmanager = useProvider(alarmManager);
-
-  String tag = "alarm";
   Widget smallclock() {
     return Column(children: [
       DigitalClock(
@@ -39,27 +37,43 @@ Widget buildVertical(BuildContext context) {
     ]);
   }
 
+  Widget fab() {
+    double radius = alarmmanager.FABsize / 3;
+    double iconSize = alarmmanager.FABsize / 4;
+    return Center(
+        child: CircleAvatar(
+      radius: radius,
+      backgroundColor: Colors.green.shade200,
+      child: IconButton(
+          color: Colors.black,
+          iconSize: iconSize,
+          icon: const Icon(Icons.play_arrow),
+          onPressed: () {
+            // do something
+          }),
+    ));
+  }
+
   Widget content() {
-    TimeOfDay value = alarmmanager.get();
+    TimeOfDay current = alarmmanager.get(0, context);
     Logger.i("- from majimo_timer/lib/view/home/alarm/widget.dart \n" +
         " >> current value => " +
-        value.toString());
+        current.toString());
     return Stack(children: [
       Center(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           const SizedBox(height: 50),
           GestureDetector(
-            child: Text(value.hour.toString() + ":" + value.minute.toString(),
+            child: Text(alarmmanager.get(1, context),
                 style: const TextStyle(
                     fontSize: 70, color: Colors.white, fontFamily: 'M-plus-B')),
             onTap: () async {
-              final value = alarmmanager.get();
               final TimeOfDay? result = await showTimePicker(
                 context: context,
-                initialTime: value,
+                initialTime: current,
                 initialEntryMode: TimePickerEntryMode.dial,
               );
-              if (result != null && result != value) {
+              if (result != null && result != current) {
                 alarmmanager.change(value: result);
                 Logger.i(
                     "- from majimo_timer/lib/view/home/alarm/widget.dart \n" +
@@ -68,8 +82,10 @@ Widget buildVertical(BuildContext context) {
               }
             },
           ),
+          TextButton(child: const Text("showFAB"), onPressed: () {}),
         ]),
       ),
+      fab(),
       Stack(
         children: [
           Row(
@@ -125,5 +141,3 @@ Widget buildHorizontal(BuildContext context) {
     decoration: const BoxDecoration(color: Color.fromRGBO(0, 163, 255, 1)),
   );
 }
-
-void onTimeChanged(TimeOfDay p1) {}

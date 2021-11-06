@@ -60,6 +60,9 @@ Widget buildVertical(BuildContext context) {
           switch (tag) {
             case ("alarm"):
               context.pushTransparentRoute(const AlarmPage());
+              context.read(alarmManager).internal();
+              context.read(alarmManager).show();
+
               break;
             case ("timer"):
               context.pushTransparentRoute(const TimerPage());
@@ -118,31 +121,12 @@ Widget buildVertical(BuildContext context) {
         TextButton(
             onPressed: () {
               Navigator.of(context).pushNamed("/debug");
-              Logger.i("- from majimo_timer/lib/view/home/root/widget.dart \n" +
+              Logger.e("- from majimo_timer/lib/view/home/root/widget.dart \n" +
                   " > debug page opened");
             },
             child: const Text("show console")),
         const SizedBox(height: 20),
       ],
-    );
-  }
-
-  ListView listView() {
-    return ListView.builder(
-      padding: EdgeInsets.only(top: 0),
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: 20,
-      shrinkWrap: true,
-      itemBuilder: (context, index) => Card(
-        color: Colors.white70,
-        child: ListTile(
-          leading: CircleAvatar(
-            child: Text("$index"),
-          ),
-          title: Text("Title"),
-          subtitle: Text("Subtitile"),
-        ),
-      ),
     );
   }
 

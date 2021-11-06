@@ -2,6 +2,8 @@ import 'package:flare_flutter/base/math/aabb.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:majimo_timer/model/pref.dart';
+import 'package:majimo_timer/plugin/let_log.dart';
 import 'package:majimo_timer/view/setting/widget.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +66,14 @@ class Setting extends HookWidget {
                 dia3(context);
               },
             ),
+            ElevatedButton(
+                onPressed: () {
+                  PrefManager.allremove();
+                  Logger.e("- from majimo_timer/lib/view/setting/body.dart \n" +
+                      " >> ! SharedPreferences All Removed ! <<");
+                  PrefManager.restore(context);
+                },
+                child: const Text("all reset")),
           ]))),
     );
   }

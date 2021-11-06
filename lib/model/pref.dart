@@ -1,4 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/src/provider.dart';
+import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/plugin/let_log.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum PrefKey {
@@ -19,6 +23,28 @@ enum PrefKey {
 // }
 
 class PrefManager {
+  static void restore(BuildContext context) async {
+    final is24 = await PrefManager.getBool(key: PrefKey.clockStyle);
+    final theme = await PrefManager.getInt(key: PrefKey.appTheme);
+    final lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
+    final alarmHour = await PrefManager.getInt(key: PrefKey.alarmHour);
+    final alarmMinute = await PrefManager.getInt(key: PrefKey.alarmMinute);
+    Logger.r(" >> restore bool is24 = " +
+        is24.toString() +
+        "\n >> restore int theme = " +
+        theme.toString() +
+        "\n >> restore int lang = " +
+        theme.toString() +
+        "\n >> restore TimeOfDay value = " +
+        TimeOfDay(hour: alarmHour, minute: alarmMinute).toString());
+    context.read(clockManager).is24change(value: is24);
+    context.read(themeManager).change(theme: theme);
+    context.read(langManager).change(context: context, lang: lang);
+    context
+        .read(alarmManager)
+        .change(value: TimeOfDay(hour: alarmHour, minute: alarmMinute));
+  }
+
   static Future<bool> getBool({required PrefKey key}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool result = prefs.getBool(key.toString()) ?? true;
@@ -44,5 +70,10 @@ class PrefManager {
   static void remove({required Type key}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove(key.toString());
+  }
+
+  static void allremove() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }

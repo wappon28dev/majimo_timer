@@ -16,8 +16,8 @@ class AlarmPage extends HookWidget {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLandscape = orientation == Orientation.landscape;
     final theme = useProvider(themeManager).theme;
-
     String tag = "alarm";
+
     return Material(
         color: Colors.transparent,
         child: Hero(

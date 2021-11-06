@@ -1,15 +1,10 @@
 import 'package:ezanimation/ezanimation.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_localization_loader/easy_localization_loader.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/plugin/let_log.dart';
-import 'package:slide_digital_clock/slide_digital_clock.dart';
 import '../../../main.dart';
-import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'pref.dart';
 import 'theme.dart';
 
@@ -19,15 +14,15 @@ class ThemeManager extends ChangeNotifier {
   change({required int theme}) {
     if (theme == 0) {
       _theme = ThemeMode.system;
-      setInt(key: PrefKey.appTheme, value: 0);
+      PrefManager.setInt(key: PrefKey.appTheme, value: 0);
     }
     if (theme == 1) {
       _theme = ThemeMode.light;
-      setInt(key: PrefKey.appTheme, value: 1);
+      PrefManager.setInt(key: PrefKey.appTheme, value: 1);
     }
     if (theme == 2) {
       _theme = ThemeMode.dark;
-      setInt(key: PrefKey.appTheme, value: 2);
+      PrefManager.setInt(key: PrefKey.appTheme, value: 2);
     }
     notifyListeners();
 
@@ -35,10 +30,12 @@ class ThemeManager extends ChangeNotifier {
         "- from ThemeManager \n" + " >> save int theme = " + theme.toString());
   }
 
+  /// ```
+  ///  int mode 0 => return String
+  ///           1 => return Icon
+  ///           2 => return int 0,1,2
+  /// ```
   get({required int mode}) {
-    // int mode : 0 => return text,
-    //            1 => return icon,
-    //            2 => return int (theme number)
     switch (mode) {
       case (0):
         if (_theme == ThemeMode.system) {
@@ -87,27 +84,28 @@ class LangManager extends ChangeNotifier {
     if (lang == 0) {
       _value = 0;
       context.resetLocale();
-      setInt(key: PrefKey.changeLanguage, value: 0);
+      PrefManager.setInt(key: PrefKey.changeLanguage, value: 0);
     }
     if (lang == 1) {
       _value = 1;
       locale(japanese);
-      setInt(key: PrefKey.changeLanguage, value: 1);
+      PrefManager.setInt(key: PrefKey.changeLanguage, value: 1);
     }
     if (lang == 2) {
       _value = 2;
       locale(english);
-      setInt(key: PrefKey.changeLanguage, value: 2);
+      PrefManager.setInt(key: PrefKey.changeLanguage, value: 2);
     }
     notifyListeners();
     Logger.s(
         "- from LangManager \n" + " >> save int lang = " + lang.toString());
   }
 
+  /// ```
+  ///  int mode 0 => return Text
+  ///           1 => return String date
+  /// ```
   get({required int mode}) {
-    // int mode : 0 => return text,
-    //            1 => return icon,
-    //            2 => return int (theme number)
     switch (mode) {
       case (0):
         if (value == 0) {
@@ -133,16 +131,18 @@ class ClockManager extends ChangeNotifier {
   bool get is24 => _is24;
   is24change({required bool value}) {
     _is24 = value;
-    setBool(key: PrefKey.clockStyle, value: value);
+    PrefManager.setBool(key: PrefKey.clockStyle, value: value);
     notifyListeners();
     Logger.s(
         "- from ClockManager \n" + " >> save bool is24 = " + value.toString());
   }
 
+  /// ```
+  ///  int mode 0 => return String for clock style name
+  ///           1 => return Icon
+  ///           2 => return bool
+  /// ```
   is24get({required int mode}) {
-    // int mode : 0 => return text,
-    //            1 => return icon,
-    //            2 => return int (theme number)
     switch (mode) {
       case (0):
         return (_is24) ? '24style'.tr() : '12style'.tr();
@@ -159,11 +159,10 @@ class ClockManager extends ChangeNotifier {
 class ColorManager extends ChangeNotifier {
   EzAnimation _color = EzAnimation.tween(
     ColorTween(begin: MyTheme.getcolor("orange"), end: null),
-    // end: MyTheme.getcolor("darkblue")),
     const Duration(seconds: 1),
   );
   EzAnimation get color => _color;
-  final opacity = EzAnimation(0.0, 1.0, const Duration(seconds: 1));
+  final opacity = EzAnimation(0.0, 1.0, const Duration(milliseconds: 10));
 
   define({required bool value}) {
     if (value) {
@@ -171,14 +170,12 @@ class ColorManager extends ChangeNotifier {
         ColorTween(
             begin: MyTheme.getcolor("orange"),
             end: Colors.orangeAccent.shade200),
-        // end: MyTheme.getcolor("darkblue")),
         const Duration(seconds: 1),
       );
     } else {
       _color = EzAnimation.tween(
         ColorTween(
             begin: MyTheme.getcolor("orange"), end: Colors.blue.shade900),
-        // end: MyTheme.getcolor("darkblue")),
         const Duration(seconds: 1),
       );
     }
@@ -191,6 +188,17 @@ class ColorManager extends ChangeNotifier {
     opacity.start();
   }
 
+  test() async {
+    Logger.i("recived!");
+    opacity.reset();
+    opacity.start();
+  }
+
+  /// ```
+  ///  int mode 0 => return Colors for clock
+  ///           1 => return Colors for end color
+  ///           2 => return String for lottie
+  /// ```
   get(int mode, BuildContext context) {
     switch (mode) {
       case (0):
@@ -218,30 +226,69 @@ class ColorManager extends ChangeNotifier {
 class AlarmManager extends ChangeNotifier {
   int _alarmHour = 12;
   int _alarmMinute = 00;
+  double _FABsize = 0;
   int get alarmHour => _alarmHour;
   int get alarmMinute => _alarmMinute;
+  double get FABsize => _FABsize;
 
-  state({required TimeOfDay value}) {
-    _alarmHour = value.hour;
-    _alarmMinute = value.minute;
+  /// set internal time
+  ///
+  ///   ex.) 5:42 => 5:50
+  internal() {
+    DateTime now = DateTime.now();
+    int minute = (now.minute / 10 + 1).ceil() * 10;
+    if (minute == 60) {
+      _alarmHour = now.hour + 1;
+      _alarmMinute = 0;
+    } else {
+      _alarmHour = now.hour;
+      _alarmMinute = minute;
+    }
     notifyListeners();
+    Logger.s("- from AlarmManager \n" +
+        " > now = ${now.toString()}\n" +
+        " >> save int alarmHour = " +
+        _alarmHour.toString() +
+        "\n >> save int alarmMinute = " +
+        _alarmMinute.toString());
   }
 
   change({required TimeOfDay value}) {
     _alarmHour = value.hour;
     _alarmMinute = value.minute;
-    setInt(key: PrefKey.alarmHour, value: _alarmHour);
-    setInt(key: PrefKey.alarmMinute, value: _alarmMinute);
-    Logger.s("- from AlarmManager \n" +
-        " >> save int alarmHour = " +
-        _alarmHour.toString() +
-        "\n >> save int alarmMinute = " +
-        _alarmMinute.toString());
     notifyListeners();
   }
 
-  get() {
+  /// ```
+  ///  int mode 0 => return String for clock style name
+  ///           1 => return Icon
+  ///           2 => return bool is24
+  /// ```
+  get(int mode, BuildContext context) {
+    bool is24 = context.read(clockManager).is24;
+    Logger.i("is24 => " + is24.toString());
     TimeOfDay value = TimeOfDay(hour: _alarmHour, minute: _alarmMinute);
-    return value;
+    switch (mode) {
+      case (0):
+        return value;
+      case (1):
+        return _alarmHour.toString().padLeft(2, "0") +
+            ":" +
+            _alarmMinute.toString().padLeft(2, "0");
+      case (2):
+        return value.replacing(hour: value.hourOfPeriod);
+      case (3):
+        return context.read(alarmManager).alarmHour < 12;
+    }
+  }
+
+  show() async {
+    Logger.e("- from AlarmManager\n > showFAB called ! ");
+    _FABsize = 0;
+    notifyListeners();
+    await Future.delayed(const Duration(milliseconds: 300));
+    Logger.e("- from AlarmManager\n > 1 seconds ! ");
+    _FABsize = 120;
+    notifyListeners();
   }
 }

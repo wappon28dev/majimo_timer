@@ -123,7 +123,7 @@ class _LogWidgetState extends State<LogWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "[${item.start!.hour}:${item.start!.minute}:${item.start!.second}] ${item.typeName} \n${item.message}",
+              "[${item.start!.hour.toString().padLeft(2, "0")}:${item.start!.minute.toString().padLeft(2, "0")}:${item.start!.second.toString().padLeft(2, "0")}] ${item.typeName} \n${item.message}",
               style: TextStyle(color: color, fontSize: 12),
             ),
             if (item.detail != null)
@@ -146,6 +146,8 @@ class _LogWidgetState extends State<LogWidget> {
     switch (type) {
       case _Type.info:
         return Colors.lightBlueAccent.shade400;
+      case _Type.event:
+        return Colors.yellow;
       case _Type.save:
         return const Color(0xFFF57F17);
       case _Type.restore:
@@ -157,6 +159,7 @@ class _LogWidgetState extends State<LogWidget> {
 
   final List<_Type> _selectTypes = [
     _Type.info,
+    _Type.event,
     _Type.save,
     _Type.restore,
   ];

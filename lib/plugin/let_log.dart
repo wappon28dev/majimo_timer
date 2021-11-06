@@ -9,17 +9,24 @@ import 'package:majimo_timer/model/theme.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 part 'log_widget.dart';
 
-enum _Type { info, save, restore }
+enum _Type { info, event, save, restore }
 
 List<String> _printNames = [
   "[Application-Info]",
+  "[Application-Event]",
   "[Manager-Save-Info]",
   "[Manager-Restore-Info]",
   "❌",
   "⬆️",
   "⬇️"
 ];
-List<String> _tabNames = ["[Info]", "[Save]", "[Restore]", "[Error]"];
+List<String> _tabNames = [
+  "[Info]",
+  "[Event]",
+  "[Save]",
+  "[Restore]",
+  "[Error]"
+];
 final RegExp _tabReg = RegExp(r"\[|\]");
 
 String _getTabName(int index) {
@@ -75,6 +82,11 @@ class Logger extends StatelessWidget {
   /// Logging
   static void i(Object message, [Object? detail]) {
     if (enabled) _Log.add(_Type.info, message, detail);
+  }
+
+  /// Record debug information
+  static void e(Object message, [Object? detail]) {
+    if (enabled) _Log.add(_Type.event, message, detail);
   }
 
   /// Record debug information
