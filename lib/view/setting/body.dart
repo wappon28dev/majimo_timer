@@ -3,25 +3,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:majimo_timer/model/pref.dart';
-import 'package:majimo_timer/plugin/let_log.dart';
+import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/setting/widget.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../main.dart';
 import '../../model/theme.dart';
 import '../setting/widget.dart';
 
-class Setting extends HookWidget {
+class Setting extends HookConsumerWidget {
   const Setting({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final thememanager = useProvider(themeManager);
-    final theme = useProvider(themeManager).theme;
-    final clockmanager = useProvider(clockManager);
-    final langmanager = useProvider(langManager);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final thememanager = ref.watch(themeManager);
+    final theme = ref.watch(themeManager).theme;
+    final clockmanager = ref.watch(clockManager);
+    final langmanager = ref.watch(langManager);
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -47,7 +47,7 @@ class Setting extends HookWidget {
               subtitle: Text(langmanager.get(mode: 0)),
               leading: const Icon(Icons.language),
               onTap: () {
-                dia1(context);
+                dia1(context, ref);
               },
             ),
             ListTile(
@@ -55,7 +55,7 @@ class Setting extends HookWidget {
               subtitle: Text(clockmanager.is24get(mode: 0)),
               leading: clockmanager.is24get(mode: 1),
               onTap: () {
-                dia2(context);
+                dia2(context, ref);
               },
             ),
             ListTile(
@@ -63,7 +63,7 @@ class Setting extends HookWidget {
               subtitle: Text(thememanager.get(mode: 0)),
               leading: thememanager.get(mode: 1),
               onTap: () {
-                dia3(context);
+                dia3(context, ref);
               },
             ),
             ElevatedButton(
@@ -71,7 +71,7 @@ class Setting extends HookWidget {
                   PrefManager.allremove();
                   Logger.e("- from majimo_timer/lib/view/setting/body.dart \n" +
                       " >> ! SharedPreferences All Removed ! <<");
-                  PrefManager.restore(context);
+                  PrefManager.restore(ref, context);
                 },
                 child: const Text("all reset")),
           ]))),

@@ -1,24 +1,24 @@
 import 'package:dismissible_page/src/dismissible_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/pref.dart';
-import 'package:majimo_timer/plugin/let_log.dart';
+import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
 import '/model/theme.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
-import '/plugin/draggable_home.dart';
+import '../../../plugin/draggable_home/draggable_home.dart';
 import 'body.dart';
 import 'package:lottie/lottie.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-Widget buildVertical(BuildContext context) {
-  final clockmanager = useProvider(clockManager);
-  final colormanager = useProvider(colorManager);
-  final alarmmanager = useProvider(alarmManager);
+Widget buildVertical(BuildContext context, WidgetRef ref) {
+  final clockmanager = ref.watch(clockManager);
+  final colormanager = ref.watch(colorManager);
+  final alarmmanager = ref.watch(alarmManager);
   final width = MediaQuery.of(context).size.width;
 
   Container headerWidget(BuildContext context) => Container(
@@ -26,7 +26,7 @@ Widget buildVertical(BuildContext context) {
         child: Container(
           child: DigitalClock(
             digitAnimationStyle: Curves.easeOutExpo,
-            is24HourTimeFormat: useProvider(clockManager).is24,
+            is24HourTimeFormat: clockmanager.is24,
             areaDecoration: const BoxDecoration(
               color: Colors.transparent,
             ),
@@ -51,17 +51,14 @@ Widget buildVertical(BuildContext context) {
         ),
       );
 
-  Widget button(
-      {required String tag,
-      required String color,
-      required BuildContext context}) {
+  Widget button({required String tag, required String color}) {
     return GestureDetector(
         onTap: () {
           switch (tag) {
             case ("alarm"):
               context.pushTransparentRoute(const AlarmPage());
-              context.read(alarmManager).internal();
-              context.read(alarmManager).show();
+              ref.watch(alarmManager).internal();
+              ref.watch(alarmManager).show();
 
               break;
             case ("timer"):
@@ -107,9 +104,9 @@ Widget buildVertical(BuildContext context) {
           // 中央寄せ
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            button(tag: "alarm", color: "blue", context: context),
-            button(tag: "timer", color: "red", context: context),
-            button(tag: "goal", color: "green", context: context),
+            button(tag: "alarm", color: "blue"),
+            button(tag: "timer", color: "red"),
+            button(tag: "goal", color: "green"),
           ],
         ),
         TextButton(
@@ -152,8 +149,8 @@ Widget buildVertical(BuildContext context) {
   Widget expand(BuildContext context) {
     var color = colormanager.color;
     var opacity = colormanager.opacity;
-    var clockcolor = colormanager.get(0, context);
-    var value = colormanager.get(2, context);
+    var clockcolor = colormanager.get(ref, 0, context);
+    var value = colormanager.get(ref, 2, context);
 
     return AnimatedBuilder(
         animation: color,

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:quds_ui_kit/screens/quds_screens.dart';
 import 'package:settings_ui/settings_ui.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../main.dart';
 import 'package:flag/flag.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 style(pref, value, int mode) {
   // int mode : 0 => return TextStyle,
@@ -22,10 +22,10 @@ style(pref, value, int mode) {
   }
 }
 
-dia1(BuildContext context) {
+dia1(BuildContext context, WidgetRef ref) {
   void changelang({required int lang}) =>
-      context.read(langManager).change(context: context, lang: lang);
-  final int pref = context.read(langManager).value;
+      ref.watch(langManager).change(ref: ref, context: context, lang: lang);
+  final int pref = ref.watch(langManager).value;
   return showQudsModalBottomSheet(
       context,
       (c) => Column(
@@ -66,10 +66,10 @@ dia1(BuildContext context) {
       title: Text('pref1'.tr(), style: const TextStyle(fontSize: 20)));
 }
 
-dia2(BuildContext context) {
+dia2(BuildContext context, WidgetRef ref) {
   void is24change({required bool value}) =>
-      context.read(clockManager).is24change(value: value);
-  final pref = context.read(clockManager).is24;
+      ref.watch(clockManager).is24change(value: value);
+  final pref = ref.watch(clockManager).is24;
 
   return showQudsModalBottomSheet(
       context,
@@ -106,10 +106,10 @@ dia2(BuildContext context) {
       title: Text('pref2'.tr(), style: const TextStyle(fontSize: 20)));
 }
 
-dia3(BuildContext context) {
+dia3(BuildContext context, WidgetRef ref) {
   void changetheme({required int theme}) =>
-      context.read(themeManager).change(theme: theme);
-  final pref = context.read(themeManager).get(mode: 2);
+      ref.watch(themeManager).change(theme: theme);
+  final pref = ref.watch(themeManager).get(mode: 2);
 
   return showQudsModalBottomSheet(
       context,

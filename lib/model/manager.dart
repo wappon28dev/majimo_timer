@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/plugin/let_log.dart';
+import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import '../../../main.dart';
 import 'pref.dart';
 import 'theme.dart';
@@ -77,7 +77,10 @@ class ThemeManager extends ChangeNotifier {
 class LangManager extends ChangeNotifier {
   int _value = 0;
   int get value => _value;
-  change({required BuildContext context, required int lang}) {
+  change(
+      {required WidgetRef ref,
+      required BuildContext context,
+      required int lang}) {
     void locale(Locale locale) => context.setLocale(locale);
     Locale japanese = const Locale('ja', 'JP');
     Locale english = const Locale('en', 'US');
@@ -162,7 +165,7 @@ class ColorManager extends ChangeNotifier {
     const Duration(seconds: 1),
   );
   EzAnimation get color => _color;
-  final opacity = EzAnimation(0.0, 1.0, const Duration(milliseconds: 10));
+  final opacity = EzAnimation(0.0, 1.0, const Duration(seconds: 1));
 
   define({required bool value}) {
     if (value) {
@@ -189,7 +192,7 @@ class ColorManager extends ChangeNotifier {
   }
 
   test() async {
-    Logger.i("recived!");
+    Logger.i("received!");
     opacity.reset();
     opacity.start();
   }
@@ -199,16 +202,18 @@ class ColorManager extends ChangeNotifier {
   ///           1 => return Colors for end color
   ///           2 => return String for lottie
   /// ```
-  get(int mode, BuildContext context) {
+  get(WidgetRef ref, int mode, BuildContext context) {
     switch (mode) {
       case (0):
-        return (MyTheme.isLight(context)) ? Colors.black : Colors.white;
+        return (MyTheme.isLight(ref: ref, context: context))
+            ? Colors.black
+            : Colors.white;
       case (1):
-        return (MyTheme.isLight(context))
+        return (MyTheme.isLight(ref: ref, context: context))
             ? Colors.orangeAccent.shade200
             : Colors.blue.shade900;
       case (2):
-        return (MyTheme.isLight(context))
+        return (MyTheme.isLight(ref: ref, context: context))
             ? 'assets/splash/sun.json'
             : 'assets/splash/wolf.json';
     }
@@ -226,17 +231,29 @@ class ColorManager extends ChangeNotifier {
 class AlarmManager extends ChangeNotifier {
   int _alarmHour = 12;
   int _alarmMinute = 00;
+  // ignore: non_constant_identifier_names
   double _FABsize = 0;
+  final _iconsize = EzAnimation(0.0, 30.0, const Duration(milliseconds: 200));
   int get alarmHour => _alarmHour;
   int get alarmMinute => _alarmMinute;
+  // ignore: non_constant_identifier_names
   double get FABsize => _FABsize;
+  EzAnimation get iconsize => _iconsize;
 
   /// set internal time
   ///
   ///   ex.) 5:42 => 5:50
   internal() {
     DateTime now = DateTime.now();
-    int minute = (now.minute / 10 + 1).ceil() * 10;
+
+    // in case n:00, make into n:10 forcedly.
+    if (now.minute == 00) {
+      _alarmMinute++;
+    }
+
+    int minute = (now.minute / 10).ceil() * 10;
+
+    // in case n:53, it'll get n:60. So, make into n+1:00 forcedly.
     if (minute == 60) {
       _alarmHour = now.hour + 1;
       _alarmMinute = 0;
@@ -264,9 +281,7 @@ class AlarmManager extends ChangeNotifier {
   ///           1 => return Icon
   ///           2 => return bool is24
   /// ```
-  get(int mode, BuildContext context) {
-    bool is24 = context.read(clockManager).is24;
-    Logger.i("is24 => " + is24.toString());
+  get(int mode, WidgetRef ref) {
     TimeOfDay value = TimeOfDay(hour: _alarmHour, minute: _alarmMinute);
     switch (mode) {
       case (0):
@@ -278,17 +293,20 @@ class AlarmManager extends ChangeNotifier {
       case (2):
         return value.replacing(hour: value.hourOfPeriod);
       case (3):
-        return context.read(alarmManager).alarmHour < 12;
+        return ref.read(alarmManager).alarmHour < 12;
     }
   }
 
   show() async {
     Logger.e("- from AlarmManager\n > showFAB called ! ");
+    _iconsize.reset();
+
     _FABsize = 0;
     notifyListeners();
     await Future.delayed(const Duration(milliseconds: 300));
-    Logger.e("- from AlarmManager\n > 1 seconds ! ");
-    _FABsize = 120;
+    _iconsize.start();
+    _FABsize = 40;
+
     notifyListeners();
   }
 }

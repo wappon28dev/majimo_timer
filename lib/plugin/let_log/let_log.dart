@@ -3,7 +3,7 @@ library let_log;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/src/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -47,13 +47,13 @@ class _Config {
   int maxLimit = 500;
 }
 
-class Logger extends StatelessWidget {
+class Logger extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
         theme: MyTheme.lightTheme,
         darkTheme: MyTheme.darkTheme,
-        themeMode: context.read(themeManager).theme,
+        themeMode: ref.watch(themeManager).theme,
         debugShowCheckedModeBanner: false,
         home: Scaffold(appBar: appbar(context), body: const LogWidget()));
   }

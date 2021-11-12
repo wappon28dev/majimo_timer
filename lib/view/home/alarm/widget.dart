@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/plugin/let_log.dart';
+import 'package:majimo_timer/plugin/circular_reveal_animation/circular_reveal_animation.dart';
+import 'package:majimo_timer/plugin/circular_reveal_animation/src/circular_reveal_animation.dart';
+import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import '../../../main.dart';
 import 'body.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-Widget buildVertical(BuildContext context) {
-  final clockmanager = useProvider(clockManager);
-  final alarmmanager = useProvider(alarmManager);
+Widget buildVertical(BuildContext context, WidgetRef ref) {
+  final clockmanager = ref.watch(clockManager);
+  final alarmmanager = ref.watch(alarmManager);
   Widget smallclock() {
     return Column(children: [
       DigitalClock(
@@ -38,24 +40,35 @@ Widget buildVertical(BuildContext context) {
   }
 
   Widget fab() {
-    double radius = alarmmanager.FABsize / 3;
-    double iconSize = alarmmanager.FABsize / 4;
-    return Center(
-        child: CircleAvatar(
-      radius: radius,
-      backgroundColor: Colors.green.shade200,
-      child: IconButton(
-          color: Colors.black,
-          iconSize: iconSize,
-          icon: const Icon(Icons.play_arrow),
-          onPressed: () {
-            // do something
-          }),
-    ));
+    double radius = alarmmanager.FABsize;
+    return AnimatedBuilder(
+        animation: alarmmanager.iconsize,
+        builder: (context, snapshot) {
+          return SizedBox(
+              height: 120,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: radius,
+                    backgroundColor: Colors.green.shade200,
+                  ),
+                  IconButton(
+                      padding: const EdgeInsets.all(20),
+                      color: Colors.black,
+                      iconSize: alarmmanager.iconsize.value,
+                      enableFeedback: true,
+                      icon: const Icon(Icons.play_arrow),
+                      onPressed: () {
+                        alarmmanager.show();
+                      }),
+                ],
+              ));
+        });
   }
 
   Widget content() {
-    TimeOfDay current = alarmmanager.get(0, context);
+    TimeOfDay current = alarmmanager.get(0, ref);
     Logger.i("- from majimo_timer/lib/view/home/alarm/widget.dart \n" +
         " >> current value => " +
         current.toString());
@@ -64,7 +77,7 @@ Widget buildVertical(BuildContext context) {
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           const SizedBox(height: 50),
           GestureDetector(
-            child: Text(alarmmanager.get(1, context),
+            child: Text(alarmmanager.get(1, ref),
                 style: const TextStyle(
                     fontSize: 70, color: Colors.white, fontFamily: 'M-plus-B')),
             onTap: () async {
@@ -82,10 +95,8 @@ Widget buildVertical(BuildContext context) {
               }
             },
           ),
-          TextButton(child: const Text("showFAB"), onPressed: () {}),
         ]),
       ),
-      fab(),
       Stack(
         children: [
           Row(
@@ -108,6 +119,7 @@ Widget buildVertical(BuildContext context) {
           ),
         ],
       ),
+      Align(alignment: Alignment.bottomCenter, child: fab()),
     ]);
   }
 

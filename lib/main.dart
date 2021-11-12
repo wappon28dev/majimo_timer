@@ -1,6 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:majimo_timer/view/debug/body.dart';
 import 'package:majimo_timer/view/setting/body.dart';
@@ -9,11 +9,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 // ignore: import_of_legacy_library_into_null_safe
-import 'plugin/let_log.dart';
+import 'plugin/let_log/let_log.dart';
 import 'model/manager.dart';
 import 'model/theme.dart';
 import '/model/pref.dart';
 import 'view/home/root/body.dart';
+import 'package:android_alarm_manager/android_alarm_manager.dart';
 
 //global
 final themeManager = ChangeNotifierProvider((ref) => ThemeManager());
@@ -36,12 +37,12 @@ void main() async {
   Logger.i(" -- Start Majimo_Timer -- ");
 }
 
-class MyApp extends HookWidget {
+class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
-      PrefManager.restore(context);
+      PrefManager.restore(ref, context);
     });
     return BackGestureWidthTheme(
         backGestureWidth: BackGestureWidth.fraction(1 / 2),
@@ -51,7 +52,7 @@ class MyApp extends HookWidget {
           locale: context.locale,
           theme: MyTheme.lightTheme,
           darkTheme: MyTheme.darkTheme,
-          themeMode: context.read(themeManager).theme,
+          themeMode: ref.read(themeManager).theme,
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           routes: <String, WidgetBuilder>{

@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:fullscreen/fullscreen.dart';
 
-class DraggableHome extends StatefulWidget {
+class DraggableHome extends ConsumerStatefulWidget {
   @override
   _DraggableHomeState createState() => _DraggableHomeState();
 
@@ -112,7 +112,7 @@ class DraggableHome extends StatefulWidget {
         super(key: key);
 }
 
-class _DraggableHomeState extends State<DraggableHome> {
+class _DraggableHomeState extends ConsumerState<DraggableHome> {
   final BehaviorSubject<bool> isFullyExpanded =
       BehaviorSubject<bool>.seeded(false);
   final BehaviorSubject<bool> isFullyCollapsed =
@@ -155,7 +155,7 @@ class _DraggableHomeState extends State<DraggableHome> {
                 expandedHeight - AppBar().preferredSize.height - 40) {
               if (!(isFullyCollapsed.value)) {
                 isFullyCollapsed.add(true);
-                context.read(colorManager).stop();
+                ref.watch(colorManager).stop();
               }
             } else {
               if ((isFullyCollapsed.value)) isFullyCollapsed.add(false);
@@ -259,7 +259,7 @@ class _DraggableHomeState extends State<DraggableHome> {
                   ? () async {
                       if (streams[1] == false) {
                         isFullyExpanded.add(true);
-                        context.read(colorManager).change();
+                        ref.watch(colorManager).change();
                         await FullScreen.enterFullScreen(
                             FullScreenMode.EMERSIVE_STICKY);
                       }

@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'widget.dart' as a;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class AlarmPage extends HookWidget {
+class AlarmPage extends HookConsumerWidget {
   const AlarmPage({Key? key}) : super(key: key);
   static getcolor(String colorname) => MyTheme.getcolor(colorname);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLandscape = orientation == Orientation.landscape;
-    final theme = useProvider(themeManager).theme;
+    final theme = ref.watch(themeManager).theme;
     String tag = "alarm";
 
     return Material(
@@ -26,7 +25,7 @@ class AlarmPage extends HookWidget {
                 onDismiss: () => Navigator.of(context).pop(),
                 isFullScreen: true,
                 child: !(isLandscape)
-                    ? a.buildVertical(context)
+                    ? a.buildVertical(context, ref)
                     : a.buildHorizontal(context))));
   }
 }

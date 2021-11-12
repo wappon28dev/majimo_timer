@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
@@ -63,15 +62,15 @@ class MyTheme {
     }
   }
 
-  static isLight(BuildContext context) {
+  static isLight({required WidgetRef ref, required BuildContext context}) {
     bool isLightMode =
         MediaQuery.of(context).platformBrightness == Brightness.light;
-    int themenum = context.read(themeManager).get(mode: 2);
+    int themenum = ref.watch(themeManager).get(mode: 2);
     if (themenum == 1 && isLightMode) {
-      context.read(colorManager).define(value: true);
+      ref.watch(colorManager).define(value: true);
       return true;
     } else {
-      context.read(colorManager).define(value: false);
+      ref.watch(colorManager).define(value: false);
       return false;
     }
   }

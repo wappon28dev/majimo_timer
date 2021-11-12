@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/src/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/plugin/let_log.dart';
+import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum PrefKey {
@@ -23,7 +23,7 @@ enum PrefKey {
 // }
 
 class PrefManager {
-  static void restore(BuildContext context) async {
+  static void restore(WidgetRef ref, BuildContext context) async {
     final is24 = await PrefManager.getBool(key: PrefKey.clockStyle);
     final theme = await PrefManager.getInt(key: PrefKey.appTheme);
     final lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
@@ -37,10 +37,10 @@ class PrefManager {
         theme.toString() +
         "\n >> restore TimeOfDay value = " +
         TimeOfDay(hour: alarmHour, minute: alarmMinute).toString());
-    context.read(clockManager).is24change(value: is24);
-    context.read(themeManager).change(theme: theme);
-    context.read(langManager).change(context: context, lang: lang);
-    context
+    ref.read(clockManager).is24change(value: is24);
+    ref.read(themeManager).change(theme: theme);
+    ref.read(langManager).change(ref: ref, context: context, lang: lang);
+    ref
         .read(alarmManager)
         .change(value: TimeOfDay(hour: alarmHour, minute: alarmMinute));
   }
