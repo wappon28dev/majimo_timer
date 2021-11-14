@@ -8,13 +8,16 @@ import 'package:majimo_timer/view/splash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
+import 'package:workmanager/workmanager.dart';
 // ignore: import_of_legacy_library_into_null_safe
+import 'model/app_link.dart';
+import 'model/work.dart';
 import 'plugin/let_log/let_log.dart';
 import 'model/manager.dart';
 import 'model/theme.dart';
-import '/model/pref.dart';
+import 'model/pref.dart';
 import 'view/home/root/body.dart';
-import 'package:android_alarm_manager/android_alarm_manager.dart';
+import 'package:app_links/app_links.dart';
 
 //global
 final themeManager = ChangeNotifierProvider((ref) => ThemeManager());
@@ -22,8 +25,16 @@ final clockManager = ChangeNotifierProvider((ref) => ClockManager());
 final langManager = ChangeNotifierProvider((ref) => LangManager());
 final colorManager = ChangeNotifierProvider((ref) => ColorManager());
 final alarmManager = ChangeNotifierProvider((ref) => AlarmManager());
+const int helloAlarmID = 0;
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) {
+    print("Native called background task"); //simpleTask will be emitted here.
+    Logger.i("are you hear?");
+    if (task == "task") ScheduleManager.notification();
+    return Future.value(true);
+  });
+}
 
-/// テーマの変更・記憶を行うStateNotifier
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -35,6 +46,11 @@ void main() async {
     child: const ProviderScope(child: MyApp()),
   ));
   Logger.i(" -- Start Majimo_Timer -- ");
+  Workmanager().initialize(
+      callbackDispatcher, // The top level function, aka callbackDispatcher
+      isInDebugMode:
+          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+      );
 }
 
 class MyApp extends HookConsumerWidget {
@@ -43,6 +59,7 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
       PrefManager.restore(ref, context);
+      LinkManager.initDeepLinks();
     });
     return BackGestureWidthTheme(
         backGestureWidth: BackGestureWidth.fraction(1 / 2),

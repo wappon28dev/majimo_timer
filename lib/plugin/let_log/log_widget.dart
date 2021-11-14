@@ -145,7 +145,7 @@ class _LogWidgetState extends State<LogWidget> {
   Color? _getColor(_Type? type, BuildContext context) {
     switch (type) {
       case _Type.info:
-        return Colors.lightBlueAccent.shade400;
+        return Colors.white;
       case _Type.event:
         return Colors.yellow;
       case _Type.save:

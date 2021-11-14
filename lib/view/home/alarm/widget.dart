@@ -7,6 +7,7 @@ import 'package:majimo_timer/plugin/circular_reveal_animation/circular_reveal_an
 import 'package:majimo_timer/plugin/circular_reveal_animation/src/circular_reveal_animation.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
+import 'package:workmanager/workmanager.dart';
 import '../../../main.dart';
 import 'body.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
@@ -60,7 +61,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                       enableFeedback: true,
                       icon: const Icon(Icons.play_arrow),
                       onPressed: () {
-                        alarmmanager.show();
+                        null;
                       }),
                 ],
               ));
@@ -95,6 +96,15 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               }
             },
           ),
+          ElevatedButton(
+              child: const Text("set"),
+              onPressed: () {
+                Logger.i("set alarm !!");
+                // One off task registration
+                Workmanager().registerOneOffTask("1", "task",
+                    initialDelay: const Duration(seconds: 10));
+              }),
+          ElevatedButton(child: const Text("cancel"), onPressed: () => null),
         ]),
       ),
       Stack(
