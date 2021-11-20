@@ -102,7 +102,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 Logger.i("set alarm !!");
                 // One off task registration
                 Workmanager().registerOneOffTask("1", "task",
-                    initialDelay: const Duration(seconds: 10));
+                    initialDelay: const Duration(seconds: 3));
               }),
           ElevatedButton(child: const Text("cancel"), onPressed: () => null),
         ]),

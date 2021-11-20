@@ -1,7 +1,12 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/app_link.dart';
+import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/plugin/draggable_home/draggable_home.dart';
+import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,7 +21,18 @@ class HomePage extends HookConsumerWidget {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLandscape = orientation == Orientation.landscape;
     final theme = ref.watch(themeManager).theme;
+    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
 
+    useEffect(() {
+      // AwesomeNotifications().actionStream.listen((receivedNotification) {
+      //   if (receivedNotification.channelKey == "basic_channel") {
+      //     Logger.e("received!");
+      //     Navigator.of(context).pushNamed(
+      //       '/setting',
+      //     );
+      //   }
+      // });
+    });
     return MaterialApp(
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,

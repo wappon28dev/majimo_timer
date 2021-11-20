@@ -1,13 +1,16 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dismissible_page/src/dismissible_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/model/pref.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '/model/theme.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import '../../../plugin/draggable_home/draggable_home.dart';
@@ -110,9 +113,8 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
           ],
         ),
         TextButton(
-            onPressed: () {
-              const value = TimeOfDay(hour: 12, minute: 12);
-              alarmmanager.change(value: value);
+            onPressed: () async {
+              NotificationManager.test();
             },
             child: const Text("a")),
         TextButton(
