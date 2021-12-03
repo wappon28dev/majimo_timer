@@ -9,7 +9,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class AlarmPage extends HookConsumerWidget {
   const AlarmPage({Key? key}) : super(key: key);
-  static getcolor(String colorname) => MyTheme.getcolor(colorname);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Orientation orientation = MediaQuery.of(context).orientation;

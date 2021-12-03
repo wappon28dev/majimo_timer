@@ -1,5 +1,6 @@
 import 'package:app_links/app_links.dart';
 import 'package:dismissible_page/src/dismissible_extensions.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,6 +9,7 @@ import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
 import 'package:majimo_timer/view/setting/body.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 late AppLinks _appLinks;
 
@@ -19,8 +21,8 @@ class LinkManager {
       Logger.i(" >> not late => " + uri.toString());
     });
 
-    final appLink = await _appLinks.getInitialAppLinkString();
-    if (appLink != null) {
+    final appLink = await _appLinks.getInitialAppLink();
+    if (appLink != null && appLink.hasFragment) {
       receiver(appLink.toString(), context, ref);
       Logger.i(" >> late => " + appLink.toString());
     }
@@ -34,8 +36,11 @@ class LinkManager {
       uri = uri.replaceAll("https://majimo.jp/app/", "");
     }
     Logger.i("tranfered -> " + uri);
+    launcher(context, ref, uri);
+  }
 
-    switch (uri) {
+  static void launcher(BuildContext context, WidgetRef ref, String mode) {
+    switch (mode) {
       case ("h"):
         Navigator.of(context).pushReplacementNamed("/home");
         break;
@@ -43,7 +48,8 @@ class LinkManager {
       case ("a"):
         Navigator.of(context).pushReplacementNamed("/home");
         context.pushTransparentRoute(const AlarmPage());
-        ref.read(alarmManager).show();
+        ref.watch(alarmManager).internal();
+        ref.watch(alarmManager).show();
         break;
 
       case ("t"):
@@ -62,5 +68,20 @@ class LinkManager {
 
         break;
     }
+  }
+
+  static void initQuickAction(
+      {required BuildContext context, required WidgetRef ref}) {
+    const QuickActions quickActions = QuickActions();
+    quickActions.initialize((shortcutType) async {
+      launcher(context, ref, shortcutType);
+    });
+    quickActions.setShortcutItems(<ShortcutItem>[
+      ShortcutItem(
+          type: 'alarm'.tr(), localizedTitle: 'a', icon: 'ic_launcher'),
+      ShortcutItem(
+          type: 'timer'.tr(), localizedTitle: 't', icon: 'ic_launcher'),
+      ShortcutItem(type: 'goal'.tr(), localizedTitle: 'g', icon: 'ic_launcher'),
+    ]);
   }
 }

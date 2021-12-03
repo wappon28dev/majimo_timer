@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flare_flutter/base/math/aabb.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class Setting extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final thememanager = ref.watch(themeManager);
-    final theme = ref.watch(themeManager).theme;
+    final theme = ref.read(themeManager).theme;
     final clockmanager = ref.watch(clockManager);
     final langmanager = ref.watch(langManager);
     return MaterialApp(
@@ -35,13 +36,10 @@ class Setting extends HookConsumerWidget {
           body: SingleChildScrollView(
               child: Column(children: [
             const SizedBox(height: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("　" + 'sec1'.tr(),
-                    style: TextStyle(color: MyTheme.getcolor("orange"))),
-              ],
-            ),
+            Text("　" + 'sec1'.tr(),
+                style: TextStyle(
+                  color: ColorKey.orange.value,
+                )),
             ListTile(
               title: Text('pref1'.tr()),
               subtitle: Text(langmanager.get(mode: 0)),
@@ -86,19 +84,15 @@ AppBar appbar(BuildContext context) {
         onPressed: () {
           Navigator.pop(context);
         }),
-    title: Text('prefer'.tr(),
+    title: AutoSizeText('prefer'.tr(),
         style: const TextStyle(
-          fontSize: 20,
           fontWeight: FontWeight.bold,
         )),
-    centerTitle: true,
-    backgroundColor: Colors.deepOrange,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(20),
-        bottomRight: Radius.circular(20),
+        bottomLeft: Radius.circular(10),
+        bottomRight: Radius.circular(10),
       ),
     ),
-    brightness: Brightness.dark,
   );
 }

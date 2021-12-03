@@ -2,6 +2,7 @@ library draggable_home;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_color/src/helper.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -215,6 +216,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                   );
                 },
               ),
+              
               collapsedHeight: appBarHeight,
               expandedHeight: streams[1] ? fullyExpandedHeight : expandedHeight,
               flexibleSpace: Stack(
@@ -222,9 +224,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                   FlexibleSpaceBar(
                     background: Container(
                         child: streams[1]
-                            ? (widget.expandedBody == null
-                                ? Container()
-                                : widget.expandedBody)
+                            ? (widget.expandedBody ?? Container())
                             : widget.headerWidget),
                   ),
                   Positioned(

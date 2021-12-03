@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:majimo_timer/model/theme.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen>
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          color: Colors.blueAccent,
+          color: ColorKey.orange.value,
           child: Lottie.asset(
             'assets/splash/splash.json',
             controller: _controller,

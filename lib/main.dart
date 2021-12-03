@@ -22,6 +22,7 @@ import 'view/home/root/body.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 //global
 final themeManager = ChangeNotifierProvider((ref) => ThemeManager());
@@ -79,7 +80,7 @@ class MyApp extends HookConsumerWidget {
           title: 'Flutter Demo',
           routes: <String, WidgetBuilder>{
             '/': (context) => const SplashScreen(),
-            '/home': (context) => HomePage(),
+            '/home': (context) => const HomePage(),
             '/setting': (context) => const Setting(),
             '/debug': (context) => const Debug(),
           },

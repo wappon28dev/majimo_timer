@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/app_link.dart';
 import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/model/pref.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
+import 'package:quick_actions/quick_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '/model/theme.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
@@ -23,9 +25,20 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   final colormanager = ref.watch(colorManager);
   final alarmmanager = ref.watch(alarmManager);
   final width = MediaQuery.of(context).size.width;
+  useEffect(() {
+    LinkManager.initQuickAction(context: context, ref: ref);
+    LinkManager.initDeepLinks(ref, context);
+    // AwesomeNotifications().actionStream.listen((receivedNotification) {
+    //   if (receivedNotification.channelKey == "basic_channel") {
+    //     Logger.e("received!");
+    //     Navigator.of(context).pushNamed(
+    //       '/setting',
+    //     );
+    //   }
+    // });
+  });
 
   Container headerWidget(BuildContext context) => Container(
-        color: MyTheme.getcolor("orange"),
         child: Container(
           child: DigitalClock(
             digitAnimationStyle: Curves.easeOutExpo,
@@ -54,14 +67,14 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         ),
       );
 
-  Widget button({required String tag, required String color}) {
+  Widget button({required String tag, required Color color}) {
     return GestureDetector(
         onTap: () {
           switch (tag) {
             case ("alarm"):
               context.pushTransparentRoute(const AlarmPage());
-              ref.watch(alarmManager).internal();
-              ref.watch(alarmManager).show();
+              alarmmanager.internal();
+              alarmmanager.show();
 
               break;
             case ("timer"):
@@ -81,8 +94,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               child: Container(
                 margin: const EdgeInsets.all(2.0),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    color: MyTheme.getcolor(color)),
+                    borderRadius: BorderRadius.circular(20.0), color: color),
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -107,23 +119,16 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
           // 中央寄せ
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            button(tag: "alarm", color: "blue"),
-            button(tag: "timer", color: "red"),
-            button(tag: "goal", color: "green"),
+            button(tag: "alarm", color: ColorKey.blue.value),
+            button(tag: "timer", color: ColorKey.red.value),
+            button(tag: "goal", color: ColorKey.green.value),
           ],
         ),
         TextButton(
             onPressed: () async {
               NotificationManager.test();
             },
-            child: const Text("a")),
-        TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed("/debug");
-              Logger.e("- from majimo_timer/lib/view/home/root/widget.dart \n" +
-                  " > debug page opened");
-            },
-            child: const Text("show console")),
+            child: const Text("NotificationManager.test()")),
         const SizedBox(height: 20),
       ],
     );
@@ -188,6 +193,15 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     actions: [
       IconButton(
         onPressed: () {
+          Navigator.of(context).pushNamed("/debug");
+          Logger.e("- from majimo_timer/lib/view/home/root/widget.dart \n" +
+              " > debug page opened");
+        },
+        icon: const Icon(Icons.developer_mode),
+        color: Colors.white,
+      ),
+      IconButton(
+        onPressed: () {
           Navigator.of(context).pushNamed("/setting");
         },
         icon: const Icon(Icons.settings),
@@ -200,6 +214,15 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("/debug");
+            Logger.e("- from majimo_timer/lib/view/home/root/widget.dart \n" +
+                " > debug page opened");
+          },
+          icon: const Icon(Icons.developer_mode),
+          color: Colors.white,
+        ),
         IconButton(
           onPressed: () {
             Navigator.of(context).pushNamed("/setting");

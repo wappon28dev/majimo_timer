@@ -161,7 +161,7 @@ class ClockManager extends ChangeNotifier {
 
 class ColorManager extends ChangeNotifier {
   EzAnimation _color = EzAnimation.tween(
-    ColorTween(begin: MyTheme.getcolor("orange"), end: null),
+    ColorTween(begin: MyTheme.getcolor(ColorKey.orange), end: null),
     const Duration(seconds: 1),
   );
   EzAnimation get color => _color;
@@ -171,14 +171,15 @@ class ColorManager extends ChangeNotifier {
     if (value) {
       _color = EzAnimation.tween(
         ColorTween(
-            begin: MyTheme.getcolor("orange"),
+            begin: MyTheme.getcolor(ColorKey.orange),
             end: Colors.orangeAccent.shade200),
         const Duration(seconds: 1),
       );
     } else {
       _color = EzAnimation.tween(
         ColorTween(
-            begin: MyTheme.getcolor("orange"), end: Colors.blue.shade900),
+            begin: MyTheme.getcolor(ColorKey.orange),
+            end: Colors.blue.shade900),
         const Duration(seconds: 1),
       );
     }
@@ -188,12 +189,6 @@ class ColorManager extends ChangeNotifier {
     _color.reset();
     opacity.reset();
     _color.start();
-    opacity.start();
-  }
-
-  test() async {
-    Logger.i("received!");
-    opacity.reset();
     opacity.start();
   }
 
@@ -220,6 +215,7 @@ class ColorManager extends ChangeNotifier {
   }
 
   stop() {
+    _color.reset(); // It may be ignore
     exit();
   }
 

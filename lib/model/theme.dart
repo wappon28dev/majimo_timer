@@ -6,61 +6,78 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/pref.dart';
 import 'package:majimo_timer/view/setting/body.dart';
 import '../../main.dart';
+import 'package:flutter_color/flutter_color.dart';
+
+enum ColorKey {
+  red,
+  blue,
+  green,
+  orange,
+  darkred,
+  darkblue,
+  darkgreen,
+  darkorange
+}
+
+extension TypeExtension on ColorKey {
+  static final colorKeys = {
+    ColorKey.red: const Color.fromRGBO(255, 101, 76, 1),
+    ColorKey.blue: const Color.fromRGBO(0, 163, 255, 1),
+    ColorKey.green: const Color.fromRGBO(95, 216, 49, 1),
+    ColorKey.orange: const Color.fromRGBO(255, 102, 0, 1),
+    ColorKey.darkred: const Color.fromRGBO(0, 32, 96, 1),
+  };
+  Color get value => colorKeys[this]!;
+}
 
 // テーマ変更用の状態クラス
 class MyTheme {
-  static ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    primarySwatch: Colors.deepOrange,
-    primaryColor: Colors.deepOrange,
-    accentColor: Colors.blue,
-    fontFamily: 'M-plus-M',
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {
-        // for Android - default page transition
-        TargetPlatform.android:
-            CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
-
-        // for iOS - one which considers ancestor BackGestureWidthTheme
-        TargetPlatform.iOS:
-            CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
-      },
-    ),
-  );
-
   static ThemeData lightTheme = ThemeData(
     primarySwatch: Colors.deepOrange,
     primaryColor: Colors.deepOrange,
-    accentColor: Colors.blue,
+    scaffoldBackgroundColor: Colors.deepOrange.shade50,
     fontFamily: 'M-plus-M',
     visualDensity: VisualDensity.adaptivePlatformDensity,
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
-        // for Android - default page transition
         TargetPlatform.android:
             CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
-
-        // for iOS - one which considers ancestor BackGestureWidthTheme
         TargetPlatform.iOS:
             CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
       },
     ),
   );
-
-  static getcolor(String colorname) {
-    switch (colorname) {
-      case ("blue"):
-        return const Color.fromRGBO(0, 163, 255, 1);
-      case ("red"):
-        return const Color.fromRGBO(255, 101, 76, 1);
-      case ("green"):
-        return const Color.fromRGBO(95, 216, 49, 1);
-      case ("orange"):
-        return const Color.fromRGBO(255, 102, 0, 1);
-      case ("darkblue"):
-        return const Color.fromRGBO(0, 32, 96, 1);
-    }
-  }
+  static ThemeData darkTheme = ThemeData(
+    brightness: Brightness.dark,
+    primarySwatch: Colors.deepOrange,
+    backgroundColor: Colors.deepOrange.darker(70),
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+      backgroundColor: Colors.deepOrange.shade800,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
+      brightness: Brightness.dark,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.deepOrange.shade800,
+      ),
+    ),
+    scaffoldBackgroundColor: Colors.deepOrange.shade50.darker(70),
+    fontFamily: 'M-plus-M',
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android:
+            CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
+        TargetPlatform.iOS:
+            CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
+      },
+    ),
+  );
 
   static isLight({required WidgetRef ref, required BuildContext context}) {
     bool isLightMode =
@@ -73,5 +90,9 @@ class MyTheme {
       ref.watch(colorManager).define(value: false);
       return false;
     }
+  }
+
+  static getcolor(ColorKey color) {
+    return color.value;
   }
 }
