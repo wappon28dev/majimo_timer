@@ -39,7 +39,7 @@ class PrefManager {
         TimeOfDay(hour: alarmHour, minute: alarmMinute).toString());
     ref.read(clockManager).is24change(value: is24);
     ref.read(themeManager).change(theme: theme);
-    ref.read(langManager).change(ref: ref, context: context, lang: lang);
+    ref.read(langManager).change(context: context, lang: lang);
     ref
         .read(alarmManager)
         .change(value: TimeOfDay(hour: alarmHour, minute: alarmMinute));

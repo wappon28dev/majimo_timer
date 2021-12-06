@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/pref.dart';
+import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/setting/body.dart';
 import '../../main.dart';
 import 'package:flutter_color/flutter_color.dart';
@@ -35,7 +36,7 @@ class MyTheme {
   static ThemeData lightTheme = ThemeData(
     primarySwatch: Colors.deepOrange,
     primaryColor: Colors.deepOrange,
-    scaffoldBackgroundColor: Colors.deepOrange.shade50,
+    scaffoldBackgroundColor: Colors.deepOrange.shade100.lighter(8),
     fontFamily: 'M-plus-M',
     visualDensity: VisualDensity.adaptivePlatformDensity,
     pageTransitionsTheme: const PageTransitionsTheme(
@@ -78,19 +79,6 @@ class MyTheme {
       },
     ),
   );
-
-  static isLight({required WidgetRef ref, required BuildContext context}) {
-    bool isLightMode =
-        MediaQuery.of(context).platformBrightness == Brightness.light;
-    int themenum = ref.watch(themeManager).get(mode: 2);
-    if (themenum == 1 && isLightMode) {
-      ref.watch(colorManager).define(value: true);
-      return true;
-    } else {
-      ref.watch(colorManager).define(value: false);
-      return false;
-    }
-  }
 
   static getcolor(ColorKey color) {
     return color.value;

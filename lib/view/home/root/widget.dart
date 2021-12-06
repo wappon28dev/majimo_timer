@@ -1,6 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dismissible_page/src/dismissible_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_color/src/helper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
@@ -67,15 +69,33 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         ),
       );
 
-  Widget button({required String tag, required Color color}) {
-    return GestureDetector(
-        onTap: () {
+  Widget button({required String tag}) {
+    Color value = Colors.black;
+    switch (tag) {
+      case ("alarm"):
+        value = ColorKey.blue.value;
+        break;
+      case ("timer"):
+        value = ColorKey.red.value;
+        break;
+      case ("goal"):
+        value = ColorKey.green.value;
+        break;
+    }
+
+    /// ```
+    ///  int mode 0 => define onTap()
+    ///           1 => return Color
+    ///           2 => return Icon
+    /// ```
+    func({required int mode}) {
+      switch (mode) {
+        case (0):
           switch (tag) {
             case ("alarm"):
               context.pushTransparentRoute(const AlarmPage());
               alarmmanager.internal();
               alarmmanager.show();
-
               break;
             case ("timer"):
               context.pushTransparentRoute(const TimerPage());
@@ -84,7 +104,22 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               context.pushTransparentRoute(const GoalPage());
               break;
           }
-        },
+          break;
+        case (1):
+          switch (tag) {
+            case ("alarm"):
+              return Icons.alarm;
+            case ("timer"):
+              return Icons.hourglass_top;
+            case ("goal"):
+              return Icons.flag;
+          }
+          break;
+      }
+    }
+
+    return GestureDetector(
+        onTap: () => func(mode: 0),
         child: Hero(
           tag: tag,
           child: Material(
@@ -94,12 +129,12 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               child: Container(
                 margin: const EdgeInsets.all(2.0),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0), color: color),
+                    borderRadius: BorderRadius.circular(20.0), color: value),
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.alarm, color: Colors.white),
+                      Icon(func(mode: 1), color: Colors.white),
                       Text(
                         tag.tr(),
                         style:
@@ -115,13 +150,15 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   Widget content(BuildContext context) {
     return Column(
       children: [
+        ref.watch(generalManager).status,
+        const SizedBox(height: 20),
         Row(
           // 中央寄せ
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            button(tag: "alarm", color: ColorKey.blue.value),
-            button(tag: "timer", color: ColorKey.red.value),
-            button(tag: "goal", color: ColorKey.green.value),
+            button(tag: "alarm"),
+            button(tag: "timer"),
+            button(tag: "goal"),
           ],
         ),
         TextButton(
@@ -129,7 +166,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               NotificationManager.test();
             },
             child: const Text("NotificationManager.test()")),
-        const SizedBox(height: 20),
       ],
     );
   }
@@ -156,8 +192,8 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   Widget expand(BuildContext context) {
     var color = colormanager.color;
     var opacity = colormanager.opacity;
-    var clockcolor = colormanager.get(ref, 0, context);
-    var value = colormanager.get(ref, 2, context);
+    var clockcolor = colormanager.get(mode: 0, context: context);
+    var value = colormanager.get(mode: 2, context: context);
 
     return AnimatedBuilder(
         animation: color,

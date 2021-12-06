@@ -78,10 +78,10 @@ class LinkManager {
     });
     quickActions.setShortcutItems(<ShortcutItem>[
       ShortcutItem(
-          type: 'alarm'.tr(), localizedTitle: 'a', icon: 'ic_launcher'),
+          type: 'a', localizedTitle: 'alarm'.tr(), icon: 'ic_launcher'),
       ShortcutItem(
-          type: 'timer'.tr(), localizedTitle: 't', icon: 'ic_launcher'),
-      ShortcutItem(type: 'goal'.tr(), localizedTitle: 'g', icon: 'ic_launcher'),
+          type: 't', localizedTitle: 'timer'.tr(), icon: 'ic_launcher'),
+      ShortcutItem(type: 'g', localizedTitle: 'goal'.tr(), icon: 'ic_launcher'),
     ]);
   }
 }

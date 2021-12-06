@@ -24,7 +24,7 @@ style(pref, value, int mode) {
 
 dia1(BuildContext context, WidgetRef ref) {
   void changelang({required int lang}) =>
-      ref.watch(langManager).change(ref: ref, context: context, lang: lang);
+      ref.watch(langManager).change(context: context, lang: lang);
   final int pref = ref.watch(langManager).value;
   return modal(
     context,

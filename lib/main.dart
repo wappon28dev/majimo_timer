@@ -25,11 +25,12 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:quick_actions/quick_actions.dart';
 
 //global
-final themeManager = ChangeNotifierProvider((ref) => ThemeManager());
-final clockManager = ChangeNotifierProvider((ref) => ClockManager());
+final generalManager = ChangeNotifierProvider((ref) => GeneralManager());
+final themeManager = ChangeNotifierProvider((ref) => ThemeManager(ref.read));
 final langManager = ChangeNotifierProvider((ref) => LangManager());
-final colorManager = ChangeNotifierProvider((ref) => ColorManager());
-final alarmManager = ChangeNotifierProvider((ref) => AlarmManager());
+final clockManager = ChangeNotifierProvider((ref) => ClockManager());
+final colorManager = ChangeNotifierProvider((ref) => ColorManager(ref.read));
+final alarmManager = ChangeNotifierProvider((ref) => AlarmManager(ref.read));
 const int helloAlarmID = 0;
 
 void callbackDispatcher() {

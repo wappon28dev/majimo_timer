@@ -157,6 +157,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
               if (!(isFullyCollapsed.value)) {
                 isFullyCollapsed.add(true);
                 ref.watch(colorManager).stop();
+                ref.watch(generalManager).home();
               }
             } else {
               if ((isFullyCollapsed.value)) isFullyCollapsed.add(false);
@@ -216,7 +217,6 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                   );
                 },
               ),
-              
               collapsedHeight: appBarHeight,
               expandedHeight: streams[1] ? fullyExpandedHeight : expandedHeight,
               flexibleSpace: Stack(
@@ -259,6 +259,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                   ? () async {
                       if (streams[1] == false) {
                         isFullyExpanded.add(true);
+                        ref.watch(generalManager).expand();
                         ref.watch(colorManager).change();
                         await FullScreen.enterFullScreen(
                             FullScreenMode.EMERSIVE_STICKY);

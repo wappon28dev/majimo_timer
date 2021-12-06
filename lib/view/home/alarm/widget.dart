@@ -3,6 +3,7 @@ import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/plugin/circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:majimo_timer/plugin/circular_reveal_animation/src/circular_reveal_animation.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
@@ -69,7 +70,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget content() {
-    TimeOfDay current = alarmmanager.get(0, ref);
+    TimeOfDay current = alarmmanager.get(mode: 0);
     Logger.i("- from majimo_timer/lib/view/home/alarm/widget.dart \n" +
         " >> current value => " +
         current.toString());
@@ -78,7 +79,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           const SizedBox(height: 50),
           GestureDetector(
-            child: Text(alarmmanager.get(1, ref),
+            child: Text(alarmmanager.get(mode: 1),
                 style: const TextStyle(
                     fontSize: 70, color: Colors.white, fontFamily: 'M-plus-B')),
             onTap: () async {
@@ -104,7 +105,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 Workmanager().registerOneOffTask("1", "task",
                     initialDelay: const Duration(seconds: 3));
               }),
-          ElevatedButton(child: const Text("cancel"), onPressed: () => null),
         ]),
       ),
       Stack(

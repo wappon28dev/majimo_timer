@@ -39,6 +39,8 @@ dependencies:
   awesome_notifications: ^0.6.17
   quick_actions: ^0.6.0+8
   flutter_color: ^2.0.0
+  circular_countdown_timer: ^0.2.0
+  animate_do: ^2.0.0
 
 dev_dependencies:
   flutter_test:

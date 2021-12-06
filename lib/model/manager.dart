@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:ezanimation/ezanimation.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -7,25 +10,57 @@ import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import '../../../main.dart';
 import 'pref.dart';
 import 'theme.dart';
+import 'package:animate_do/animate_do.dart';
+
+class GeneralManager extends ChangeNotifier {
+  Widget _status = const AutoSizeText("まじもタイマーへようこそ！",
+      style: TextStyle(fontWeight: FontWeight.bold));
+  Widget get status => _status;
+
+  home() {
+    _status = FadeIn(
+        child: AutoSizeText("まじもタイマーへようこそ！",
+            style: TextStyle(fontWeight: FontWeight.bold)));
+
+    notifyListeners();
+  }
+
+  expand() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      _status = FadeIn(
+          child: AutoSizeText("わお",
+              style: TextStyle(fontWeight: FontWeight.bold)));
+      await Future.delayed(const Duration(seconds: 1));
+      _status = FadeIn(
+          child: AutoSizeText("＼(^o^)／",
+              style: TextStyle(fontWeight: FontWeight.bold)));
+      notifyListeners();
+    });
+  }
+}
 
 class ThemeManager extends ChangeNotifier {
+  ThemeManager(this.read);
+  final Reader read;
+
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
   change({required int theme}) {
-    if (theme == 0) {
-      _theme = ThemeMode.system;
-      PrefManager.setInt(key: PrefKey.appTheme, value: 0);
-    }
-    if (theme == 1) {
-      _theme = ThemeMode.light;
-      PrefManager.setInt(key: PrefKey.appTheme, value: 1);
-    }
-    if (theme == 2) {
-      _theme = ThemeMode.dark;
-      PrefManager.setInt(key: PrefKey.appTheme, value: 2);
+    switch (theme) {
+      case 0:
+        _theme = ThemeMode.system;
+        PrefManager.setInt(key: PrefKey.appTheme, value: 0);
+        break;
+      case 1:
+        _theme = ThemeMode.light;
+        PrefManager.setInt(key: PrefKey.appTheme, value: 1);
+        break;
+      case 2:
+        _theme = ThemeMode.dark;
+        PrefManager.setInt(key: PrefKey.appTheme, value: 2);
+        break;
     }
     notifyListeners();
-
     Logger.s(
         "- from ThemeManager \n" + " >> save int theme = " + theme.toString());
   }
@@ -72,15 +107,24 @@ class ThemeManager extends ChangeNotifier {
         break;
     }
   }
+
+  isLight({required BuildContext context}) {
+    bool isLightMode =
+        MediaQuery.of(context).platformBrightness == Brightness.light;
+    if (isLightMode || _theme == ThemeMode.light) {
+      read(colorManager).define(value: true);
+      return true;
+    } else {
+      read(colorManager).define(value: false);
+      return false;
+    }
+  }
 }
 
 class LangManager extends ChangeNotifier {
   int _value = 0;
   int get value => _value;
-  change(
-      {required WidgetRef ref,
-      required BuildContext context,
-      required int lang}) {
+  change({required BuildContext context, required int lang}) {
     void locale(Locale locale) => context.setLocale(locale);
     Locale japanese = const Locale('ja', 'JP');
     Locale english = const Locale('en', 'US');
@@ -106,7 +150,7 @@ class LangManager extends ChangeNotifier {
 
   /// ```
   ///  int mode 0 => return Text
-  ///           1 => return String date
+  ///           1 => return String
   /// ```
   get({required int mode}) {
     switch (mode) {
@@ -160,6 +204,9 @@ class ClockManager extends ChangeNotifier {
 }
 
 class ColorManager extends ChangeNotifier {
+  ColorManager(this.read);
+  final Reader read;
+
   EzAnimation _color = EzAnimation.tween(
     ColorTween(begin: MyTheme.getcolor(ColorKey.orange), end: null),
     const Duration(seconds: 1),
@@ -197,20 +244,15 @@ class ColorManager extends ChangeNotifier {
   ///           1 => return Colors for end color
   ///           2 => return String for lottie
   /// ```
-  get(WidgetRef ref, int mode, BuildContext context) {
+  get({required int mode, required BuildContext context}) {
+    bool isLight = read(themeManager).isLight(context: context);
     switch (mode) {
       case (0):
-        return (MyTheme.isLight(ref: ref, context: context))
-            ? Colors.black
-            : Colors.white;
+        return isLight ? Colors.black : Colors.white;
       case (1):
-        return (MyTheme.isLight(ref: ref, context: context))
-            ? Colors.orangeAccent.shade200
-            : Colors.blue.shade900;
+        return isLight ? Colors.orangeAccent.shade200 : Colors.blue.shade900;
       case (2):
-        return (MyTheme.isLight(ref: ref, context: context))
-            ? 'assets/splash/sun.json'
-            : 'assets/splash/wolf.json';
+        return isLight ? 'assets/splash/sun.json' : 'assets/splash/wolf.json';
     }
   }
 
@@ -225,6 +267,9 @@ class ColorManager extends ChangeNotifier {
 }
 
 class AlarmManager extends ChangeNotifier {
+  AlarmManager(this.read);
+  final Reader read;
+
   int _alarmHour = 12;
   int _alarmMinute = 00;
   // ignore: non_constant_identifier_names
@@ -277,7 +322,7 @@ class AlarmManager extends ChangeNotifier {
   ///           1 => return Icon
   ///           2 => return bool is24
   /// ```
-  get(int mode, WidgetRef ref) {
+  get({required int mode}) {
     TimeOfDay value = TimeOfDay(hour: _alarmHour, minute: _alarmMinute);
     switch (mode) {
       case (0):
@@ -289,7 +334,7 @@ class AlarmManager extends ChangeNotifier {
       case (2):
         return value.replacing(hour: value.hourOfPeriod);
       case (3):
-        return ref.read(alarmManager).alarmHour < 12;
+        return read(alarmManager).alarmHour < 12;
     }
   }
 
@@ -302,7 +347,6 @@ class AlarmManager extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 300));
     _iconsize.start();
     _FABsize = 40;
-
     notifyListeners();
   }
 }
