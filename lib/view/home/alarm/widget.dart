@@ -7,6 +7,7 @@ import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/plugin/circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:majimo_timer/plugin/circular_reveal_animation/src/circular_reveal_animation.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/view/home/alarm/timekeeping/body.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:workmanager/workmanager.dart';
 import '../../../main.dart';
@@ -62,7 +63,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                       enableFeedback: true,
                       icon: const Icon(Icons.play_arrow),
                       onPressed: () {
-                        null;
+                        ref.read(generalManager).push(
+                            context: context,
+                            name: const AlarmTimeKeepingPage());
                       }),
                 ],
               ));

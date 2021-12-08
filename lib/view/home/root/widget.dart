@@ -26,6 +26,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   final clockmanager = ref.watch(clockManager);
   final colormanager = ref.watch(colorManager);
   final alarmmanager = ref.watch(alarmManager);
+  final generalmanager = ref.watch(generalManager);
   final width = MediaQuery.of(context).size.width;
   useEffect(() {
     LinkManager.initQuickAction(context: context, ref: ref);
@@ -150,7 +151,12 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   Widget content(BuildContext context) {
     return Column(
       children: [
-        ref.watch(generalManager).status,
+        Consumer(
+          builder: (BuildContext context, WidgetRef wref, Widget? child) {
+            return AutoSizeText(wref.watch(generalManager).status.toString(),
+                style: TextStyle(fontWeight: FontWeight.bold));
+          },
+        ),
         const SizedBox(height: 20),
         Row(
           // 中央寄せ
@@ -166,6 +172,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               NotificationManager.test();
             },
             child: const Text("NotificationManager.test()")),
+        TextButton(
+            onPressed: () async {
+              ToastManager.toast(context: context, id: 0);
+            },
+            child: const Text("ToastManager.test()")),
       ],
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/notification.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:fullscreen/fullscreen.dart';
@@ -261,6 +262,10 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                         isFullyExpanded.add(true);
                         ref.watch(generalManager).expand();
                         ref.watch(colorManager).change();
+
+                        WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          ToastManager.toast(context: context, id: 1);
+                        });
                         await FullScreen.enterFullScreen(
                             FullScreenMode.EMERSIVE_STICKY);
                       }

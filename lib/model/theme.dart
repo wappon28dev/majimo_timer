@@ -32,53 +32,58 @@ extension TypeExtension on ColorKey {
 }
 
 // テーマ変更用の状態クラス
-class MyTheme {
-  static ThemeData lightTheme = ThemeData(
-    primarySwatch: Colors.deepOrange,
-    primaryColor: Colors.deepOrange,
-    scaffoldBackgroundColor: Colors.deepOrange.shade100.lighter(8),
-    fontFamily: 'M-plus-M',
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {
-        TargetPlatform.android:
-            CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
-        TargetPlatform.iOS:
-            CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
-      },
-    ),
+class MyTheme extends ChangeNotifier {
+  MyTheme(this.read);
+  final Reader read;
+
+  static const back = PageTransitionsTheme(
+    builders: {
+      TargetPlatform.android:
+          CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
+      TargetPlatform.iOS:
+          CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
+    },
   );
-  static ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    primarySwatch: Colors.deepOrange,
-    backgroundColor: Colors.deepOrange.darker(70),
-    appBarTheme: AppBarTheme(
-      centerTitle: true,
-      backgroundColor: Colors.deepOrange.shade800,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
+  static const up =
+      PageTransitionsTheme(builders: <TargetPlatform, PageTransitionsBuilder>{
+    TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
+    TargetPlatform.iOS: OpenUpwardsPageTransitionsBuilder(),
+  });
+
+  final ThemeData _lightTheme = ThemeData(
+      primarySwatch: Colors.deepOrange,
+      primaryColor: Colors.deepOrange,
+      scaffoldBackgroundColor: Colors.deepOrange.shade100.lighter(12),
+      fontFamily: 'M-plus-M',
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      pageTransitionsTheme: back);
+
+  final ThemeData _darkTheme = ThemeData(
+      brightness: Brightness.dark,
+      primarySwatch: Colors.deepOrange,
+      backgroundColor: Colors.deepOrange.darker(70),
+      appBarTheme: AppBarTheme(
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange.shade800,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+        brightness: Brightness.dark,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.deepOrange.shade800,
         ),
       ),
-      brightness: Brightness.dark,
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        primary: Colors.deepOrange.shade800,
-      ),
-    ),
-    scaffoldBackgroundColor: Colors.deepOrange.shade50.darker(70),
-    fontFamily: 'M-plus-M',
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {
-        TargetPlatform.android:
-            CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
-        TargetPlatform.iOS:
-            CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
-      },
-    ),
-  );
+      scaffoldBackgroundColor: Colors.deepOrange.shade50.darker(70),
+      fontFamily: 'M-plus-M',
+      pageTransitionsTheme: back);
+
+  ThemeData get lightTheme => _lightTheme;
+  ThemeData get darkTheme => _darkTheme;
 
   static getcolor(ColorKey color) {
     return color.value;

@@ -27,19 +27,24 @@ class Setting extends HookConsumerWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: MyTheme.lightTheme,
-      darkTheme: MyTheme.darkTheme,
-      themeMode: theme,
+      theme: ref.read(myTheme).lightTheme,
+      darkTheme: ref.read(myTheme).darkTheme,
+      themeMode: ref.read(themeManager).theme,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: appbar(context),
           body: SingleChildScrollView(
               child: Column(children: [
             const SizedBox(height: 10),
-            Text("　" + 'sec1'.tr(),
-                style: TextStyle(
-                  color: ColorKey.orange.value,
-                )),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("　" + 'sec1'.tr(),
+                      style: TextStyle(
+                        color: ColorKey.orange.value,
+                      )),
+                ]),
             ListTile(
               title: Text('pref1'.tr()),
               subtitle: Text(langmanager.get(mode: 0)),

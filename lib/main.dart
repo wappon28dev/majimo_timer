@@ -25,6 +25,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:quick_actions/quick_actions.dart';
 
 //global
+final myTheme = ChangeNotifierProvider((ref) => MyTheme(ref.read));
 final generalManager = ChangeNotifierProvider((ref) => GeneralManager());
 final themeManager = ChangeNotifierProvider((ref) => ThemeManager(ref.read));
 final langManager = ChangeNotifierProvider((ref) => LangManager());
@@ -74,8 +75,8 @@ class MyApp extends HookConsumerWidget {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          theme: MyTheme.lightTheme,
-          darkTheme: MyTheme.darkTheme,
+          theme: ref.read(myTheme).lightTheme,
+          darkTheme: ref.read(myTheme).darkTheme,
           themeMode: ref.read(themeManager).theme,
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',

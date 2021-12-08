@@ -31,9 +31,9 @@ class HomePage extends HookConsumerWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        theme: MyTheme.lightTheme,
-        darkTheme: MyTheme.darkTheme,
-        themeMode: theme,
+        theme: ref.read(myTheme).lightTheme,
+        darkTheme: ref.watch(myTheme).darkTheme,
+        themeMode: ref.watch(themeManager).theme,
         debugShowCheckedModeBanner: false,
         home: !(isLandscape)
             ? buildVertical(context, ref)

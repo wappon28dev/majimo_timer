@@ -1,41 +1,56 @@
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:ezanimation/ezanimation.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import '../../../main.dart';
 import 'pref.dart';
 import 'theme.dart';
-import 'package:animate_do/animate_do.dart';
+import 'package:wakelock/wakelock.dart';
 
 class GeneralManager extends ChangeNotifier {
-  Widget _status = const AutoSizeText("まじもタイマーへようこそ！",
-      style: TextStyle(fontWeight: FontWeight.bold));
-  Widget get status => _status;
+  String _status = "まじもタイマーへようこそ！";
+  String get status => _status;
 
   home() {
-    _status = FadeIn(
-        child: AutoSizeText("まじもタイマーへようこそ！",
-            style: TextStyle(fontWeight: FontWeight.bold)));
-
+    Wakelock.disable();
+    Logger.i("wakelock => disable");
+    _status = "まじもタイマーへようこそ！";
     notifyListeners();
   }
 
   expand() {
+    Wakelock.enable();
+    Logger.i("wakelock => enable");
+
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      _status = FadeIn(
-          child: AutoSizeText("わお",
-              style: TextStyle(fontWeight: FontWeight.bold)));
-      await Future.delayed(const Duration(seconds: 1));
-      _status = FadeIn(
-          child: AutoSizeText("＼(^o^)／",
-              style: TextStyle(fontWeight: FontWeight.bold)));
-      notifyListeners();
+      DateTime now = DateTime.now();
+      _status = '${now.year}年${now.month}月${now.day}日  ・  Majimo-Timer v0.0.1';
+      Logger.i("through");
     });
+  }
+
+  push({required BuildContext context, required dynamic name}) {
+    return Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => name,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return const OpenUpwardsPageTransitionsBuilder().buildTransitions(
+                MaterialPageRoute(builder: (context) => name),
+                context,
+                animation,
+                secondaryAnimation,
+                child);
+          },
+        ),
+        (_) => false);
   }
 }
 
@@ -232,7 +247,7 @@ class ColorManager extends ChangeNotifier {
     }
   }
 
-  change() async {
+  change() {
     _color.reset();
     opacity.reset();
     _color.start();

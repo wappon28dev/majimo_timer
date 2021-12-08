@@ -40,7 +40,8 @@ dependencies:
   quick_actions: ^0.6.0+8
   flutter_color: ^2.0.0
   circular_countdown_timer: ^0.2.0
-  animate_do: ^2.0.0
+  wakelock: ^0.5.6
+  flutter_styled_toast: ^2.0.0
 
 dev_dependencies:
   flutter_test:
