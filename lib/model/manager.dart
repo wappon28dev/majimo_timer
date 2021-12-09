@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -5,6 +6,7 @@ import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:ezanimation/ezanimation.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_color/src/helper.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/notification.dart';
@@ -15,24 +17,48 @@ import 'theme.dart';
 import 'package:wakelock/wakelock.dart';
 
 class GeneralManager extends ChangeNotifier {
-  String _status = "まじもタイマーへようこそ！";
-  String get status => _status;
+  Widget _status = const Text("まじもタイマーへようこそ！",
+      style: TextStyle(fontWeight: FontWeight.bold));
+  bool _topToast = false;
+  Widget get status => _status;
+  bool get topToast => _topToast;
+
+  changetopToast({required bool value}) {
+    _topToast = value;
+    PrefManager.setBool(key: PrefKey.topToast, value: value);
+
+    notifyListeners();
+    Logger.s("- from GeneralManager \n" +
+        " >> save bool toptoast = " +
+        _topToast.toString());
+  }
+
+  gettopToast() {
+    List array = [];
+    (_topToast)
+        ? array = ['top'.tr(), Icons.keyboard_arrow_up]
+        : array = ['bottom'.tr(), Icons.keyboard_arrow_down];
+    return array;
+  }
 
   home() {
     Wakelock.disable();
     Logger.i("wakelock => disable");
-    _status = "まじもタイマーへようこそ！";
+    _status = const Text("まじもタイマーへようこそ！",
+        style: TextStyle(fontWeight: FontWeight.bold));
     notifyListeners();
   }
 
-  expand() {
+  expand() async {
     Wakelock.enable();
     Logger.i("wakelock => enable");
 
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       DateTime now = DateTime.now();
-      _status = '${now.year}年${now.month}月${now.day}日  ・  Majimo-Timer v0.0.1';
-      Logger.i("through");
+      _status = Text(
+          '${now.year}年${now.month}月${now.day}日  ・  Majimo-Timer v0.0.1',
+          style: const TextStyle(fontWeight: FontWeight.bold));
+      notifyListeners();
     });
   }
 
@@ -81,46 +107,22 @@ class ThemeManager extends ChangeNotifier {
   }
 
   /// ```
-  ///  int mode 0 => return String
-  ///           1 => return Icon
-  ///           2 => return int 0,1,2
+  /// return array = [String title, IconData icon, int number]
   /// ```
-  get({required int mode}) {
-    switch (mode) {
-      case (0):
-        if (_theme == ThemeMode.system) {
-          return 'system'.tr();
-        }
-        if (_theme == ThemeMode.light) {
-          return 'light'.tr();
-        }
-        if (_theme == ThemeMode.dark) {
-          return 'dark'.tr();
-        }
+  get() {
+    List array = []..length = 3;
+    switch (_theme) {
+      case (ThemeMode.system):
+        array = ['system'.tr(), Icons.settings_brightness, 0];
         break;
-      case (1):
-        if (_theme == ThemeMode.system) {
-          return const Icon(Icons.settings_brightness);
-        }
-        if (_theme == ThemeMode.light) {
-          return const Icon(Icons.brightness_7);
-        }
-        if (_theme == ThemeMode.dark) {
-          return const Icon(Icons.nights_stay);
-        }
+      case (ThemeMode.light):
+        array = ['light'.tr(), Icons.brightness_7, 1];
         break;
-      case (2):
-        if (_theme == ThemeMode.system) {
-          return 0;
-        }
-        if (_theme == ThemeMode.light) {
-          return 1;
-        }
-        if (_theme == ThemeMode.dark) {
-          return 2;
-        }
+      case (ThemeMode.dark):
+        array = ['dark'.tr(), Icons.nights_stay, 2];
         break;
     }
+    return array;
   }
 
   isLight({required BuildContext context}) {
@@ -167,23 +169,14 @@ class LangManager extends ChangeNotifier {
   ///  int mode 0 => return Text
   ///           1 => return String
   /// ```
-  get({required int mode}) {
-    switch (mode) {
-      case (0):
-        if (value == 0) {
-          return 'system'.tr();
-        }
-        if (value == 1) {
-          return "日本語/Japanese";
-        }
-        if (value == 2) {
-          return "英語/English";
-        }
-        break;
-      case (1):
-        return null;
-      case (2):
-        return null;
+  get() {
+    switch (value) {
+      case 0:
+        return 'system'.tr();
+      case 1:
+        return "日本語/Japanese";
+      case 2:
+        return "英語/English";
     }
   }
 }
@@ -200,21 +193,14 @@ class ClockManager extends ChangeNotifier {
   }
 
   /// ```
-  ///  int mode 0 => return String for clock style name
-  ///           1 => return Icon
-  ///           2 => return bool
+  /// return array = [String text, IconData icon];
   /// ```
-  is24get({required int mode}) {
-    switch (mode) {
-      case (0):
-        return (_is24) ? '24style'.tr() : '12style'.tr();
-      case (1):
-        return (_is24)
-            ? const Icon(Icons.share_arrival_time_outlined)
-            : const Icon(Icons.share_arrival_time);
-      case (2):
-        return (_is24) ? true : false;
-    }
+  is24get() {
+    List array = []..length = 2;
+    (_is24)
+        ? array = ['24style'.tr(), Icons.share_arrival_time_outlined]
+        : array = ['12style'.tr(), Icons.share_arrival_time];
+    return array;
   }
 }
 
@@ -223,7 +209,7 @@ class ColorManager extends ChangeNotifier {
   final Reader read;
 
   EzAnimation _color = EzAnimation.tween(
-    ColorTween(begin: MyTheme.getcolor(ColorKey.orange), end: null),
+    ColorTween(begin: null, end: null),
     const Duration(seconds: 1),
   );
   EzAnimation get color => _color;
@@ -232,22 +218,19 @@ class ColorManager extends ChangeNotifier {
   define({required bool value}) {
     if (value) {
       _color = EzAnimation.tween(
-        ColorTween(
-            begin: MyTheme.getcolor(ColorKey.orange),
-            end: Colors.orangeAccent.shade200),
+        ColorTween(begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
         const Duration(seconds: 1),
       );
     } else {
       _color = EzAnimation.tween(
         ColorTween(
-            begin: MyTheme.getcolor(ColorKey.orange),
-            end: Colors.blue.shade900),
+            begin: Colors.deepOrange.darker(70), end: Colors.blue.shade900),
         const Duration(seconds: 1),
       );
     }
   }
 
-  change() {
+  change() async {
     _color.reset();
     opacity.reset();
     _color.start();
@@ -255,20 +238,23 @@ class ColorManager extends ChangeNotifier {
   }
 
   /// ```
-  ///  int mode 0 => return Colors for clock
-  ///           1 => return Colors for end color
-  ///           2 => return String for lottie
+  /// return array = [Color clockcolor, Color start, Color end, String path]
   /// ```
-  get({required int mode, required BuildContext context}) {
+  get({required BuildContext context}) {
     bool isLight = read(themeManager).isLight(context: context);
-    switch (mode) {
-      case (0):
-        return isLight ? Colors.black : Colors.white;
-      case (1):
-        return isLight ? Colors.orangeAccent.shade200 : Colors.blue.shade900;
-      case (2):
-        return isLight ? 'assets/splash/sun.json' : 'assets/splash/wolf.json';
-    }
+    List array = []..length = 4;
+    (isLight)
+        ? array = [
+            Colors.black,
+            Colors.orangeAccent.shade200,
+            'assets/splash/sun.json'
+          ]
+        : array = [
+            Colors.white,
+            Colors.blue.shade900,
+            'assets/splash/wolf.json'
+          ];
+    return array;
   }
 
   stop() {
@@ -356,7 +342,6 @@ class AlarmManager extends ChangeNotifier {
   show() async {
     Logger.e("- from AlarmManager\n > showFAB called ! ");
     _iconsize.reset();
-
     _FABsize = 0;
     notifyListeners();
     await Future.delayed(const Duration(milliseconds: 300));

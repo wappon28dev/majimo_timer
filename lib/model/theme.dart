@@ -54,6 +54,18 @@ class MyTheme extends ChangeNotifier {
       primarySwatch: Colors.deepOrange,
       primaryColor: Colors.deepOrange,
       scaffoldBackgroundColor: Colors.deepOrange.shade100.lighter(12),
+      backgroundColor: Colors.deepOrange.shade100.lighter(12),
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+        brightness: Brightness.dark,
+      ),
       fontFamily: 'M-plus-M',
       visualDensity: VisualDensity.adaptivePlatformDensity,
       pageTransitionsTheme: back);

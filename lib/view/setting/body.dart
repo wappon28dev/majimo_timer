@@ -19,10 +19,11 @@ class Setting extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final thememanager = ref.watch(themeManager);
+    final thememanager = ref.read(themeManager);
     final theme = ref.read(themeManager).theme;
-    final clockmanager = ref.watch(clockManager);
-    final langmanager = ref.watch(langManager);
+    final clockmanager = ref.read(clockManager);
+    final langmanager = ref.read(langManager);
+    final generalmanager = ref.read(generalManager);
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -47,7 +48,7 @@ class Setting extends HookConsumerWidget {
                 ]),
             ListTile(
               title: Text('pref1'.tr()),
-              subtitle: Text(langmanager.get(mode: 0)),
+              subtitle: Text(langmanager.get()),
               leading: const Icon(Icons.language),
               onTap: () {
                 dia1(context, ref);
@@ -55,18 +56,26 @@ class Setting extends HookConsumerWidget {
             ),
             ListTile(
               title: Text('pref2'.tr()),
-              subtitle: Text(clockmanager.is24get(mode: 0)),
-              leading: clockmanager.is24get(mode: 1),
+              subtitle: Text(clockmanager.is24get()[0]),
+              leading: Icon(clockmanager.is24get()[1]),
               onTap: () {
                 dia2(context, ref);
               },
             ),
             ListTile(
               title: Text('pref3'.tr()),
-              subtitle: Text(thememanager.get(mode: 0)),
-              leading: thememanager.get(mode: 1),
+              subtitle: Text(thememanager.get()[0]),
+              leading: Icon(thememanager.get()[1]),
               onTap: () {
                 dia3(context, ref);
+              },
+            ),
+            ListTile(
+              title: Text('pref4'.tr()),
+              subtitle: Text(generalmanager.gettopToast()[0]),
+              leading: Icon(generalmanager.gettopToast()[1]),
+              onTap: () {
+                dia4(context, ref);
               },
             ),
             ElevatedButton(

@@ -22,7 +22,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     return Column(children: [
       DigitalClock(
         digitAnimationStyle: Curves.easeOutExpo,
-        is24HourTimeFormat: clockmanager.is24get(mode: 2),
+        is24HourTimeFormat: clockmanager.is24,
         areaDecoration: const BoxDecoration(
           color: Colors.transparent,
         ),

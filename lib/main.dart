@@ -32,6 +32,7 @@ final langManager = ChangeNotifierProvider((ref) => LangManager());
 final clockManager = ChangeNotifierProvider((ref) => ClockManager());
 final colorManager = ChangeNotifierProvider((ref) => ColorManager(ref.read));
 final alarmManager = ChangeNotifierProvider((ref) => AlarmManager(ref.read));
+
 const int helloAlarmID = 0;
 
 void callbackDispatcher() {

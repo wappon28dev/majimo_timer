@@ -9,6 +9,7 @@ timer,じかん,Timer
 goal,もくひょう,Goal
 record,きろく,Record
 prefer,まじもタイマーの設定,Preferences of Majimo-Timer
+system,システムに合わせる,Allow system mode
 sec1,時刻と表示,Clock and View
 pref1,言語の変更,Change language
 pref2,時計のスタイル,Clock style
@@ -18,4 +19,6 @@ restart,アプリの再起動が必要です,Require restarting this app
 pref3,アプリのテーマ,Theme of this app
 light,ライトモード,Light mode
 dark,ダークモード,Dark mode
-system,システムに合わせる,Allow system mode
+pref4,トースト通知の位置,Position of toast notification
+top,画面の上部に表示,Show top of screen
+bottom,画面の下部に表示,Show bottom of screen

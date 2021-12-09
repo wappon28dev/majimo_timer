@@ -23,10 +23,10 @@ import 'package:lottie/lottie.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
-  final clockmanager = ref.watch(clockManager);
-  final colormanager = ref.watch(colorManager);
-  final alarmmanager = ref.watch(alarmManager);
-  final generalmanager = ref.watch(generalManager);
+  final clockmanager = ref.read(clockManager);
+  final colormanager = ref.read(colorManager);
+  final alarmmanager = ref.read(alarmManager);
+  final generalmanager = ref.read(generalManager);
   final width = MediaQuery.of(context).size.width;
   useEffect(() {
     LinkManager.initQuickAction(context: context, ref: ref);
@@ -151,11 +151,8 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   Widget content(BuildContext context) {
     return Column(
       children: [
-        Consumer(
-          builder: (BuildContext context, WidgetRef wref, Widget? child) {
-            return AutoSizeText(wref.watch(generalManager).status.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold));
-          },
+        SizedBox(
+          child: ref.watch(generalManager).status,
         ),
         const SizedBox(height: 20),
         Row(
@@ -172,11 +169,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               NotificationManager.test();
             },
             child: const Text("NotificationManager.test()")),
-        TextButton(
-            onPressed: () async {
-              ToastManager.toast(context: context, id: 0);
-            },
-            child: const Text("ToastManager.test()")),
       ],
     );
   }
@@ -184,7 +176,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   Widget largeclock(BuildContext context, Color color) {
     return DigitalClock(
       digitAnimationStyle: Curves.easeOutExpo,
-      is24HourTimeFormat: clockmanager.is24get(mode: 2),
+      is24HourTimeFormat: clockmanager.is24,
       areaDecoration: const BoxDecoration(
         color: Colors.transparent,
       ),
@@ -201,13 +193,19 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget expand(BuildContext context) {
-    var color = colormanager.color;
+    var color = ref.watch(colorManager).color;
     var opacity = colormanager.opacity;
-    var clockcolor = colormanager.get(mode: 0, context: context);
-    var value = colormanager.get(mode: 2, context: context);
+    var clockcolor = colormanager.get(context: context)[0];
+    var path = colormanager.get(context: context)[2];
+    bool value = true;
+    color.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        value = false;
+      }
+    });
 
     return AnimatedBuilder(
-        animation: color,
+        animation: opacity,
         builder: (context, snapshot) {
           return Container(
               alignment: Alignment.center,
@@ -219,7 +217,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     AnimatedOpacity(
                         opacity: opacity.value,
                         duration: const Duration(seconds: 1),
-                        child: Lottie.asset(value)),
+                        child: Lottie.asset(path)),
                   ]),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,

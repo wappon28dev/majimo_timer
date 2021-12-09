@@ -229,7 +229,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                             : widget.headerWidget),
                   ),
                   Positioned(
-                    bottom: -1,
+                    bottom: -2,
                     left: 0,
                     right: 0,
                     child: roundedCorner(context),
@@ -264,7 +264,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                         ref.watch(colorManager).change();
 
                         WidgetsBinding.instance!.addPostFrameCallback((_) {
-                          ToastManager.toast(context: context, id: 1);
+                          ToastManager.toast(context: context, id: 1, ref: ref);
                         });
                         await FullScreen.enterFullScreen(
                             FullScreenMode.EMERSIVE_STICKY);

@@ -9,8 +9,7 @@ enum PrefKey {
   changeLanguage, //int 0 = system, 1 = Japanese, 2 = English
   clockStyle, //bool true = 24h, false = 12h
   appTheme, //int 0 = system, 1 = light, 2 = dark
-  alarmHour, //int alarm timeOfDay
-  alarmMinute, //int alarm timeOfDay
+  topToast //bool toptoast
 }
 
 // extension TypeExtension on ValueKey {
@@ -27,22 +26,19 @@ class PrefManager {
     final is24 = await PrefManager.getBool(key: PrefKey.clockStyle);
     final theme = await PrefManager.getInt(key: PrefKey.appTheme);
     final lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
-    final alarmHour = await PrefManager.getInt(key: PrefKey.alarmHour);
-    final alarmMinute = await PrefManager.getInt(key: PrefKey.alarmMinute);
+    final topToast = await PrefManager.getBool(key: PrefKey.topToast);
     Logger.r(" >> restore bool is24 = " +
         is24.toString() +
         "\n >> restore int theme = " +
         theme.toString() +
         "\n >> restore int lang = " +
-        theme.toString() +
-        "\n >> restore TimeOfDay value = " +
-        TimeOfDay(hour: alarmHour, minute: alarmMinute).toString());
+        lang.toString() +
+        "\n >> restore bool topToast = " +
+        topToast.toString());
     ref.read(clockManager).is24change(value: is24);
     ref.read(themeManager).change(theme: theme);
     ref.read(langManager).change(context: context, lang: lang);
-    ref
-        .read(alarmManager)
-        .change(value: TimeOfDay(hour: alarmHour, minute: alarmMinute));
+    ref.read(generalManager).changetopToast(value: topToast);
   }
 
   static Future<bool> getBool({required PrefKey key}) async {
