@@ -193,19 +193,13 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget expand(BuildContext context) {
-    var color = ref.watch(colorManager).color;
+    var color = colormanager.color;
     var opacity = colormanager.opacity;
     var clockcolor = colormanager.get(context: context)[0];
     var path = colormanager.get(context: context)[2];
-    bool value = true;
-    color.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        value = false;
-      }
-    });
 
     return AnimatedBuilder(
-        animation: opacity,
+        animation: color,
         builder: (context, snapshot) {
           return Container(
               alignment: Alignment.center,

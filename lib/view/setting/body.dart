@@ -19,11 +19,11 @@ class Setting extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final thememanager = ref.read(themeManager);
-    final theme = ref.read(themeManager).theme;
-    final clockmanager = ref.read(clockManager);
-    final langmanager = ref.read(langManager);
-    final generalmanager = ref.read(generalManager);
+    final thememanager = ref.watch(themeManager);
+    final theme = ref.watch(themeManager).theme;
+    final clockmanager = ref.watch(clockManager);
+    final langmanager = ref.watch(langManager);
+    final generalmanager = ref.watch(generalManager);
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -56,8 +56,8 @@ class Setting extends HookConsumerWidget {
             ),
             ListTile(
               title: Text('pref2'.tr()),
-              subtitle: Text(clockmanager.is24get()[0]),
-              leading: Icon(clockmanager.is24get()[1]),
+              subtitle: Text(clockmanager.get_is24()[0]),
+              leading: Icon(clockmanager.get_is24()[1]),
               onTap: () {
                 dia2(context, ref);
               },
@@ -70,12 +70,29 @@ class Setting extends HookConsumerWidget {
                 dia3(context, ref);
               },
             ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("　" + 'sec2'.tr(),
+                      style: TextStyle(
+                        color: ColorKey.orange.value,
+                      )),
+                ]),
             ListTile(
               title: Text('pref4'.tr()),
-              subtitle: Text(generalmanager.gettopToast()[0]),
-              leading: Icon(generalmanager.gettopToast()[1]),
+              subtitle: Text(generalmanager.get_topToast()[0]),
+              leading: Icon(generalmanager.get_topToast()[1]),
               onTap: () {
                 dia4(context, ref);
+              },
+            ),
+            ListTile(
+              title: Text('pref5'.tr()),
+              subtitle: Text(generalmanager.get_toastDuration()),
+              leading: const Icon(Icons.timelapse),
+              onTap: () {
+                dia5(context, ref);
               },
             ),
             ElevatedButton(

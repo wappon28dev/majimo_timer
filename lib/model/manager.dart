@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:ffi';
 import 'dart:io';
 
@@ -20,25 +22,42 @@ class GeneralManager extends ChangeNotifier {
   Widget _status = const Text("まじもタイマーへようこそ！",
       style: TextStyle(fontWeight: FontWeight.bold));
   bool _topToast = false;
+  int _toastDuration = 3;
+
   Widget get status => _status;
   bool get topToast => _topToast;
+  int get toastDuration => _toastDuration;
 
-  changetopToast({required bool value}) {
+  change_topToast({required bool value}) {
     _topToast = value;
     PrefManager.setBool(key: PrefKey.topToast, value: value);
-
     notifyListeners();
     Logger.s("- from GeneralManager \n" +
         " >> save bool toptoast = " +
         _topToast.toString());
   }
 
-  gettopToast() {
+  change_toastDuration({required int value}) {
+    if (value == 0) value = 4;
+    _toastDuration = value;
+    PrefManager.setInt(key: PrefKey.toastDuration, value: value);
+    Logger.s("- from GeneralManager \n" +
+        " >> save int toastDuration = " +
+        _toastDuration.toString());
+
+    notifyListeners();
+  }
+
+  get_topToast() {
     List array = [];
     (_topToast)
         ? array = ['top'.tr(), Icons.keyboard_arrow_up]
         : array = ['bottom'.tr(), Icons.keyboard_arrow_down];
     return array;
+  }
+
+  get_toastDuration() {
+    return 'duration'.plural(_toastDuration);
   }
 
   home() {
@@ -52,14 +71,13 @@ class GeneralManager extends ChangeNotifier {
   expand() async {
     Wakelock.enable();
     Logger.i("wakelock => enable");
-
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      DateTime now = DateTime.now();
-      _status = Text(
-          '${now.year}年${now.month}月${now.day}日  ・  Majimo-Timer v0.0.1',
-          style: const TextStyle(fontWeight: FontWeight.bold));
-      notifyListeners();
-    });
+    DateTime now = DateTime.now();
+    _status = Text("あいすくりーむ");
+    await Future.delayed(const Duration(seconds: 5));
+    _status = Text(
+        '${now.year}年${now.month}月${now.day}日  ・  Majimo-Timer v0.0.1',
+        style: const TextStyle(fontWeight: FontWeight.bold));
+    notifyListeners();
   }
 
   push({required BuildContext context, required dynamic name}) {
@@ -129,10 +147,8 @@ class ThemeManager extends ChangeNotifier {
     bool isLightMode =
         MediaQuery.of(context).platformBrightness == Brightness.light;
     if (isLightMode || _theme == ThemeMode.light) {
-      read(colorManager).define(value: true);
       return true;
     } else {
-      read(colorManager).define(value: false);
       return false;
     }
   }
@@ -145,21 +161,19 @@ class LangManager extends ChangeNotifier {
     void locale(Locale locale) => context.setLocale(locale);
     Locale japanese = const Locale('ja', 'JP');
     Locale english = const Locale('en', 'US');
-    if (lang == 0) {
-      _value = 0;
-      context.resetLocale();
-      PrefManager.setInt(key: PrefKey.changeLanguage, value: 0);
+    _value = lang;
+    switch (lang) {
+      case 0:
+        context.resetLocale();
+        break;
+      case 1:
+        locale(japanese);
+        break;
+      case 2:
+        locale(english);
+        break;
     }
-    if (lang == 1) {
-      _value = 1;
-      locale(japanese);
-      PrefManager.setInt(key: PrefKey.changeLanguage, value: 1);
-    }
-    if (lang == 2) {
-      _value = 2;
-      locale(english);
-      PrefManager.setInt(key: PrefKey.changeLanguage, value: 2);
-    }
+    PrefManager.setInt(key: PrefKey.changeLanguage, value: lang);
     notifyListeners();
     Logger.s(
         "- from LangManager \n" + " >> save int lang = " + lang.toString());
@@ -184,7 +198,7 @@ class LangManager extends ChangeNotifier {
 class ClockManager extends ChangeNotifier {
   bool _is24 = true;
   bool get is24 => _is24;
-  is24change({required bool value}) {
+  change_is24({required bool value}) {
     _is24 = value;
     PrefManager.setBool(key: PrefKey.clockStyle, value: value);
     notifyListeners();
@@ -195,7 +209,7 @@ class ClockManager extends ChangeNotifier {
   /// ```
   /// return array = [String text, IconData icon];
   /// ```
-  is24get() {
+  get_is24() {
     List array = []..length = 2;
     (_is24)
         ? array = ['24style'.tr(), Icons.share_arrival_time_outlined]
@@ -207,34 +221,39 @@ class ClockManager extends ChangeNotifier {
 class ColorManager extends ChangeNotifier {
   ColorManager(this.read);
   final Reader read;
-
+  // ignore: prefer_final_fields
   EzAnimation _color = EzAnimation.tween(
     ColorTween(begin: null, end: null),
     const Duration(seconds: 1),
   );
+  final _opacity = EzAnimation(0.0, 1.0, const Duration(seconds: 1));
   EzAnimation get color => _color;
-  final opacity = EzAnimation(0.0, 1.0, const Duration(seconds: 1));
+  EzAnimation get opacity => _opacity;
 
-  define({required bool value}) {
-    if (value) {
-      _color = EzAnimation.tween(
-        ColorTween(begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
-        const Duration(seconds: 1),
-      );
-    } else {
-      _color = EzAnimation.tween(
-        ColorTween(
-            begin: Colors.deepOrange.darker(70), end: Colors.blue.shade900),
-        const Duration(seconds: 1),
-      );
-    }
-  }
-
-  change() async {
-    _color.reset();
-    opacity.reset();
-    _color.start();
-    opacity.start();
+  change({required bool isLight}) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      if (isLight) {
+        _color = EzAnimation.tween(
+          ColorTween(
+              begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
+          const Duration(seconds: 1),
+        );
+      } else {
+        _color = EzAnimation.tween(
+          ColorTween(
+              begin: Colors.deepOrange.shade800, end: Colors.blue.shade900),
+          const Duration(seconds: 1),
+        );
+      }
+      WidgetsBinding.instance!.addPostFrameCallback((_) async {
+        _color.reset();
+        _opacity.reset();
+        _color.start();
+        _opacity.start();
+      });
+      Logger.e("EZAnimation _color => " + _color.value.toString());
+      notifyListeners();
+    });
   }
 
   /// ```

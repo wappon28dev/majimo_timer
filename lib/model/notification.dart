@@ -52,12 +52,14 @@ class NotificationManager {
 }
 
 class ToastManager {
-  static void toast(
-      {required BuildContext context,
-      required int id,
-      required WidgetRef ref}) {
+  static void toast({
+    required BuildContext context,
+    required WidgetRef ref,
+    required int id,
+  }) {
     List _array = [];
     bool _topToast = ref.read(generalManager).topToast;
+    int _duration = ref.read(generalManager).toastDuration;
     switch (id) {
       case 0:
         _array = [Colors.green[600]!, Icons.check, "テスト通知"];
@@ -114,7 +116,7 @@ class ToastManager {
           ? const a.StyledToastPosition(align: Alignment.topCenter)
           : const a.StyledToastPosition(align: Alignment.bottomCenter),
       animDuration: const Duration(seconds: 1),
-      duration: const Duration(seconds: 4),
+      duration: Duration(seconds: _duration),
       curve: Curves.elasticOut,
       reverseCurve: Curves.easeOutCirc,
     );

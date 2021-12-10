@@ -9,7 +9,8 @@ enum PrefKey {
   changeLanguage, //int 0 = system, 1 = Japanese, 2 = English
   clockStyle, //bool true = 24h, false = 12h
   appTheme, //int 0 = system, 1 = light, 2 = dark
-  topToast //bool toptoast
+  topToast, //bool toptoast
+  toastDuration, //int Duration of toast notification
 }
 
 // extension TypeExtension on ValueKey {
@@ -23,22 +24,26 @@ enum PrefKey {
 
 class PrefManager {
   static void restore(WidgetRef ref, BuildContext context) async {
-    final is24 = await PrefManager.getBool(key: PrefKey.clockStyle);
-    final theme = await PrefManager.getInt(key: PrefKey.appTheme);
-    final lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
-    final topToast = await PrefManager.getBool(key: PrefKey.topToast);
+    final _is24 = await PrefManager.getBool(key: PrefKey.clockStyle);
+    final _theme = await PrefManager.getInt(key: PrefKey.appTheme);
+    final _lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
+    final _topToast = await PrefManager.getBool(key: PrefKey.topToast);
+    final _toastDuration = await PrefManager.getInt(key: PrefKey.toastDuration);
     Logger.r(" >> restore bool is24 = " +
-        is24.toString() +
+        _is24.toString() +
         "\n >> restore int theme = " +
-        theme.toString() +
+        _theme.toString() +
         "\n >> restore int lang = " +
-        lang.toString() +
+        _lang.toString() +
         "\n >> restore bool topToast = " +
-        topToast.toString());
-    ref.read(clockManager).is24change(value: is24);
-    ref.read(themeManager).change(theme: theme);
-    ref.read(langManager).change(context: context, lang: lang);
-    ref.read(generalManager).changetopToast(value: topToast);
+        _topToast.toString() +
+        "\n >> restore int toastDuration = " +
+        _toastDuration.toString());
+    ref.read(clockManager).change_is24(value: _is24);
+    ref.read(themeManager).change(theme: _theme);
+    ref.read(langManager).change(context: context, lang: _lang);
+    ref.read(generalManager).change_topToast(value: _topToast);
+    ref.read(generalManager).change_toastDuration(value: _toastDuration);
   }
 
   static Future<bool> getBool({required PrefKey key}) async {

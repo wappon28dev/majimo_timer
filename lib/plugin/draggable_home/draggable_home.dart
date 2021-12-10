@@ -261,7 +261,10 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                       if (streams[1] == false) {
                         isFullyExpanded.add(true);
                         ref.watch(generalManager).expand();
-                        ref.watch(colorManager).change();
+                        ref.watch(colorManager).change(
+                            isLight: ref
+                                .read(themeManager)
+                                .isLight(context: context));
 
                         WidgetsBinding.instance!.addPostFrameCallback((_) {
                           ToastManager.toast(context: context, id: 1, ref: ref);
