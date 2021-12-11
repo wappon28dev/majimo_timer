@@ -2,6 +2,7 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_color/src/helper.dart';
 import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,6 +10,61 @@ import 'package:majimo_timer/plugin/quds_ui_kit/quds_bottom_sheet_container.dart
 import '../../main.dart';
 import 'package:flag/flag.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+modal(BuildContext context, WidgetRef ref, String title, String subtitle,
+    List<Widget> widget) {
+  var radius = const BorderRadius.only(
+      topRight: Radius.circular(20), topLeft: Radius.circular(20));
+  bool value = ref.read(themeManager).isLight(context: context);
+  List<Widget> header = [
+    Theme(
+      data: ref.read(myTheme).get_theme(context: context),
+      child: Column(children: <Widget>[
+        const SizedBox(height: 10),
+        Icon(Icons.ac_unit),
+        const SizedBox(height: 8),
+        AutoSizeText(title,
+            style: TextStyle(color: value ? Colors.black : Colors.white),
+            minFontSize: 20,
+            maxLines: 1),
+        const SizedBox(height: 5),
+        AutoSizeText(subtitle,
+            style: TextStyle(color: value ? Colors.black : Colors.white),
+            maxLines: 1),
+        const SizedBox(height: 5),
+        const Divider(
+          thickness: 2.0,
+        ),
+      ]),
+    )
+  ];
+  List<Widget> bottom = [
+    const SizedBox(height: 10),
+  ];
+  return showBarModalBottomSheet(
+      context: context,
+      duration: const Duration(milliseconds: 300),
+      // shape: const RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.only(
+      //         topRight: Radius.circular(20), topLeft: Radius.circular(20))),
+      builder: (context) => SingleChildScrollView(
+          controller: ModalScrollController.of(context),
+          child: Theme(
+              data: ref.read(myTheme).get_theme(context: context),
+              child: Ink(
+                padding: const EdgeInsets.all(15),
+                color: value
+                    ? Colors.deepOrange.shade100.lighter(12)
+                    : Colors.deepOrange.shade50.darker(70),
+                child: Column(children: header + widget + bottom),
+              ))));
+  // return showQudsModalBottomSheet(
+  //     context,
+  //     (c) => Column(
+  //           children: titleWidget + widget + bottomspace,
+  //         ));
+}
 
 style(pref, value) {
   // int mode : 0 => return TextStyle,
@@ -32,6 +88,7 @@ dia1(BuildContext context, WidgetRef ref) {
   final int pref = ref.watch(langManager).value;
   return modal(
     context,
+    ref,
     'pref1'.tr(),
     'pref1_sub'.tr(),
     [
@@ -74,6 +131,7 @@ dia2(BuildContext context, WidgetRef ref) {
 
   return modal(
     context,
+    ref,
     'pref2'.tr(),
     'pref2_sub'.tr(),
     [
@@ -110,6 +168,7 @@ dia3(BuildContext context, WidgetRef ref) {
 
   return modal(
     context,
+    ref,
     'pref3'.tr(),
     'pref3_sub'.tr(),
     [
@@ -151,6 +210,7 @@ dia4(BuildContext context, WidgetRef ref) {
 
   return modal(
     context,
+    ref,
     'pref4'.tr(),
     'pref4_sub'.tr(),
     [
@@ -188,6 +248,7 @@ dia5(BuildContext context, WidgetRef ref) {
 
   return modal(
     context,
+    ref,
     'pref5'.tr(),
     'pref5_sub'.tr(),
     [
@@ -220,29 +281,4 @@ dia5(BuildContext context, WidgetRef ref) {
       ),
     ],
   );
-}
-
-modal(
-    BuildContext context, String title, String subtitle, List<Widget> widget) {
-  List<Widget> titleWidget = [
-    const SizedBox(height: 10),
-    Icon(Icons.ac_unit),
-    const SizedBox(height: 8),
-    AutoSizeText(title,
-        style: const TextStyle(fontWeight: FontWeight.w600), minFontSize: 20),
-    const SizedBox(height: 5),
-    AutoSizeText(subtitle, maxLines: 1),
-    const SizedBox(height: 5),
-    Divider(
-      thickness: 2.0,
-    ),
-  ];
-  List<Widget> bottomspace = [
-    const SizedBox(height: 10),
-  ];
-  return showQudsModalBottomSheet(
-      context,
-      (c) => Column(
-            children: titleWidget + widget + bottomspace,
-          ));
 }

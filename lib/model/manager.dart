@@ -101,9 +101,9 @@ class GeneralManager extends ChangeNotifier {
 class ThemeManager extends ChangeNotifier {
   ThemeManager(this.read);
   final Reader read;
-
   ThemeMode _theme = ThemeMode.system;
   ThemeMode get theme => _theme;
+
   change({required int theme}) {
     switch (theme) {
       case 0:
@@ -127,7 +127,7 @@ class ThemeManager extends ChangeNotifier {
   /// ```
   /// return array = [String title, IconData icon, int number]
   /// ```
-  get() {
+  get({BuildContext? context}) {
     List array = []..length = 3;
     switch (_theme) {
       case (ThemeMode.system):

@@ -1,7 +1,7 @@
 name: majimo_timer
 description: A new Flutter project.
 
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -9,51 +9,49 @@ environment:
   sdk: '>=2.14.0 <3.0.0'
 
 dependencies:
-  flutter:
-    sdk: flutter
-
+  app_links: ^2.2.0
+  auto_size_text: ^3.0.0
+  auto_size_text_pk: ^3.0.0-nullsafety
+  awesome_notifications: ^0.6.17
+  circular_countdown_timer: ^0.2.0
+  cupertino_back_gesture: ^0.1.0
   cupertino_icons: ^1.0.2
-  flare_flutter: ^3.0.2
-  flutter_native_splash: ^1.2.4
+  day_night_time_picker: ^1.0.3+1
+  dismissible_page: ^0.6.3
+  draggable_home: ^1.0.2
   easy_localization: ^3.0.0
   easy_localization_loader: ^1.0.0
-  flutter_hooks: ^0.18.0
-  hooks_riverpod: ^1.0.0
-  slide_digital_clock: ^1.0.2
-  draggable_home: ^1.0.2
-  settings_ui: ^1.0.0
-  cupertino_back_gesture: ^0.1.0
-  quds_ui_kit: ^0.0.7+5
-  flag: ^5.0.1
-  auto_size_text_pk: ^3.0.0-nullsafety
   ezanimation: ^0.6.0
-  fullscreen: ^1.0.3
-  dismissible_page: ^0.6.3
-  lottie: ^1.2.1  
-  day_night_time_picker: ^1.0.3+1
-  auto_size_text: ^3.0.0
-  workmanager: ^0.4.1
-  app_links: ^2.2.0
-  url_launcher: ^6.0.12
-  flutter_windowmanager: ^0.2.0
-  awesome_notifications: ^0.6.17
-  quick_actions: ^0.6.0+8
+  flag: ^5.0.1
+  flare_flutter: ^3.0.2
+  flutter:
+    sdk: flutter
   flutter_color: ^2.0.0
-  circular_countdown_timer: ^0.2.0
-  wakelock: ^0.5.6
+  flutter_hooks: ^0.18.0
+  flutter_native_splash: ^1.2.4
   flutter_styled_toast: ^2.0.0
+  flutter_windowmanager: ^0.2.0
+  fullscreen: ^1.0.3
+  hooks_riverpod: ^1.0.0
+  lottie: ^1.2.1
+  modal_bottom_sheet: ^2.0.0
+  quds_ui_kit: ^0.0.7+5
+  quick_actions: ^0.6.0+8
+  settings_ui: ^1.0.0
+  slide_digital_clock: ^1.0.2
+  url_launcher: ^6.0.12
+  wakelock: ^0.5.6
+  workmanager: ^0.4.1
 
 dev_dependencies:
+  flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
-
 
 flutter_native_splash:
   image: assets/splash/splash.png
   color: "FF6600"
   color_dark: "FF5521"
-
 
 flutter:
   uses-material-design: true
@@ -68,7 +66,7 @@ flutter:
         - asset: assets/fonts/MPLUS1p-Bold.ttf
           style: normal
           weight: 500
-          
+
     - family: M-plus-M
       fonts:
         - asset: assets/fonts/MPLUS1p-Medium.ttf

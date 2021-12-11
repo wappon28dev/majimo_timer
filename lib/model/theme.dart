@@ -97,7 +97,12 @@ class MyTheme extends ChangeNotifier {
   ThemeData get lightTheme => _lightTheme;
   ThemeData get darkTheme => _darkTheme;
 
-  static getcolor(ColorKey color) {
+  get_theme({required BuildContext context}) {
+    bool value = read(themeManager).isLight(context: context);
+    return (value) ? _lightTheme : _darkTheme;
+  }
+
+  static get_color(ColorKey color) {
     return color.value;
   }
 }
