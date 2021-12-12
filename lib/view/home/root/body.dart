@@ -7,8 +7,8 @@ import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/plugin/draggable_home/draggable_home.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/plugin/slide_digital_clock-1.0.2/slide_digital_clock.dart';
 import 'package:quick_actions/quick_actions.dart';
-import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -21,7 +21,6 @@ class HomePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLandscape = orientation == Orientation.landscape;
-    final theme = ref.watch(themeManager).theme;
 
     useEffect(() {
       FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);

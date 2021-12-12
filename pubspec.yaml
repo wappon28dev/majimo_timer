@@ -37,7 +37,6 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   quds_ui_kit: ^0.0.7+5
   quick_actions: ^0.6.0+8
-  settings_ui: ^1.0.0
   slide_digital_clock: ^1.0.2
   url_launcher: ^6.0.12
   wakelock: ^0.5.6

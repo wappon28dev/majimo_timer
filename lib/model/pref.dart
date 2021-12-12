@@ -11,8 +11,9 @@ enum PrefKey {
   appTheme, //int 0 = system, 1 = light, 2 = dark
   topToast, //bool toptoast
   toastDuration, //int Duration of toast notification
+  clockAnimation, //int Curve of Clock Animation
+  showSec, // bool show clock seconds
 }
-
 // extension TypeExtension on ValueKey {
 //   String? get valueKey => valueKeys[this];
 //   static final valueKeys = {
@@ -29,6 +30,10 @@ class PrefManager {
     final _lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
     final _topToast = await PrefManager.getBool(key: PrefKey.topToast);
     final _toastDuration = await PrefManager.getInt(key: PrefKey.toastDuration);
+    final _clockAnimation =
+        await PrefManager.getInt(key: PrefKey.clockAnimation);
+    final _showSec = await PrefManager.getBool(key: PrefKey.showSec);
+
     Logger.r(" >> restore bool is24 = " +
         _is24.toString() +
         "\n >> restore int theme = " +
@@ -38,12 +43,19 @@ class PrefManager {
         "\n >> restore bool topToast = " +
         _topToast.toString() +
         "\n >> restore int toastDuration = " +
-        _toastDuration.toString());
+        _toastDuration.toString() +
+        "\n >> restore int clockAnimation = " +
+        _clockAnimation.toString() +
+        "\n >> restore bool showSec = " +
+        _showSec.toString());
+
     ref.read(clockManager).change_is24(value: _is24);
     ref.read(themeManager).change(theme: _theme);
     ref.read(langManager).change(context: context, lang: _lang);
     ref.read(generalManager).change_topToast(value: _topToast);
     ref.read(generalManager).change_toastDuration(value: _toastDuration);
+    ref.read(clockManager).change_animation(value: _clockAnimation);
+    ref.read(clockManager).change_showSec(value: _showSec);
   }
 
   static Future<bool> getBool({required PrefKey key}) async {

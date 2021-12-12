@@ -8,8 +8,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/app_link.dart';
 import 'package:majimo_timer/model/notification.dart';
-import 'package:majimo_timer/model/pref.dart';
+import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/plugin/slide_digital_clock-1.0.2/slide_digital_clock.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
@@ -42,32 +43,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   });
 
   Container headerWidget(BuildContext context) => Container(
-        child: Container(
-          child: DigitalClock(
-            digitAnimationStyle: Curves.easeOutExpo,
-            is24HourTimeFormat: clockmanager.is24,
-            areaDecoration: const BoxDecoration(
-              color: Colors.transparent,
-            ),
-            hourMinuteDigitTextStyle: const TextStyle(
-                fontSize: 50, color: Colors.white, fontFamily: 'M-plus-B'),
-            hourMinuteDigitDecoration:
-                const BoxDecoration(color: Colors.transparent),
-            amPmDigitTextStyle: const TextStyle(
-                fontSize: 10,
-                height: 2,
-                color: Colors.white,
-                fontFamily: 'M-plus-B'),
-            secondDigitTextStyle: const TextStyle(
-                fontSize: 20,
-                height: 1.5,
-                color: Colors.white,
-                fontFamily: 'M-plus-B'),
-            secondDigitDecoration:
-                const BoxDecoration(color: Colors.transparent),
-            areaAligment: AlignmentDirectional.center,
-          ),
-        ),
+        child: Container(child: largeclock(context, ref, false)),
       );
 
   Widget button({required String tag}) {
@@ -173,29 +149,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     );
   }
 
-  Widget largeclock(BuildContext context, Color color) {
-    return DigitalClock(
-      digitAnimationStyle: Curves.easeOutExpo,
-      is24HourTimeFormat: clockmanager.is24,
-      areaDecoration: const BoxDecoration(
-        color: Colors.transparent,
-      ),
-      hourMinuteDigitTextStyle:
-          TextStyle(fontSize: 50, color: color, fontFamily: 'M-plus-B'),
-      hourMinuteDigitDecoration: const BoxDecoration(color: Colors.transparent),
-      amPmDigitTextStyle: TextStyle(
-          fontSize: 10, height: 2, color: color, fontFamily: 'M-plus-B'),
-      secondDigitTextStyle: TextStyle(
-          fontSize: 20, height: 1.5, color: color, fontFamily: 'M-plus-B'),
-      secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
-      areaAligment: AlignmentDirectional.center,
-    );
-  }
-
   Widget expand(BuildContext context) {
     var color = colormanager.color;
     var opacity = colormanager.opacity;
-    var clockcolor = colormanager.get(context: context)[0];
     var path = colormanager.get(context: context)[2];
 
     return AnimatedBuilder(
@@ -216,7 +172,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      largeclock(context, clockcolor),
+                      largeclock(context, ref, true),
                     ],
                   )
                 ],
@@ -226,7 +182,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
 
   return DraggableHome(
     title: Text(
-      'app_name'.tr(),
+      t.app_name.t,
       style: const TextStyle(fontWeight: FontWeight.bold),
     ),
     actions: [

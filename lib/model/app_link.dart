@@ -10,6 +10,7 @@ import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
 import 'package:majimo_timer/view/setting/body.dart';
 import 'package:quick_actions/quick_actions.dart';
+import 'package:majimo_timer/model/translations.dart';
 
 late AppLinks _appLinks;
 
@@ -77,11 +78,9 @@ class LinkManager {
       launcher(context, ref, shortcutType);
     });
     quickActions.setShortcutItems(<ShortcutItem>[
-      ShortcutItem(
-          type: 'a', localizedTitle: 'alarm'.tr(), icon: 'ic_launcher'),
-      ShortcutItem(
-          type: 't', localizedTitle: 'timer'.tr(), icon: 'ic_launcher'),
-      ShortcutItem(type: 'g', localizedTitle: 'goal'.tr(), icon: 'ic_launcher'),
+      ShortcutItem(type: 'g', localizedTitle: t.goal.t, icon: 'ic_launcher'),
+      ShortcutItem(type: 't', localizedTitle: t.timer.t, icon: 'ic_launcher'),
+      ShortcutItem(type: 'a', localizedTitle: t.alarm.t, icon: 'ic_launcher'),
     ]);
   }
 }

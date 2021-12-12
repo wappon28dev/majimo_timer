@@ -12,6 +12,7 @@ import 'package:flutter_color/src/helper.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/notification.dart';
+import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import '../../../main.dart';
 import 'pref.dart';
@@ -51,8 +52,8 @@ class GeneralManager extends ChangeNotifier {
   get_topToast() {
     List array = [];
     (_topToast)
-        ? array = ['top'.tr(), Icons.keyboard_arrow_up]
-        : array = ['bottom'.tr(), Icons.keyboard_arrow_down];
+        ? array = [t.top.t, Icons.keyboard_arrow_up]
+        : array = [t.bottom.t, Icons.keyboard_arrow_down];
     return array;
   }
 
@@ -127,17 +128,17 @@ class ThemeManager extends ChangeNotifier {
   /// ```
   /// return array = [String title, IconData icon, int number]
   /// ```
-  get({BuildContext? context}) {
+  get() {
     List array = []..length = 3;
     switch (_theme) {
       case (ThemeMode.system):
-        array = ['system'.tr(), Icons.settings_brightness, 0];
+        array = [t.system.t, Icons.settings_brightness, 0];
         break;
       case (ThemeMode.light):
-        array = ['light'.tr(), Icons.brightness_7, 1];
+        array = [t.light.t, Icons.brightness_7, 1];
         break;
       case (ThemeMode.dark):
-        array = ['dark'.tr(), Icons.nights_stay, 2];
+        array = [t.dark.t, Icons.nights_stay, 2];
         break;
     }
     return array;
@@ -146,11 +147,9 @@ class ThemeManager extends ChangeNotifier {
   isLight({required BuildContext context}) {
     bool isLightMode =
         MediaQuery.of(context).platformBrightness == Brightness.light;
-    if (isLightMode || _theme == ThemeMode.light) {
-      return true;
-    } else {
-      return false;
-    }
+    int pref = get()[2];
+
+    return (pref != 0) ? (pref == 1) : (isLightMode);
   }
 }
 
@@ -186,7 +185,7 @@ class LangManager extends ChangeNotifier {
   get() {
     switch (value) {
       case 0:
-        return 'system'.tr();
+        return t.system.t;
       case 1:
         return "日本語/Japanese";
       case 2:
@@ -197,7 +196,12 @@ class LangManager extends ChangeNotifier {
 
 class ClockManager extends ChangeNotifier {
   bool _is24 = true;
+  bool _showSec = true;
+  int _animation = 0;
   bool get is24 => _is24;
+  bool get showSec => _showSec;
+  int get animation => _animation;
+
   change_is24({required bool value}) {
     _is24 = value;
     PrefManager.setBool(key: PrefKey.clockStyle, value: value);
@@ -206,14 +210,58 @@ class ClockManager extends ChangeNotifier {
         "- from ClockManager \n" + " >> save bool is24 = " + value.toString());
   }
 
+  change_showSec({required bool value}) {
+    _showSec = value;
+    PrefManager.setBool(key: PrefKey.showSec, value: value);
+    notifyListeners();
+    Logger.s("- from ClockManager \n" +
+        " >> save bool showSec = " +
+        value.toString());
+  }
+
+  change_animation({required int value}) {
+    _animation = value;
+    PrefManager.setInt(key: PrefKey.clockAnimation, value: value);
+    notifyListeners();
+    Logger.s("- from ClockManager \n" +
+        " >> save int animation = " +
+        value.toString());
+  }
+
   /// ```
   /// return array = [String text, IconData icon];
   /// ```
   get_is24() {
     List array = []..length = 2;
     (_is24)
-        ? array = ['24style'.tr(), Icons.share_arrival_time_outlined]
-        : array = ['12style'.tr(), Icons.share_arrival_time];
+        ? array = [t.style24.t, Icons.share_arrival_time_outlined]
+        : array = [t.style12.t, Icons.share_arrival_time];
+    return array;
+  }
+
+  /// ```
+  /// return array = [String text, IconData icon];
+  /// ```
+  get_showSec() {
+    List array = []..length = 2;
+    (_showSec)
+        ? array = [t.show_sec.t, Icons.timer]
+        : array = [t.not_show_sec.t, Icons.timer_off];
+    return array;
+  }
+
+  /// ```
+  /// return array = [String text, IconData icon, Curve curve];
+  /// ```
+  get_animation() {
+    List array = []..length = 3;
+    switch (_animation) {
+      case 0:
+        array = [t.easeOutExpo.t, Icons.moving, Curves.easeOutExpo];
+        break;
+      case 1:
+        array = [t.elasticOut.t, Icons.bubble_chart, Curves.elasticOut];
+    }
     return array;
   }
 }
@@ -223,10 +271,9 @@ class ColorManager extends ChangeNotifier {
   final Reader read;
   // ignore: prefer_final_fields
   EzAnimation _color = EzAnimation.tween(
-    ColorTween(begin: null, end: null),
-    const Duration(seconds: 1),
-  );
-  final _opacity = EzAnimation(0.0, 1.0, const Duration(seconds: 1));
+      ColorTween(begin: null, end: null), const Duration(seconds: 1));
+  final _opacity = EzAnimation(0.0, 1.0, const Duration(milliseconds: 300),
+      curve: Curves.easeOutQuad);
   EzAnimation get color => _color;
   EzAnimation get opacity => _opacity;
 
@@ -234,20 +281,18 @@ class ColorManager extends ChangeNotifier {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       if (isLight) {
         _color = EzAnimation.tween(
-          ColorTween(
-              begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
-          const Duration(seconds: 1),
-        );
+            ColorTween(
+                begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
+            const Duration(seconds: 1),
+            curve: Curves.easeOutQuad);
       } else {
         _color = EzAnimation.tween(
-          ColorTween(
-              begin: Colors.deepOrange.shade800, end: Colors.blue.shade900),
-          const Duration(seconds: 1),
-        );
+            ColorTween(
+                begin: Colors.deepOrange.shade800, end: Colors.blue.shade900),
+            const Duration(seconds: 1),
+            curve: Curves.easeOutQuad);
       }
       WidgetsBinding.instance!.addPostFrameCallback((_) async {
-        _color.reset();
-        _opacity.reset();
         _color.start();
         _opacity.start();
       });
@@ -261,7 +306,7 @@ class ColorManager extends ChangeNotifier {
   /// ```
   get({required BuildContext context}) {
     bool isLight = read(themeManager).isLight(context: context);
-    List array = []..length = 4;
+    List array = []..length = 3;
     (isLight)
         ? array = [
             Colors.black,
@@ -278,6 +323,7 @@ class ColorManager extends ChangeNotifier {
 
   stop() {
     _color.reset(); // It may be ignore
+    _opacity.reset();
     exit();
   }
 

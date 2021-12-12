@@ -1,33 +1,61 @@
-string,ja_JP,en_US
+﻿string,ja_JP,en_US
 app_name,まじもタイマー,Majimo-Timer
+,,
+,,
+,,
 ok,はい,OK
 cancel,キャンセル,CANCEL
 greetings,まじもタイマーへようこそ！,Welcome to Majimo_timer!
-lang,ja_JP,en_US
 alarm,じこく,Alarm
 timer,じかん,Timer
 goal,もくひょう,Goal
 record,きろく,Record
+,,
+,,
+,,
 prefer,まじもタイマーの設定,Preferences of Majimo-Timer
 system,システムに合わせる,Allow system mode
-sec1,時刻と表示,Clock and View
-pref1,言語の変更,Change language
-pref1_sub,アプリ内で使う言語を変更します,It will change the language you want to use
-pref2,時計の時間表示,Clock style
-pref2_sub,アプリ内で使う時計の12/24時間表示を変更します,It will change the 12/24 h style clock you want to use
-12style,12時間表示,12h format
-24style,24時間表示,24h format
-restart,アプリの再起動が必要です,Require restarting this app
-pref3,アプリのテーマ,Theme of this app
-pref3_sub,アプリ全体のテーマを変更します,It will change the theme of this app
+,,
+,,
+app_appearance,アプリの外観,App appearance
+,,
+change_lang,言語の変更,Change language
+change_lang_sub,アプリ内で使う言語を変更します,It will change the language you want to use
+,,
+app_theme,アプリのテーマ,Theme of this app
+app_theme_sub,アプリ全体のテーマを変更します,It will change the theme of this app
 light,ライトモード,Light mode
 dark,ダークモード,Dark mode
-sec2,トースト通知,Toast notification
-pref4,トースト通知の位置,Position of toast notification
-pref4_sub,トースト通知を表示する位置を変更します,It will change the position of toast notification
+,,
+,,
+clock_appearance,時計の外観,Clock appearance
+,,
+clock_style,時計の時間表示,Clock style
+clock_style_sub,アプリ内で使う全ての時計の12/24時間表示を変更します,It will change the 12/24 h style clock you want to use
+style12,12時間表示,12h format
+style24,24時間表示,24h format
+restart,アプリの再起動が必要です,Require restarting this app
+,,
+clock_animation,時計のアニメーション,Clock animation
+clock_animation_sub,アプリ内で使う全ての時計のアニメーションを変更します,It will change the animation of clock
+easeOutExpo,なめらかなアニメーション,Smooth animation
+elasticOut,跳ねるようなアニメーション,Bound animation
+show_temp,一時的に秒を表示しています,Showing clock seconds temporarily
+,,
+clock_seconds,時計の秒表示,Showing clock seconds
+clock_seconds_sub,アプリ内で使う全ての時計の秒表示を変更します,It will change visibility of clock seconds
+show_sec,秒を表示する,Show seconds
+not_show_sec,秒を表示しない,Do not show seconds
+,,
+,,
+toast,トースト通知,Toast notification
+,,
+toast_position,トースト通知の位置,Position of toast notification
+toast_position_sub,トースト通知を表示する位置を変更します,It will change the position of toast notification
 top,画面の上部に表示,Show top of screen
 bottom,画面の下部に表示,Show bottom of screen
-pref5,トースト通知の長さ,Duration of toast notification
+,,
+toast_duration,トースト通知の長さ,Duration of toast notification
+toast_duration_sub,トースト通知を表示する長さを変更します,It will change the duration of showing toast notification
 duration,表示時間：{} 秒間,Showing duration : For {} s
 sec,{} 秒間,For {} seconds
-pref5_sub,トースト通知を表示する長さを変更します,It will change the duration of showing toast notification

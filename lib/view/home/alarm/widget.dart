@@ -8,39 +8,19 @@ import 'package:majimo_timer/plugin/circular_reveal_animation/circular_reveal_an
 import 'package:majimo_timer/plugin/circular_reveal_animation/src/circular_reveal_animation.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/home/alarm/timekeeping/body.dart';
+import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:workmanager/workmanager.dart';
 import '../../../main.dart';
 import 'body.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:majimo_timer/plugin/slide_digital_clock-1.0.2/slide_digital_clock.dart';
+import 'package:majimo_timer/model/translations.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final clockmanager = ref.watch(clockManager);
   final alarmmanager = ref.watch(alarmManager);
-  Widget smallclock() {
-    return Column(children: [
-      DigitalClock(
-        digitAnimationStyle: Curves.easeOutExpo,
-        is24HourTimeFormat: clockmanager.is24,
-        areaDecoration: const BoxDecoration(
-          color: Colors.transparent,
-        ),
-        hourMinuteDigitTextStyle: const TextStyle(
-          fontSize: 17,
-          height: 1,
-          color: Colors.white,
-        ),
-        secondDigitTextStyle: const TextStyle(
-          fontSize: 10,
-          color: Colors.white,
-        ),
-        hourMinuteDigitDecoration:
-            const BoxDecoration(color: Colors.transparent),
-        secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
-      )
-    ]);
-  }
 
   Widget fab() {
     double radius = alarmmanager.FABsize;
@@ -119,7 +99,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 const SizedBox(width: 5),
                 const Icon(Icons.alarm, color: Colors.white),
                 const SizedBox(width: 5),
-                Text('alarm'.tr(), style: const TextStyle(color: Colors.white)),
+                Text(t.alarm.t, style: const TextStyle(color: Colors.white)),
               ]),
           Positioned(
             right: -15,
@@ -127,7 +107,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  smallclock(),
+                  smallclock(context, ref, false),
                 ]),
           ),
         ],
