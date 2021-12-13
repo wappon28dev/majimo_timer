@@ -10,7 +10,7 @@ import 'package:majimo_timer/model/app_link.dart';
 import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/plugin/slide_digital_clock-1.0.2/slide_digital_clock.dart';
+import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
@@ -22,6 +22,7 @@ import '../../../plugin/draggable_home/draggable_home.dart';
 import 'body.dart';
 import 'package:lottie/lottie.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final clockmanager = ref.read(clockManager);
@@ -169,10 +170,20 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                         duration: const Duration(seconds: 1),
                         child: Lottie.asset(path)),
                   ]),
+                  AnimatedOpacity(
+                    opacity: opacity.value,
+                    duration: const Duration(seconds: 1),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: analogclock()),
+                    ),
+                  ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      largeclock(context, ref, true),
+                      largeclock(context, ref, true, true),
                     ],
                   )
                 ],

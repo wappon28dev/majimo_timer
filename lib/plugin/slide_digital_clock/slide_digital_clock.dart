@@ -2,15 +2,24 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart' as p;
-
 import '../../main.dart';
 import 'helpers/clock_model.dart';
 import 'helpers/spinner_text.dart';
 
-Widget largeclock(BuildContext context, WidgetRef ref, bool value) {
+Widget largeclock(BuildContext context, WidgetRef ref, bool value,
+    [bool? isExpand]) {
   final clockmanager = ref.read(clockManager);
   final colormanager = ref.read(colorManager);
+  bool isLight = ref.read(themeManager).isLight(context: context);
+
   var color = (value) ? colormanager.get(context: context)[0] : Colors.white;
+  var flame = (isExpand ?? false)
+      ? ((value)
+          ? (isLight)
+              ? Colors.white
+              : Colors.black
+          : Colors.white)
+      : Colors.transparent;
 
   return DigitalClock(
     digitAnimationStyle: clockmanager.get_animation()[2],
@@ -20,10 +29,11 @@ Widget largeclock(BuildContext context, WidgetRef ref, bool value) {
       color: Colors.transparent,
     ),
     hourMinuteDigitTextStyle: TextStyle(
-        fontSize: 50,
-        color: color,
-        wordSpacing: 5,
-        fontWeight: FontWeight.bold),
+      fontSize: 50,
+      color: color,
+      wordSpacing: 5,
+      fontWeight: FontWeight.bold,
+    ),
     hourMinuteDigitDecoration: const BoxDecoration(color: Colors.transparent),
     amPmDigitTextStyle: TextStyle(
         fontSize: 10, height: 2, color: color, fontWeight: FontWeight.bold),
@@ -31,6 +41,7 @@ Widget largeclock(BuildContext context, WidgetRef ref, bool value) {
         fontSize: 20, height: 1.5, color: color, fontWeight: FontWeight.bold),
     secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
     areaAligment: AlignmentDirectional.center,
+    flame: flame,
   );
 }
 
@@ -74,6 +85,7 @@ class DigitalClock extends StatefulWidget {
     this.hourMinuteDigitTextStyle,
     this.secondDigitTextStyle,
     this.amPmDigitTextStyle,
+    this.flame,
   });
 
   final bool? is24HourTimeFormat;
@@ -88,6 +100,7 @@ class DigitalClock extends StatefulWidget {
   final TextStyle? hourMinuteDigitTextStyle;
   final TextStyle? secondDigitTextStyle;
   final TextStyle? amPmDigitTextStyle;
+  final Color? flame;
 
   @override
   _DigitalClockState createState() => _DigitalClockState();
@@ -101,6 +114,7 @@ class _DigitalClockState extends State<DigitalClock> {
   @override
   void initState() {
     super.initState();
+
     _dateTime = DateTime.now();
     _clockModel = ClockModel();
     _clockModel.is24HourFormat = widget.is24HourTimeFormat ?? true;
@@ -147,12 +161,23 @@ class _DigitalClockState extends State<DigitalClock> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             _hour(),
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 2),
-                child: SpinnerText(
-                  text: ":",
-                  textStyle: widget.hourMinuteDigitTextStyle ?? null,
-                )),
+            Stack(children: [
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 2),
+                  child: SpinnerText(
+                      text: ":",
+                      textStyle: widget.hourMinuteDigitTextStyle?.copyWith(
+                          foreground: Paint()
+                            ..style = PaintingStyle.stroke
+                            ..strokeWidth = 5
+                            ..color = widget.flame ?? Colors.transparent))),
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 2),
+                  child: SpinnerText(
+                    text: ":",
+                    textStyle: widget.hourMinuteDigitTextStyle ?? null,
+                  )),
+            ]),
             _minute,
             const SizedBox(width: 10),
             Column(
@@ -174,26 +199,51 @@ class _DigitalClockState extends State<DigitalClock> {
             BoxDecoration(
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(5)),
-        child: SpinnerText(
-          text: _clockModel.is24HourTimeFormat
-              ? hTOhh_24hTrue(_clockModel.hour)
-              : hTOhh_24hFalse(_clockModel.hour)[0],
-          animationStyle: widget.digitAnimationStyle ?? null,
-          textStyle: widget.hourMinuteDigitTextStyle ?? null,
-        ),
+        child: Stack(children: [
+          SpinnerText(
+            text: _clockModel.is24HourTimeFormat
+                ? hTOhh_24hTrue(_clockModel.hour)
+                : hTOhh_24hFalse(_clockModel.hour)[0],
+            animationStyle: widget.digitAnimationStyle,
+            textStyle: widget.hourMinuteDigitTextStyle?.copyWith(
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 5
+                ..color = widget.flame ?? Colors.transparent,
+            ),
+          ),
+          SpinnerText(
+            text: _clockModel.is24HourTimeFormat
+                ? hTOhh_24hTrue(_clockModel.hour)
+                : hTOhh_24hFalse(_clockModel.hour)[0],
+            animationStyle: widget.digitAnimationStyle ?? null,
+            textStyle: widget.hourMinuteDigitTextStyle ?? null,
+          )
+        ]),
       );
 
   Widget get _minute => Container(
-        decoration: widget.hourMinuteDigitDecoration ??
-            BoxDecoration(
-                border: Border.all(color: Colors.white),
-                borderRadius: BorderRadius.circular(5)),
-        child: SpinnerText(
+      decoration: widget.hourMinuteDigitDecoration ??
+          BoxDecoration(
+              border: Border.all(color: Colors.white),
+              borderRadius: BorderRadius.circular(5)),
+      child: Stack(children: [
+        SpinnerText(
+          text: mTOmm(_clockModel.minute),
+          animationStyle: widget.digitAnimationStyle,
+          textStyle: widget.hourMinuteDigitTextStyle?.copyWith(
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 5
+              ..color = widget.flame ?? Colors.transparent,
+          ),
+        ),
+        SpinnerText(
           text: mTOmm(_clockModel.minute),
           animationStyle: widget.digitAnimationStyle ?? null,
           textStyle: widget.hourMinuteDigitTextStyle ?? null,
         ),
-      );
+      ]));
 
   Widget get _second => widget.showSecondsDigit != false
       ? Container(
@@ -201,25 +251,43 @@ class _DigitalClockState extends State<DigitalClock> {
               BoxDecoration(
                   border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(5)),
-          child: SpinnerText(
-            text: sTOss(_clockModel.second),
-            animationStyle: widget.digitAnimationStyle,
-            textStyle: widget.secondDigitTextStyle ??
-                TextStyle(
-                    fontSize: widget.hourMinuteDigitTextStyle != null
-                        ? widget.hourMinuteDigitTextStyle!.fontSize! / 2
-                        : 15,
-                    color: widget.hourMinuteDigitTextStyle != null
-                        ? widget.hourMinuteDigitTextStyle!.color!
-                        : Colors.white),
-          ),
-        )
-      : Text("");
+          child: Stack(children: [
+            SpinnerText(
+                text: sTOss(_clockModel.second),
+                animationStyle: widget.digitAnimationStyle,
+                textStyle: widget.secondDigitTextStyle!.copyWith(
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 5
+                    ..color = widget.flame ?? Colors.transparent,
+                )),
+            SpinnerText(
+              text: sTOss(_clockModel.second),
+              animationStyle: widget.digitAnimationStyle,
+              textStyle: widget.secondDigitTextStyle ??
+                  TextStyle(
+                      fontSize: widget.hourMinuteDigitTextStyle != null
+                          ? widget.hourMinuteDigitTextStyle!.fontSize! / 2
+                          : 15,
+                      color: widget.hourMinuteDigitTextStyle != null
+                          ? widget.hourMinuteDigitTextStyle!.color!
+                          : Colors.white),
+            ),
+          ]))
+      : const SizedBox();
 
   Widget get _amPm => _clockModel.is24HourTimeFormat
-      ? Text("")
+      ? const SizedBox()
       : Container(
-          child: Text(
+          child: Stack(children: [
+          Text(hTOhh_24hFalse(_clockModel.hour)[1],
+              style: widget.amPmDigitTextStyle!.copyWith(
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 3
+                  ..color = widget.flame ?? Colors.transparent,
+              )),
+          Text(
             hTOhh_24hFalse(_clockModel.hour)[1],
             style: widget.amPmDigitTextStyle ??
                 TextStyle(
@@ -230,5 +298,5 @@ class _DigitalClockState extends State<DigitalClock> {
                         ? widget.hourMinuteDigitTextStyle!.color!
                         : Colors.white),
           ),
-        );
+        ]));
 }

@@ -15,7 +15,7 @@ import '../../../main.dart';
 import 'body.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:majimo_timer/plugin/slide_digital_clock-1.0.2/slide_digital_clock.dart';
+import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/translations.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {

@@ -6,7 +6,7 @@ import 'package:flutter_color/src/helper.dart';
 import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/plugin/slide_digital_clock-1.0.2/slide_digital_clock.dart';
+import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
 import '../../main.dart';
 import 'package:flag/flag.dart';
 import 'package:easy_localization/easy_localization.dart';
