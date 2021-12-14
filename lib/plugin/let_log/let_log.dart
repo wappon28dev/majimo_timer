@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:majimo_timer/vm/viewmodel.dart';
 part 'log_widget.dart';
 
 enum _Type { info, event, save, restore }
@@ -53,7 +54,7 @@ class Logger extends HookConsumerWidget {
     return MaterialApp(
         theme: ref.read(myTheme).lightTheme,
         darkTheme: ref.read(myTheme).darkTheme,
-        themeMode: ref.read(themeManager).theme,
+        themeMode: ThemeManagerVM(ref.read).themeMode_value,
         debugShowCheckedModeBanner: false,
         home: Scaffold(appBar: appbar(context), body: const LogWidget()));
   }

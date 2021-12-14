@@ -9,6 +9,7 @@ import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/plugin/draggable_home/draggable_home.dart';
 import 'package:majimo_timer/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -33,7 +34,7 @@ class HomePage extends HookConsumerWidget {
         locale: context.locale,
         theme: ref.read(myTheme).lightTheme,
         darkTheme: ref.watch(myTheme).darkTheme,
-        themeMode: ref.watch(themeManager).theme,
+        themeMode: ThemeManagerVM(ref.read).themeMode_value,
         debugShowCheckedModeBanner: false,
         home: !(isLandscape)
             ? buildVertical(context, ref)

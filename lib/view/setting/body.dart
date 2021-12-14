@@ -1,16 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flare_flutter/base/math/aabb.dart';
-import 'package:flutter/foundation.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/model/pref.dart';
 import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/setting/widget.dart';
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:majimo_timer/vm/viewmodel.dart';
 import '../../main.dart';
 import '../../model/theme.dart';
 import '../setting/widget.dart';
@@ -23,7 +20,7 @@ class Setting extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("　" + title,
+          Text('　$title',
               style: TextStyle(
                 color: ColorKey.orange.value,
               )),
@@ -43,7 +40,7 @@ class Setting extends HookConsumerWidget {
       locale: context.locale,
       theme: ref.read(myTheme).lightTheme,
       darkTheme: ref.read(myTheme).darkTheme,
-      themeMode: ref.read(themeManager).theme,
+      themeMode: ThemeManagerVM(ref.read).themeMode_value,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: appbar(context: context, ref: ref),
@@ -53,7 +50,7 @@ class Setting extends HookConsumerWidget {
             section(t.app_appearance.t),
             ListTile(
               title: Text(t.change_lang.t),
-              subtitle: Text(langmanager.get()),
+              subtitle: Text(LangManagerVM().lang_caption),
               leading: const Icon(Icons.language),
               onTap: () {
                 change_lang(context, ref);
@@ -61,8 +58,8 @@ class Setting extends HookConsumerWidget {
             ),
             ListTile(
               title: Text(t.app_theme.t),
-              subtitle: Text(thememanager.get()[0]),
-              leading: Icon(thememanager.get()[1]),
+              subtitle: Text(ThemeManagerVM(ref.read).themeMode_caption),
+              leading: Icon(ThemeManagerVM(ref.read).themeMode_icon),
               onTap: () {
                 app_theme(context, ref);
               },
@@ -70,24 +67,24 @@ class Setting extends HookConsumerWidget {
             section(t.clock_appearance.t),
             ListTile(
               title: Text(t.clock_style.t),
-              subtitle: Text(clockmanager.get_is24()[0]),
-              leading: Icon(clockmanager.get_is24()[1]),
+              subtitle: Text(ClockManagerVM().is24_caption),
+              leading: Icon(ClockManagerVM().is24_icon),
               onTap: () {
                 clock_style(context, ref);
               },
             ),
             ListTile(
               title: Text(t.clock_seconds.t),
-              subtitle: Text(clockmanager.get_showSec()[0]),
-              leading: Icon(clockmanager.get_showSec()[1]),
+              subtitle: Text(ClockManagerVM().showSec_caption),
+              leading: Icon(ClockManagerVM().showSec_icon),
               onTap: () {
                 clock_showSec(context, ref);
               },
             ),
             ListTile(
               title: Text(t.clock_animation.t),
-              subtitle: Text(clockmanager.get_animation()[0]),
-              leading: Icon(clockmanager.get_animation()[1]),
+              subtitle: Text(ClockManagerVM().animation_caption),
+              leading: Icon(ClockManagerVM().animation_icon),
               onTap: () {
                 clock_animation(context, ref);
               },
@@ -95,15 +92,15 @@ class Setting extends HookConsumerWidget {
             section(t.toast.t),
             ListTile(
               title: Text(t.toast_position.t),
-              subtitle: Text(generalmanager.get_topToast()[0]),
-              leading: Icon(generalmanager.get_topToast()[1]),
+              subtitle: Text(GeneralManagerVM().topToast_caption),
+              leading: Icon(GeneralManagerVM().topToast_icon),
               onTap: () {
                 toast_position(context, ref);
               },
             ),
             ListTile(
               title: Text(t.toast_duration.t),
-              subtitle: Text(generalmanager.get_toastDuration()),
+              subtitle: Text(GeneralManagerVM().toastDuration_caption),
               leading: const Icon(Icons.timelapse),
               onTap: () {
                 toast_duration(context, ref);

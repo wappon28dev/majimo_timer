@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart' as p;
 import '../../main.dart';
 import 'helpers/clock_model.dart';
@@ -10,19 +11,21 @@ Widget largeclock(BuildContext context, WidgetRef ref, bool value,
     [bool? isExpand]) {
   final clockmanager = ref.read(clockManager);
   final colormanager = ref.read(colorManager);
-  bool isLight = ref.read(themeManager).isLight(context: context);
+  final isLight = ref.read(themeManager).isLight(context: context);
 
-  var color = (value) ? colormanager.get(context: context)[0] : Colors.white;
-  var flame = (isExpand ?? false)
-      ? ((value)
-          ? (isLight)
+  final color = value
+      ? ColorManagerVM(ref.read).color_clockcolor(context: context)
+      : Colors.white;
+  final flame = (isExpand ?? false)
+      ? (value
+          ? isLight
               ? Colors.white
               : Colors.black
           : Colors.white)
       : Colors.transparent;
 
   return DigitalClock(
-    digitAnimationStyle: clockmanager.get_animation()[2],
+    digitAnimationStyle: ClockManagerVM().animation_curve,
     showSecondsDigit: clockmanager.showSec,
     is24HourTimeFormat: clockmanager.is24,
     areaDecoration: const BoxDecoration(
@@ -48,10 +51,12 @@ Widget largeclock(BuildContext context, WidgetRef ref, bool value,
 Widget smallclock(BuildContext context, WidgetRef ref, bool value) {
   final clockmanager = ref.read(clockManager);
   final colormanager = ref.read(colorManager);
-  var color = (value) ? colormanager.get(context: context)[0] : Colors.white;
+  final color = value
+      ? ColorManagerVM(ref.read).color_clockcolor(context: context)
+      : Colors.white;
 
   return p.DigitalClock(
-    digitAnimationStyle: clockmanager.get_animation()[2],
+    digitAnimationStyle: ClockManagerVM().animation_curve,
     showSecondsDigit: clockmanager.showSec,
     is24HourTimeFormat: clockmanager.is24,
     areaDecoration: const BoxDecoration(
@@ -202,8 +207,8 @@ class _DigitalClockState extends State<DigitalClock> {
         child: Stack(children: [
           SpinnerText(
             text: _clockModel.is24HourTimeFormat
-                ? hTOhh_24hTrue(_clockModel.hour)
-                : hTOhh_24hFalse(_clockModel.hour)[0],
+                ? hTOhh_24hTrue(_clockModel.hour).toString()
+                : hTOhh_24hFalse(_clockModel.hour)[0].toString(),
             animationStyle: widget.digitAnimationStyle,
             textStyle: widget.hourMinuteDigitTextStyle?.copyWith(
               foreground: Paint()
@@ -214,8 +219,8 @@ class _DigitalClockState extends State<DigitalClock> {
           ),
           SpinnerText(
             text: _clockModel.is24HourTimeFormat
-                ? hTOhh_24hTrue(_clockModel.hour)
-                : hTOhh_24hFalse(_clockModel.hour)[0],
+                ? hTOhh_24hTrue(_clockModel.hour).toString()
+                : hTOhh_24hFalse(_clockModel.hour)[0].toString(),
             animationStyle: widget.digitAnimationStyle ?? null,
             textStyle: widget.hourMinuteDigitTextStyle ?? null,
           )
@@ -280,7 +285,7 @@ class _DigitalClockState extends State<DigitalClock> {
       ? const SizedBox()
       : Container(
           child: Stack(children: [
-          Text(hTOhh_24hFalse(_clockModel.hour)[1],
+          Text(hTOhh_24hFalse(_clockModel.hour)[1].toString(),
               style: widget.amPmDigitTextStyle!.copyWith(
                 foreground: Paint()
                   ..style = PaintingStyle.stroke
@@ -288,7 +293,7 @@ class _DigitalClockState extends State<DigitalClock> {
                   ..color = widget.flame ?? Colors.transparent,
               )),
           Text(
-            hTOhh_24hFalse(_clockModel.hour)[1],
+            hTOhh_24hFalse(_clockModel.hour)[1].toString(),
             style: widget.amPmDigitTextStyle ??
                 TextStyle(
                     fontSize: widget.hourMinuteDigitTextStyle != null

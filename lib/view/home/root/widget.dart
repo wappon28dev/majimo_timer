@@ -7,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/app_link.dart';
+import 'package:majimo_timer/model/manager.dart';
 import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
@@ -14,6 +15,7 @@ import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
+import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '/model/theme.dart';
@@ -50,13 +52,13 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   Widget button({required String tag}) {
     Color value = Colors.black;
     switch (tag) {
-      case ("alarm"):
+      case 'alarm':
         value = ColorKey.blue.value;
         break;
-      case ("timer"):
+      case 'timer':
         value = ColorKey.red.value;
         break;
-      case ("goal"):
+      case 'goal':
         value = ColorKey.green.value;
         break;
     }
@@ -68,28 +70,28 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     /// ```
     func({required int mode}) {
       switch (mode) {
-        case (0):
+        case 0:
           switch (tag) {
-            case ("alarm"):
+            case 'alarm':
               context.pushTransparentRoute(const AlarmPage());
               alarmmanager.internal();
               alarmmanager.show();
               break;
-            case ("timer"):
+            case 'timer':
               context.pushTransparentRoute(const TimerPage());
               break;
-            case ("goal"):
+            case 'goal':
               context.pushTransparentRoute(const GoalPage());
               break;
           }
           break;
-        case (1):
+        case 1:
           switch (tag) {
-            case ("alarm"):
+            case 'alarm':
               return Icons.alarm;
-            case ("timer"):
+            case 'timer':
               return Icons.hourglass_top;
-            case ("goal"):
+            case 'goal':
               return Icons.flag;
           }
           break;
@@ -136,42 +138,41 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
           // 中央寄せ
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            button(tag: "alarm"),
-            button(tag: "timer"),
-            button(tag: "goal"),
+            button(tag: 'alarm'),
+            button(tag: 'timer'),
+            button(tag: 'goal'),
           ],
         ),
         TextButton(
             onPressed: () async {
               NotificationManager.test();
             },
-            child: const Text("NotificationManager.test()")),
+            child: const Text('NotificationManager.test()')),
       ],
     );
   }
 
   Widget expand(BuildContext context) {
-    var color = colormanager.color;
-    var opacity = colormanager.opacity;
-    var path = colormanager.get(context: context)[2];
-
+    final color = colormanager.color;
+    final opacity = colormanager.opacity;
+    final path = ColorManagerVM(ref.read).color_picture_path(context: context);
     return AnimatedBuilder(
         animation: color,
         builder: (context, snapshot) {
           return Container(
               alignment: Alignment.center,
-              color: color.value,
+              color: color.value as Color,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
                   Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                     AnimatedOpacity(
-                        opacity: opacity.value,
+                        opacity: opacity.value as double,
                         duration: const Duration(seconds: 1),
                         child: Lottie.asset(path)),
                   ]),
                   AnimatedOpacity(
-                    opacity: opacity.value,
+                    opacity: opacity.value as double,
                     duration: const Duration(seconds: 1),
                     child: Align(
                       alignment: Alignment.center,
@@ -199,16 +200,16 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     actions: [
       IconButton(
         onPressed: () {
-          Navigator.of(context).pushNamed("/debug");
-          Logger.e("- from majimo_timer/lib/view/home/root/widget.dart \n" +
-              " > debug page opened");
+          Navigator.of(context).pushNamed('/debug');
+          Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n' +
+              ' > debug page opened');
         },
         icon: const Icon(Icons.developer_mode),
         color: Colors.white,
       ),
       IconButton(
         onPressed: () {
-          Navigator.of(context).pushNamed("/setting");
+          Navigator.of(context).pushNamed('/setting');
         },
         icon: const Icon(Icons.settings),
         color: Colors.white,
@@ -222,16 +223,16 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       children: [
         IconButton(
           onPressed: () {
-            Navigator.of(context).pushNamed("/debug");
-            Logger.e("- from majimo_timer/lib/view/home/root/widget.dart \n" +
-                " > debug page opened");
+            Navigator.of(context).pushNamed('/debug');
+            Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n' +
+                ' > debug page opened');
           },
           icon: const Icon(Icons.developer_mode),
           color: Colors.white,
         ),
         IconButton(
           onPressed: () {
-            Navigator.of(context).pushNamed("/setting");
+            Navigator.of(context).pushNamed('/setting');
           },
           icon: const Icon(Icons.settings),
           color: Colors.white,

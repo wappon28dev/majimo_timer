@@ -1,23 +1,25 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_color/src/helper.dart';
-import 'package:majimo_timer/model/notification.dart';
-import 'package:majimo_timer/model/theme.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
-import '../../main.dart';
 import 'package:flag/flag.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter/material.dart';
+// ignore: implementation_imports
+import 'package:flutter_color/src/helper.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/model/translations.dart';
+import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/vm/viewmodel.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-modal(BuildContext context, WidgetRef ref, IconData icon, String title,
+import '../../main.dart';
+
+Future modal(BuildContext context, WidgetRef ref, IconData icon, String title,
     String subtitle, List<Widget> widget) {
-  var padding = const EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
-  bool value = ref.read(themeManager).isLight(context: context);
-  List<Widget> header = [
+  final padding =
+      const EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
+  final value = ref.read(themeManager).isLight(context: context);
+  final header = <Widget>[
     Theme(
       data: ref.read(myTheme).get_theme(context: context),
       child: Column(children: <Widget>[
@@ -51,8 +53,8 @@ modal(BuildContext context, WidgetRef ref, IconData icon, String title,
       ]),
     )
   ];
-  List<Widget> bottom = [];
-  return showCupertinoModalBottomSheet(
+  final bottom = <Widget>[];
+  return showCupertinoModalBottomSheet<dynamic>(
       context: context,
       barrierColor: Colors.black54,
       duration: const Duration(milliseconds: 300),
@@ -71,14 +73,14 @@ modal(BuildContext context, WidgetRef ref, IconData icon, String title,
                   )))));
 }
 
-style(pref, value) {
+List style(dynamic pref, dynamic value) {
   // int mode : 0 => return TextStyle,
   //            1 => return Color,
   //            2 => return Icon
-  final Color color = ColorKey.orange.value;
-  List array = []..length = 3;
+  final color = ColorKey.orange.value;
+  var array = <dynamic>[]..length = 3;
   (value == pref)
-      ? array = [
+      ? array = <dynamic>[
           TextStyle(color: color, fontWeight: FontWeight.bold),
           color,
           Icon(Icons.check, color: color)
@@ -87,13 +89,13 @@ style(pref, value) {
   return array;
 }
 
-change_lang(BuildContext context, WidgetRef ref) {
+dynamic change_lang(BuildContext context, WidgetRef ref) {
   void func({required int lang}) {
     ref.watch(langManager).change(context: context, lang: lang);
     Navigator.pop(context);
   }
 
-  final int pref = ref.watch(langManager).value;
+  final pref = ref.watch(langManager).value;
   return modal(
     context,
     ref,
@@ -102,28 +104,29 @@ change_lang(BuildContext context, WidgetRef ref) {
     t.change_lang_sub.t,
     [
       ListTile(
-        title: AutoSizeText(t.system.t, maxLines: 1, style: style(pref, 0)[0]),
-        leading:
-            Icon(Icons.system_security_update_good, color: style(pref, 0)[1]),
-        trailing: style(pref, 0)[2],
+        title: AutoSizeText(t.system.t,
+            maxLines: 1, style: style(pref, 0)[0] as TextStyle?),
+        leading: Icon(Icons.system_security_update_good,
+            color: style(pref, 0)[1] as Color?),
+        trailing: style(pref, 0)[2] as Widget?,
         onTap: () {
           func(lang: 0);
         },
       ),
       ListTile(
-        title:
-            AutoSizeText("日本語/Japanese", maxLines: 1, style: style(pref, 1)[0]),
+        title: AutoSizeText('日本語/Japanese',
+            maxLines: 1, style: style(pref, 1)[0] as TextStyle?),
         leading: const Flag.fromString('JP', height: 25, width: 25),
-        trailing: style(pref, 1)[2],
+        trailing: style(pref, 1)[2] as Widget?,
         onTap: () {
           func(lang: 1);
         },
       ),
       ListTile(
-        title:
-            AutoSizeText("英語/English", maxLines: 1, style: style(pref, 2)[0]),
+        title: AutoSizeText('英語/English',
+            maxLines: 1, style: style(pref, 2)[0] as TextStyle?),
         leading: const Flag.fromString('US', height: 25, width: 25),
-        trailing: style(pref, 2)[2],
+        trailing: style(pref, 2)[2] as Widget?,
         onTap: () {
           func(lang: 2);
         },
@@ -132,14 +135,14 @@ change_lang(BuildContext context, WidgetRef ref) {
   );
 }
 
-app_theme(BuildContext context, WidgetRef ref) {
+dynamic app_theme(BuildContext context, WidgetRef ref) {
   void func({required int theme}) {
-    ref.watch(themeManager).change(theme: theme);
+    ref.watch(themeManager).change(value: theme);
 
     Navigator.pop(context);
   }
 
-  final pref = ref.watch(themeManager).get()[2];
+  final pref = ref.watch(themeManager).theme;
 
   return modal(
     context,
@@ -149,25 +152,29 @@ app_theme(BuildContext context, WidgetRef ref) {
     t.app_theme_sub.t,
     [
       ListTile(
-        title: AutoSizeText(t.system.t, maxLines: 1, style: style(pref, 0)[0]),
-        leading: Icon(Icons.settings_brightness, color: style(pref, 0)[1]),
-        trailing: style(pref, 0)[2],
+        title: AutoSizeText(t.system.t,
+            maxLines: 1, style: style(pref, 0)[0] as TextStyle?),
+        leading:
+            Icon(Icons.settings_brightness, color: style(pref, 0)[1] as Color?),
+        trailing: style(pref, 0)[2] as Widget?,
         onTap: () {
           func(theme: 0);
         },
       ),
       ListTile(
-        title: AutoSizeText(t.light.t, maxLines: 1, style: style(pref, 1)[0]),
-        leading: Icon(Icons.brightness_7, color: style(pref, 1)[1]),
-        trailing: style(pref, 1)[2],
+        title: AutoSizeText(t.light.t,
+            maxLines: 1, style: style(pref, 1)[0] as TextStyle?),
+        leading: Icon(Icons.brightness_7, color: style(pref, 1)[1] as Color?),
+        trailing: style(pref, 1)[2] as Widget?,
         onTap: () {
           func(theme: 1);
         },
       ),
       ListTile(
-        title: AutoSizeText(t.dark.t, maxLines: 1, style: style(pref, 2)[0]),
-        leading: Icon(Icons.nights_stay, color: style(pref, 2)[1]),
-        trailing: style(pref, 2)[2],
+        title: AutoSizeText(t.dark.t,
+            maxLines: 1, style: style(pref, 2)[0] as TextStyle?),
+        leading: Icon(Icons.nights_stay, color: style(pref, 2)[1] as Color?),
+        trailing: style(pref, 2)[2] as Widget?,
         onTap: () {
           func(theme: 2);
         },
@@ -176,7 +183,7 @@ app_theme(BuildContext context, WidgetRef ref) {
   );
 }
 
-clock_style(BuildContext context, WidgetRef ref) {
+dynamic clock_style(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
     ref.watch(clockManager).change_is24(value: value);
 
@@ -186,9 +193,9 @@ clock_style(BuildContext context, WidgetRef ref) {
   final pref = ref.watch(clockManager).is24;
 
   Widget clock({required bool mode}) {
-    bool value = ref.read(themeManager).isLight(context: context);
+    final value = ref.read(themeManager).isLight(context: context);
 
-    Color color = (mode == pref)
+    final color = (mode == pref)
         ? ColorKey.orange.value
         : (value)
             ? Colors.black
@@ -197,7 +204,7 @@ clock_style(BuildContext context, WidgetRef ref) {
     return GestureDetector(
         onTap: () => func(value: mode),
         child: DigitalClock(
-          digitAnimationStyle: ref.read(clockManager).get_animation()[2],
+          digitAnimationStyle: ClockManagerVM().animation_curve,
           is24HourTimeFormat: mode,
           showSecondsDigit: ref.read(clockManager).showSec,
           areaDecoration: const BoxDecoration(
@@ -231,20 +238,21 @@ clock_style(BuildContext context, WidgetRef ref) {
     [
       ListTile(
         title: AutoSizeText(t.style12.t,
-            maxLines: 1, style: style(pref, false)[0]),
-        leading: Icon(Icons.share_arrival_time, color: style(pref, false)[1]),
-        trailing: style(pref, false)[2],
+            maxLines: 1, style: style(pref, false)[0] as TextStyle?),
+        leading: Icon(Icons.share_arrival_time,
+            color: style(pref, false)[1] as Color?),
+        trailing: style(pref, false)[2] as Widget?,
         onTap: () {
           func(value: false);
         },
       ),
       clock(mode: false),
       ListTile(
-        title:
-            AutoSizeText(t.style24.t, maxLines: 1, style: style(pref, true)[0]),
+        title: AutoSizeText(t.style24.t,
+            maxLines: 1, style: style(pref, true)[0] as TextStyle?),
         leading: Icon(Icons.share_arrival_time_outlined,
-            color: style(pref, true)[1]),
-        trailing: style(pref, true)[2],
+            color: style(pref, true)[1] as Color?),
+        trailing: style(pref, true)[2] as Widget?,
         onTap: () {
           func(value: true);
         },
@@ -258,7 +266,7 @@ clock_style(BuildContext context, WidgetRef ref) {
   );
 }
 
-clock_showSec(BuildContext context, WidgetRef ref) {
+dynamic clock_showSec(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
     ref.watch(clockManager).change_showSec(value: value);
     Navigator.pop(context);
@@ -267,9 +275,9 @@ clock_showSec(BuildContext context, WidgetRef ref) {
   final pref = ref.watch(clockManager).showSec;
 
   Widget clock({required bool mode}) {
-    bool value = ref.read(themeManager).isLight(context: context);
+    final value = ref.read(themeManager).isLight(context: context);
 
-    Color color = (mode == pref)
+    final color = (mode == pref)
         ? ColorKey.orange.value
         : (value)
             ? Colors.black
@@ -278,7 +286,7 @@ clock_showSec(BuildContext context, WidgetRef ref) {
     return GestureDetector(
         onTap: () => func(value: mode),
         child: DigitalClock(
-          digitAnimationStyle: ref.read(clockManager).get_animation()[2],
+          digitAnimationStyle: ClockManagerVM().animation_curve,
           is24HourTimeFormat: ref.read(clockManager).is24,
           showSecondsDigit: mode,
           areaDecoration: const BoxDecoration(
@@ -312,9 +320,9 @@ clock_showSec(BuildContext context, WidgetRef ref) {
     [
       ListTile(
         title: AutoSizeText(t.show_sec.t,
-            maxLines: 1, style: style(pref, true)[0]),
-        leading: Icon(Icons.timer, color: style(pref, true)[1]),
-        trailing: style(pref, true)[2],
+            maxLines: 1, style: style(pref, true)[0] as TextStyle?),
+        leading: Icon(Icons.timer, color: style(pref, true)[1] as Color?),
+        trailing: style(pref, true)[2] as Widget?,
         onTap: () {
           func(value: true);
         },
@@ -322,9 +330,9 @@ clock_showSec(BuildContext context, WidgetRef ref) {
       clock(mode: true),
       ListTile(
         title: AutoSizeText(t.not_show_sec.t,
-            maxLines: 1, style: style(pref, false)[0]),
-        leading: Icon(Icons.timer_off, color: style(pref, false)[1]),
-        trailing: style(pref, false)[2],
+            maxLines: 1, style: style(pref, false)[0] as TextStyle?),
+        leading: Icon(Icons.timer_off, color: style(pref, false)[1] as Color?),
+        trailing: style(pref, false)[2] as Widget?,
         onTap: () {
           func(value: false);
         },
@@ -338,7 +346,7 @@ clock_showSec(BuildContext context, WidgetRef ref) {
   );
 }
 
-clock_animation(BuildContext context, WidgetRef ref) {
+dynamic clock_animation(BuildContext context, WidgetRef ref) {
   void func({required int value}) {
     ref.read(clockManager).change_animation(value: value);
     Navigator.pop(context);
@@ -347,15 +355,15 @@ clock_animation(BuildContext context, WidgetRef ref) {
   final pref = ref.read(clockManager).animation;
 
   Widget clock({required int mode}) {
-    bool value = ref.read(themeManager).isLight(context: context);
+    final value = ref.read(themeManager).isLight(context: context);
 
-    Color color = (mode == pref)
+    final color = (mode == pref)
         ? ColorKey.orange.value
         : (value)
             ? Colors.black
             : Colors.white;
 
-    animation() => (mode == 0) ? Curves.easeOutExpo : Curves.elasticOut;
+    Curve animation() => (mode == 0) ? Curves.easeOutExpo : Curves.elasticOut;
     return GestureDetector(
         onTap: () => func(value: mode),
         child: DigitalClock(
@@ -407,19 +415,19 @@ clock_animation(BuildContext context, WidgetRef ref) {
           ])),
       ListTile(
         title: AutoSizeText(t.easeOutExpo.t,
-            maxLines: 1, style: style(pref, 0)[0]),
-        leading: Icon(Icons.moving, color: style(pref, 0)[1]),
-        trailing: style(pref, 0)[2],
+            maxLines: 1, style: style(pref, 0)[0] as TextStyle?),
+        leading: Icon(Icons.moving, color: style(pref, 0)[1] as Color?),
+        trailing: style(pref, 0)[2] as Widget?,
         onTap: () {
           func(value: 0);
         },
       ),
       clock(mode: 0),
       ListTile(
-        title:
-            AutoSizeText(t.elasticOut.t, maxLines: 1, style: style(pref, 1)[0]),
-        leading: Icon(Icons.bubble_chart, color: style(pref, 1)[1]),
-        trailing: style(pref, 1)[2],
+        title: AutoSizeText(t.elasticOut.t,
+            maxLines: 1, style: style(pref, 1)[0] as TextStyle?),
+        leading: Icon(Icons.bubble_chart, color: style(pref, 1)[1] as Color?),
+        trailing: style(pref, 1)[2] as Widget?,
         onTap: () {
           func(value: 1);
         },
@@ -433,7 +441,7 @@ clock_animation(BuildContext context, WidgetRef ref) {
   );
 }
 
-toast_position(BuildContext context, WidgetRef ref) {
+dynamic toast_position(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
     ref.read(generalManager).change_topToast(value: value);
 
@@ -450,18 +458,21 @@ toast_position(BuildContext context, WidgetRef ref) {
     t.toast_position_sub.t,
     [
       ListTile(
-        title: AutoSizeText(t.top.t, maxLines: 1, style: style(pref, true)[0]),
-        leading: Icon(Icons.keyboard_arrow_up, color: style(pref, true)[1]),
-        trailing: style(pref, true)[2],
+        title: AutoSizeText(t.top.t,
+            maxLines: 1, style: style(pref, true)[0] as TextStyle?),
+        leading: Icon(Icons.keyboard_arrow_up,
+            color: style(pref, true)[1] as Color?),
+        trailing: style(pref, true)[2] as Widget?,
         onTap: () {
           func(value: true);
         },
       ),
       ListTile(
-        title:
-            AutoSizeText(t.bottom.t, maxLines: 1, style: style(pref, false)[0]),
-        leading: Icon(Icons.keyboard_arrow_down, color: style(pref, false)[1]),
-        trailing: style(pref, false)[2],
+        title: AutoSizeText(t.bottom.t,
+            maxLines: 1, style: style(pref, false)[0] as TextStyle?),
+        leading: Icon(Icons.keyboard_arrow_down,
+            color: style(pref, false)[1] as Color?),
+        trailing: style(pref, false)[2] as Widget?,
         onTap: () {
           func(value: false);
         },
@@ -470,7 +481,7 @@ toast_position(BuildContext context, WidgetRef ref) {
   );
 }
 
-toast_duration(BuildContext context, WidgetRef ref) {
+dynamic toast_duration(BuildContext context, WidgetRef ref) {
   void func({required int sec}) {
     ref.read(generalManager).change_toastDuration(value: sec);
 
@@ -487,25 +498,28 @@ toast_duration(BuildContext context, WidgetRef ref) {
     t.toast_duration_sub.t,
     [
       ListTile(
-        title: AutoSizeText(t.sec.p(3), maxLines: 1, style: style(pref, 3)[0]),
-        leading: Icon(Icons.looks_3, color: style(pref, 3)[1]),
-        trailing: style(pref, 3)[2],
+        title: AutoSizeText(t.sec.p(3),
+            maxLines: 1, style: style(pref, 3)[0] as TextStyle?),
+        leading: Icon(Icons.looks_3, color: style(pref, 3)[1] as Color?),
+        trailing: style(pref, 3)[2] as Widget?,
         onTap: () {
           func(sec: 3);
         },
       ),
       ListTile(
-        title: AutoSizeText(t.sec.p(4), maxLines: 1, style: style(pref, 4)[0]),
-        leading: Icon(Icons.looks_4, color: style(pref, 4)[1]),
-        trailing: style(pref, 4)[2],
+        title: AutoSizeText(t.sec.p(4),
+            maxLines: 1, style: style(pref, 4)[0] as TextStyle?),
+        leading: Icon(Icons.looks_4, color: style(pref, 4)[1] as Color?),
+        trailing: style(pref, 4)[2] as Widget?,
         onTap: () {
           func(sec: 4);
         },
       ),
       ListTile(
-        title: AutoSizeText(t.sec.p(5), maxLines: 1, style: style(pref, 5)[0]),
-        leading: Icon(Icons.looks_5, color: style(pref, 5)[1]),
-        trailing: style(pref, 5)[2],
+        title: AutoSizeText(t.sec.p(5),
+            maxLines: 1, style: style(pref, 5)[0] as TextStyle?),
+        leading: Icon(Icons.looks_5, color: style(pref, 5)[1] as Color?),
+        trailing: style(pref, 5)[2] as Widget?,
         onTap: () {
           func(sec: 5);
         },
