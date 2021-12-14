@@ -1,28 +1,21 @@
+import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/view/debug/body.dart';
 import 'package:majimo_timer/view/setting/body.dart';
 import 'package:majimo_timer/view/splash.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:workmanager/workmanager.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'model/app_link.dart';
-import 'model/notification.dart';
-import 'model/work.dart';
-import 'plugin/let_log/let_log.dart';
+
 import 'model/manager.dart';
-import 'model/theme.dart';
+import 'model/notification.dart';
 import 'model/pref.dart';
+import 'model/theme.dart';
+import 'plugin/let_log/let_log.dart';
 import 'view/home/root/body.dart';
-import 'package:app_links/app_links.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:quick_actions/quick_actions.dart';
 
 //global
 final myTheme = ChangeNotifierProvider((ref) => MyTheme(ref.read));
@@ -78,7 +71,7 @@ class MyApp extends HookConsumerWidget {
           locale: context.locale,
           theme: ref.read(myTheme).lightTheme,
           darkTheme: ref.read(myTheme).darkTheme,
-          themeMode: ref.read(themeManager).theme,
+          themeMode: ThemeManagerVM(ref.read).themeMode_value,
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           routes: <String, WidgetBuilder>{

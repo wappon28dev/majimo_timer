@@ -27,7 +27,7 @@ class CircularRevealAnimation extends StatelessWidget {
       builder: (BuildContext context, Widget? _) {
         return ClipPath(
           clipper: CircularRevealClipper(
-            fraction: animation.value,
+            fraction: animation.value as double,
             centerAlignment: centerAlignment,
             centerOffset: centerOffset,
             minRadius: minRadius,

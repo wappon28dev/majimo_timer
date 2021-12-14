@@ -101,7 +101,7 @@ class _LogWidgetState extends State<LogWidget> {
       onTap: () {
         final ClipboardData data = ClipboardData(text: item.toString());
         Clipboard.setData(data);
-        showDialog(
+        showDialog<void>(
           context: context,
           barrierDismissible: true,
           builder: (context) {

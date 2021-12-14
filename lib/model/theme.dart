@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -58,13 +59,13 @@ class MyTheme extends ChangeNotifier {
       appBarTheme: const AppBarTheme(
         centerTitle: true,
         backgroundColor: Colors.deepOrange,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20),
             bottomRight: Radius.circular(20),
           ),
         ),
-        brightness: Brightness.dark,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       fontFamily: 'M-plus-M',
       visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -83,7 +84,7 @@ class MyTheme extends ChangeNotifier {
             bottomRight: Radius.circular(20),
           ),
         ),
-        brightness: Brightness.dark,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -97,12 +98,12 @@ class MyTheme extends ChangeNotifier {
   ThemeData get lightTheme => _lightTheme;
   ThemeData get darkTheme => _darkTheme;
 
-  get_theme({required BuildContext context}) {
+  ThemeData get_theme({required BuildContext context}) {
     bool value = read(themeManager).isLight(context: context);
     return (value) ? _lightTheme : _darkTheme;
   }
 
-  static get_color(ColorKey color) {
+  static Color get_color(ColorKey color) {
     return color.value;
   }
 }

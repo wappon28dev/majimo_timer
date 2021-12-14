@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_classes_with_only_static_members, depend_on_referenced_packages
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -24,7 +26,7 @@ enum PrefKey {
 // }
 
 class PrefManager {
-  static void restore(WidgetRef ref, BuildContext context) async {
+  static Future<void> restore(WidgetRef ref, BuildContext context) async {
     final _is24 = await PrefManager.getBool(key: PrefKey.clockStyle);
     final _theme = await PrefManager.getInt(key: PrefKey.appTheme);
     final _lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
@@ -34,23 +36,11 @@ class PrefManager {
         await PrefManager.getInt(key: PrefKey.clockAnimation);
     final _showSec = await PrefManager.getBool(key: PrefKey.showSec);
 
-    Logger.r(" >> restore bool is24 = " +
-        _is24.toString() +
-        "\n >> restore int theme = " +
-        _theme.toString() +
-        "\n >> restore int lang = " +
-        _lang.toString() +
-        "\n >> restore bool topToast = " +
-        _topToast.toString() +
-        "\n >> restore int toastDuration = " +
-        _toastDuration.toString() +
-        "\n >> restore int clockAnimation = " +
-        _clockAnimation.toString() +
-        "\n >> restore bool showSec = " +
-        _showSec.toString());
+    Logger.r(
+        ' >> restore bool is24 = $_is24\n >> restore int theme = $_theme\n >> restore int lang = $_lang\n >> restore bool topToast = $_topToast\n >> restore int toastDuration = $_toastDuration\n >> restore int clockAnimation = $_clockAnimation\n >> restore bool showSec = $_showSec');
 
     ref.read(clockManager).change_is24(value: _is24);
-    ref.read(themeManager).change(theme: _theme);
+    ref.read(themeManager).change(value: _theme);
     ref.read(langManager).change(context: context, lang: _lang);
     ref.read(generalManager).change_topToast(value: _topToast);
     ref.read(generalManager).change_toastDuration(value: _toastDuration);
@@ -59,34 +49,35 @@ class PrefManager {
   }
 
   static Future<bool> getBool({required PrefKey key}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool result = prefs.getBool(key.toString()) ?? true;
+    final prefs = await SharedPreferences.getInstance();
+    final result = prefs.getBool(key.toString()) ?? true;
     return result;
   }
 
   static Future<int> getInt({required PrefKey key}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int result = prefs.getInt(key.toString()) ?? 0;
+    final prefs = await SharedPreferences.getInstance();
+    final result = prefs.getInt(key.toString()) ?? 0;
     return result;
   }
 
-  static void setBool({required PrefKey key, required bool value}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(key.toString(), value);
+  static Future<void> setBool(
+      {required PrefKey key, required bool value}) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(key.toString(), value);
   }
 
-  static void setInt({required PrefKey key, required int value}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt(key.toString(), value);
+  static Future<void> setInt({required PrefKey key, required int value}) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(key.toString(), value);
   }
 
-  static void remove({required Type key}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove(key.toString());
+  static Future<void> remove({required Type key}) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key.toString());
   }
 
-  static void allremove() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+  static Future<void> allremove() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }

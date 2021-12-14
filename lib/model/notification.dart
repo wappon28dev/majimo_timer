@@ -1,13 +1,11 @@
-import 'package:auto_size_text/auto_size_text.dart';
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart' as a;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
-import 'package:workmanager/workmanager.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart' as a;
 
 class NotificationManager {
   static void initialize() {
@@ -41,7 +39,7 @@ class NotificationManager {
   }
 
   static void background() {
-    Logger.i("called background");
+    Logger.i('called background');
     AwesomeNotifications().createNotification(
         content: NotificationContent(
             id: 10,
@@ -57,15 +55,15 @@ class ToastManager {
     required WidgetRef ref,
     required int id,
   }) {
-    List _array = [];
-    bool _topToast = ref.read(generalManager).topToast;
-    int _duration = ref.read(generalManager).toastDuration;
+    var _array = <dynamic>[]..length = 2;
+    final _topToast = ref.read(generalManager).topToast;
+    final _duration = ref.read(generalManager).toastDuration;
     switch (id) {
       case 0:
-        _array = [Colors.green[600]!, Icons.check, "テスト通知"];
+        _array = <dynamic>[Colors.green[600]!, Icons.check, 'テスト通知'];
         break;
       case 1:
-        _array = [Colors.blue, Icons.light, "画面の消灯を一時的にOFFにしました"];
+        _array = <dynamic>[Colors.blue, Icons.light, '画面の消灯を一時的にOFFにしました'];
         break;
     }
 
@@ -80,7 +78,7 @@ class ToastManager {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
-            color: _array[0],
+            color: _array[0] as Color,
           ),
           child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -89,12 +87,12 @@ class ToastManager {
                 IconButton(
                   onPressed: () {},
                   icon: Icon(
-                    _array[1],
+                    _array[1] as IconData,
                     color: Colors.white,
                   ),
                 ),
                 Text(
-                  _array[2],
+                  _array[2] as String,
                   style: const TextStyle(
                     color: Colors.white,
                   ),
