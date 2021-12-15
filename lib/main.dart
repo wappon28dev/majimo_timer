@@ -19,35 +19,33 @@ import 'view/home/root/body.dart';
 
 //global
 final myTheme = ChangeNotifierProvider((ref) => MyTheme(ref.read));
-final generalManager =
-    ChangeNotifierProvider((ref) => GeneralManagerVM(GeneralManager()));
-final themeManager =
-    ChangeNotifierProvider((ref) => ThemeManagerVM(ThemeManager(), ref.read));
-final langManager =
-    ChangeNotifierProvider((ref) => LangManagerVM(LangManager()));
-final clockManager =
-    ChangeNotifierProvider((ref) => ClockManagerVM(ClockManager()));
-final colorManager =
-    ChangeNotifierProvider((ref) => ColorManagerVM(ColorManager(), ref.read));
-final alarmManager =
-    ChangeNotifierProvider((ref) => AlarmManagerVM(AlarmManager()));
+final generalManager = ChangeNotifierProvider((ref) => GeneralManager());
+final themeManager = ChangeNotifierProvider((ref) => ThemeManager(ref.read));
+final langManager = ChangeNotifierProvider((ref) => LangManager());
+final clockManager = ChangeNotifierProvider((ref) => ClockManager());
+final colorManager = ChangeNotifierProvider((ref) => ColorManager(ref.read));
+final alarmManager = ChangeNotifierProvider((ref) => AlarmManager(ref.read));
 
 const int helloAlarmID = 0;
 
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
-    Logger.i('are you hear?');
+    Logger.i("are you hear?");
     NotificationManager.background();
 
     return Future.value(true);
   });
 }
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   NotificationManager.initialize();
-  await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  Workmanager().initialize(
+      callbackDispatcher, // The top level function, aka callbackDispatcher
+      isInDebugMode:
+          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+      );
   runApp(EasyLocalization(
     supportedLocales: const [Locale('en', 'US'), Locale('ja', 'JP')],
     fallbackLocale: const Locale('en', 'US'),
@@ -55,7 +53,7 @@ Future<void> main() async {
     assetLoader: CsvAssetLoader(),
     child: const ProviderScope(child: MyApp()),
   ));
-  Logger.i(' -- Start Majimo_Timer -- ');
+  Logger.i(" -- Start Majimo_Timer -- ");
 }
 
 class MyApp extends HookConsumerWidget {
@@ -73,11 +71,7 @@ class MyApp extends HookConsumerWidget {
           locale: context.locale,
           theme: ref.read(myTheme).lightTheme,
           darkTheme: ref.read(myTheme).darkTheme,
-<<<<<<< HEAD
-          themeMode: ref.read(themeManager).theme_value,
-=======
           themeMode: ThemeManagerVM(ref.read).themeMode_value,
->>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           routes: <String, WidgetBuilder>{

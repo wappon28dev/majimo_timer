@@ -1,12 +1,10 @@
-// ignore_for_file: implementation_imports
-
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dismissible_page/src/dismissible_extensions.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_fader/flutter_fader.dart';
+import 'package:flutter_color/src/helper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lottie/lottie.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/app_link.dart';
 import 'package:majimo_timer/model/manager.dart';
@@ -17,19 +15,22 @@ import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
-<<<<<<< HEAD
-=======
 import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
->>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
 import '/model/theme.dart';
+import 'package:slide_digital_clock/slide_digital_clock.dart';
 import '../../../plugin/draggable_home/draggable_home.dart';
+import 'body.dart';
+import 'package:lottie/lottie.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
+  final clockmanager = ref.read(clockManager);
   final colormanager = ref.read(colorManager);
   final alarmmanager = ref.read(alarmManager);
+  final generalmanager = ref.read(generalManager);
   final width = MediaQuery.of(context).size.width;
   useEffect(() {
     LinkManager.initQuickAction(context: context, ref: ref);
@@ -44,13 +45,12 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     // });
   });
 
-  // ignore: avoid_unnecessary_containers
   Container headerWidget(BuildContext context) => Container(
         child: Container(child: largeclock(context, ref, false)),
       );
 
   Widget button({required String tag}) {
-    var value = Colors.black;
+    Color value = Colors.black;
     switch (tag) {
       case 'alarm':
         value = ColorKey.blue.value;
@@ -95,8 +95,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               return Icons.flag;
           }
           break;
-        default:
-          throw Exception('error!');
       }
     }
 
@@ -130,14 +128,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget content(BuildContext context) {
-    print(ref.watch(generalManager).opacity);
     return Column(
       children: [
-        AnimatedOpacity(
-            opacity: ref.watch(generalManager).opacity,
-            duration: const Duration(milliseconds: 300),
-            child: Text(ref.watch(generalManager).status,
-                style: const TextStyle(fontWeight: FontWeight.bold))),
+        SizedBox(
+          child: ref.watch(generalManager).status,
+        ),
         const SizedBox(height: 20),
         Row(
           // 中央寄せ
@@ -160,11 +155,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   Widget expand(BuildContext context) {
     final color = colormanager.color;
     final opacity = colormanager.opacity;
-<<<<<<< HEAD
-    final path = colormanager.color_picture_path(context: context);
-=======
     final path = ColorManagerVM(ref.read).color_picture_path(context: context);
->>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
     return AnimatedBuilder(
         animation: color,
         builder: (context, snapshot) {
@@ -187,11 +178,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                       alignment: Alignment.center,
                       child: Padding(
                           padding: const EdgeInsets.all(30),
-                          child: analogclock(
-                              showSec: ref.read(clockManager).showSec,
-                              isLight: ref
-                                  .read(themeManager)
-                                  .isLight(context: context))),
+                          child: analogclock()),
                     ),
                   ),
                   Column(

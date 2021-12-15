@@ -91,15 +91,11 @@ List style(dynamic pref, dynamic value) {
 
 dynamic change_lang(BuildContext context, WidgetRef ref) {
   void func({required int lang}) {
-    ref.read(langManager).change(context: context, lang: lang);
+    ref.watch(langManager).change(context: context, lang: lang);
     Navigator.pop(context);
   }
 
-<<<<<<< HEAD
-  final pref = ref.read(langManager).lang;
-=======
   final pref = ref.watch(langManager).value;
->>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
   return modal(
     context,
     ref,
@@ -141,20 +137,12 @@ dynamic change_lang(BuildContext context, WidgetRef ref) {
 
 dynamic app_theme(BuildContext context, WidgetRef ref) {
   void func({required int theme}) {
-<<<<<<< HEAD
-    ref.read(themeManager).change(value: theme);
-=======
     ref.watch(themeManager).change(value: theme);
->>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
 
     Navigator.pop(context);
   }
 
-<<<<<<< HEAD
-  final pref = ref.read(themeManager).theme;
-=======
   final pref = ref.watch(themeManager).theme;
->>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
 
   return modal(
     context,
@@ -197,30 +185,26 @@ dynamic app_theme(BuildContext context, WidgetRef ref) {
 
 dynamic clock_style(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(clockManager).change_is24(value: value);
+    ref.watch(clockManager).change_is24(value: value);
 
     Navigator.pop(context);
   }
 
-  final pref = ref.read(clockManager).is24;
+  final pref = ref.watch(clockManager).is24;
 
   Widget clock({required bool mode}) {
     final value = ref.read(themeManager).isLight(context: context);
 
     final color = (mode == pref)
         ? ColorKey.orange.value
-        : value
+        : (value)
             ? Colors.black
             : Colors.white;
 
     return GestureDetector(
         onTap: () => func(value: mode),
         child: DigitalClock(
-<<<<<<< HEAD
-          digitAnimationStyle: ref.read(clockManager).animation_curve,
-=======
           digitAnimationStyle: ClockManagerVM().animation_curve,
->>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
           is24HourTimeFormat: mode,
           showSecondsDigit: ref.read(clockManager).showSec,
           areaDecoration: const BoxDecoration(
@@ -231,7 +215,7 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
           hourMinuteDigitDecoration:
               const BoxDecoration(color: Colors.transparent),
           amPmDigitTextStyle: TextStyle(
-              fontSize: 15,
+              fontSize: 10,
               height: 2,
               color: color,
               fontWeight: FontWeight.bold),
@@ -284,29 +268,25 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
 
 dynamic clock_showSec(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(clockManager).change_showSec(value: value);
+    ref.watch(clockManager).change_showSec(value: value);
     Navigator.pop(context);
   }
 
-  final pref = ref.read(clockManager).showSec;
+  final pref = ref.watch(clockManager).showSec;
 
   Widget clock({required bool mode}) {
     final value = ref.read(themeManager).isLight(context: context);
 
     final color = (mode == pref)
         ? ColorKey.orange.value
-        : value
+        : (value)
             ? Colors.black
             : Colors.white;
 
     return GestureDetector(
         onTap: () => func(value: mode),
         child: DigitalClock(
-<<<<<<< HEAD
-          digitAnimationStyle: ref.read(clockManager).animation_curve,
-=======
           digitAnimationStyle: ClockManagerVM().animation_curve,
->>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
           is24HourTimeFormat: ref.read(clockManager).is24,
           showSecondsDigit: mode,
           areaDecoration: const BoxDecoration(
@@ -317,7 +297,7 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
           hourMinuteDigitDecoration:
               const BoxDecoration(color: Colors.transparent),
           amPmDigitTextStyle: TextStyle(
-              fontSize: 15,
+              fontSize: 10,
               height: 2,
               color: color,
               fontWeight: FontWeight.bold),
@@ -387,7 +367,6 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
     return GestureDetector(
         onTap: () => func(value: mode),
         child: DigitalClock(
-          showSecondsDigit: true,
           digitAnimationStyle: animation(),
           is24HourTimeFormat: ref.read(clockManager).is24,
           areaDecoration: const BoxDecoration(
@@ -398,7 +377,7 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
           hourMinuteDigitDecoration:
               const BoxDecoration(color: Colors.transparent),
           amPmDigitTextStyle: TextStyle(
-              fontSize: 15,
+              fontSize: 10,
               height: 2,
               color: color,
               fontWeight: FontWeight.bold),
@@ -469,7 +448,7 @@ dynamic toast_position(BuildContext context, WidgetRef ref) {
     Navigator.pop(context);
   }
 
-  final pref = ref.read(generalManager).topToast;
+  final pref = ref.watch(generalManager).topToast;
 
   return modal(
     context,
@@ -509,7 +488,7 @@ dynamic toast_duration(BuildContext context, WidgetRef ref) {
     Navigator.pop(context);
   }
 
-  final pref = ref.read(generalManager).toastDuration;
+  final pref = ref.watch(generalManager).toastDuration;
 
   return modal(
     context,
