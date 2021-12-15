@@ -13,7 +13,6 @@ class AlarmPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final bool isLandscape = orientation == Orientation.landscape;
-    final theme = ref.watch(themeManager).theme;
     String tag = "alarm";
 
     return Material(

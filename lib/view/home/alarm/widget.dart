@@ -13,6 +13,7 @@ import '../../../main.dart';
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final clockmanager = ref.watch(clockManager);
   final alarmmanager = ref.watch(alarmManager);
+  final generalmanager = ref.read(generalManager);
 
   Widget fab() {
     var radius = alarmmanager.FABsize;
@@ -35,7 +36,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                       enableFeedback: true,
                       icon: const Icon(Icons.play_arrow),
                       onPressed: () {
-                        ref.read(generalManager).push(
+                        generalmanager.push(
                             context: context,
                             name: const AlarmTimeKeepingPage());
                       }),
@@ -45,16 +46,26 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget content() {
+<<<<<<< HEAD
+    final current = alarmmanager.alarm_value;
+    Logger.i('- from majimo_timer/lib/view/home/alarm/widget.dart \n' +
+        ' >> current value => ' +
+=======
     final current = AlarmManagerVM(ref.read).alarm_value;
     Logger.i("- from majimo_timer/lib/view/home/alarm/widget.dart \n" +
         " >> current value => " +
+>>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
         current.toString());
     return Stack(children: [
       Center(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           const SizedBox(height: 50),
           GestureDetector(
+<<<<<<< HEAD
+            child: Text(alarmmanager.alarm_value_str,
+=======
             child: Text(AlarmManagerVM(ref.read).alarm_value_str,
+>>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
                 style: const TextStyle(
                     fontSize: 70, color: Colors.white, fontFamily: 'M-plus-B')),
             onTap: () async {
@@ -66,18 +77,18 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               if (result != null && result != current) {
                 alarmmanager.change(value: result);
                 Logger.i(
-                    "- from majimo_timer/lib/view/home/alarm/widget.dart \n" +
-                        " >> receive result => " +
+                    '- from majimo_timer/lib/view/home/alarm/widget.dart \n' +
+                        ' >> receive result => ' +
                         result.toString());
               }
             },
           ),
           ElevatedButton(
-              child: const Text("set"),
+              child: const Text('set'),
               onPressed: () {
-                Logger.i("set alarm !!");
+                Logger.i('set alarm !!');
                 // One off task registration
-                Workmanager().registerOneOffTask("1", "task",
+                Workmanager().registerOneOffTask('1', 'task',
                     initialDelay: const Duration(seconds: 3));
               }),
         ]),
@@ -120,7 +131,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
 }
 
 Widget buildHorizontal(BuildContext context) {
+<<<<<<< HEAD
+  var tag = 'alarm';
+=======
   var tag = "alarm";
+>>>>>>> 11f2098393c2b2228b4fe5801ca023b585fd671b
 
   return Container(
     padding: const EdgeInsets.all(20),

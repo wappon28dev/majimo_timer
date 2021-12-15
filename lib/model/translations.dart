@@ -1,26 +1,11 @@
 // ignore_for_file: constant_identifier_names
 
-import 'dart:ffi';
-import 'dart:io';
-
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
-import 'package:ezanimation/ezanimation.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_color/src/helper.dart';
-import 'package:fullscreen/fullscreen.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/notification.dart';
-import 'package:majimo_timer/plugin/let_log/let_log.dart';
-import '../../../main.dart';
-import 'pref.dart';
-import 'theme.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:flutter/foundation.dart';
 
 enum t {
   app_name,
+  lang,
   ok,
   cancel,
   greetings,
