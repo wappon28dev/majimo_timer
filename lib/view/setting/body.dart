@@ -30,17 +30,17 @@ class Setting extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final thememanager = ref.watch(themeManager);
-    final theme = ref.watch(themeManager).theme;
     final clockmanager = ref.watch(clockManager);
     final langmanager = ref.watch(langManager);
     final generalmanager = ref.watch(generalManager);
+
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       theme: ref.read(myTheme).lightTheme,
       darkTheme: ref.read(myTheme).darkTheme,
-      themeMode: ThemeManagerVM(ref.read).themeMode_value,
+      themeMode: thememanager.theme_value,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: appbar(context: context, ref: ref),
@@ -50,7 +50,7 @@ class Setting extends HookConsumerWidget {
             section(t.app_appearance.t),
             ListTile(
               title: Text(t.change_lang.t),
-              subtitle: Text(LangManagerVM().lang_caption),
+              subtitle: Text(langmanager.lang_caption),
               leading: const Icon(Icons.language),
               onTap: () {
                 change_lang(context, ref);
@@ -58,8 +58,8 @@ class Setting extends HookConsumerWidget {
             ),
             ListTile(
               title: Text(t.app_theme.t),
-              subtitle: Text(ThemeManagerVM(ref.read).themeMode_caption),
-              leading: Icon(ThemeManagerVM(ref.read).themeMode_icon),
+              subtitle: Text(thememanager.theme_caption),
+              leading: Icon(thememanager.theme_icon),
               onTap: () {
                 app_theme(context, ref);
               },
@@ -67,24 +67,24 @@ class Setting extends HookConsumerWidget {
             section(t.clock_appearance.t),
             ListTile(
               title: Text(t.clock_style.t),
-              subtitle: Text(ClockManagerVM().is24_caption),
-              leading: Icon(ClockManagerVM().is24_icon),
+              subtitle: Text(clockmanager.is24_caption),
+              leading: Icon(clockmanager.is24_icon),
               onTap: () {
                 clock_style(context, ref);
               },
             ),
             ListTile(
               title: Text(t.clock_seconds.t),
-              subtitle: Text(ClockManagerVM().showSec_caption),
-              leading: Icon(ClockManagerVM().showSec_icon),
+              subtitle: Text(clockmanager.showSec_caption),
+              leading: Icon(clockmanager.showSec_icon),
               onTap: () {
                 clock_showSec(context, ref);
               },
             ),
             ListTile(
               title: Text(t.clock_animation.t),
-              subtitle: Text(ClockManagerVM().animation_caption),
-              leading: Icon(ClockManagerVM().animation_icon),
+              subtitle: Text(clockmanager.animation_caption),
+              leading: Icon(clockmanager.animation_icon),
               onTap: () {
                 clock_animation(context, ref);
               },
@@ -92,15 +92,15 @@ class Setting extends HookConsumerWidget {
             section(t.toast.t),
             ListTile(
               title: Text(t.toast_position.t),
-              subtitle: Text(GeneralManagerVM().topToast_caption),
-              leading: Icon(GeneralManagerVM().topToast_icon),
+              subtitle: Text(generalmanager.topToast_caption),
+              leading: Icon(generalmanager.topToast_icon),
               onTap: () {
                 toast_position(context, ref);
               },
             ),
             ListTile(
               title: Text(t.toast_duration.t),
-              subtitle: Text(GeneralManagerVM().toastDuration_caption),
+              subtitle: Text(generalmanager.toastDuration_caption),
               leading: const Icon(Icons.timelapse),
               onTap: () {
                 toast_duration(context, ref);

@@ -1,33 +1,33 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:dart_date/dart_date.dart';
 // ignore: implementation_imports
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:ezanimation/ezanimation.dart';
 import 'package:flutter/material.dart';
 import 'package:fullscreen/fullscreen.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:wakelock/wakelock.dart';
-import '../../../main.dart';
+import 'package:flutter_fader/flutter_fader.dart';
+import 'package:majimo_timer/model/translations.dart';
+
 import 'pref.dart';
 
-class GeneralManager extends ChangeNotifier {
-  Widget _status = const Text('まじもタイマーへようこそ！',
-      style: TextStyle(fontWeight: FontWeight.bold));
+class GeneralManager {
+  String _status = 'まじもタイマーへようこそ！';
   bool _topToast = false;
   int _toastDuration = 3;
+  double _opacity = 1;
 
-  Widget get status => _status;
+  String get status => _status;
   bool get topToast => _topToast;
   int get toastDuration => _toastDuration;
+  double get opacity => _opacity;
 
   void change_topToast({required bool value}) {
     _topToast = value;
     PrefManager.setBool(key: PrefKey.topToast, value: value);
     Logger.s('- from GeneralManager \n >> save bool toptoast = $_topToast');
-    notifyListeners();
   }
 
   void change_toastDuration({required int value}) {
@@ -37,26 +37,39 @@ class GeneralManager extends ChangeNotifier {
     // ignore: lines_longer_than_80_chars
     Logger.s(
         '- from GeneralManager \n >> save int toastDuration = $_toastDuration');
-    notifyListeners();
   }
 
-  void home() {
-    Wakelock.disable();
-    Logger.i('wakelock => disable');
-    _status = const Text('まじもタイマーへようこそ！',
-        style: TextStyle(fontWeight: FontWeight.bold));
-    notifyListeners();
+  Future<void> home(int i) async {
+    await Wakelock.disable();
+
+    if (i == 0) {
+      _opacity = 1.0;
+      _status = "まじもタイマーへようこそ！";
+    }
+    if (i == 1) {
+      _opacity = 0.0;
+    }
+    if (i == 2) {
+      _status = DateTime.now().format('yMMMMEEEEd', t.lang.t);
+      _opacity = 1.0;
+    }
   }
 
-  Future<void> expand() async {
-    await Wakelock.enable();
-    Logger.i('wakelock => enable');
-    final now = DateTime.now();
-    _status = const Text('あいすくりーむ');
-    await Future<void>.delayed(const Duration(seconds: 5));
-    _status = Text(
-        '${now.year}年${now.month}月${now.day}日  ・  Majimo-Timer v0.0.1',
-        style: const TextStyle(fontWeight: FontWeight.bold));
+  Future<void> expand(int i) async {
+    await Wakelock.disable();
+
+    if (i == 0) {
+      _opacity = 1.0;
+      _status = "置き時計モード";
+    }
+    if (i == 1) {
+      _opacity = 0.0;
+    }
+    if (i == 2) {
+      _status = DateTime.now().format('yMMMMEEEEd', t.lang.t) +
+          "・Majimo-Timer v0.0.2";
+      _opacity = 1.0;
+    }
   }
 
   Future<void> push({required BuildContext context, required Widget name}) {
@@ -78,17 +91,13 @@ class GeneralManager extends ChangeNotifier {
   }
 }
 
-class ThemeManager extends ChangeNotifier {
-  ThemeManager(this.read);
-  final Reader read;
-
+class ThemeManager {
   int _theme = 0;
   int get theme => _theme;
 
   void change({required int value}) {
     _theme = value;
-    PrefManager.setInt(key: PrefKey.appTheme, value: 0);
-    notifyListeners();
+    PrefManager.setInt(key: PrefKey.appTheme, value: value);
     Logger.s('- from ThemeManager \n >> save int theme = $theme');
   }
 
@@ -101,7 +110,7 @@ class ThemeManager extends ChangeNotifier {
   }
 }
 
-class LangManager extends ChangeNotifier {
+class LangManager {
   int _value = 0;
   int get value => _value;
   void change({required BuildContext context, required int lang}) {
@@ -121,12 +130,11 @@ class LangManager extends ChangeNotifier {
         break;
     }
     PrefManager.setInt(key: PrefKey.changeLanguage, value: lang);
-    notifyListeners();
     Logger.s('- from LangManager \n >> save int lang = $lang');
   }
 }
 
-class ClockManager extends ChangeNotifier {
+class ClockManager {
   bool _is24 = true;
   bool _showSec = true;
   int _animation = 0;
@@ -137,28 +145,23 @@ class ClockManager extends ChangeNotifier {
   void change_is24({required bool value}) {
     _is24 = value;
     PrefManager.setBool(key: PrefKey.clockStyle, value: value);
-    notifyListeners();
     Logger.s('- from ClockManager \n >> save bool is24 = $value');
   }
 
   void change_showSec({required bool value}) {
     _showSec = value;
     PrefManager.setBool(key: PrefKey.showSec, value: value);
-    notifyListeners();
     Logger.s('- from ClockManager \n >> save bool showSec = $value');
   }
 
   void change_animation({required int value}) {
     _animation = value;
     PrefManager.setInt(key: PrefKey.clockAnimation, value: value);
-    notifyListeners();
     Logger.s('- from ClockManager \n >> save int animation = $value');
   }
 }
 
-class ColorManager extends ChangeNotifier {
-  ColorManager(this.read);
-  final Reader read;
+class ColorManager {
   // ignore: prefer_final_fields
   EzAnimation _color = EzAnimation.tween(
       ColorTween(begin: null, end: null), const Duration(seconds: 1));
@@ -187,7 +190,6 @@ class ColorManager extends ChangeNotifier {
         _opacity.start();
       });
       Logger.e('EZAnimation _color => ${_color.value}');
-      notifyListeners();
     });
   }
 
@@ -202,10 +204,7 @@ class ColorManager extends ChangeNotifier {
   }
 }
 
-class AlarmManager extends ChangeNotifier {
-  AlarmManager(this.read);
-  final Reader read;
-
+class AlarmManager {
   int _alarmHour = 12;
   int _alarmMinute = 00;
   double _FABsize = 0;
@@ -236,7 +235,6 @@ class AlarmManager extends ChangeNotifier {
       _alarmHour = now.hour;
       _alarmMinute = minute;
     }
-    notifyListeners();
     Logger.s(
         '- from AlarmManager \n > now = ${now.toString()}\n >> save int alarmHour = $_alarmHour\n >> save int alarmMinute = $_alarmMinute');
   }
@@ -244,17 +242,14 @@ class AlarmManager extends ChangeNotifier {
   void change({required TimeOfDay value}) {
     _alarmHour = value.hour;
     _alarmMinute = value.minute;
-    notifyListeners();
   }
 
   Future<void> show() async {
     Logger.e('- from AlarmManager\n > showFAB called ! ');
     _iconsize.reset();
     _FABsize = 0;
-    notifyListeners();
     await Future<void>.delayed(const Duration(milliseconds: 300));
     _iconsize.start();
     _FABsize = 40;
-    notifyListeners();
   }
 }

@@ -54,7 +54,7 @@ class Logger extends HookConsumerWidget {
     return MaterialApp(
         theme: ref.read(myTheme).lightTheme,
         darkTheme: ref.read(myTheme).darkTheme,
-        themeMode: ThemeManagerVM(ref.read).themeMode_value,
+        themeMode: ref.read(themeManager).theme_value,
         debugShowCheckedModeBanner: false,
         home: Scaffold(appBar: appbar(context), body: const LogWidget()));
   }
