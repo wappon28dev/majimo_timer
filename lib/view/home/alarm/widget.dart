@@ -4,45 +4,51 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/view/home/alarm/timekeeping/body.dart';
+import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
 import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:workmanager/workmanager.dart';
 
 import '../../../main.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
-  final clockmanager = ref.watch(clockManager);
-  final alarmmanager = ref.watch(alarmManager);
+  final clockmanager = ref.read(clockManager);
+  final alarmmanager = ref.read(alarmManager);
   final generalmanager = ref.read(generalManager);
 
   Widget fab() {
-    var radius = alarmmanager.FABsize;
-    return AnimatedBuilder(
-        animation: alarmmanager.iconsize,
-        builder: (context, snapshot) {
-          return SizedBox(
-              height: 120,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: radius,
-                    backgroundColor: Colors.green.shade200,
-                  ),
-                  IconButton(
-                      padding: const EdgeInsets.all(20),
-                      color: Colors.black,
-                      iconSize: alarmmanager.iconsize.value as double,
-                      enableFeedback: true,
-                      icon: const Icon(Icons.play_arrow),
-                      onPressed: () {
-                        generalmanager.push(
-                            context: context,
-                            name: const AlarmTimeKeepingPage());
-                      }),
-                ],
-              ));
-        });
+    var radius = ref.watch(alarmManager).FABsize;
+    return Stack(children: [
+      Container(
+          child: AnimatedBuilder(
+              animation: alarmmanager.iconsize,
+              builder: (context, snapshot) {
+                return SizedBox(
+                    height: 120,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: radius,
+                          backgroundColor: Colors.green.shade200,
+                        ),
+                        IconButton(
+                            padding: const EdgeInsets.all(20),
+                            color: Colors.black,
+                            iconSize: alarmmanager.iconsize.value as double,
+                            enableFeedback: true,
+                            icon: const Icon(Icons.play_arrow),
+                            onPressed: () {
+                              generalmanager.push(
+                                context: context,
+                                ref: ref,
+                                page: const AlarmTimeKeepingPage(),
+                              );
+                              ref.read(alarmTimeKeepingManager).start();
+                            }),
+                      ],
+                    ));
+              })),
+    ]);
   }
 
   Widget content() {
@@ -111,12 +117,12 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
 
   return Container(
     padding: const EdgeInsets.all(7),
+    clipBehavior: Clip.antiAlias,
+    decoration: const BoxDecoration(color: Color.fromRGBO(0, 163, 255, 1)),
     child: Material(
       color: Colors.transparent,
       child: SafeArea(child: content()),
     ),
-    clipBehavior: Clip.antiAlias,
-    decoration: const BoxDecoration(color: Color.fromRGBO(0, 163, 255, 1)),
   );
 }
 
@@ -125,6 +131,8 @@ Widget buildHorizontal(BuildContext context) {
 
   return Container(
     padding: const EdgeInsets.all(20),
+    clipBehavior: Clip.antiAlias,
+    decoration: const BoxDecoration(color: Color.fromRGBO(0, 163, 255, 1)),
     child: Material(
       color: Colors.transparent,
       child: Column(
@@ -135,7 +143,5 @@ Widget buildHorizontal(BuildContext context) {
             Text(tag.tr(), style: const TextStyle(color: Colors.white)),
           ]),
     ),
-    clipBehavior: Clip.antiAlias,
-    decoration: const BoxDecoration(color: Color.fromRGBO(0, 163, 255, 1)),
   );
 }

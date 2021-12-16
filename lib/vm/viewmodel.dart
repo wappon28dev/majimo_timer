@@ -6,6 +6,7 @@ import 'package:flutter_fader/flutter_fader.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/manager.dart';
 import 'package:majimo_timer/model/translations.dart';
+import 'package:majimo_timer/plugin/let_log/let_log.dart';
 
 import '../../../main.dart';
 
@@ -39,7 +40,7 @@ class GeneralManagerVM extends ChangeNotifier {
   Future<void> home() async {
     await _.home(0);
     notifyListeners();
-    await Future<void>.delayed(const Duration(seconds: 3));
+    await Future<void>.delayed(const Duration(seconds: 2));
     await _.home(1);
     notifyListeners();
     await Future<void>.delayed(const Duration(milliseconds: 600));
@@ -58,9 +59,18 @@ class GeneralManagerVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  void push({required BuildContext context, required Widget name}) {
-    _.push(context: context, name: name);
-    notifyListeners();
+  void push({
+    required BuildContext context,
+    required WidgetRef ref,
+    required Widget page,
+  }) {
+    _.push(context: context, page: page);
+  }
+
+  void push_home({
+    required BuildContext context,
+  }) {
+    _.push_home(context: context);
   }
 }
 
@@ -266,8 +276,8 @@ class ColorManagerVM extends ChangeNotifier {
 
   // create & forward function
   void change({required bool isLight}) {
-    _.change(isLight: isLight);
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((__) {
+      _.change(isLight: isLight);
       notifyListeners();
     });
   }
@@ -336,3 +346,42 @@ class AlarmManagerVM extends ChangeNotifier {
       '${alarmHour.toString().padLeft(2, '0')}:${alarmMinute.toString().padLeft(2, '0')}';
   TimeOfDay get_ampm() => alarm_value.replacing(hour: alarm_value.hourOfPeriod);
 }
+
+class AlarmTimeKeepingManagerVM extends ChangeNotifier {
+  AlarmTimeKeepingManagerVM(
+      AlarmTimeKeepingManager alarmTimeKeepingManager, this.read)
+      : _ = alarmTimeKeepingManager;
+  final AlarmTimeKeepingManager _;
+  final Reader read;
+
+  // obtain value
+  double get rate => _.rate;
+
+  // create values
+  int internal = 0;
+  int time = 0;
+
+  void start() {
+    final value = read(alarmManager);
+    final tar = Duration(hours: value.alarmHour, minutes: value.alarmMinute);
+    internal = _.internal(target: tar);
+    print(_.internal(target: tar));
+  }
+
+  void update() {
+    time *= 2;
+    _.update(internal: internal, target: internal - time);
+
+    notifyListeners();
+  }
+}
+
+
+
+  // // create values
+  // TimeOfDay get target => read(alarmManager).alarm_value;
+  // TimeOfDay get now => _.update();
+
+  // // get_value function
+  // Duration get duration => Duration(
+  //     hours: target.hour - now.hour, minutes: target.minute - now.minute);

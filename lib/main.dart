@@ -31,6 +31,8 @@ final colorManager =
     ChangeNotifierProvider((ref) => ColorManagerVM(ColorManager(), ref.read));
 final alarmManager =
     ChangeNotifierProvider((ref) => AlarmManagerVM(AlarmManager()));
+final alarmTimeKeepingManager = ChangeNotifierProvider(
+    (ref) => AlarmTimeKeepingManagerVM(AlarmTimeKeepingManager(), ref.read));
 
 const int helloAlarmID = 0;
 

@@ -260,13 +260,14 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                   ? () async {
                       if (streams[1] == false) {
                         isFullyExpanded.add(true);
-                        ref.watch(generalManager).expand();
-                        ref.watch(colorManager).change(
-                            isLight: ref
-                                .read(themeManager)
-                                .isLight(context: context));
-
                         WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          ref.watch(generalManager).expand();
+
+                          ref.watch(colorManager).change(
+                              isLight: ref
+                                  .read(themeManager)
+                                  .isLight(context: context));
+
                           ToastManager.toast(context: context, id: 1, ref: ref);
                         });
                         await FullScreen.enterFullScreen(

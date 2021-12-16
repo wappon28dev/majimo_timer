@@ -6,10 +6,10 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:ezanimation/ezanimation.dart';
 import 'package:flutter/material.dart';
 import 'package:fullscreen/fullscreen.dart';
-import 'package:majimo_timer/plugin/let_log/let_log.dart';
-import 'package:wakelock/wakelock.dart';
-import 'package:flutter_fader/flutter_fader.dart';
 import 'package:majimo_timer/model/translations.dart';
+import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/view/home/root/body.dart';
+import 'package:wakelock/wakelock.dart';
 
 import 'pref.dart';
 
@@ -44,7 +44,7 @@ class GeneralManager {
 
     if (i == 0) {
       _opacity = 1.0;
-      _status = "まじもタイマーへようこそ！";
+      _status = 'まじもタイマーへようこそ！';
     }
     if (i == 1) {
       _opacity = 0.0;
@@ -56,37 +56,51 @@ class GeneralManager {
   }
 
   Future<void> expand(int i) async {
-    await Wakelock.disable();
+    await Wakelock.enable();
 
     if (i == 0) {
       _opacity = 1.0;
-      _status = "置き時計モード";
+      _status = '置き時計モード';
     }
     if (i == 1) {
       _opacity = 0.0;
     }
     if (i == 2) {
       _status = DateTime.now().format('yMMMMEEEEd', t.lang.t) +
-          "・Majimo-Timer v0.0.2";
+          '・Majimo-Timer v0.0.2';
       _opacity = 1.0;
     }
   }
 
-  Future<void> push({required BuildContext context, required Widget name}) {
+  Future<void> push({
+    required BuildContext context,
+    required Widget page,
+  }) {
+    return Navigator.pushAndRemoveUntil(
+        context, MaterialPageRoute(builder: (context) => page), (_) => false);
+    // return Navigator.pushAndRemoveUntil(
+    //     context,
+    //     PageRouteBuilder(
+    //       pageBuilder: (context, animation, secondaryAnimation) => page,
+    //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //         return const OpenUpwardsPageTransitionsBuilder()
+    //             .buildTransitions<Widget>(
+    //                 MaterialPageRoute(builder: (context) => page),
+    //                 context,
+    //                 animation,
+    //                 secondaryAnimation,
+    //                 child);
+    //       },
+    //     ),
+    //     (_) => false);
+  }
+
+  Future<void> push_home({
+    required BuildContext context,
+  }) {
     return Navigator.pushAndRemoveUntil(
         context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => name,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return const OpenUpwardsPageTransitionsBuilder()
-                .buildTransitions<Widget>(
-                    MaterialPageRoute(builder: (context) => name),
-                    context,
-                    animation,
-                    secondaryAnimation,
-                    child);
-          },
-        ),
+        MaterialPageRoute(builder: (context) => const HomePage()),
         (_) => false);
   }
 }
@@ -164,33 +178,32 @@ class ClockManager {
 class ColorManager {
   // ignore: prefer_final_fields
   EzAnimation _color = EzAnimation.tween(
-      ColorTween(begin: null, end: null), const Duration(seconds: 1));
+      ColorTween(begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
+      const Duration(seconds: 1));
   final _opacity = EzAnimation(0.0, 1.0, const Duration(milliseconds: 300),
       curve: Curves.easeOutQuad);
   EzAnimation get color => _color;
   EzAnimation get opacity => _opacity;
 
   void change({required bool isLight}) {
+    if (isLight) {
+      _color = EzAnimation.tween(
+          ColorTween(
+              begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
+          const Duration(seconds: 1),
+          curve: Curves.easeOutQuad);
+    } else {
+      _color = EzAnimation.tween(
+          ColorTween(
+              begin: Colors.deepOrange.shade800, end: Colors.blue.shade900),
+          const Duration(seconds: 1),
+          curve: Curves.easeOutQuad);
+    }
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      if (isLight) {
-        _color = EzAnimation.tween(
-            ColorTween(
-                begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
-            const Duration(seconds: 1),
-            curve: Curves.easeOutQuad);
-      } else {
-        _color = EzAnimation.tween(
-            ColorTween(
-                begin: Colors.deepOrange.shade800, end: Colors.blue.shade900),
-            const Duration(seconds: 1),
-            curve: Curves.easeOutQuad);
-      }
-      WidgetsBinding.instance!.addPostFrameCallback((_) async {
-        _color.start();
-        _opacity.start();
-      });
-      Logger.e('EZAnimation _color => ${_color.value}');
+      _color.start();
+      _opacity.start();
     });
+    Logger.e('EZAnimation _color => ${_color.value}');
   }
 
   void stop() {
@@ -251,5 +264,25 @@ class AlarmManager {
     await Future<void>.delayed(const Duration(milliseconds: 300));
     _iconsize.start();
     _FABsize = 40;
+  }
+}
+
+class AlarmTimeKeepingManager {
+  double _rate = 0;
+  double get rate => _rate;
+
+  void update({required int internal, required int target}) {
+    _rate = target / internal;
+    print(target.toString() + " => " + internal.toString());
+  }
+
+  int internal({required Duration target}) {
+    final now = TimeOfDay.now();
+    final temp = Duration(
+        hours: target.inHours - now.hour,
+        minutes: target.inMinutes - now.minute,
+        seconds: target.inSeconds);
+
+    return temp.inMinutes * 60 + temp.inSeconds;
   }
 }

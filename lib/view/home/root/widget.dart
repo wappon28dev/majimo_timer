@@ -151,9 +151,10 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget expand(BuildContext context) {
-    final color = colormanager.color;
+    final color = ref.watch(colorManager).color;
     final opacity = colormanager.opacity;
     final path = colormanager.color_picture_path(context: context);
+
     return AnimatedBuilder(
         animation: color,
         builder: (context, snapshot) {
@@ -173,15 +174,10 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     opacity: opacity.value as double,
                     duration: const Duration(seconds: 1),
                     child: Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                          padding: const EdgeInsets.all(30),
-                          child: analogclock(
-                              showSec: ref.read(clockManager).showSec,
-                              isLight: ref
-                                  .read(themeManager)
-                                  .isLight(context: context))),
-                    ),
+                        alignment: Alignment.center,
+                        child: Padding(
+                            padding: const EdgeInsets.all(30),
+                            child: analogclock(context: context, ref: ref))),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,

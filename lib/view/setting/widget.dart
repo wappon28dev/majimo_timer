@@ -16,15 +16,14 @@ import '../../main.dart';
 
 Future modal(BuildContext context, WidgetRef ref, IconData icon, String title,
     String subtitle, List<Widget> widget) {
-  final padding =
-      const EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
+  const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
   final value = ref.read(themeManager).isLight(context: context);
   final header = <Widget>[
     Theme(
       data: ref.read(myTheme).get_theme(context: context),
       child: Column(children: <Widget>[
         Container(
-          margin: EdgeInsets.symmetric(vertical: 3),
+          margin: const EdgeInsets.symmetric(vertical: 3),
           width: 35,
           height: 4,
           decoration: BoxDecoration(
@@ -48,7 +47,7 @@ Future modal(BuildContext context, WidgetRef ref, IconData icon, String title,
         ),
         const SizedBox(height: 5),
         const Divider(
-          thickness: 2.0,
+          thickness: 2,
         ),
       ]),
     )

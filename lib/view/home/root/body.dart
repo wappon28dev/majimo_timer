@@ -45,7 +45,9 @@ class HomePage extends HookConsumerWidget {
   }
 }
 
-Widget analogclock({required bool isLight, required bool showSec}) {
+Widget analogclock({required BuildContext context, required WidgetRef ref}) {
+  final isLight = ref.read(themeManager).isLight(context: context);
+  final showSec = ref.read(clockManager).showSec;
   return FlutterAnalogClock(
     showNumber: true,
     dialPlateColor: Colors.transparent,

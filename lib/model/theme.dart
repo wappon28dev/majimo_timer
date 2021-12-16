@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/services.dart';
@@ -54,8 +56,8 @@ class MyTheme extends ChangeNotifier {
   final ThemeData _lightTheme = ThemeData(
       primarySwatch: Colors.deepOrange,
       primaryColor: Colors.deepOrange,
-      scaffoldBackgroundColor: Colors.deepOrange.shade100.lighter(12),
-      backgroundColor: Colors.deepOrange.shade100.lighter(12),
+      scaffoldBackgroundColor: Colors.deepOrange.shade100.lighter(10),
+      backgroundColor: Colors.deepOrange.shade100.lighter(10),
       appBarTheme: const AppBarTheme(
         centerTitle: true,
         backgroundColor: Colors.deepOrange,
@@ -99,8 +101,15 @@ class MyTheme extends ChangeNotifier {
   ThemeData get darkTheme => _darkTheme;
 
   ThemeData get_theme({required BuildContext context}) {
-    bool value = read(themeManager).isLight(context: context);
-    return (value) ? _lightTheme : _darkTheme;
+    final value = read(themeManager).isLight(context: context);
+    return value ? _lightTheme : _darkTheme;
+  }
+
+  Color get_background({required BuildContext context}) {
+    final value = read(themeManager).isLight(context: context);
+    return value
+        ? _lightTheme.scaffoldBackgroundColor
+        : _darkTheme.scaffoldBackgroundColor;
   }
 
   static Color get_color(ColorKey color) {

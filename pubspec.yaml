@@ -37,6 +37,7 @@ dependencies:
   hooks_riverpod: ^1.0.0
   lottie: ^1.2.1
   modal_bottom_sheet: ^2.0.0
+  percent_indicator: ^3.4.0
   quds_ui_kit: ^0.0.7+5
   quick_actions: ^0.6.0+8
   slide_digital_clock: ^1.0.2
