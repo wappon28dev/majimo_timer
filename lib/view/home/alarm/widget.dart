@@ -4,8 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
+import 'package:majimo_timer/view/home/alarm/body.dart';
+import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:majimo_timer/vm/viewmodel.dart';
+import 'package:simple_animations/simple_animations.dart';
 import 'package:workmanager/workmanager.dart';
 
 import '../../../main.dart';
@@ -14,42 +16,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   final clockmanager = ref.read(clockManager);
   final alarmmanager = ref.read(alarmManager);
   final generalmanager = ref.read(generalManager);
-
-  Widget fab() {
-    var radius = ref.watch(alarmManager).FABsize;
-    return Stack(children: [
-      Container(
-          child: AnimatedBuilder(
-              animation: alarmmanager.iconsize,
-              builder: (context, snapshot) {
-                return SizedBox(
-                    height: 120,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: radius,
-                          backgroundColor: Colors.green.shade200,
-                        ),
-                        IconButton(
-                            padding: const EdgeInsets.all(20),
-                            color: Colors.black,
-                            iconSize: alarmmanager.iconsize.value as double,
-                            enableFeedback: true,
-                            icon: const Icon(Icons.play_arrow),
-                            onPressed: () {
-                              generalmanager.push(
-                                context: context,
-                                ref: ref,
-                                page: const AlarmTimeKeepingPage(),
-                              );
-                              ref.read(alarmTimeKeepingManager).start();
-                            }),
-                      ],
-                    ));
-              })),
-    ]);
-  }
 
   Widget content() {
     final current = alarmmanager.alarm_value;
@@ -111,7 +77,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
           ),
         ],
       ),
-      Align(alignment: Alignment.bottomCenter, child: fab()),
+      Align(
+          alignment: Alignment.bottomCenter,
+          child: fab(context: context, ref: ref)),
     ]);
   }
 
@@ -127,7 +95,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
 }
 
 Widget buildHorizontal(BuildContext context) {
-  var tag = 'alarm';
+  final tag = 'alarm';
 
   return Container(
     padding: const EdgeInsets.all(20),

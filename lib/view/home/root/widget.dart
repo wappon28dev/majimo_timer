@@ -13,9 +13,12 @@ import 'package:majimo_timer/model/notification.dart';
 import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/view/debug/body.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
+import 'package:majimo_timer/view/setting/body.dart';
+import 'package:simple_animations/simple_animations.dart';
 import '/model/theme.dart';
 import '../../../plugin/draggable_home/draggable_home.dart';
 import 'body.dart';
@@ -23,6 +26,8 @@ import 'body.dart';
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final colormanager = ref.read(colorManager);
   final alarmmanager = ref.read(alarmManager);
+  final generalmanager = ref.read(generalManager);
+
   final width = MediaQuery.of(context).size.width;
   useEffect(() {
     LinkManager.initQuickAction(context: context, ref: ref);
@@ -155,23 +160,23 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     final opacity = colormanager.opacity;
     final path = colormanager.color_picture_path(context: context);
 
-    return AnimatedBuilder(
-        animation: color,
-        builder: (context, snapshot) {
+    return PlayAnimation<Color?>(
+        tween: color,
+        builder: (context, child, value) {
           return Container(
               alignment: Alignment.center,
-              color: color.value as Color,
+              color: value,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
                   Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                     AnimatedOpacity(
-                        opacity: opacity.value as double,
+                        opacity: opacity,
                         duration: const Duration(seconds: 1),
                         child: Lottie.asset(path)),
                   ]),
                   AnimatedOpacity(
-                    opacity: opacity.value as double,
+                    opacity: opacity,
                     duration: const Duration(seconds: 1),
                     child: Align(
                         alignment: Alignment.center,
@@ -221,7 +226,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       children: [
         IconButton(
           onPressed: () {
-            Navigator.of(context).pushNamed('/debug');
+            generalmanager.push(context: context, page: const Debug());
             Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n' +
                 ' > debug page opened');
           },
@@ -230,7 +235,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         ),
         IconButton(
           onPressed: () {
-            Navigator.of(context).pushNamed('/setting');
+            generalmanager.push(context: context, page: const Setting());
           },
           icon: const Icon(Icons.settings),
           color: Colors.white,

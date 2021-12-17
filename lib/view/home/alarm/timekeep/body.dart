@@ -1,10 +1,11 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, cascade_invocations
 
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/plugin/flutter_analog_clock/flutter_analog_clock.dart';
+import 'package:simple_animations/simple_animations.dart';
 import '../../../../main.dart';
 import 'widget.dart';
 
@@ -54,43 +55,42 @@ Widget analogclock_timekeeping(
   );
 }
 
-Widget fab({required WidgetRef ref}) {
-  final clockmanager = ref.read(clockManager);
-  final alarmmanager = ref.read(alarmManager);
+Widget fab({required BuildContext context, required WidgetRef ref}) {
   final generalmanager = ref.read(generalManager);
+  final alarmTKmanager = ref.read(alarmTimeKeepingManager);
+  final radius = ref.watch(alarmManager).FABsize;
+  final size = ref.watch(alarmManager).iconsize;
 
-  var radius = ref.watch(alarmManager).FABsize;
-  return AnimatedBuilder(
-      animation: alarmmanager.iconsize,
-      builder: (context, snapshot) {
-        return SizedBox(
+  return Stack(children: [
+    Container(
+        child: SizedBox(
             height: 120,
-            child: PhysicalShape(
-              color: Colors.blue,
-              shadowColor: Colors.red,
-              elevation: 3,
-              clipper: const ShapeBorderClipper(shape: CircleBorder()),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: radius,
-                    backgroundColor: Colors.red,
-                  ),
-                  IconButton(
-                      padding: const EdgeInsets.all(20),
-                      color: Colors.black,
-                      iconSize: alarmmanager.iconsize.value as double,
-                      enableFeedback: true,
-                      icon: const Icon(
-                        Icons.stop,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        generalmanager.push_home(context: context);
-                      }),
-                ],
-              ),
-            ));
-      });
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                CircleAvatar(
+                  radius: radius,
+                  backgroundColor: Colors.red,
+                ),
+                PlayAnimation<double>(
+                    tween: Tween(begin: 0, end: 25),
+                    duration: const Duration(milliseconds: 400),
+                    builder: (context, child, value) {
+                      return IconButton(
+                          iconSize: value,
+                          padding: const EdgeInsets.all(20),
+                          color: Colors.black,
+                          enableFeedback: true,
+                          icon: const Icon(
+                            Icons.stop,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            generalmanager.push_home(context: context);
+                            generalmanager.change_timekeeping(value: false);
+                          });
+                    })
+              ],
+            )))
+  ]);
 }

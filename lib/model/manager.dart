@@ -3,13 +3,14 @@
 import 'package:dart_date/dart_date.dart';
 // ignore: implementation_imports
 import 'package:easy_localization/src/public_ext.dart';
-import 'package:ezanimation/ezanimation.dart';
 import 'package:flutter/material.dart';
 import 'package:fullscreen/fullscreen.dart';
+import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:wakelock/wakelock.dart';
+import 'package:simple_animations/simple_animations.dart';
 
 import 'pref.dart';
 
@@ -18,11 +19,13 @@ class GeneralManager {
   bool _topToast = false;
   int _toastDuration = 3;
   double _opacity = 1;
+  bool _timekeeping = false;
 
   String get status => _status;
   bool get topToast => _topToast;
   int get toastDuration => _toastDuration;
   double get opacity => _opacity;
+  bool get timekeeping => _timekeeping;
 
   void change_topToast({required bool value}) {
     _topToast = value;
@@ -72,37 +75,7 @@ class GeneralManager {
     }
   }
 
-  Future<void> push({
-    required BuildContext context,
-    required Widget page,
-  }) {
-    return Navigator.pushAndRemoveUntil(
-        context, MaterialPageRoute(builder: (context) => page), (_) => false);
-    // return Navigator.pushAndRemoveUntil(
-    //     context,
-    //     PageRouteBuilder(
-    //       pageBuilder: (context, animation, secondaryAnimation) => page,
-    //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    //         return const OpenUpwardsPageTransitionsBuilder()
-    //             .buildTransitions<Widget>(
-    //                 MaterialPageRoute(builder: (context) => page),
-    //                 context,
-    //                 animation,
-    //                 secondaryAnimation,
-    //                 child);
-    //       },
-    //     ),
-    //     (_) => false);
-  }
-
-  Future<void> push_home({
-    required BuildContext context,
-  }) {
-    return Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-        (_) => false);
-  }
+  void change_timekeeping({required bool value}) => _timekeeping = value;
 }
 
 class ThemeManager {
@@ -177,38 +150,31 @@ class ClockManager {
 
 class ColorManager {
   // ignore: prefer_final_fields
-  EzAnimation _color = EzAnimation.tween(
-      ColorTween(begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
-      const Duration(seconds: 1));
-  final _opacity = EzAnimation(0.0, 1.0, const Duration(milliseconds: 300),
-      curve: Curves.easeOutQuad);
-  EzAnimation get color => _color;
-  EzAnimation get opacity => _opacity;
+  // var _color = EzAnimation.tween(
+  //     ColorTween(begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
+  //     const Duration(seconds: 1));
+
+  ColorTween _color =
+      ColorTween(begin: Colors.deepOrange, end: Colors.orangeAccent.shade200);
+  double _opacity = 0;
+
+  ColorTween get color => _color;
+  double get opacity => _opacity;
 
   void change({required bool isLight}) {
     if (isLight) {
-      _color = EzAnimation.tween(
-          ColorTween(
-              begin: Colors.deepOrange, end: Colors.orangeAccent.shade200),
-          const Duration(seconds: 1),
-          curve: Curves.easeOutQuad);
+      _color = ColorTween(
+          begin: Colors.deepOrange, end: Colors.orangeAccent.shade200);
     } else {
-      _color = EzAnimation.tween(
-          ColorTween(
-              begin: Colors.deepOrange.shade800, end: Colors.blue.shade900),
-          const Duration(seconds: 1),
-          curve: Curves.easeOutQuad);
+      _color = ColorTween(
+          begin: Colors.deepOrange.shade800, end: Colors.blue.shade900);
     }
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      _color.start();
-      _opacity.start();
-    });
-    Logger.e('EZAnimation _color => ${_color.value}');
+    _opacity = 1.0;
+    // Logger.e('EZAnimation _color => ${_color.value}');
   }
 
   void stop() {
-    _color.reset(); // It may be ignore
-    _opacity.reset();
+    _opacity = 0.0;
     exit();
   }
 
@@ -221,11 +187,11 @@ class AlarmManager {
   int _alarmHour = 12;
   int _alarmMinute = 00;
   double _FABsize = 0;
-  final _iconsize = EzAnimation(0.0, 30.0, const Duration(milliseconds: 200));
+  double _iconsize = 0;
   int get alarmHour => _alarmHour;
   int get alarmMinute => _alarmMinute;
   double get FABsize => _FABsize;
-  EzAnimation get iconsize => _iconsize;
+  double get iconsize => _iconsize;
 
   /// set internal time
   ///
@@ -259,30 +225,43 @@ class AlarmManager {
 
   Future<void> show() async {
     Logger.e('- from AlarmManager\n > showFAB called ! ');
-    _iconsize.reset();
+    _iconsize = 0;
     _FABsize = 0;
     await Future<void>.delayed(const Duration(milliseconds: 300));
-    _iconsize.start();
+    _iconsize = 100;
     _FABsize = 40;
   }
 }
 
 class AlarmTimeKeepingManager {
-  double _rate = 0;
-  double get rate => _rate;
-
-  void update({required int internal, required int target}) {
-    _rate = target / internal;
-    print(target.toString() + " => " + internal.toString());
+  Duration _duration = const Duration(seconds: 1);
+  Duration get duration => _duration;
+  void start({required Duration duration}) {
+    _duration = duration;
+    print("duration =>" + duration.toString());
   }
 
-  int internal({required Duration target}) {
-    final now = TimeOfDay.now();
-    final temp = Duration(
-        hours: target.inHours - now.hour,
-        minutes: target.inMinutes - now.minute,
-        seconds: target.inSeconds);
+  // late ColorTween _color;
+  // ColorTween get color => _color;
 
-    return temp.inMinutes * 60 + temp.inSeconds;
-  }
+  // void start({required Duration duration}) {
+  //   _color = Tween(begin: Colors.blue, ), Duration.zero);
+  // }
+
+  // late EzAnimation _rate;
+  // EzAnimation _color =
+  //     EzAnimation.tween(Tween(begin: Colors.blue), Duration.zero);
+  // EzAnimation get rate => _rate;
+  // EzAnimation get color => _color;
+
+  // void start({required Duration duration}) {
+  //   _rate = EzAnimation(0.0, 1.0, duration);
+  //   _color = EzAnimation.tween(Tween(begin: Colors.blue), Duration.zero);
+  // }
+
+  // void finish() {
+  //   _color = EzAnimation.tween(
+  //       Tween(begin: Colors.blue, end: ColorKey.orange.value),
+  //       const Duration(milliseconds: 300));
+  // }
 }

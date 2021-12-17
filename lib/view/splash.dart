@@ -3,6 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/theme.dart';
+import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
+import 'package:majimo_timer/view/home/root/body.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -40,10 +42,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
             onLoaded: (composition) {
               _controller
                 ..duration = composition.duration
-                ..forward().whenComplete(
-                    () => Navigator.of(context).pushReplacementNamed("/home"));
-              Future<void>.delayed(const Duration(seconds: 1));
-              ref.read(generalManager).home();
+                ..forward().whenComplete(() {
+                  bool timekeeping = ref.read(generalManager).timekeeping;
+                  Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
+                    builder: (BuildContext context) => !timekeeping
+                        ? const HomePage()
+                        : const AlarmTimeKeepingPage(),
+                  ));
+                  ref.read(generalManager).home();
+                });
             },
           ),
         ));

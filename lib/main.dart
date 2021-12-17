@@ -70,20 +70,14 @@ class MyApp extends HookConsumerWidget {
     return BackGestureWidthTheme(
         backGestureWidth: BackGestureWidth.fraction(1 / 2),
         child: MaterialApp(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          theme: ref.read(myTheme).lightTheme,
-          darkTheme: ref.read(myTheme).darkTheme,
-          themeMode: ref.read(themeManager).theme_value,
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          routes: <String, WidgetBuilder>{
-            '/': (context) => const SplashScreen(),
-            '/home': (context) => const HomePage(),
-            '/setting': (context) => const Setting(),
-            '/debug': (context) => const Debug(),
-          },
-        ));
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            theme: ref.read(myTheme).lightTheme,
+            darkTheme: ref.read(myTheme).darkTheme,
+            themeMode: ref.read(themeManager).theme_value,
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            home: const SplashScreen()));
   }
 }

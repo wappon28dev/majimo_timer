@@ -22,7 +22,6 @@ dependencies:
   draggable_home: ^1.0.2
   easy_localization: ^3.0.0
   easy_localization_loader: ^1.0.0
-  ezanimation: ^0.6.0
   flag: ^5.0.1
   flare_flutter: ^3.0.2
   flutter:
@@ -40,6 +39,7 @@ dependencies:
   percent_indicator: ^3.4.0
   quds_ui_kit: ^0.0.7+5
   quick_actions: ^0.6.0+8
+  simple_animations: ^4.0.1
   slide_digital_clock: ^1.0.2
   url_launcher: ^6.0.12
   wakelock: ^0.5.6

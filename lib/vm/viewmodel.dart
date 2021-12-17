@@ -1,12 +1,13 @@
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
 
-import 'package:ezanimation/ezanimation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fader/flutter_fader.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/manager.dart';
 import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/view/home/root/body.dart';
+import 'package:simple_animations/simple_animations.dart';
 
 import '../../../main.dart';
 
@@ -19,6 +20,7 @@ class GeneralManagerVM extends ChangeNotifier {
   bool get topToast => _.topToast;
   int get toastDuration => _.toastDuration;
   double get opacity => _.opacity;
+  bool get timekeeping => _.timekeeping;
 
   // create values
   String get topToast_caption => topToast ? t.top.t : t.bottom.t;
@@ -36,6 +38,9 @@ class GeneralManagerVM extends ChangeNotifier {
     _.change_toastDuration(value: value);
     notifyListeners();
   }
+
+  void change_timekeeping({required bool value}) =>
+      _.change_timekeeping(value: value);
 
   Future<void> home() async {
     await _.home(0);
@@ -59,19 +64,18 @@ class GeneralManagerVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  void push({
-    required BuildContext context,
-    required WidgetRef ref,
-    required Widget page,
-  }) {
-    _.push(context: context, page: page);
-  }
+  void push({required BuildContext context, required Widget page}) =>
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => page,
+        ),
+      );
 
-  void push_home({
-    required BuildContext context,
-  }) {
-    _.push_home(context: context);
-  }
+  void push_home({required BuildContext context}) =>
+      Navigator.pushAndRemoveUntil<void>(
+          context,
+          MaterialPageRoute<void>(builder: (context) => const HomePage()),
+          (_) => false);
 }
 
 class ThemeManagerVM extends ChangeNotifier {
@@ -261,8 +265,8 @@ class ColorManagerVM extends ChangeNotifier {
   final Reader read;
 
   // obtain values
-  EzAnimation get color => _.color;
-  EzAnimation get opacity => _.opacity;
+  ColorTween get color => _.color;
+  double get opacity => _.opacity;
 
   // create values
   Color color_clockcolor({required BuildContext context}) =>
@@ -316,7 +320,7 @@ class AlarmManagerVM extends ChangeNotifier {
   int get alarmHour => _.alarmHour;
   int get alarmMinute => _.alarmMinute;
   double get FABsize => _.FABsize;
-  EzAnimation get iconsize => _.iconsize;
+  double get iconsize => _.iconsize;
 
   // create values
   TimeOfDay get alarm_value => TimeOfDay(hour: alarmHour, minute: alarmMinute);
@@ -355,33 +359,25 @@ class AlarmTimeKeepingManagerVM extends ChangeNotifier {
   final Reader read;
 
   // obtain value
-  double get rate => _.rate;
+  Duration get duration => _.duration;
 
-  // create values
-  int internal = 0;
-  int time = 0;
+  // EzAnimation get rate => _.rate;
+  // EzAnimation get color => _.color;
 
-  void start() {
-    final value = read(alarmManager);
-    final tar = Duration(hours: value.alarmHour, minutes: value.alarmMinute);
-    internal = _.internal(target: tar);
-    print(_.internal(target: tar));
+  Future<void> start() async {
+    final target = read(alarmManager).get_value();
+    _.start(duration: define_duration(target: target));
+    // _.finish();
+    // color.start();
   }
 
-  void update() {
-    time *= 2;
-    _.update(internal: internal, target: internal - time);
+  Duration define_duration({required TimeOfDay target}) {
+    final now = DateTime.now();
+    final nowInSeconds = now.hour * 3600 + now.minute * 60 + now.second;
+    final targetInSeconds = target.hour * 3600 + target.minute * 60;
+    final duration = targetInSeconds - nowInSeconds;
+    print('$targetInSeconds-$nowInSeconds=$duration');
 
-    notifyListeners();
+    return Duration(seconds: (duration > 0) ? duration : 3600 * 24 - duration);
   }
 }
-
-
-
-  // // create values
-  // TimeOfDay get target => read(alarmManager).alarm_value;
-  // TimeOfDay get now => _.update();
-
-  // // get_value function
-  // Duration get duration => Duration(
-  //     hours: target.hour - now.hour, minutes: target.minute - now.minute);
