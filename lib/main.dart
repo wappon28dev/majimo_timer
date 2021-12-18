@@ -30,7 +30,7 @@ final clockManager =
 final colorManager =
     ChangeNotifierProvider((ref) => ColorManagerVM(ColorManager(), ref.read));
 final alarmManager =
-    ChangeNotifierProvider((ref) => AlarmManagerVM(AlarmManager()));
+    ChangeNotifierProvider((ref) => AlarmManagerVM(AlarmManager(), ref.read));
 final alarmTimeKeepingManager = ChangeNotifierProvider(
     (ref) => AlarmTimeKeepingManagerVM(AlarmTimeKeepingManager(), ref.read));
 

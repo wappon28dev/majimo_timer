@@ -1,13 +1,16 @@
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_fader/flutter_fader.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/manager.dart';
 import 'package:majimo_timer/model/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/view/debug/body.dart';
+import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
-import 'package:simple_animations/simple_animations.dart';
+import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
+import 'package:ripple_backdrop_animate_route/src/transparent_route.dart';
 
 import '../../../main.dart';
 
@@ -280,10 +283,8 @@ class ColorManagerVM extends ChangeNotifier {
 
   // create & forward function
   void change({required bool isLight}) {
-    WidgetsBinding.instance!.addPostFrameCallback((__) {
-      _.change(isLight: isLight);
-      notifyListeners();
-    });
+    _.change(isLight: isLight);
+    notifyListeners();
   }
 
   void stop() => _.stop();
@@ -313,14 +314,14 @@ class ColorManagerVM extends ChangeNotifier {
 }
 
 class AlarmManagerVM extends ChangeNotifier {
-  AlarmManagerVM(AlarmManager alarmManager) : _ = alarmManager;
+  AlarmManagerVM(AlarmManager alarmManager, this.read) : _ = alarmManager;
   final AlarmManager _;
+  final Reader read;
 
   // obtain values
   int get alarmHour => _.alarmHour;
   int get alarmMinute => _.alarmMinute;
-  double get FABsize => _.FABsize;
-  double get iconsize => _.iconsize;
+  bool get showFAB => _.showFAB;
 
   // create values
   TimeOfDay get alarm_value => TimeOfDay(hour: alarmHour, minute: alarmMinute);
@@ -349,6 +350,40 @@ class AlarmManagerVM extends ChangeNotifier {
   String get_str() =>
       '${alarmHour.toString().padLeft(2, '0')}:${alarmMinute.toString().padLeft(2, '0')}';
   TimeOfDay get_ampm() => alarm_value.replacing(hour: alarm_value.hourOfPeriod);
+
+  void push({required BuildContext context, required WidgetRef ref}) {
+    Navigator.pushAndRemoveUntil<void>(
+        context,
+        MaterialPageRoute<void>(
+            builder: (context) => const AlarmTimeKeepingPage()),
+        (_) => false);
+
+    ref.read(alarmManager).show();
+    ref.read(alarmTimeKeepingManager).start();
+    ref.read(generalManager).change_timekeeping(value: true);
+  }
+
+  void tooltip({required BuildContext context}) {
+    // Navigator.of(context).push(TransparentRoute(
+    //   builder: (BuildContext context) => RippleBackdropAnimatePage(
+    //       childFade: true,
+    //       duration: 300,
+    //       blurRadius: 20,
+    //       bottomHeight: 0,
+    //       child: Center(child: Text('test widget'))),
+    // ));
+    RippleBackdropAnimatePage.show(
+        context: context,
+        childFade: true,
+        duration: 300,
+        blurRadius: 20,
+        bottomHeight: 110,
+        child: GestureDetector(
+            behavior: HitTestBehavior.deferToChild,
+            // onTap: () => Navigator.of(context).pop(),
+            child: const Text('test widget',
+                style: TextStyle(color: Colors.white))));
+  }
 }
 
 class AlarmTimeKeepingManagerVM extends ChangeNotifier {
@@ -360,9 +395,6 @@ class AlarmTimeKeepingManagerVM extends ChangeNotifier {
 
   // obtain value
   Duration get duration => _.duration;
-
-  // EzAnimation get rate => _.rate;
-  // EzAnimation get color => _.color;
 
   Future<void> start() async {
     final target = read(alarmManager).get_value();
@@ -376,7 +408,7 @@ class AlarmTimeKeepingManagerVM extends ChangeNotifier {
     final nowInSeconds = now.hour * 3600 + now.minute * 60 + now.second;
     final targetInSeconds = target.hour * 3600 + target.minute * 60;
     final duration = targetInSeconds - nowInSeconds;
-    print('$targetInSeconds-$nowInSeconds=$duration');
+    Logger.i('$targetInSeconds-$nowInSeconds=$duration');
 
     return Duration(seconds: (duration > 0) ? duration : 3600 * 24 - duration);
   }

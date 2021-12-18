@@ -4,6 +4,7 @@ import 'package:dart_date/dart_date.dart';
 // ignore: implementation_imports
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/model/translations.dart';
@@ -69,8 +70,8 @@ class GeneralManager {
       _opacity = 0.0;
     }
     if (i == 2) {
-      _status = DateTime.now().format('yMMMMEEEEd', t.lang.t) +
-          '・Majimo-Timer v0.0.2';
+      _status =
+          '${DateTime.now().format('yMMMMEEEEd', t.lang.t)}・Majimo-Timer v0.0.2';
       _opacity = 1.0;
     }
   }
@@ -186,12 +187,10 @@ class ColorManager {
 class AlarmManager {
   int _alarmHour = 12;
   int _alarmMinute = 00;
-  double _FABsize = 0;
-  double _iconsize = 0;
+  bool _showFAB = false;
   int get alarmHour => _alarmHour;
   int get alarmMinute => _alarmMinute;
-  double get FABsize => _FABsize;
-  double get iconsize => _iconsize;
+  bool get showFAB => _showFAB;
 
   /// set internal time
   ///
@@ -224,44 +223,18 @@ class AlarmManager {
   }
 
   Future<void> show() async {
-    Logger.e('- from AlarmManager\n > showFAB called ! ');
-    _iconsize = 0;
-    _FABsize = 0;
+    _showFAB = false;
     await Future<void>.delayed(const Duration(milliseconds: 300));
-    _iconsize = 100;
-    _FABsize = 40;
+    _showFAB = true;
   }
 }
 
 class AlarmTimeKeepingManager {
   Duration _duration = const Duration(seconds: 1);
   Duration get duration => _duration;
+
   void start({required Duration duration}) {
     _duration = duration;
-    print("duration =>" + duration.toString());
+    Logger.i('duration => $duration');
   }
-
-  // late ColorTween _color;
-  // ColorTween get color => _color;
-
-  // void start({required Duration duration}) {
-  //   _color = Tween(begin: Colors.blue, ), Duration.zero);
-  // }
-
-  // late EzAnimation _rate;
-  // EzAnimation _color =
-  //     EzAnimation.tween(Tween(begin: Colors.blue), Duration.zero);
-  // EzAnimation get rate => _rate;
-  // EzAnimation get color => _color;
-
-  // void start({required Duration duration}) {
-  //   _rate = EzAnimation(0.0, 1.0, duration);
-  //   _color = EzAnimation.tween(Tween(begin: Colors.blue), Duration.zero);
-  // }
-
-  // void finish() {
-  //   _color = EzAnimation.tween(
-  //       Tween(begin: Colors.blue, end: ColorKey.orange.value),
-  //       const Duration(milliseconds: 300));
-  // }
 }

@@ -23,26 +23,26 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     return Stack(children: [
       Center(
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20),
-              Container(
-                  height: width * 0.9,
-                  alignment: Alignment.center,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      analogclock_timekeeping(context: context, ref: ref),
-                      largeclock(context, ref, true, true),
-                      percent(ref: ref, width: width)
-                    ],
-                  )),
-            ]),
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            Container(
+                height: width * 0.9,
+                alignment: Alignment.center,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    analogclock_timekeeping(context: context, ref: ref),
+                    largeclock(context, ref, true, true),
+                    percent(ref: ref, width: width)
+                  ],
+                )),
+            const SizedBox(height: 10),
+            Text(ref.read(alarmTimeKeepingManager).duration.toString()),
+          ],
+        ),
       ),
-      Align(
-          alignment: Alignment.bottomCenter,
-          child: fab(context: context, ref: ref)),
     ]);
   }
 

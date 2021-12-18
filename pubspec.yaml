@@ -39,6 +39,7 @@ dependencies:
   percent_indicator: ^3.4.0
   quds_ui_kit: ^0.0.7+5
   quick_actions: ^0.6.0+8
+  ripple_backdrop_animate_route: ^1.0.0
   simple_animations: ^4.0.1
   slide_digital_clock: ^1.0.2
   url_launcher: ^6.0.12

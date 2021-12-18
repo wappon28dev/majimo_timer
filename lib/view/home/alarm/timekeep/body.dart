@@ -6,23 +6,51 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/theme.dart';
 import 'package:majimo_timer/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:simple_animations/simple_animations.dart';
+
 import '../../../../main.dart';
 import 'widget.dart';
 
 class AlarmTimeKeepingPage extends HookConsumerWidget {
   const AlarmTimeKeepingPage({Key? key}) : super(key: key);
+  @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orientation = MediaQuery.of(context).orientation;
     final isLandscape = orientation == Orientation.landscape;
+    final alarmmanager = ref.read(alarmManager);
+    final generalmanager = ref.read(generalManager);
+    final show = ref.watch(alarmManager).showFAB;
 
     return MaterialApp(
         theme: ref.read(myTheme).lightTheme,
         darkTheme: ref.read(myTheme).darkTheme,
         themeMode: ref.watch(themeManager).theme_value,
         debugShowCheckedModeBanner: false,
-        home: !isLandscape
-            ? buildVertical(context, ref)
-            : buildHorizontal(context));
+        home: Scaffold(
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: show
+                ? SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: FloatingActionButton(
+                      splashColor: Colors.red.shade400,
+                      backgroundColor: Colors.red,
+                      onPressed: () {
+                        generalmanager.push_home(context: context);
+                        generalmanager.change_timekeeping(value: false);
+                      },
+                      heroTag: null,
+                      child: const Icon(
+                        Icons.stop,
+                        color: Colors.white,
+                      ),
+                    ))
+                : null,
+            // floatingActionButtonLocation:
+            //     FloatingActionButtonLocation.centerDocked,
+            body: !isLandscape
+                ? buildVertical(context, ref)
+                : buildHorizontal(context)));
   }
 }
 
@@ -55,42 +83,40 @@ Widget analogclock_timekeeping(
   );
 }
 
-Widget fab({required BuildContext context, required WidgetRef ref}) {
-  final generalmanager = ref.read(generalManager);
-  final alarmTKmanager = ref.read(alarmTimeKeepingManager);
-  final radius = ref.watch(alarmManager).FABsize;
-  final size = ref.watch(alarmManager).iconsize;
+// Widget fab({required BuildContext context, required WidgetRef ref}) {
+//   final generalmanager = ref.read(generalManager);
 
-  return Stack(children: [
-    Container(
-        child: SizedBox(
-            height: 120,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                CircleAvatar(
-                  radius: radius,
-                  backgroundColor: Colors.red,
-                ),
-                PlayAnimation<double>(
-                    tween: Tween(begin: 0, end: 25),
-                    duration: const Duration(milliseconds: 400),
-                    builder: (context, child, value) {
-                      return IconButton(
-                          iconSize: value,
-                          padding: const EdgeInsets.all(20),
-                          color: Colors.black,
-                          enableFeedback: true,
-                          icon: const Icon(
-                            Icons.stop,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            generalmanager.push_home(context: context);
-                            generalmanager.change_timekeeping(value: false);
-                          });
-                    })
-              ],
-            )))
-  ]);
-}
+//   return Stack(children: [
+//     Container(
+//         child: SizedBox(
+//             height: 120,
+//             child: Stack(
+//               alignment: Alignment.center,
+//               children: [
+//                 CircleAvatar(
+//                   radius: 7,
+//                   backgroundColor: Colors.red,
+//                 ),
+//                 PlayAnimation<double>(
+//                     tween: Tween(begin: 0, end: 25),
+//                     duration: const Duration(milliseconds: 300),
+//                     delay: const Duration(milliseconds: 100),
+//                     builder: (context, child, value) {
+//                       return IconButton(
+//                           iconSize: value,
+//                           padding: const EdgeInsets.all(20),
+//                           color: Colors.black,
+//                           enableFeedback: true,
+//                           icon: const Icon(
+//                             Icons.stop,
+//                             color: Colors.white,
+//                           ),
+//                           onPressed: () {
+//                             generalmanager.push_home(context: context);
+//                             generalmanager.change_timekeeping(value: false);
+//                           });
+//                     })
+//               ],
+//             )))
+//   ]);
+// }

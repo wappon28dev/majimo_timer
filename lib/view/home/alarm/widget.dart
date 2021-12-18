@@ -9,7 +9,6 @@ import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:workmanager/workmanager.dart';
-
 import '../../../main.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
@@ -34,7 +33,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               final result = await showTimePicker(
                 context: context,
                 initialTime: current,
-                initialEntryMode: TimePickerEntryMode.dial,
+                initialEntryMode: TimePickerEntryMode.input,
               );
               if (result != null && result != current) {
                 alarmmanager.change(value: result);
@@ -77,9 +76,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
           ),
         ],
       ),
-      Align(
-          alignment: Alignment.bottomCenter,
-          child: fab(context: context, ref: ref)),
     ]);
   }
 
