@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/theme.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 

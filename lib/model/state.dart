@@ -3,17 +3,22 @@
 import 'package:dart_date/dart_date.dart';
 // ignore: implementation_imports
 import 'package:easy_localization/src/public_ext.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullscreen/fullscreen.dart';
-import 'package:majimo_timer/model/theme.dart';
-import 'package:majimo_timer/model/translations.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:simple_animations/simple_animations.dart';
 
-import 'pref.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+import 'helper/pref.dart';
+
+part 'state.freezed.dart';
+// part 'state.g.dart';
 
 class GeneralManager {
   String _status = 'まじもタイマーへようこそ！';
@@ -162,7 +167,8 @@ class ColorManager {
   ColorTween get color => _color;
   double get opacity => _opacity;
 
-  void change({required bool isLight}) {
+  Future<void> change({required bool isLight}) async {
+    _opacity = 0.0;
     if (isLight) {
       _color = ColorTween(
           begin: Colors.deepOrange, end: Colors.orangeAccent.shade200);
@@ -170,12 +176,14 @@ class ColorManager {
       _color = ColorTween(
           begin: Colors.deepOrange.shade800, end: Colors.blue.shade900);
     }
+    await Future<void>.delayed(const Duration(milliseconds: 100)); // 何故か必要
+
     _opacity = 1.0;
-    // Logger.e('EZAnimation _color => ${_color.value}');
   }
 
   void stop() {
     _opacity = 0.0;
+
     exit();
   }
 
@@ -224,6 +232,7 @@ class AlarmManager {
 
   Future<void> show() async {
     _showFAB = false;
+
     await Future<void>.delayed(const Duration(milliseconds: 300));
     _showFAB = true;
   }
@@ -237,4 +246,61 @@ class AlarmTimeKeepingManager {
     _duration = duration;
     Logger.i('duration => $duration');
   }
+}
+
+@freezed
+class CounterState with _$CounterState {
+  const factory CounterState({@Default(0) int count, @Default(0) int count10}) =
+      _CounterState;
+}
+
+@freezed
+class GeneralManagers with _$GeneralManagers {
+  const factory GeneralManagers(
+      {@Default('まじもタイマーへようこそ！') String status,
+      @Default(false) bool topToast,
+      @Default(3) int toastDuration,
+      @Default(1) double opacity,
+      @Default(false) bool timekeeping}) = _GeneralManagers;
+}
+
+@freezed
+class ThemeMangers with _$ThemeMangers {
+  const factory ThemeMangers({
+    @Default(0) int theme,
+  }) = _ThemeMangers;
+}
+
+@freezed
+class LangManagers with _$LangManagers {
+  const factory LangManagers({@Default(0) int value}) = _LangManagers;
+}
+
+@freezed
+class ClockManagers with _$ClockManagers {
+  const factory ClockManagers(
+      {@Default(true) bool is24,
+      @Default(true) bool showSec,
+      @Default(0) int animation}) = _ClockManagers;
+}
+
+@freezed
+class ColorManagers with _$ColorManagers {
+  const factory ColorManagers({@Default(0) double opacity}) = _ColorManagers;
+}
+
+@freezed
+class AlarmManagers with _$AlarmManagers {
+  const factory AlarmManagers({
+    @Default(12) int alarmHour,
+    @Default(00) int alarmMinute,
+    @Default(false) bool showFAB,
+  }) = _AlarmManagers;
+}
+
+@freezed
+class AlarmTimeKeepingManagers with _$AlarmTimeKeepingManagers {
+  const factory AlarmTimeKeepingManagers(
+          {@Default(const Duration(seconds: 1)) Duration duration}) =
+      _AlarmTimeKeepingManagers;
 }

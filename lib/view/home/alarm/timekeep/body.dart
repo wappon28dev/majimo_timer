@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/theme.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:simple_animations/simple_animations.dart';
 

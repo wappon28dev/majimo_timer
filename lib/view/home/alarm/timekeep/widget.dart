@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/pref.dart';
-import 'package:majimo_timer/model/theme.dart';
-import 'package:majimo_timer/model/translations.dart';
+import 'package:majimo_timer/model/helper/pref.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:percent_indicator/percent_indicator.dart';

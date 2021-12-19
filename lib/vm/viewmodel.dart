@@ -3,8 +3,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/manager.dart';
-import 'package:majimo_timer/model/translations.dart';
+import 'package:majimo_timer/model/state.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/debug/body.dart';
 import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
@@ -287,7 +287,10 @@ class ColorManagerVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  void stop() => _.stop();
+  void stop() {
+    _.stop();
+    notifyListeners();
+  }
 
   // get_value function
   /// ```
@@ -412,4 +415,17 @@ class AlarmTimeKeepingManagerVM extends ChangeNotifier {
 
     return Duration(seconds: (duration > 0) ? duration : 3600 * 24 - duration);
   }
+}
+
+class CounterStateController extends StateNotifier<CounterState> {
+  CounterStateController() : super(const CounterState());
+  void increment() => state = state.copyWith(
+        count: state.count + 1,
+        count10: state.count10 + 10,
+      );
+}
+
+class LangManagersVM extends StateNotifier<LangManagers> {
+  LangManagersVM() : super(const LangManagers());
+  int get value => state.value;
 }

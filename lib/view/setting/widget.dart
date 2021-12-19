@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter_color/src/helper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/theme.dart';
-import 'package:majimo_timer/model/translations.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';

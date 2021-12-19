@@ -8,9 +8,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/app_link.dart';
-import 'package:majimo_timer/model/notification.dart';
-import 'package:majimo_timer/model/translations.dart';
+import 'package:majimo_timer/model/helper/app_link.dart';
+import 'package:majimo_timer/model/helper/notification.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/view/debug/body.dart';
@@ -19,7 +19,7 @@ import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
 import 'package:majimo_timer/view/setting/body.dart';
 import 'package:simple_animations/simple_animations.dart';
-import '/model/theme.dart';
+import '../../../model/helper/theme.dart';
 import '../../../plugin/draggable_home/draggable_home.dart';
 import 'body.dart';
 
@@ -157,9 +157,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
 
   Widget expand(BuildContext context) {
     final color = ref.watch(colorManager).color;
-    final opacity = colormanager.opacity;
+    final opacity = ref.watch(colorManager).opacity;
     final path = colormanager.color_picture_path(context: context);
-
+    Logger.e('opacity4 => ${opacity}');
     return PlayAnimation<Color?>(
         tween: color,
         builder: (context, child, value) {
