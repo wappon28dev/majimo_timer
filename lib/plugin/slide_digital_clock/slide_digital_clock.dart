@@ -11,10 +11,11 @@ Widget largeclock(BuildContext context, WidgetRef ref, bool value,
     [bool? isExpand]) {
   final clockmanager = ref.read(clockManager);
   final colormanager = ref.read(colorManager);
-  final isLight = ref.read(themeManager).isLight(context: context);
+  final isLight = ref.read(themeManager.notifier).isLight(context: context);
 
-  final color =
-      value ? colormanager.color_clockcolor(context: context) : Colors.white;
+  final color = value
+      ? ref.read(colorManager).color_clockcolor(context: context, ref: ref)
+      : Colors.white;
   final flame = (isExpand ?? false)
       ? (value
           ? isLight
@@ -24,7 +25,7 @@ Widget largeclock(BuildContext context, WidgetRef ref, bool value,
       : Colors.transparent;
 
   return DigitalClock(
-    digitAnimationStyle: clockmanager.animation_curve,
+    digitAnimationStyle: ref.read(clockManager).animation_curve,
     showSecondsDigit: clockmanager.showSec,
     is24HourTimeFormat: clockmanager.is24,
     areaDecoration: const BoxDecoration(
@@ -50,13 +51,14 @@ Widget largeclock(BuildContext context, WidgetRef ref, bool value,
 Widget smallclock(BuildContext context, WidgetRef ref, bool value) {
   final clockmanager = ref.read(clockManager);
   final colormanager = ref.read(colorManager);
-  final color =
-      value ? colormanager.color_clockcolor(context: context) : Colors.white;
+  final color = value
+      ? colormanager.color_clockcolor(context: context, ref: ref)
+      : Colors.white;
 
   return p.DigitalClock(
     digitAnimationStyle: clockmanager.animation_curve,
-    showSecondsDigit: clockmanager.showSec,
-    is24HourTimeFormat: clockmanager.is24,
+    showSecondsDigit: ref.read(clockManager).showSec,
+    is24HourTimeFormat: ref.read(clockManager).is24,
     areaDecoration: const BoxDecoration(
       color: Colors.transparent,
     ),

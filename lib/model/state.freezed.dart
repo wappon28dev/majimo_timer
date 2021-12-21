@@ -11,7 +11,7 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 class _$CounterStateTearOff {
@@ -171,16 +171,16 @@ abstract class _CounterState implements CounterState {
 }
 
 /// @nodoc
-class _$GeneralManagersTearOff {
-  const _$GeneralManagersTearOff();
+class _$GeneralManagerTearOff {
+  const _$GeneralManagerTearOff();
 
-  _GeneralManagers call(
+  _GeneralManager call(
       {String status = 'まじもタイマーへようこそ！',
       bool topToast = false,
       int toastDuration = 3,
       double opacity = 1,
       bool timekeeping = false}) {
-    return _GeneralManagers(
+    return _GeneralManager(
       status: status,
       topToast: topToast,
       toastDuration: toastDuration,
@@ -191,10 +191,10 @@ class _$GeneralManagersTearOff {
 }
 
 /// @nodoc
-const $GeneralManagers = _$GeneralManagersTearOff();
+const $GeneralManager = _$GeneralManagerTearOff();
 
 /// @nodoc
-mixin _$GeneralManagers {
+mixin _$GeneralManager {
   String get status => throw _privateConstructorUsedError;
   bool get topToast => throw _privateConstructorUsedError;
   int get toastDuration => throw _privateConstructorUsedError;
@@ -202,15 +202,15 @@ mixin _$GeneralManagers {
   bool get timekeeping => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $GeneralManagersCopyWith<GeneralManagers> get copyWith =>
+  $GeneralManagerCopyWith<GeneralManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GeneralManagersCopyWith<$Res> {
-  factory $GeneralManagersCopyWith(
-          GeneralManagers value, $Res Function(GeneralManagers) then) =
-      _$GeneralManagersCopyWithImpl<$Res>;
+abstract class $GeneralManagerCopyWith<$Res> {
+  factory $GeneralManagerCopyWith(
+          GeneralManager value, $Res Function(GeneralManager) then) =
+      _$GeneralManagerCopyWithImpl<$Res>;
   $Res call(
       {String status,
       bool topToast,
@@ -220,13 +220,13 @@ abstract class $GeneralManagersCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GeneralManagersCopyWithImpl<$Res>
-    implements $GeneralManagersCopyWith<$Res> {
-  _$GeneralManagersCopyWithImpl(this._value, this._then);
+class _$GeneralManagerCopyWithImpl<$Res>
+    implements $GeneralManagerCopyWith<$Res> {
+  _$GeneralManagerCopyWithImpl(this._value, this._then);
 
-  final GeneralManagers _value;
+  final GeneralManager _value;
   // ignore: unused_field
-  final $Res Function(GeneralManagers) _then;
+  final $Res Function(GeneralManager) _then;
 
   @override
   $Res call({
@@ -262,11 +262,11 @@ class _$GeneralManagersCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$GeneralManagersCopyWith<$Res>
-    implements $GeneralManagersCopyWith<$Res> {
-  factory _$GeneralManagersCopyWith(
-          _GeneralManagers value, $Res Function(_GeneralManagers) then) =
-      __$GeneralManagersCopyWithImpl<$Res>;
+abstract class _$GeneralManagerCopyWith<$Res>
+    implements $GeneralManagerCopyWith<$Res> {
+  factory _$GeneralManagerCopyWith(
+          _GeneralManager value, $Res Function(_GeneralManager) then) =
+      __$GeneralManagerCopyWithImpl<$Res>;
   @override
   $Res call(
       {String status,
@@ -277,15 +277,15 @@ abstract class _$GeneralManagersCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GeneralManagersCopyWithImpl<$Res>
-    extends _$GeneralManagersCopyWithImpl<$Res>
-    implements _$GeneralManagersCopyWith<$Res> {
-  __$GeneralManagersCopyWithImpl(
-      _GeneralManagers _value, $Res Function(_GeneralManagers) _then)
-      : super(_value, (v) => _then(v as _GeneralManagers));
+class __$GeneralManagerCopyWithImpl<$Res>
+    extends _$GeneralManagerCopyWithImpl<$Res>
+    implements _$GeneralManagerCopyWith<$Res> {
+  __$GeneralManagerCopyWithImpl(
+      _GeneralManager _value, $Res Function(_GeneralManager) _then)
+      : super(_value, (v) => _then(v as _GeneralManager));
 
   @override
-  _GeneralManagers get _value => super._value as _GeneralManagers;
+  _GeneralManager get _value => super._value as _GeneralManager;
 
   @override
   $Res call({
@@ -295,7 +295,7 @@ class __$GeneralManagersCopyWithImpl<$Res>
     Object? opacity = freezed,
     Object? timekeeping = freezed,
   }) {
-    return _then(_GeneralManagers(
+    return _then(_GeneralManager(
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -322,15 +322,14 @@ class __$GeneralManagersCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GeneralManagers
-    with DiagnosticableTreeMixin
-    implements _GeneralManagers {
-  const _$_GeneralManagers(
+class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
+  const _$_GeneralManager(
       {this.status = 'まじもタイマーへようこそ！',
       this.topToast = false,
       this.toastDuration = 3,
       this.opacity = 1,
-      this.timekeeping = false});
+      this.timekeeping = false})
+      : super._();
 
   @JsonKey()
   @override
@@ -350,14 +349,14 @@ class _$_GeneralManagers
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GeneralManagers(status: $status, topToast: $topToast, toastDuration: $toastDuration, opacity: $opacity, timekeeping: $timekeeping)';
+    return 'GeneralManager(status: $status, topToast: $topToast, toastDuration: $toastDuration, opacity: $opacity, timekeeping: $timekeeping)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'GeneralManagers'))
+      ..add(DiagnosticsProperty('type', 'GeneralManager'))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('topToast', topToast))
       ..add(DiagnosticsProperty('toastDuration', toastDuration))
@@ -369,7 +368,7 @@ class _$_GeneralManagers
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _GeneralManagers &&
+            other is _GeneralManager &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.topToast, topToast) &&
             const DeepCollectionEquality()
@@ -390,17 +389,18 @@ class _$_GeneralManagers
 
   @JsonKey(ignore: true)
   @override
-  _$GeneralManagersCopyWith<_GeneralManagers> get copyWith =>
-      __$GeneralManagersCopyWithImpl<_GeneralManagers>(this, _$identity);
+  _$GeneralManagerCopyWith<_GeneralManager> get copyWith =>
+      __$GeneralManagerCopyWithImpl<_GeneralManager>(this, _$identity);
 }
 
-abstract class _GeneralManagers implements GeneralManagers {
-  const factory _GeneralManagers(
+abstract class _GeneralManager extends GeneralManager {
+  const factory _GeneralManager(
       {String status,
       bool topToast,
       int toastDuration,
       double opacity,
-      bool timekeeping}) = _$_GeneralManagers;
+      bool timekeeping}) = _$_GeneralManager;
+  const _GeneralManager._() : super._();
 
   @override
   String get status;
@@ -414,48 +414,48 @@ abstract class _GeneralManagers implements GeneralManagers {
   bool get timekeeping;
   @override
   @JsonKey(ignore: true)
-  _$GeneralManagersCopyWith<_GeneralManagers> get copyWith =>
+  _$GeneralManagerCopyWith<_GeneralManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$ThemeMangersTearOff {
-  const _$ThemeMangersTearOff();
+class _$ThemeManagerTearOff {
+  const _$ThemeManagerTearOff();
 
-  _ThemeMangers call({int theme = 0}) {
-    return _ThemeMangers(
+  _ThemeManager call({int theme = 0}) {
+    return _ThemeManager(
       theme: theme,
     );
   }
 }
 
 /// @nodoc
-const $ThemeMangers = _$ThemeMangersTearOff();
+const $ThemeManager = _$ThemeManagerTearOff();
 
 /// @nodoc
-mixin _$ThemeMangers {
+mixin _$ThemeManager {
   int get theme => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ThemeMangersCopyWith<ThemeMangers> get copyWith =>
+  $ThemeManagerCopyWith<ThemeManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ThemeMangersCopyWith<$Res> {
-  factory $ThemeMangersCopyWith(
-          ThemeMangers value, $Res Function(ThemeMangers) then) =
-      _$ThemeMangersCopyWithImpl<$Res>;
+abstract class $ThemeManagerCopyWith<$Res> {
+  factory $ThemeManagerCopyWith(
+          ThemeManager value, $Res Function(ThemeManager) then) =
+      _$ThemeManagerCopyWithImpl<$Res>;
   $Res call({int theme});
 }
 
 /// @nodoc
-class _$ThemeMangersCopyWithImpl<$Res> implements $ThemeMangersCopyWith<$Res> {
-  _$ThemeMangersCopyWithImpl(this._value, this._then);
+class _$ThemeManagerCopyWithImpl<$Res> implements $ThemeManagerCopyWith<$Res> {
+  _$ThemeManagerCopyWithImpl(this._value, this._then);
 
-  final ThemeMangers _value;
+  final ThemeManager _value;
   // ignore: unused_field
-  final $Res Function(ThemeMangers) _then;
+  final $Res Function(ThemeManager) _then;
 
   @override
   $Res call({
@@ -471,30 +471,30 @@ class _$ThemeMangersCopyWithImpl<$Res> implements $ThemeMangersCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ThemeMangersCopyWith<$Res>
-    implements $ThemeMangersCopyWith<$Res> {
-  factory _$ThemeMangersCopyWith(
-          _ThemeMangers value, $Res Function(_ThemeMangers) then) =
-      __$ThemeMangersCopyWithImpl<$Res>;
+abstract class _$ThemeManagerCopyWith<$Res>
+    implements $ThemeManagerCopyWith<$Res> {
+  factory _$ThemeManagerCopyWith(
+          _ThemeManager value, $Res Function(_ThemeManager) then) =
+      __$ThemeManagerCopyWithImpl<$Res>;
   @override
   $Res call({int theme});
 }
 
 /// @nodoc
-class __$ThemeMangersCopyWithImpl<$Res> extends _$ThemeMangersCopyWithImpl<$Res>
-    implements _$ThemeMangersCopyWith<$Res> {
-  __$ThemeMangersCopyWithImpl(
-      _ThemeMangers _value, $Res Function(_ThemeMangers) _then)
-      : super(_value, (v) => _then(v as _ThemeMangers));
+class __$ThemeManagerCopyWithImpl<$Res> extends _$ThemeManagerCopyWithImpl<$Res>
+    implements _$ThemeManagerCopyWith<$Res> {
+  __$ThemeManagerCopyWithImpl(
+      _ThemeManager _value, $Res Function(_ThemeManager) _then)
+      : super(_value, (v) => _then(v as _ThemeManager));
 
   @override
-  _ThemeMangers get _value => super._value as _ThemeMangers;
+  _ThemeManager get _value => super._value as _ThemeManager;
 
   @override
   $Res call({
     Object? theme = freezed,
   }) {
-    return _then(_ThemeMangers(
+    return _then(_ThemeManager(
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
@@ -505,8 +505,8 @@ class __$ThemeMangersCopyWithImpl<$Res> extends _$ThemeMangersCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ThemeMangers with DiagnosticableTreeMixin implements _ThemeMangers {
-  const _$_ThemeMangers({this.theme = 0});
+class _$_ThemeManager extends _ThemeManager with DiagnosticableTreeMixin {
+  const _$_ThemeManager({this.theme = 0}) : super._();
 
   @JsonKey()
   @override
@@ -514,14 +514,14 @@ class _$_ThemeMangers with DiagnosticableTreeMixin implements _ThemeMangers {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ThemeMangers(theme: $theme)';
+    return 'ThemeManager(theme: $theme)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ThemeMangers'))
+      ..add(DiagnosticsProperty('type', 'ThemeManager'))
       ..add(DiagnosticsProperty('theme', theme));
   }
 
@@ -529,7 +529,7 @@ class _$_ThemeMangers with DiagnosticableTreeMixin implements _ThemeMangers {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ThemeMangers &&
+            other is _ThemeManager &&
             const DeepCollectionEquality().equals(other.theme, theme));
   }
 
@@ -539,101 +539,102 @@ class _$_ThemeMangers with DiagnosticableTreeMixin implements _ThemeMangers {
 
   @JsonKey(ignore: true)
   @override
-  _$ThemeMangersCopyWith<_ThemeMangers> get copyWith =>
-      __$ThemeMangersCopyWithImpl<_ThemeMangers>(this, _$identity);
+  _$ThemeManagerCopyWith<_ThemeManager> get copyWith =>
+      __$ThemeManagerCopyWithImpl<_ThemeManager>(this, _$identity);
 }
 
-abstract class _ThemeMangers implements ThemeMangers {
-  const factory _ThemeMangers({int theme}) = _$_ThemeMangers;
+abstract class _ThemeManager extends ThemeManager {
+  const factory _ThemeManager({int theme}) = _$_ThemeManager;
+  const _ThemeManager._() : super._();
 
   @override
   int get theme;
   @override
   @JsonKey(ignore: true)
-  _$ThemeMangersCopyWith<_ThemeMangers> get copyWith =>
+  _$ThemeManagerCopyWith<_ThemeManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$LangManagersTearOff {
-  const _$LangManagersTearOff();
+class _$LangManagerTearOff {
+  const _$LangManagerTearOff();
 
-  _LangManagers call({int value = 0}) {
-    return _LangManagers(
-      value: value,
+  _LangManager call({int lang = 0}) {
+    return _LangManager(
+      lang: lang,
     );
   }
 }
 
 /// @nodoc
-const $LangManagers = _$LangManagersTearOff();
+const $LangManager = _$LangManagerTearOff();
 
 /// @nodoc
-mixin _$LangManagers {
-  int get value => throw _privateConstructorUsedError;
+mixin _$LangManager {
+  int get lang => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $LangManagersCopyWith<LangManagers> get copyWith =>
+  $LangManagerCopyWith<LangManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LangManagersCopyWith<$Res> {
-  factory $LangManagersCopyWith(
-          LangManagers value, $Res Function(LangManagers) then) =
-      _$LangManagersCopyWithImpl<$Res>;
-  $Res call({int value});
+abstract class $LangManagerCopyWith<$Res> {
+  factory $LangManagerCopyWith(
+          LangManager value, $Res Function(LangManager) then) =
+      _$LangManagerCopyWithImpl<$Res>;
+  $Res call({int lang});
 }
 
 /// @nodoc
-class _$LangManagersCopyWithImpl<$Res> implements $LangManagersCopyWith<$Res> {
-  _$LangManagersCopyWithImpl(this._value, this._then);
+class _$LangManagerCopyWithImpl<$Res> implements $LangManagerCopyWith<$Res> {
+  _$LangManagerCopyWithImpl(this._value, this._then);
 
-  final LangManagers _value;
+  final LangManager _value;
   // ignore: unused_field
-  final $Res Function(LangManagers) _then;
+  final $Res Function(LangManager) _then;
 
   @override
   $Res call({
-    Object? value = freezed,
+    Object? lang = freezed,
   }) {
     return _then(_value.copyWith(
-      value: value == freezed
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+      lang: lang == freezed
+          ? _value.lang
+          : lang // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$LangManagersCopyWith<$Res>
-    implements $LangManagersCopyWith<$Res> {
-  factory _$LangManagersCopyWith(
-          _LangManagers value, $Res Function(_LangManagers) then) =
-      __$LangManagersCopyWithImpl<$Res>;
+abstract class _$LangManagerCopyWith<$Res>
+    implements $LangManagerCopyWith<$Res> {
+  factory _$LangManagerCopyWith(
+          _LangManager value, $Res Function(_LangManager) then) =
+      __$LangManagerCopyWithImpl<$Res>;
   @override
-  $Res call({int value});
+  $Res call({int lang});
 }
 
 /// @nodoc
-class __$LangManagersCopyWithImpl<$Res> extends _$LangManagersCopyWithImpl<$Res>
-    implements _$LangManagersCopyWith<$Res> {
-  __$LangManagersCopyWithImpl(
-      _LangManagers _value, $Res Function(_LangManagers) _then)
-      : super(_value, (v) => _then(v as _LangManagers));
+class __$LangManagerCopyWithImpl<$Res> extends _$LangManagerCopyWithImpl<$Res>
+    implements _$LangManagerCopyWith<$Res> {
+  __$LangManagerCopyWithImpl(
+      _LangManager _value, $Res Function(_LangManager) _then)
+      : super(_value, (v) => _then(v as _LangManager));
 
   @override
-  _LangManagers get _value => super._value as _LangManagers;
+  _LangManager get _value => super._value as _LangManager;
 
   @override
   $Res call({
-    Object? value = freezed,
+    Object? lang = freezed,
   }) {
-    return _then(_LangManagers(
-      value: value == freezed
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
+    return _then(_LangManager(
+      lang: lang == freezed
+          ? _value.lang
+          : lang // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -641,62 +642,63 @@ class __$LangManagersCopyWithImpl<$Res> extends _$LangManagersCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LangManagers with DiagnosticableTreeMixin implements _LangManagers {
-  const _$_LangManagers({this.value = 0});
+class _$_LangManager extends _LangManager with DiagnosticableTreeMixin {
+  const _$_LangManager({this.lang = 0}) : super._();
 
   @JsonKey()
   @override
-  final int value;
+  final int lang;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LangManagers(value: $value)';
+    return 'LangManager(lang: $lang)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'LangManagers'))
-      ..add(DiagnosticsProperty('value', value));
+      ..add(DiagnosticsProperty('type', 'LangManager'))
+      ..add(DiagnosticsProperty('lang', lang));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LangManagers &&
-            const DeepCollectionEquality().equals(other.value, value));
+            other is _LangManager &&
+            const DeepCollectionEquality().equals(other.lang, lang));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(lang));
 
   @JsonKey(ignore: true)
   @override
-  _$LangManagersCopyWith<_LangManagers> get copyWith =>
-      __$LangManagersCopyWithImpl<_LangManagers>(this, _$identity);
+  _$LangManagerCopyWith<_LangManager> get copyWith =>
+      __$LangManagerCopyWithImpl<_LangManager>(this, _$identity);
 }
 
-abstract class _LangManagers implements LangManagers {
-  const factory _LangManagers({int value}) = _$_LangManagers;
+abstract class _LangManager extends LangManager {
+  const factory _LangManager({int lang}) = _$_LangManager;
+  const _LangManager._() : super._();
 
   @override
-  int get value;
+  int get lang;
   @override
   @JsonKey(ignore: true)
-  _$LangManagersCopyWith<_LangManagers> get copyWith =>
+  _$LangManagerCopyWith<_LangManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$ClockManagersTearOff {
-  const _$ClockManagersTearOff();
+class _$ClockManagerTearOff {
+  const _$ClockManagerTearOff();
 
-  _ClockManagers call(
+  _ClockManager call(
       {bool is24 = true, bool showSec = true, int animation = 0}) {
-    return _ClockManagers(
+    return _ClockManager(
       is24: is24,
       showSec: showSec,
       animation: animation,
@@ -705,35 +707,34 @@ class _$ClockManagersTearOff {
 }
 
 /// @nodoc
-const $ClockManagers = _$ClockManagersTearOff();
+const $ClockManager = _$ClockManagerTearOff();
 
 /// @nodoc
-mixin _$ClockManagers {
+mixin _$ClockManager {
   bool get is24 => throw _privateConstructorUsedError;
   bool get showSec => throw _privateConstructorUsedError;
   int get animation => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ClockManagersCopyWith<ClockManagers> get copyWith =>
+  $ClockManagerCopyWith<ClockManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ClockManagersCopyWith<$Res> {
-  factory $ClockManagersCopyWith(
-          ClockManagers value, $Res Function(ClockManagers) then) =
-      _$ClockManagersCopyWithImpl<$Res>;
+abstract class $ClockManagerCopyWith<$Res> {
+  factory $ClockManagerCopyWith(
+          ClockManager value, $Res Function(ClockManager) then) =
+      _$ClockManagerCopyWithImpl<$Res>;
   $Res call({bool is24, bool showSec, int animation});
 }
 
 /// @nodoc
-class _$ClockManagersCopyWithImpl<$Res>
-    implements $ClockManagersCopyWith<$Res> {
-  _$ClockManagersCopyWithImpl(this._value, this._then);
+class _$ClockManagerCopyWithImpl<$Res> implements $ClockManagerCopyWith<$Res> {
+  _$ClockManagerCopyWithImpl(this._value, this._then);
 
-  final ClockManagers _value;
+  final ClockManager _value;
   // ignore: unused_field
-  final $Res Function(ClockManagers) _then;
+  final $Res Function(ClockManager) _then;
 
   @override
   $Res call({
@@ -759,25 +760,24 @@ class _$ClockManagersCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ClockManagersCopyWith<$Res>
-    implements $ClockManagersCopyWith<$Res> {
-  factory _$ClockManagersCopyWith(
-          _ClockManagers value, $Res Function(_ClockManagers) then) =
-      __$ClockManagersCopyWithImpl<$Res>;
+abstract class _$ClockManagerCopyWith<$Res>
+    implements $ClockManagerCopyWith<$Res> {
+  factory _$ClockManagerCopyWith(
+          _ClockManager value, $Res Function(_ClockManager) then) =
+      __$ClockManagerCopyWithImpl<$Res>;
   @override
   $Res call({bool is24, bool showSec, int animation});
 }
 
 /// @nodoc
-class __$ClockManagersCopyWithImpl<$Res>
-    extends _$ClockManagersCopyWithImpl<$Res>
-    implements _$ClockManagersCopyWith<$Res> {
-  __$ClockManagersCopyWithImpl(
-      _ClockManagers _value, $Res Function(_ClockManagers) _then)
-      : super(_value, (v) => _then(v as _ClockManagers));
+class __$ClockManagerCopyWithImpl<$Res> extends _$ClockManagerCopyWithImpl<$Res>
+    implements _$ClockManagerCopyWith<$Res> {
+  __$ClockManagerCopyWithImpl(
+      _ClockManager _value, $Res Function(_ClockManager) _then)
+      : super(_value, (v) => _then(v as _ClockManager));
 
   @override
-  _ClockManagers get _value => super._value as _ClockManagers;
+  _ClockManager get _value => super._value as _ClockManager;
 
   @override
   $Res call({
@@ -785,7 +785,7 @@ class __$ClockManagersCopyWithImpl<$Res>
     Object? showSec = freezed,
     Object? animation = freezed,
   }) {
-    return _then(_ClockManagers(
+    return _then(_ClockManager(
       is24: is24 == freezed
           ? _value.is24
           : is24 // ignore: cast_nullable_to_non_nullable
@@ -804,9 +804,10 @@ class __$ClockManagersCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ClockManagers with DiagnosticableTreeMixin implements _ClockManagers {
-  const _$_ClockManagers(
-      {this.is24 = true, this.showSec = true, this.animation = 0});
+class _$_ClockManager extends _ClockManager with DiagnosticableTreeMixin {
+  const _$_ClockManager(
+      {this.is24 = true, this.showSec = true, this.animation = 0})
+      : super._();
 
   @JsonKey()
   @override
@@ -820,14 +821,14 @@ class _$_ClockManagers with DiagnosticableTreeMixin implements _ClockManagers {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ClockManagers(is24: $is24, showSec: $showSec, animation: $animation)';
+    return 'ClockManager(is24: $is24, showSec: $showSec, animation: $animation)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ClockManagers'))
+      ..add(DiagnosticsProperty('type', 'ClockManager'))
       ..add(DiagnosticsProperty('is24', is24))
       ..add(DiagnosticsProperty('showSec', showSec))
       ..add(DiagnosticsProperty('animation', animation));
@@ -837,7 +838,7 @@ class _$_ClockManagers with DiagnosticableTreeMixin implements _ClockManagers {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ClockManagers &&
+            other is _ClockManager &&
             const DeepCollectionEquality().equals(other.is24, is24) &&
             const DeepCollectionEquality().equals(other.showSec, showSec) &&
             const DeepCollectionEquality().equals(other.animation, animation));
@@ -852,13 +853,14 @@ class _$_ClockManagers with DiagnosticableTreeMixin implements _ClockManagers {
 
   @JsonKey(ignore: true)
   @override
-  _$ClockManagersCopyWith<_ClockManagers> get copyWith =>
-      __$ClockManagersCopyWithImpl<_ClockManagers>(this, _$identity);
+  _$ClockManagerCopyWith<_ClockManager> get copyWith =>
+      __$ClockManagerCopyWithImpl<_ClockManager>(this, _$identity);
 }
 
-abstract class _ClockManagers implements ClockManagers {
-  const factory _ClockManagers({bool is24, bool showSec, int animation}) =
-      _$_ClockManagers;
+abstract class _ClockManager extends ClockManager {
+  const factory _ClockManager({bool is24, bool showSec, int animation}) =
+      _$_ClockManager;
+  const _ClockManager._() : super._();
 
   @override
   bool get is24;
@@ -868,49 +870,48 @@ abstract class _ClockManagers implements ClockManagers {
   int get animation;
   @override
   @JsonKey(ignore: true)
-  _$ClockManagersCopyWith<_ClockManagers> get copyWith =>
+  _$ClockManagerCopyWith<_ClockManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$ColorManagersTearOff {
-  const _$ColorManagersTearOff();
+class _$ColorManagerTearOff {
+  const _$ColorManagerTearOff();
 
-  _ColorManagers call({double opacity = 0}) {
-    return _ColorManagers(
+  _ColorManager call({double opacity = 0}) {
+    return _ColorManager(
       opacity: opacity,
     );
   }
 }
 
 /// @nodoc
-const $ColorManagers = _$ColorManagersTearOff();
+const $ColorManager = _$ColorManagerTearOff();
 
 /// @nodoc
-mixin _$ColorManagers {
+mixin _$ColorManager {
   double get opacity => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ColorManagersCopyWith<ColorManagers> get copyWith =>
+  $ColorManagerCopyWith<ColorManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ColorManagersCopyWith<$Res> {
-  factory $ColorManagersCopyWith(
-          ColorManagers value, $Res Function(ColorManagers) then) =
-      _$ColorManagersCopyWithImpl<$Res>;
+abstract class $ColorManagerCopyWith<$Res> {
+  factory $ColorManagerCopyWith(
+          ColorManager value, $Res Function(ColorManager) then) =
+      _$ColorManagerCopyWithImpl<$Res>;
   $Res call({double opacity});
 }
 
 /// @nodoc
-class _$ColorManagersCopyWithImpl<$Res>
-    implements $ColorManagersCopyWith<$Res> {
-  _$ColorManagersCopyWithImpl(this._value, this._then);
+class _$ColorManagerCopyWithImpl<$Res> implements $ColorManagerCopyWith<$Res> {
+  _$ColorManagerCopyWithImpl(this._value, this._then);
 
-  final ColorManagers _value;
+  final ColorManager _value;
   // ignore: unused_field
-  final $Res Function(ColorManagers) _then;
+  final $Res Function(ColorManager) _then;
 
   @override
   $Res call({
@@ -926,31 +927,30 @@ class _$ColorManagersCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ColorManagersCopyWith<$Res>
-    implements $ColorManagersCopyWith<$Res> {
-  factory _$ColorManagersCopyWith(
-          _ColorManagers value, $Res Function(_ColorManagers) then) =
-      __$ColorManagersCopyWithImpl<$Res>;
+abstract class _$ColorManagerCopyWith<$Res>
+    implements $ColorManagerCopyWith<$Res> {
+  factory _$ColorManagerCopyWith(
+          _ColorManager value, $Res Function(_ColorManager) then) =
+      __$ColorManagerCopyWithImpl<$Res>;
   @override
   $Res call({double opacity});
 }
 
 /// @nodoc
-class __$ColorManagersCopyWithImpl<$Res>
-    extends _$ColorManagersCopyWithImpl<$Res>
-    implements _$ColorManagersCopyWith<$Res> {
-  __$ColorManagersCopyWithImpl(
-      _ColorManagers _value, $Res Function(_ColorManagers) _then)
-      : super(_value, (v) => _then(v as _ColorManagers));
+class __$ColorManagerCopyWithImpl<$Res> extends _$ColorManagerCopyWithImpl<$Res>
+    implements _$ColorManagerCopyWith<$Res> {
+  __$ColorManagerCopyWithImpl(
+      _ColorManager _value, $Res Function(_ColorManager) _then)
+      : super(_value, (v) => _then(v as _ColorManager));
 
   @override
-  _ColorManagers get _value => super._value as _ColorManagers;
+  _ColorManager get _value => super._value as _ColorManager;
 
   @override
   $Res call({
     Object? opacity = freezed,
   }) {
-    return _then(_ColorManagers(
+    return _then(_ColorManager(
       opacity: opacity == freezed
           ? _value.opacity
           : opacity // ignore: cast_nullable_to_non_nullable
@@ -961,8 +961,8 @@ class __$ColorManagersCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ColorManagers with DiagnosticableTreeMixin implements _ColorManagers {
-  const _$_ColorManagers({this.opacity = 0});
+class _$_ColorManager extends _ColorManager with DiagnosticableTreeMixin {
+  const _$_ColorManager({this.opacity = 0}) : super._();
 
   @JsonKey()
   @override
@@ -970,14 +970,14 @@ class _$_ColorManagers with DiagnosticableTreeMixin implements _ColorManagers {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ColorManagers(opacity: $opacity)';
+    return 'ColorManager(opacity: $opacity)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ColorManagers'))
+      ..add(DiagnosticsProperty('type', 'ColorManager'))
       ..add(DiagnosticsProperty('opacity', opacity));
   }
 
@@ -985,7 +985,7 @@ class _$_ColorManagers with DiagnosticableTreeMixin implements _ColorManagers {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ColorManagers &&
+            other is _ColorManager &&
             const DeepCollectionEquality().equals(other.opacity, opacity));
   }
 
@@ -995,28 +995,29 @@ class _$_ColorManagers with DiagnosticableTreeMixin implements _ColorManagers {
 
   @JsonKey(ignore: true)
   @override
-  _$ColorManagersCopyWith<_ColorManagers> get copyWith =>
-      __$ColorManagersCopyWithImpl<_ColorManagers>(this, _$identity);
+  _$ColorManagerCopyWith<_ColorManager> get copyWith =>
+      __$ColorManagerCopyWithImpl<_ColorManager>(this, _$identity);
 }
 
-abstract class _ColorManagers implements ColorManagers {
-  const factory _ColorManagers({double opacity}) = _$_ColorManagers;
+abstract class _ColorManager extends ColorManager {
+  const factory _ColorManager({double opacity}) = _$_ColorManager;
+  const _ColorManager._() : super._();
 
   @override
   double get opacity;
   @override
   @JsonKey(ignore: true)
-  _$ColorManagersCopyWith<_ColorManagers> get copyWith =>
+  _$ColorManagerCopyWith<_ColorManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$AlarmManagersTearOff {
-  const _$AlarmManagersTearOff();
+class _$AlarmManagerTearOff {
+  const _$AlarmManagerTearOff();
 
-  _AlarmManagers call(
+  _AlarmManager call(
       {int alarmHour = 12, int alarmMinute = 00, bool showFAB = false}) {
-    return _AlarmManagers(
+    return _AlarmManager(
       alarmHour: alarmHour,
       alarmMinute: alarmMinute,
       showFAB: showFAB,
@@ -1025,35 +1026,34 @@ class _$AlarmManagersTearOff {
 }
 
 /// @nodoc
-const $AlarmManagers = _$AlarmManagersTearOff();
+const $AlarmManager = _$AlarmManagerTearOff();
 
 /// @nodoc
-mixin _$AlarmManagers {
+mixin _$AlarmManager {
   int get alarmHour => throw _privateConstructorUsedError;
   int get alarmMinute => throw _privateConstructorUsedError;
   bool get showFAB => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AlarmManagersCopyWith<AlarmManagers> get copyWith =>
+  $AlarmManagerCopyWith<AlarmManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AlarmManagersCopyWith<$Res> {
-  factory $AlarmManagersCopyWith(
-          AlarmManagers value, $Res Function(AlarmManagers) then) =
-      _$AlarmManagersCopyWithImpl<$Res>;
+abstract class $AlarmManagerCopyWith<$Res> {
+  factory $AlarmManagerCopyWith(
+          AlarmManager value, $Res Function(AlarmManager) then) =
+      _$AlarmManagerCopyWithImpl<$Res>;
   $Res call({int alarmHour, int alarmMinute, bool showFAB});
 }
 
 /// @nodoc
-class _$AlarmManagersCopyWithImpl<$Res>
-    implements $AlarmManagersCopyWith<$Res> {
-  _$AlarmManagersCopyWithImpl(this._value, this._then);
+class _$AlarmManagerCopyWithImpl<$Res> implements $AlarmManagerCopyWith<$Res> {
+  _$AlarmManagerCopyWithImpl(this._value, this._then);
 
-  final AlarmManagers _value;
+  final AlarmManager _value;
   // ignore: unused_field
-  final $Res Function(AlarmManagers) _then;
+  final $Res Function(AlarmManager) _then;
 
   @override
   $Res call({
@@ -1079,25 +1079,24 @@ class _$AlarmManagersCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$AlarmManagersCopyWith<$Res>
-    implements $AlarmManagersCopyWith<$Res> {
-  factory _$AlarmManagersCopyWith(
-          _AlarmManagers value, $Res Function(_AlarmManagers) then) =
-      __$AlarmManagersCopyWithImpl<$Res>;
+abstract class _$AlarmManagerCopyWith<$Res>
+    implements $AlarmManagerCopyWith<$Res> {
+  factory _$AlarmManagerCopyWith(
+          _AlarmManager value, $Res Function(_AlarmManager) then) =
+      __$AlarmManagerCopyWithImpl<$Res>;
   @override
   $Res call({int alarmHour, int alarmMinute, bool showFAB});
 }
 
 /// @nodoc
-class __$AlarmManagersCopyWithImpl<$Res>
-    extends _$AlarmManagersCopyWithImpl<$Res>
-    implements _$AlarmManagersCopyWith<$Res> {
-  __$AlarmManagersCopyWithImpl(
-      _AlarmManagers _value, $Res Function(_AlarmManagers) _then)
-      : super(_value, (v) => _then(v as _AlarmManagers));
+class __$AlarmManagerCopyWithImpl<$Res> extends _$AlarmManagerCopyWithImpl<$Res>
+    implements _$AlarmManagerCopyWith<$Res> {
+  __$AlarmManagerCopyWithImpl(
+      _AlarmManager _value, $Res Function(_AlarmManager) _then)
+      : super(_value, (v) => _then(v as _AlarmManager));
 
   @override
-  _AlarmManagers get _value => super._value as _AlarmManagers;
+  _AlarmManager get _value => super._value as _AlarmManager;
 
   @override
   $Res call({
@@ -1105,7 +1104,7 @@ class __$AlarmManagersCopyWithImpl<$Res>
     Object? alarmMinute = freezed,
     Object? showFAB = freezed,
   }) {
-    return _then(_AlarmManagers(
+    return _then(_AlarmManager(
       alarmHour: alarmHour == freezed
           ? _value.alarmHour
           : alarmHour // ignore: cast_nullable_to_non_nullable
@@ -1124,9 +1123,10 @@ class __$AlarmManagersCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AlarmManagers with DiagnosticableTreeMixin implements _AlarmManagers {
-  const _$_AlarmManagers(
-      {this.alarmHour = 12, this.alarmMinute = 00, this.showFAB = false});
+class _$_AlarmManager extends _AlarmManager with DiagnosticableTreeMixin {
+  const _$_AlarmManager(
+      {this.alarmHour = 12, this.alarmMinute = 00, this.showFAB = false})
+      : super._();
 
   @JsonKey()
   @override
@@ -1140,14 +1140,14 @@ class _$_AlarmManagers with DiagnosticableTreeMixin implements _AlarmManagers {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AlarmManagers(alarmHour: $alarmHour, alarmMinute: $alarmMinute, showFAB: $showFAB)';
+    return 'AlarmManager(alarmHour: $alarmHour, alarmMinute: $alarmMinute, showFAB: $showFAB)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'AlarmManagers'))
+      ..add(DiagnosticsProperty('type', 'AlarmManager'))
       ..add(DiagnosticsProperty('alarmHour', alarmHour))
       ..add(DiagnosticsProperty('alarmMinute', alarmMinute))
       ..add(DiagnosticsProperty('showFAB', showFAB));
@@ -1157,7 +1157,7 @@ class _$_AlarmManagers with DiagnosticableTreeMixin implements _AlarmManagers {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AlarmManagers &&
+            other is _AlarmManager &&
             const DeepCollectionEquality().equals(other.alarmHour, alarmHour) &&
             const DeepCollectionEquality()
                 .equals(other.alarmMinute, alarmMinute) &&
@@ -1173,13 +1173,14 @@ class _$_AlarmManagers with DiagnosticableTreeMixin implements _AlarmManagers {
 
   @JsonKey(ignore: true)
   @override
-  _$AlarmManagersCopyWith<_AlarmManagers> get copyWith =>
-      __$AlarmManagersCopyWithImpl<_AlarmManagers>(this, _$identity);
+  _$AlarmManagerCopyWith<_AlarmManager> get copyWith =>
+      __$AlarmManagerCopyWithImpl<_AlarmManager>(this, _$identity);
 }
 
-abstract class _AlarmManagers implements AlarmManagers {
-  const factory _AlarmManagers({int alarmHour, int alarmMinute, bool showFAB}) =
-      _$_AlarmManagers;
+abstract class _AlarmManager extends AlarmManager {
+  const factory _AlarmManager({int alarmHour, int alarmMinute, bool showFAB}) =
+      _$_AlarmManager;
+  const _AlarmManager._() : super._();
 
   @override
   int get alarmHour;
@@ -1189,50 +1190,50 @@ abstract class _AlarmManagers implements AlarmManagers {
   bool get showFAB;
   @override
   @JsonKey(ignore: true)
-  _$AlarmManagersCopyWith<_AlarmManagers> get copyWith =>
+  _$AlarmManagerCopyWith<_AlarmManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$AlarmTimeKeepingManagersTearOff {
-  const _$AlarmTimeKeepingManagersTearOff();
+class _$AlarmTimeKeepingManagerTearOff {
+  const _$AlarmTimeKeepingManagerTearOff();
 
-  _AlarmTimeKeepingManagers call(
+  _AlarmTimeKeepingManager call(
       {Duration duration = const Duration(seconds: 1)}) {
-    return _AlarmTimeKeepingManagers(
+    return _AlarmTimeKeepingManager(
       duration: duration,
     );
   }
 }
 
 /// @nodoc
-const $AlarmTimeKeepingManagers = _$AlarmTimeKeepingManagersTearOff();
+const $AlarmTimeKeepingManager = _$AlarmTimeKeepingManagerTearOff();
 
 /// @nodoc
-mixin _$AlarmTimeKeepingManagers {
+mixin _$AlarmTimeKeepingManager {
   Duration get duration => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AlarmTimeKeepingManagersCopyWith<AlarmTimeKeepingManagers> get copyWith =>
+  $AlarmTimeKeepingManagerCopyWith<AlarmTimeKeepingManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AlarmTimeKeepingManagersCopyWith<$Res> {
-  factory $AlarmTimeKeepingManagersCopyWith(AlarmTimeKeepingManagers value,
-          $Res Function(AlarmTimeKeepingManagers) then) =
-      _$AlarmTimeKeepingManagersCopyWithImpl<$Res>;
+abstract class $AlarmTimeKeepingManagerCopyWith<$Res> {
+  factory $AlarmTimeKeepingManagerCopyWith(AlarmTimeKeepingManager value,
+          $Res Function(AlarmTimeKeepingManager) then) =
+      _$AlarmTimeKeepingManagerCopyWithImpl<$Res>;
   $Res call({Duration duration});
 }
 
 /// @nodoc
-class _$AlarmTimeKeepingManagersCopyWithImpl<$Res>
-    implements $AlarmTimeKeepingManagersCopyWith<$Res> {
-  _$AlarmTimeKeepingManagersCopyWithImpl(this._value, this._then);
+class _$AlarmTimeKeepingManagerCopyWithImpl<$Res>
+    implements $AlarmTimeKeepingManagerCopyWith<$Res> {
+  _$AlarmTimeKeepingManagerCopyWithImpl(this._value, this._then);
 
-  final AlarmTimeKeepingManagers _value;
+  final AlarmTimeKeepingManager _value;
   // ignore: unused_field
-  final $Res Function(AlarmTimeKeepingManagers) _then;
+  final $Res Function(AlarmTimeKeepingManager) _then;
 
   @override
   $Res call({
@@ -1248,32 +1249,32 @@ class _$AlarmTimeKeepingManagersCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$AlarmTimeKeepingManagersCopyWith<$Res>
-    implements $AlarmTimeKeepingManagersCopyWith<$Res> {
-  factory _$AlarmTimeKeepingManagersCopyWith(_AlarmTimeKeepingManagers value,
-          $Res Function(_AlarmTimeKeepingManagers) then) =
-      __$AlarmTimeKeepingManagersCopyWithImpl<$Res>;
+abstract class _$AlarmTimeKeepingManagerCopyWith<$Res>
+    implements $AlarmTimeKeepingManagerCopyWith<$Res> {
+  factory _$AlarmTimeKeepingManagerCopyWith(_AlarmTimeKeepingManager value,
+          $Res Function(_AlarmTimeKeepingManager) then) =
+      __$AlarmTimeKeepingManagerCopyWithImpl<$Res>;
   @override
   $Res call({Duration duration});
 }
 
 /// @nodoc
-class __$AlarmTimeKeepingManagersCopyWithImpl<$Res>
-    extends _$AlarmTimeKeepingManagersCopyWithImpl<$Res>
-    implements _$AlarmTimeKeepingManagersCopyWith<$Res> {
-  __$AlarmTimeKeepingManagersCopyWithImpl(_AlarmTimeKeepingManagers _value,
-      $Res Function(_AlarmTimeKeepingManagers) _then)
-      : super(_value, (v) => _then(v as _AlarmTimeKeepingManagers));
+class __$AlarmTimeKeepingManagerCopyWithImpl<$Res>
+    extends _$AlarmTimeKeepingManagerCopyWithImpl<$Res>
+    implements _$AlarmTimeKeepingManagerCopyWith<$Res> {
+  __$AlarmTimeKeepingManagerCopyWithImpl(_AlarmTimeKeepingManager _value,
+      $Res Function(_AlarmTimeKeepingManager) _then)
+      : super(_value, (v) => _then(v as _AlarmTimeKeepingManager));
 
   @override
-  _AlarmTimeKeepingManagers get _value =>
-      super._value as _AlarmTimeKeepingManagers;
+  _AlarmTimeKeepingManager get _value =>
+      super._value as _AlarmTimeKeepingManager;
 
   @override
   $Res call({
     Object? duration = freezed,
   }) {
-    return _then(_AlarmTimeKeepingManagers(
+    return _then(_AlarmTimeKeepingManager(
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -1284,10 +1285,10 @@ class __$AlarmTimeKeepingManagersCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AlarmTimeKeepingManagers
+class _$_AlarmTimeKeepingManager
     with DiagnosticableTreeMixin
-    implements _AlarmTimeKeepingManagers {
-  const _$_AlarmTimeKeepingManagers(
+    implements _AlarmTimeKeepingManager {
+  const _$_AlarmTimeKeepingManager(
       {this.duration = const Duration(seconds: 1)});
 
   @JsonKey()
@@ -1296,14 +1297,14 @@ class _$_AlarmTimeKeepingManagers
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AlarmTimeKeepingManagers(duration: $duration)';
+    return 'AlarmTimeKeepingManager(duration: $duration)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'AlarmTimeKeepingManagers'))
+      ..add(DiagnosticsProperty('type', 'AlarmTimeKeepingManager'))
       ..add(DiagnosticsProperty('duration', duration));
   }
 
@@ -1311,7 +1312,7 @@ class _$_AlarmTimeKeepingManagers
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AlarmTimeKeepingManagers &&
+            other is _AlarmTimeKeepingManager &&
             const DeepCollectionEquality().equals(other.duration, duration));
   }
 
@@ -1321,19 +1322,19 @@ class _$_AlarmTimeKeepingManagers
 
   @JsonKey(ignore: true)
   @override
-  _$AlarmTimeKeepingManagersCopyWith<_AlarmTimeKeepingManagers> get copyWith =>
-      __$AlarmTimeKeepingManagersCopyWithImpl<_AlarmTimeKeepingManagers>(
+  _$AlarmTimeKeepingManagerCopyWith<_AlarmTimeKeepingManager> get copyWith =>
+      __$AlarmTimeKeepingManagerCopyWithImpl<_AlarmTimeKeepingManager>(
           this, _$identity);
 }
 
-abstract class _AlarmTimeKeepingManagers implements AlarmTimeKeepingManagers {
-  const factory _AlarmTimeKeepingManagers({Duration duration}) =
-      _$_AlarmTimeKeepingManagers;
+abstract class _AlarmTimeKeepingManager implements AlarmTimeKeepingManager {
+  const factory _AlarmTimeKeepingManager({Duration duration}) =
+      _$_AlarmTimeKeepingManager;
 
   @override
   Duration get duration;
   @override
   @JsonKey(ignore: true)
-  _$AlarmTimeKeepingManagersCopyWith<_AlarmTimeKeepingManagers> get copyWith =>
+  _$AlarmTimeKeepingManagerCopyWith<_AlarmTimeKeepingManager> get copyWith =>
       throw _privateConstructorUsedError;
 }

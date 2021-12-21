@@ -35,10 +35,7 @@ extension TypeExtension on ColorKey {
 }
 
 // テーマ変更用の状態クラス
-class MyTheme extends ChangeNotifier {
-  MyTheme(this.read);
-  final Reader read;
-
+class MyTheme {
   static const back = PageTransitionsTheme(
     builders: {
       TargetPlatform.android:
@@ -53,7 +50,7 @@ class MyTheme extends ChangeNotifier {
     TargetPlatform.iOS: OpenUpwardsPageTransitionsBuilder(),
   });
 
-  final ThemeData _lightTheme = ThemeData(
+  static final ThemeData _lightTheme = ThemeData(
       primarySwatch: Colors.deepOrange,
       primaryColor: Colors.deepOrange,
       scaffoldBackgroundColor: Colors.deepOrange.shade100.lighter(10),
@@ -73,7 +70,7 @@ class MyTheme extends ChangeNotifier {
       visualDensity: VisualDensity.adaptivePlatformDensity,
       pageTransitionsTheme: back);
 
-  final ThemeData _darkTheme = ThemeData(
+  static final ThemeData _darkTheme = ThemeData(
       brightness: Brightness.dark,
       primarySwatch: Colors.deepOrange,
       backgroundColor: Colors.deepOrange.darker(70),
@@ -97,16 +94,18 @@ class MyTheme extends ChangeNotifier {
       fontFamily: 'M-plus-M',
       pageTransitionsTheme: back);
 
-  ThemeData get lightTheme => _lightTheme;
-  ThemeData get darkTheme => _darkTheme;
+  static ThemeData get lightTheme => _lightTheme;
+  static ThemeData get darkTheme => _darkTheme;
 
-  ThemeData get_theme({required BuildContext context}) {
-    final value = read(themeManager).isLight(context: context);
+  static ThemeData get_theme(
+      {required BuildContext context, required WidgetRef ref}) {
+    final value = ref.read(themeManager.notifier).isLight(context: context);
     return value ? _lightTheme : _darkTheme;
   }
 
-  Color get_background({required BuildContext context}) {
-    final value = read(themeManager).isLight(context: context);
+  static Color get_background(
+      {required BuildContext context, required WidgetRef ref}) {
+    final value = ref.read(themeManager.notifier).isLight(context: context);
     return value
         ? _lightTheme.scaffoldBackgroundColor
         : _darkTheme.scaffoldBackgroundColor;
@@ -115,4 +114,6 @@ class MyTheme extends ChangeNotifier {
   static Color get_color(ColorKey color) {
     return color.value;
   }
+
+  void foo() {}
 }

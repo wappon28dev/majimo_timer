@@ -43,13 +43,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
               _controller
                 ..duration = composition.duration
                 ..forward().whenComplete(() {
-                  bool timekeeping = ref.read(generalManager).timekeeping;
+                  final timekeeping = ref.read(generalManager).timekeeping;
                   Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
                     builder: (BuildContext context) => !timekeeping
                         ? const HomePage()
                         : const AlarmTimeKeepingPage(),
                   ));
-                  ref.read(generalManager).home();
+                  ref.read(generalManager.notifier).home();
                 });
             },
           ),

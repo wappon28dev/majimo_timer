@@ -18,24 +18,24 @@ import 'plugin/let_log/let_log.dart';
 import 'view/home/root/body.dart';
 
 //global
-final myTheme = ChangeNotifierProvider((ref) => MyTheme(ref.read));
-final generalManager =
-    ChangeNotifierProvider((ref) => GeneralManagerVM(GeneralManager()));
-final themeManager =
-    ChangeNotifierProvider((ref) => ThemeManagerVM(ThemeManager(), ref.read));
-final langManager =
-    ChangeNotifierProvider((ref) => LangManagerVM(LangManager()));
-final clockManager =
-    ChangeNotifierProvider((ref) => ClockManagerVM(ClockManager()));
-final colorManager =
-    ChangeNotifierProvider((ref) => ColorManagerVM(ColorManager(), ref.read));
-final alarmManager =
-    ChangeNotifierProvider((ref) => AlarmManagerVM(AlarmManager(), ref.read));
-final alarmTimeKeepingManager = ChangeNotifierProvider(
-    (ref) => AlarmTimeKeepingManagerVM(AlarmTimeKeepingManager(), ref.read));
 final counterStateControllerProvider =
     StateNotifierProvider<CounterStateController, CounterState>(
         (ref) => CounterStateController());
+final generalManager = StateNotifierProvider<GeneralManagerVM, GeneralManager>(
+    (ref) => GeneralManagerVM());
+final themeManager = StateNotifierProvider<ThemeManagerVM, ThemeManager>(
+    (ref) => ThemeManagerVM());
+final langManager =
+    StateNotifierProvider<LangManagerVM, LangManager>((ref) => LangManagerVM());
+final clockManager = StateNotifierProvider<ClockManagerVM, ClockManager>(
+    (ref) => ClockManagerVM());
+final colorManager = StateNotifierProvider<ColorManagerVM, ColorManager>(
+    (ref) => ColorManagerVM());
+final alarmManager = StateNotifierProvider<AlarmManagerVM, AlarmManager>(
+    (ref) => AlarmManagerVM());
+final alarmTimeKeepingManager =
+    StateNotifierProvider<AlarmTimeKeepingManagerVM, AlarmTimeKeepingManager>(
+        (ref) => AlarmTimeKeepingManagerVM(ref.read));
 
 const int helloAlarmID = 0;
 
@@ -76,8 +76,8 @@ class MyApp extends HookConsumerWidget {
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
-            theme: ref.read(myTheme).lightTheme,
-            darkTheme: ref.read(myTheme).darkTheme,
+            theme: MyTheme.lightTheme,
+            darkTheme: MyTheme.darkTheme,
             themeMode: ref.read(themeManager).theme_value,
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',

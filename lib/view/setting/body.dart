@@ -38,9 +38,9 @@ class Setting extends HookConsumerWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: ref.read(myTheme).lightTheme,
-      darkTheme: ref.read(myTheme).darkTheme,
-      themeMode: thememanager.theme_value,
+      theme: MyTheme.lightTheme,
+      darkTheme: MyTheme.darkTheme,
+      themeMode: ref.watch(themeManager).theme_value,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: appbar(context: context, ref: ref),

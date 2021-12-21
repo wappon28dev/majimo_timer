@@ -55,28 +55,46 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
 AppBar appbar({required BuildContext context, required WidgetRef ref}) {
   return AppBar(
     centerTitle: true,
-    leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () {}),
-    title: const AutoSizeText("アラームモード",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        maxLines: 1),
+    leading: PlayAnimation(
+      tween: Tween<double>(begin: 0, end: 1),
+      delay: const Duration(milliseconds: 5900),
+      duration: const Duration(milliseconds: 300),
+      builder: (context, child, value) {
+        return Opacity(
+          opacity: value as double,
+          child: IconButton(
+            icon: const Icon(Icons.alarm),
+            onPressed: () {},
+            enableFeedback: false,
+          ),
+        );
+      },
+    ),
+    title: AnimatedOpacity(
+        opacity: ref.watch(generalManager).opacity,
+        duration: const Duration(milliseconds: 300),
+        child: AutoSizeText(
+          ref.watch(generalManager).status,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+          maxLines: 1,
+        )),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(10),
         bottomRight: Radius.circular(10),
       ),
     ),
-    actions: [
-      IconButton(
-          onPressed: () {
-            PrefManager.allremove();
-            Logger.e("- from majimo_timer/lib/view/setting/body.dart \n" +
-                " >> ! SharedPreferences All Removed ! <<");
-            PrefManager.restore(ref, context);
-          },
-          icon: const Icon(Icons.settings_backup_restore))
-    ],
+    backgroundColor: Colors.blue,
+    // actions: [
+    //   IconButton(
+    //       onPressed: () {
+    //         PrefManager.allremove();
+    //         Logger.e("- from majimo_timer/lib/view/setting/body.dart \n" +
+    //             " >> ! SharedPreferences All Removed ! <<");
+    //         PrefManager.restore(ref, context);
+    //       },
+    //       icon: const Icon(Icons.settings_backup_restore))
+    // ],
   );
 }
 

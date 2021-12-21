@@ -18,16 +18,13 @@ import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
 import 'package:majimo_timer/view/setting/body.dart';
+import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:simple_animations/simple_animations.dart';
 import '../../../model/helper/theme.dart';
 import '../../../plugin/draggable_home/draggable_home.dart';
 import 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
-  final colormanager = ref.read(colorManager);
-  final alarmmanager = ref.read(alarmManager);
-  final generalmanager = ref.read(generalManager);
-
   final width = MediaQuery.of(context).size.width;
   useEffect(() {
     LinkManager.initQuickAction(context: context, ref: ref);
@@ -66,14 +63,14 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     ///           1 => return Color
     ///           2 => return Icon
     /// ```
-    func({required int mode}) {
+    dynamic func({required int mode}) {
       switch (mode) {
         case 0:
           switch (tag) {
             case 'alarm':
               context.pushTransparentRoute(const AlarmPage());
-              alarmmanager.internal();
-              alarmmanager.show();
+              ref.read(alarmManager.notifier).internal();
+              ref.read(alarmManager.notifier).show();
               break;
             case 'timer':
               context.pushTransparentRoute(const TimerPage());
@@ -107,14 +104,14 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             child: SizedBox.square(
               dimension: width / 3.6,
               child: Container(
-                margin: const EdgeInsets.all(2.0),
+                margin: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0), color: value),
+                    borderRadius: BorderRadius.circular(20), color: value),
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(func(mode: 1), color: Colors.white),
+                      Icon(func(mode: 1) as IconData, color: Colors.white),
                       Text(
                         tag.tr(),
                         style:
@@ -128,7 +125,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget content(BuildContext context) {
-    print(ref.watch(generalManager).opacity);
     return Column(
       children: [
         AnimatedOpacity(
@@ -156,10 +152,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget expand(BuildContext context) {
-    final color = ref.watch(colorManager).color;
+    final color =
+        ref.watch(colorManager).color_tween(context: context, ref: ref);
     final opacity = ref.watch(colorManager).opacity;
-    final path = colormanager.color_picture_path(context: context);
-    Logger.e('opacity4 => ${opacity}');
+    final path =
+        ref.watch(colorManager).color_picture_path(context: context, ref: ref);
     return PlayAnimation<Color?>(
         tween: color,
         builder: (context, child, value) {
@@ -204,7 +201,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       IconButton(
         onPressed: () {
           Navigator.of(context).pushNamed('/debug');
-          Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n' +
+          Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n'
               ' > debug page opened');
         },
         icon: const Icon(Icons.developer_mode),
@@ -226,8 +223,10 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       children: [
         IconButton(
           onPressed: () {
-            generalmanager.push(context: context, page: const Debug());
-            Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n' +
+            ref
+                .read(generalManager.notifier)
+                .push(context: context, page: const Debug());
+            Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n'
                 ' > debug page opened');
           },
           icon: const Icon(Icons.developer_mode),
@@ -235,7 +234,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         ),
         IconButton(
           onPressed: () {
-            generalmanager.push(context: context, page: const Setting());
+            ref
+                .read(generalManager.notifier)
+                .push(context: context, page: const Setting());
           },
           icon: const Icon(Icons.settings),
           color: Colors.white,

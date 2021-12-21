@@ -39,13 +39,15 @@ class PrefManager {
     Logger.r(
         ' >> restore bool is24 = $_is24\n >> restore int theme = $_theme\n >> restore int lang = $_lang\n >> restore bool topToast = $_topToast\n >> restore int toastDuration = $_toastDuration\n >> restore int clockAnimation = $_clockAnimation\n >> restore bool showSec = $_showSec');
 
-    ref.read(clockManager).change_is24(value: _is24);
-    ref.read(themeManager).change(value: _theme);
-    ref.read(langManager).change(context: context, lang: _lang);
-    ref.read(generalManager).change_topToast(value: _topToast);
-    ref.read(generalManager).change_toastDuration(value: _toastDuration);
-    ref.read(clockManager).change_animation(value: _clockAnimation);
-    ref.read(clockManager).change_showSec(value: _showSec);
+    ref.read(clockManager.notifier).change_is24(value: _is24);
+    ref.read(themeManager.notifier).change(value: _theme);
+    ref.read(langManager.notifier).change(context: context, value: _lang);
+    ref.read(generalManager.notifier).change_topToast(value: _topToast);
+    ref
+        .read(generalManager.notifier)
+        .change_toastDuration(value: _toastDuration);
+    ref.read(clockManager.notifier).change_animation(value: _clockAnimation);
+    ref.read(clockManager.notifier).change_showSec(value: _showSec);
   }
 
   static Future<bool> getBool({required PrefKey key}) async {

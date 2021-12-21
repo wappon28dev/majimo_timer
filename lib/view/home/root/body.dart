@@ -7,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
 import 'package:simple_animations/simple_animations.dart';
@@ -29,8 +30,8 @@ class HomePage extends HookConsumerWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        theme: ref.read(myTheme).lightTheme,
-        darkTheme: ref.read(myTheme).darkTheme,
+        theme: MyTheme.lightTheme,
+        darkTheme: MyTheme.darkTheme,
         themeMode: ref.watch(themeManager).theme_value,
         debugShowCheckedModeBanner: false,
         home: !isLandscape
@@ -48,7 +49,7 @@ class HomePage extends HookConsumerWidget {
 }
 
 Widget analogclock({required BuildContext context, required WidgetRef ref}) {
-  final isLight = ref.read(themeManager).isLight(context: context);
+  final isLight = ref.read(themeManager.notifier).isLight(context: context);
   final showSec = ref.read(clockManager).showSec;
   return FlutterAnalogClock(
     showNumber: true,

@@ -17,10 +17,10 @@ import '../../main.dart';
 Future modal(BuildContext context, WidgetRef ref, IconData icon, String title,
     String subtitle, List<Widget> widget) {
   const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
-  final value = ref.read(themeManager).isLight(context: context);
+  final value = ref.read(themeManager.notifier).isLight(context: context);
   final header = <Widget>[
     Theme(
-      data: ref.read(myTheme).get_theme(context: context),
+      data: MyTheme.get_theme(context: context, ref: ref),
       child: Column(children: <Widget>[
         Container(
           margin: const EdgeInsets.symmetric(vertical: 3),
@@ -62,7 +62,7 @@ Future modal(BuildContext context, WidgetRef ref, IconData icon, String title,
           controller: ModalScrollController.of(context),
           child: Material(
               child: Theme(
-                  data: ref.read(myTheme).get_theme(context: context),
+                  data: MyTheme.get_theme(context: context, ref: ref),
                   child: Ink(
                     padding: padding,
                     color: value
@@ -90,7 +90,7 @@ List style(dynamic pref, dynamic value) {
 
 dynamic change_lang(BuildContext context, WidgetRef ref) {
   void func({required int lang}) {
-    ref.read(langManager).change(context: context, lang: lang);
+    ref.read(langManager.notifier).change(context: context, value: lang);
     Navigator.pop(context);
   }
 
@@ -136,7 +136,7 @@ dynamic change_lang(BuildContext context, WidgetRef ref) {
 
 dynamic app_theme(BuildContext context, WidgetRef ref) {
   void func({required int theme}) {
-    ref.read(themeManager).change(value: theme);
+    ref.read(themeManager.notifier).change(value: theme);
 
     Navigator.pop(context);
   }
@@ -184,7 +184,7 @@ dynamic app_theme(BuildContext context, WidgetRef ref) {
 
 dynamic clock_style(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(clockManager).change_is24(value: value);
+    ref.read(clockManager.notifier).change_is24(value: value);
 
     Navigator.pop(context);
   }
@@ -192,7 +192,7 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
   final pref = ref.read(clockManager).is24;
 
   Widget clock({required bool mode}) {
-    final value = ref.read(themeManager).isLight(context: context);
+    final value = ref.read(themeManager.notifier).isLight(context: context);
 
     final color = (mode == pref)
         ? ColorKey.orange.value
@@ -267,14 +267,14 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
 
 dynamic clock_showSec(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(clockManager).change_showSec(value: value);
+    ref.read(clockManager.notifier).change_showSec(value: value);
     Navigator.pop(context);
   }
 
   final pref = ref.read(clockManager).showSec;
 
   Widget clock({required bool mode}) {
-    final value = ref.read(themeManager).isLight(context: context);
+    final value = ref.read(themeManager.notifier).isLight(context: context);
 
     final color = (mode == pref)
         ? ColorKey.orange.value
@@ -347,14 +347,14 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
 
 dynamic clock_animation(BuildContext context, WidgetRef ref) {
   void func({required int value}) {
-    ref.read(clockManager).change_animation(value: value);
+    ref.read(clockManager.notifier).change_animation(value: value);
     Navigator.pop(context);
   }
 
   final pref = ref.read(clockManager).animation;
 
   Widget clock({required int mode}) {
-    final value = ref.read(themeManager).isLight(context: context);
+    final value = ref.read(themeManager.notifier).isLight(context: context);
 
     final color = (mode == pref)
         ? ColorKey.orange.value
@@ -443,7 +443,7 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
 
 dynamic toast_position(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(generalManager).change_topToast(value: value);
+    ref.read(generalManager.notifier).change_topToast(value: value);
 
     Navigator.pop(context);
   }
@@ -483,7 +483,7 @@ dynamic toast_position(BuildContext context, WidgetRef ref) {
 
 dynamic toast_duration(BuildContext context, WidgetRef ref) {
   void func({required int sec}) {
-    ref.read(generalManager).change_toastDuration(value: sec);
+    ref.read(generalManager.notifier).change_toastDuration(value: sec);
 
     Navigator.pop(context);
   }

@@ -17,12 +17,12 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
     final orientation = MediaQuery.of(context).orientation;
     final isLandscape = orientation == Orientation.landscape;
     final alarmmanager = ref.read(alarmManager);
-    final generalmanager = ref.read(generalManager);
+    final generalmanager = ref.read(generalManager.notifier);
     final show = ref.watch(alarmManager).showFAB;
 
     return MaterialApp(
-        theme: ref.read(myTheme).lightTheme,
-        darkTheme: ref.read(myTheme).darkTheme,
+        theme: MyTheme.lightTheme,
+        darkTheme: MyTheme.darkTheme,
         themeMode: ref.watch(themeManager).theme_value,
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -38,6 +38,7 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
                       onPressed: () {
                         generalmanager.push_home(context: context);
                         generalmanager.change_timekeeping(value: false);
+                        generalmanager.home();
                       },
                       heroTag: null,
                       child: const Icon(
@@ -64,7 +65,7 @@ Widget buildHorizontal(BuildContext context) {
 
 Widget analogclock_timekeeping(
     {required BuildContext context, required WidgetRef ref}) {
-  final isLight = ref.read(themeManager).isLight(context: context);
+  final isLight = ref.read(themeManager.notifier).isLight(context: context);
   final showSec = ref.read(clockManager).showSec;
   return FlutterAnalogClock(
     showNumber: true,

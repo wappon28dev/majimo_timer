@@ -16,7 +16,7 @@ class AlarmPage extends HookConsumerWidget {
     final orientation = MediaQuery.of(context).orientation;
     final isLandscape = orientation == Orientation.landscape;
     final generalmanager = ref.read(generalManager);
-    final alarmmanager = ref.read(alarmManager);
+    final alarmmanager = ref.read(alarmManager.notifier);
     final show = ref.watch(alarmManager).showFAB;
     const tag = 'alarm';
 

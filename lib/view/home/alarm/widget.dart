@@ -36,7 +36,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 initialEntryMode: TimePickerEntryMode.input,
               );
               if (result != null && result != current) {
-                alarmmanager.change(value: result);
+                ref.read(alarmManager.notifier).change(value: result);
                 Logger.i(
                     '- from majimo_timer/lib/view/home/alarm/widget.dart \n' +
                         ' >> receive result => ' +

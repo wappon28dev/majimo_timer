@@ -51,8 +51,8 @@ class LinkManager {
       case 'a':
         Navigator.of(context).pushReplacementNamed('/home');
         context.pushTransparentRoute(const AlarmPage());
-        ref.watch(alarmManager).internal();
-        ref.watch(alarmManager).show();
+        ref.watch(alarmManager.notifier).internal();
+        ref.watch(alarmManager.notifier).show();
         break;
 
       case 't':
