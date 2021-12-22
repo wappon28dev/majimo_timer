@@ -38,6 +38,7 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
                       onPressed: () {
                         generalmanager.push_home(context: context);
                         generalmanager.change_timekeeping(value: false);
+
                         generalmanager.home();
                       },
                       heroTag: null,

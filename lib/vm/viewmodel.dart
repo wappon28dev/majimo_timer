@@ -7,6 +7,7 @@ import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/pref.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/model/helper/work.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
@@ -49,13 +50,7 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
     state = state.copyWith(status: 'まじもタイマーへようこそ！');
 
     await Future<void>.delayed(const Duration(seconds: 2));
-    state = state.copyWith(opacity: 0);
-
-    await Future<void>.delayed(const Duration(milliseconds: 600));
-
-    state =
-        state.copyWith(status: DateTime.now().format('yMMMMEEEEd', t.lang.t));
-    state = state.copyWith(opacity: 1);
+    await change_status(text: DateTime.now().format('yMMMMEEEEd', t.lang.t));
   }
 
   Future<void> expand(int i) async {
@@ -64,7 +59,7 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
     await Future<void>.delayed(const Duration(seconds: 3));
     await change_status(
         text:
-            '${DateTime.now().format('yMMMMEEEEd', t.lang.t)}・Majimo-Timer v0.0.2');
+            '${DateTime.now().format('yMMMMEEEEd', t.lang.t)}・Majimo-Timer v0.1.0');
   }
 
   Future<void> change_status({required String text}) async {
@@ -84,11 +79,13 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
         ),
       );
 
-  void push_home({required BuildContext context}) =>
-      Navigator.pushAndRemoveUntil<void>(
-          context,
-          MaterialPageRoute<void>(builder: (context) => const HomePage()),
-          (_) => false);
+  void push_home({required BuildContext context}) {
+    Navigator.pushAndRemoveUntil<void>(
+        context,
+        MaterialPageRoute<void>(builder: (context) => const HomePage()),
+        (_) => false);
+    WorkManager().reset(task: TaskName.Alarm_finish);
+  }
 }
 
 class ThemeManagerVM extends StateNotifier<ThemeManager> {
@@ -260,6 +257,7 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
     state = state.copyWith(duration: duration);
     Logger.i('duration => $duration');
     status();
+    WorkManager().register(task: TaskName.Alarm_finish, duration: duration);
   }
 
   Future<void> status() async {

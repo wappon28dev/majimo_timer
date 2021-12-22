@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/model/helper/work.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
@@ -33,7 +34,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               final result = await showTimePicker(
                 context: context,
                 initialTime: current,
-                initialEntryMode: TimePickerEntryMode.input,
               );
               if (result != null && result != current) {
                 ref.read(alarmManager.notifier).change(value: result);
@@ -49,8 +49,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               onPressed: () {
                 Logger.i('set alarm !!');
                 // One off task registration
-                Workmanager().registerOneOffTask('1', 'task',
-                    initialDelay: const Duration(seconds: 3));
+                WorkManager().register(
+                    task: TaskName.Alarm_finish,
+                    duration: const Duration(seconds: 5));
               }),
         ]),
       ),

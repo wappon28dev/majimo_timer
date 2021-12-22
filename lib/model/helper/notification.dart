@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: avoid_classes_with_only_static_members, non_constant_identifier_names
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +14,13 @@ class NotificationManager {
         null,
         [
           NotificationChannel(
-              channelKey: 'basic_channel',
-              channelName: 'Basic notifications',
-              channelDescription: 'Notification channel for basic tests',
-              defaultColor: const Color(0xFF9D50DD),
-              ledColor: Colors.white)
+            channelKey: 'basic_channel',
+            channelName: 'Basic notifications',
+            channelDescription: 'Notification channel for basic tests',
+            defaultColor: const Color(0xFF9D50DD),
+            ledColor: Colors.white,
+            onlyAlertOnce: false,
+          )
         ]);
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
@@ -38,14 +40,39 @@ class NotificationManager {
             body: 'from まじもタイマー'));
   }
 
-  static void background() {
-    Logger.i('called background');
+  // static void background() {
+  //   Logger.i('called background');
+  //   AwesomeNotifications().createNotification(
+  //       content: NotificationContent(
+  //           id: 10,
+  //           channelKey: 'basic_channel',
+  //           title: 'バックグラウンド処理テスト',
+  //           body: 'from まじもタイマー'));
+  // }
+
+  static void alarm_finish() {
+    Logger.i('finish AlarmMode');
     AwesomeNotifications().createNotification(
         content: NotificationContent(
-            id: 10,
-            channelKey: 'basic_channel',
-            title: 'バックグラウンド処理テスト',
-            body: 'from まじもタイマー'));
+          id: 10,
+          channelKey: 'basic_channel',
+          title: '時間です！',
+          body: 'from まじもタイマー',
+          autoDismissible: true,
+          category: NotificationCategory.Alarm,
+          wakeUpScreen: true,
+          criticalAlert: true,
+        ),
+        actionButtons: [
+          NotificationActionButton(
+              key: 'SHOW_SERVICE_DETAILS',
+              label: 'Show details',
+              showInCompactView: true),
+          NotificationActionButton(
+              key: 'SHOW_SERVICE_DETAILS', label: 'Show details'),
+          NotificationActionButton(
+              key: 'SHOW_SERVICE_DETAILS', label: 'Show details'),
+        ]);
   }
 }
 

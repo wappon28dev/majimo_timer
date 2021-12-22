@@ -8,7 +8,9 @@ import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 import 'notification.dart';
 
-class ScheduleManager {
+enum TaskName { Alarm_finish }
+
+class WorkManager {
   // static notification() async {
   //   const url = "https://majimo.jp/app/a";
   //   await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
@@ -20,4 +22,16 @@ class ScheduleManager {
   //           title: 'Simple Notification',
   //           body: 'Simple body'));
   // }
+  void register({required TaskName task, required Duration duration}) {
+    reset(task: task);
+    Workmanager().registerOneOffTask(
+      task.index.toString(),
+      task.name,
+      initialDelay: duration,
+    );
+  }
+
+  void reset({required TaskName task}) {
+    Workmanager().cancelByUniqueName(task.index.toString());
+  }
 }

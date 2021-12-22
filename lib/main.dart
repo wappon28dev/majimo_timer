@@ -42,8 +42,7 @@ const int helloAlarmID = 0;
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     Logger.i('are you hear?');
-    NotificationManager.background();
-
+    NotificationManager.alarm_finish();
     return Future.value(true);
   });
 }
