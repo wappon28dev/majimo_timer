@@ -15,12 +15,10 @@ import 'model/helper/notification.dart';
 import 'model/helper/pref.dart';
 import 'model/helper/theme.dart';
 import 'plugin/let_log/let_log.dart';
+import 'view/home/alarm/timekeep/body.dart';
 import 'view/home/root/body.dart';
 
 //global
-final counterStateControllerProvider =
-    StateNotifierProvider<CounterStateController, CounterState>(
-        (ref) => CounterStateController());
 final generalManager = StateNotifierProvider<GeneralManagerVM, GeneralManager>(
     (ref) => GeneralManagerVM());
 final themeManager = StateNotifierProvider<ThemeManagerVM, ThemeManager>(
@@ -66,6 +64,8 @@ class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final alarmTK = ref.read(alarmTimeKeepingManager).alarmTK;
+
     useEffect(() {
       PrefManager.restore(ref, context);
     });
@@ -80,6 +80,8 @@ class MyApp extends HookConsumerWidget {
             themeMode: ref.read(themeManager).theme_value,
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
-            home: const SplashScreen()));
+            home: !alarmTK
+                ? const SplashScreen()
+                : const AlarmTimeKeepingPage()));
   }
 }

@@ -12,20 +12,14 @@ part 'state.freezed.dart';
 // part 'state.g.dart';
 
 @freezed
-class CounterState with _$CounterState {
-  const factory CounterState({@Default(0) int count, @Default(0) int count10}) =
-      _CounterState;
-}
-
-@freezed
 class GeneralManager with _$GeneralManager {
   const GeneralManager._();
-  const factory GeneralManager(
-      {@Default('まじもタイマーへようこそ！') String status,
-      @Default(false) bool topToast,
-      @Default(3) int toastDuration,
-      @Default(1) double opacity,
-      @Default(false) bool timekeeping}) = _GeneralManager;
+  const factory GeneralManager({
+    @Default('まじもタイマーへようこそ！') String status,
+    @Default(false) bool topToast,
+    @Default(3) int toastDuration,
+    @Default(1) double opacity,
+  }) = _GeneralManager;
 
   // define custom getter
   String get topToast_caption => topToast ? t.top.t : t.bottom.t;
@@ -249,7 +243,9 @@ class AlarmManager with _$AlarmManager {
 
 @freezed
 class AlarmTimeKeepingManager with _$AlarmTimeKeepingManager {
-  const factory AlarmTimeKeepingManager(
-          {@Default(Duration(seconds: 1)) Duration duration}) =
-      _AlarmTimeKeepingManager;
+  const factory AlarmTimeKeepingManager({
+    @Default(Duration(seconds: 1)) Duration duration,
+    @Default(false) bool alarmTK,
+    @Default(false) bool isAlarmFinish,
+  }) = _AlarmTimeKeepingManager;
 }

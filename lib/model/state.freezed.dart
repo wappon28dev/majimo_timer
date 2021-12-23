@@ -14,163 +14,6 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$CounterStateTearOff {
-  const _$CounterStateTearOff();
-
-  _CounterState call({int count = 0, int count10 = 0}) {
-    return _CounterState(
-      count: count,
-      count10: count10,
-    );
-  }
-}
-
-/// @nodoc
-const $CounterState = _$CounterStateTearOff();
-
-/// @nodoc
-mixin _$CounterState {
-  int get count => throw _privateConstructorUsedError;
-  int get count10 => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $CounterStateCopyWith<CounterState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CounterStateCopyWith<$Res> {
-  factory $CounterStateCopyWith(
-          CounterState value, $Res Function(CounterState) then) =
-      _$CounterStateCopyWithImpl<$Res>;
-  $Res call({int count, int count10});
-}
-
-/// @nodoc
-class _$CounterStateCopyWithImpl<$Res> implements $CounterStateCopyWith<$Res> {
-  _$CounterStateCopyWithImpl(this._value, this._then);
-
-  final CounterState _value;
-  // ignore: unused_field
-  final $Res Function(CounterState) _then;
-
-  @override
-  $Res call({
-    Object? count = freezed,
-    Object? count10 = freezed,
-  }) {
-    return _then(_value.copyWith(
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
-      count10: count10 == freezed
-          ? _value.count10
-          : count10 // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-abstract class _$CounterStateCopyWith<$Res>
-    implements $CounterStateCopyWith<$Res> {
-  factory _$CounterStateCopyWith(
-          _CounterState value, $Res Function(_CounterState) then) =
-      __$CounterStateCopyWithImpl<$Res>;
-  @override
-  $Res call({int count, int count10});
-}
-
-/// @nodoc
-class __$CounterStateCopyWithImpl<$Res> extends _$CounterStateCopyWithImpl<$Res>
-    implements _$CounterStateCopyWith<$Res> {
-  __$CounterStateCopyWithImpl(
-      _CounterState _value, $Res Function(_CounterState) _then)
-      : super(_value, (v) => _then(v as _CounterState));
-
-  @override
-  _CounterState get _value => super._value as _CounterState;
-
-  @override
-  $Res call({
-    Object? count = freezed,
-    Object? count10 = freezed,
-  }) {
-    return _then(_CounterState(
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
-      count10: count10 == freezed
-          ? _value.count10
-          : count10 // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_CounterState with DiagnosticableTreeMixin implements _CounterState {
-  const _$_CounterState({this.count = 0, this.count10 = 0});
-
-  @JsonKey()
-  @override
-  final int count;
-  @JsonKey()
-  @override
-  final int count10;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CounterState(count: $count, count10: $count10)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'CounterState'))
-      ..add(DiagnosticsProperty('count', count))
-      ..add(DiagnosticsProperty('count10', count10));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _CounterState &&
-            const DeepCollectionEquality().equals(other.count, count) &&
-            const DeepCollectionEquality().equals(other.count10, count10));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(count),
-      const DeepCollectionEquality().hash(count10));
-
-  @JsonKey(ignore: true)
-  @override
-  _$CounterStateCopyWith<_CounterState> get copyWith =>
-      __$CounterStateCopyWithImpl<_CounterState>(this, _$identity);
-}
-
-abstract class _CounterState implements CounterState {
-  const factory _CounterState({int count, int count10}) = _$_CounterState;
-
-  @override
-  int get count;
-  @override
-  int get count10;
-  @override
-  @JsonKey(ignore: true)
-  _$CounterStateCopyWith<_CounterState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 class _$GeneralManagerTearOff {
   const _$GeneralManagerTearOff();
 
@@ -178,14 +21,12 @@ class _$GeneralManagerTearOff {
       {String status = 'まじもタイマーへようこそ！',
       bool topToast = false,
       int toastDuration = 3,
-      double opacity = 1,
-      bool timekeeping = false}) {
+      double opacity = 1}) {
     return _GeneralManager(
       status: status,
       topToast: topToast,
       toastDuration: toastDuration,
       opacity: opacity,
-      timekeeping: timekeeping,
     );
   }
 }
@@ -199,7 +40,6 @@ mixin _$GeneralManager {
   bool get topToast => throw _privateConstructorUsedError;
   int get toastDuration => throw _privateConstructorUsedError;
   double get opacity => throw _privateConstructorUsedError;
-  bool get timekeeping => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GeneralManagerCopyWith<GeneralManager> get copyWith =>
@@ -211,12 +51,7 @@ abstract class $GeneralManagerCopyWith<$Res> {
   factory $GeneralManagerCopyWith(
           GeneralManager value, $Res Function(GeneralManager) then) =
       _$GeneralManagerCopyWithImpl<$Res>;
-  $Res call(
-      {String status,
-      bool topToast,
-      int toastDuration,
-      double opacity,
-      bool timekeeping});
+  $Res call({String status, bool topToast, int toastDuration, double opacity});
 }
 
 /// @nodoc
@@ -234,7 +69,6 @@ class _$GeneralManagerCopyWithImpl<$Res>
     Object? topToast = freezed,
     Object? toastDuration = freezed,
     Object? opacity = freezed,
-    Object? timekeeping = freezed,
   }) {
     return _then(_value.copyWith(
       status: status == freezed
@@ -253,10 +87,6 @@ class _$GeneralManagerCopyWithImpl<$Res>
           ? _value.opacity
           : opacity // ignore: cast_nullable_to_non_nullable
               as double,
-      timekeeping: timekeeping == freezed
-          ? _value.timekeeping
-          : timekeeping // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -268,12 +98,7 @@ abstract class _$GeneralManagerCopyWith<$Res>
           _GeneralManager value, $Res Function(_GeneralManager) then) =
       __$GeneralManagerCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String status,
-      bool topToast,
-      int toastDuration,
-      double opacity,
-      bool timekeeping});
+  $Res call({String status, bool topToast, int toastDuration, double opacity});
 }
 
 /// @nodoc
@@ -293,7 +118,6 @@ class __$GeneralManagerCopyWithImpl<$Res>
     Object? topToast = freezed,
     Object? toastDuration = freezed,
     Object? opacity = freezed,
-    Object? timekeeping = freezed,
   }) {
     return _then(_GeneralManager(
       status: status == freezed
@@ -312,10 +136,6 @@ class __$GeneralManagerCopyWithImpl<$Res>
           ? _value.opacity
           : opacity // ignore: cast_nullable_to_non_nullable
               as double,
-      timekeeping: timekeeping == freezed
-          ? _value.timekeeping
-          : timekeeping // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -327,8 +147,7 @@ class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
       {this.status = 'まじもタイマーへようこそ！',
       this.topToast = false,
       this.toastDuration = 3,
-      this.opacity = 1,
-      this.timekeeping = false})
+      this.opacity = 1})
       : super._();
 
   @JsonKey()
@@ -343,13 +162,10 @@ class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final double opacity;
-  @JsonKey()
-  @override
-  final bool timekeeping;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GeneralManager(status: $status, topToast: $topToast, toastDuration: $toastDuration, opacity: $opacity, timekeeping: $timekeeping)';
+    return 'GeneralManager(status: $status, topToast: $topToast, toastDuration: $toastDuration, opacity: $opacity)';
   }
 
   @override
@@ -360,8 +176,7 @@ class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('topToast', topToast))
       ..add(DiagnosticsProperty('toastDuration', toastDuration))
-      ..add(DiagnosticsProperty('opacity', opacity))
-      ..add(DiagnosticsProperty('timekeeping', timekeeping));
+      ..add(DiagnosticsProperty('opacity', opacity));
   }
 
   @override
@@ -373,9 +188,7 @@ class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.topToast, topToast) &&
             const DeepCollectionEquality()
                 .equals(other.toastDuration, toastDuration) &&
-            const DeepCollectionEquality().equals(other.opacity, opacity) &&
-            const DeepCollectionEquality()
-                .equals(other.timekeeping, timekeeping));
+            const DeepCollectionEquality().equals(other.opacity, opacity));
   }
 
   @override
@@ -384,8 +197,7 @@ class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(topToast),
       const DeepCollectionEquality().hash(toastDuration),
-      const DeepCollectionEquality().hash(opacity),
-      const DeepCollectionEquality().hash(timekeeping));
+      const DeepCollectionEquality().hash(opacity));
 
   @JsonKey(ignore: true)
   @override
@@ -398,8 +210,7 @@ abstract class _GeneralManager extends GeneralManager {
       {String status,
       bool topToast,
       int toastDuration,
-      double opacity,
-      bool timekeeping}) = _$_GeneralManager;
+      double opacity}) = _$_GeneralManager;
   const _GeneralManager._() : super._();
 
   @override
@@ -410,8 +221,6 @@ abstract class _GeneralManager extends GeneralManager {
   int get toastDuration;
   @override
   double get opacity;
-  @override
-  bool get timekeeping;
   @override
   @JsonKey(ignore: true)
   _$GeneralManagerCopyWith<_GeneralManager> get copyWith =>
@@ -1199,9 +1008,13 @@ class _$AlarmTimeKeepingManagerTearOff {
   const _$AlarmTimeKeepingManagerTearOff();
 
   _AlarmTimeKeepingManager call(
-      {Duration duration = const Duration(seconds: 1)}) {
+      {Duration duration = const Duration(seconds: 1),
+      bool alarmTK = false,
+      bool isAlarmFinish = false}) {
     return _AlarmTimeKeepingManager(
       duration: duration,
+      alarmTK: alarmTK,
+      isAlarmFinish: isAlarmFinish,
     );
   }
 }
@@ -1212,6 +1025,8 @@ const $AlarmTimeKeepingManager = _$AlarmTimeKeepingManagerTearOff();
 /// @nodoc
 mixin _$AlarmTimeKeepingManager {
   Duration get duration => throw _privateConstructorUsedError;
+  bool get alarmTK => throw _privateConstructorUsedError;
+  bool get isAlarmFinish => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AlarmTimeKeepingManagerCopyWith<AlarmTimeKeepingManager> get copyWith =>
@@ -1223,7 +1038,7 @@ abstract class $AlarmTimeKeepingManagerCopyWith<$Res> {
   factory $AlarmTimeKeepingManagerCopyWith(AlarmTimeKeepingManager value,
           $Res Function(AlarmTimeKeepingManager) then) =
       _$AlarmTimeKeepingManagerCopyWithImpl<$Res>;
-  $Res call({Duration duration});
+  $Res call({Duration duration, bool alarmTK, bool isAlarmFinish});
 }
 
 /// @nodoc
@@ -1238,12 +1053,22 @@ class _$AlarmTimeKeepingManagerCopyWithImpl<$Res>
   @override
   $Res call({
     Object? duration = freezed,
+    Object? alarmTK = freezed,
+    Object? isAlarmFinish = freezed,
   }) {
     return _then(_value.copyWith(
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration,
+      alarmTK: alarmTK == freezed
+          ? _value.alarmTK
+          : alarmTK // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAlarmFinish: isAlarmFinish == freezed
+          ? _value.isAlarmFinish
+          : isAlarmFinish // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1255,7 +1080,7 @@ abstract class _$AlarmTimeKeepingManagerCopyWith<$Res>
           $Res Function(_AlarmTimeKeepingManager) then) =
       __$AlarmTimeKeepingManagerCopyWithImpl<$Res>;
   @override
-  $Res call({Duration duration});
+  $Res call({Duration duration, bool alarmTK, bool isAlarmFinish});
 }
 
 /// @nodoc
@@ -1273,12 +1098,22 @@ class __$AlarmTimeKeepingManagerCopyWithImpl<$Res>
   @override
   $Res call({
     Object? duration = freezed,
+    Object? alarmTK = freezed,
+    Object? isAlarmFinish = freezed,
   }) {
     return _then(_AlarmTimeKeepingManager(
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration,
+      alarmTK: alarmTK == freezed
+          ? _value.alarmTK
+          : alarmTK // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAlarmFinish: isAlarmFinish == freezed
+          ? _value.isAlarmFinish
+          : isAlarmFinish // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1289,15 +1124,23 @@ class _$_AlarmTimeKeepingManager
     with DiagnosticableTreeMixin
     implements _AlarmTimeKeepingManager {
   const _$_AlarmTimeKeepingManager(
-      {this.duration = const Duration(seconds: 1)});
+      {this.duration = const Duration(seconds: 1),
+      this.alarmTK = false,
+      this.isAlarmFinish = false});
 
   @JsonKey()
   @override
   final Duration duration;
+  @JsonKey()
+  @override
+  final bool alarmTK;
+  @JsonKey()
+  @override
+  final bool isAlarmFinish;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AlarmTimeKeepingManager(duration: $duration)';
+    return 'AlarmTimeKeepingManager(duration: $duration, alarmTK: $alarmTK, isAlarmFinish: $isAlarmFinish)';
   }
 
   @override
@@ -1305,7 +1148,9 @@ class _$_AlarmTimeKeepingManager
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AlarmTimeKeepingManager'))
-      ..add(DiagnosticsProperty('duration', duration));
+      ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('alarmTK', alarmTK))
+      ..add(DiagnosticsProperty('isAlarmFinish', isAlarmFinish));
   }
 
   @override
@@ -1313,12 +1158,18 @@ class _$_AlarmTimeKeepingManager
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AlarmTimeKeepingManager &&
-            const DeepCollectionEquality().equals(other.duration, duration));
+            const DeepCollectionEquality().equals(other.duration, duration) &&
+            const DeepCollectionEquality().equals(other.alarmTK, alarmTK) &&
+            const DeepCollectionEquality()
+                .equals(other.isAlarmFinish, isAlarmFinish));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(duration));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(duration),
+      const DeepCollectionEquality().hash(alarmTK),
+      const DeepCollectionEquality().hash(isAlarmFinish));
 
   @JsonKey(ignore: true)
   @override
@@ -1328,11 +1179,17 @@ class _$_AlarmTimeKeepingManager
 }
 
 abstract class _AlarmTimeKeepingManager implements AlarmTimeKeepingManager {
-  const factory _AlarmTimeKeepingManager({Duration duration}) =
-      _$_AlarmTimeKeepingManager;
+  const factory _AlarmTimeKeepingManager(
+      {Duration duration,
+      bool alarmTK,
+      bool isAlarmFinish}) = _$_AlarmTimeKeepingManager;
 
   @override
   Duration get duration;
+  @override
+  bool get alarmTK;
+  @override
+  bool get isAlarmFinish;
   @override
   @JsonKey(ignore: true)
   _$AlarmTimeKeepingManagerCopyWith<_AlarmTimeKeepingManager> get copyWith =>

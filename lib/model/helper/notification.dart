@@ -60,8 +60,9 @@ class NotificationManager {
           body: 'from まじもタイマー',
           autoDismissible: true,
           category: NotificationCategory.Alarm,
+          displayOnBackground: true,
+          displayOnForeground: true,
           wakeUpScreen: true,
-          criticalAlert: true,
         ),
         actionButtons: [
           NotificationActionButton(

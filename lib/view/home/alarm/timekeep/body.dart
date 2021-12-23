@@ -16,7 +16,7 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final orientation = MediaQuery.of(context).orientation;
     final isLandscape = orientation == Orientation.landscape;
-    final alarmmanager = ref.read(alarmManager);
+    final alarmTKmanager = ref.read(alarmTimeKeepingManager.notifier);
     final generalmanager = ref.read(generalManager.notifier);
     final show = ref.watch(alarmManager).showFAB;
 
@@ -37,7 +37,7 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
                       backgroundColor: Colors.red,
                       onPressed: () {
                         generalmanager.push_home(context: context);
-                        generalmanager.change_timekeeping(value: false);
+                        alarmTKmanager.change_alarmTK(value: false);
 
                         generalmanager.home();
                       },

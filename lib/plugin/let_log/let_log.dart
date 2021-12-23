@@ -181,7 +181,7 @@ class _Log {
     length.value++;
     if (Logger.config.printLog) {
       debugPrint(
-          " --------------------------------\n${log.typeName}\n${log.message}${log.detail == null ? '' : '\n${log.detail}'}\n--------------------------------");
+          "--------------------------------\n${log.typeName}\n${log.message}${log.detail == null ? '' : '\n${log.detail}'}\n--------------------------------");
     }
   }
 

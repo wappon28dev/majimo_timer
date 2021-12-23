@@ -15,29 +15,70 @@ enum PrefKey {
   toastDuration, //int Duration of toast notification
   clockAnimation, //int Curve of Clock Animation
   showSec, // bool show clock seconds
+  alarmTK, // bool alarmTimeKeeping
+  isAlarmFinish, // bool isAlarmFinish
+
 }
-// extension TypeExtension on ValueKey {
-//   String? get valueKey => valueKeys[this];
-//   static final valueKeys = {
-//     ValueKey.pref1: 'ChangeLanguage',
-//     ValueKey.pref2: 'ClockStyle',
-//     ValueKey.pref3: 'AppTheme'
-//   };
-// }
 
 class PrefManager {
   static Future<void> restore(WidgetRef ref, BuildContext context) async {
-    final _is24 = await PrefManager.getBool(key: PrefKey.clockStyle);
-    final _theme = await PrefManager.getInt(key: PrefKey.appTheme);
-    final _lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
-    final _topToast = await PrefManager.getBool(key: PrefKey.topToast);
-    final _toastDuration = await PrefManager.getInt(key: PrefKey.toastDuration);
-    final _clockAnimation =
-        await PrefManager.getInt(key: PrefKey.clockAnimation);
-    final _showSec = await PrefManager.getBool(key: PrefKey.showSec);
+    var _is24 = await PrefManager.getBool(key: PrefKey.clockStyle);
+    var _theme = await PrefManager.getInt(key: PrefKey.appTheme);
+    var _lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
+    var _topToast = await PrefManager.getBool(key: PrefKey.topToast);
+    var _toastDuration = await PrefManager.getInt(key: PrefKey.toastDuration);
+    var _clockAnimation = await PrefManager.getInt(key: PrefKey.clockAnimation);
+    var _showSec = await PrefManager.getBool(key: PrefKey.showSec);
+    var _alarmTK = await PrefManager.getBool(key: PrefKey.showSec);
+    var _isAlarmFinish = await PrefManager.getBool(key: PrefKey.showSec);
 
-    Logger.r(
-        ' >> restore bool is24 = $_is24\n >> restore int theme = $_theme\n >> restore int lang = $_lang\n >> restore bool topToast = $_topToast\n >> restore int toastDuration = $_toastDuration\n >> restore int clockAnimation = $_clockAnimation\n >> restore bool showSec = $_showSec');
+    Logger.r(' >> restore bool is24 = $_is24 \n'
+        '>> restore int theme = $_theme \n '
+        '>> restore int lang = $_lang \n'
+        '>> restore bool topToast = $_topToast \n'
+        '>> restore int toastDuration = $_toastDuration \n'
+        '>> restore int clockAnimation = $_clockAnimation \n'
+        '>> restore bool showSec = $_showSec \n'
+        '>> restore bool alarmTK = $_alarmTK \n'
+        '>> restore bool isAlarmFinish = $_isAlarmFinish \n');
+
+    if (_is24 == null) {
+      Logger.r('Warning! : _is24 is null => true');
+    }
+    if (_theme == null) {
+      Logger.r('Warning! : _theme is null => true');
+    }
+    if (_lang == null) {
+      Logger.r('Warning! : _lang is null => true');
+    }
+    if (_topToast == null) {
+      Logger.r('Warning! : _is24 is null => true');
+    }
+    if (_toastDuration == null) {
+      Logger.r('Warning! : _toastDuration is null => 4');
+    }
+    if (_clockAnimation == null) {
+      Logger.r('Warning! : _clockAnimation is null => 0');
+    }
+    if (_showSec == null) {
+      Logger.r('Warning! : _showSec is null => true');
+    }
+    if (_alarmTK == null) {
+      Logger.r('Warning! : _alarmTK is null => false');
+    }
+    if (_isAlarmFinish == null) {
+      Logger.r('Warning! : _isAlarmFinish is null => false');
+    }
+
+    _is24 ??= true;
+    _theme ??= 0;
+    _lang ??= 0;
+    _topToast ??= true;
+    _toastDuration ??= 4;
+    _clockAnimation ??= 0;
+    _showSec ??= true;
+    _alarmTK ??= false;
+    _isAlarmFinish ??= false;
 
     ref.read(clockManager.notifier).change_is24(value: _is24);
     ref.read(themeManager.notifier).change(value: _theme);
@@ -48,17 +89,21 @@ class PrefManager {
         .change_toastDuration(value: _toastDuration);
     ref.read(clockManager.notifier).change_animation(value: _clockAnimation);
     ref.read(clockManager.notifier).change_showSec(value: _showSec);
+    ref.read(alarmTimeKeepingManager.notifier).change_alarmTK(value: _alarmTK);
+    ref
+        .read(alarmTimeKeepingManager.notifier)
+        .change_isAlarmFinish(value: _isAlarmFinish);
   }
 
-  static Future<bool> getBool({required PrefKey key}) async {
+  static Future<bool?> getBool({required PrefKey key}) async {
     final prefs = await SharedPreferences.getInstance();
-    final result = prefs.getBool(key.toString()) ?? true;
+    final result = prefs.getBool(key.toString());
     return result;
   }
 
-  static Future<int> getInt({required PrefKey key}) async {
+  static Future<int?> getInt({required PrefKey key}) async {
     final prefs = await SharedPreferences.getInstance();
-    final result = prefs.getInt(key.toString()) ?? 0;
+    final result = prefs.getInt(key.toString());
     return result;
   }
 

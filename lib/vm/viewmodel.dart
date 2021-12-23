@@ -17,14 +17,6 @@ import 'package:wakelock/wakelock.dart';
 
 import '../../../main.dart';
 
-class CounterStateController extends StateNotifier<CounterState> {
-  CounterStateController() : super(const CounterState());
-  void increment() => state = state.copyWith(
-        count: state.count + 1,
-        count10: state.count10 + 10,
-      );
-}
-
 class GeneralManagerVM extends StateNotifier<GeneralManager> {
   GeneralManagerVM() : super(const GeneralManager());
 
@@ -69,9 +61,6 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
     state = state.copyWith(status: text);
   }
 
-  void change_timekeeping({required bool value}) =>
-      state = state.copyWith(timekeeping: value);
-
   void push({required BuildContext context, required Widget page}) =>
       Navigator.of(context).push(
         MaterialPageRoute<void>(
@@ -84,6 +73,7 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
         context,
         MaterialPageRoute<void>(builder: (context) => const HomePage()),
         (_) => false);
+
     WorkManager().reset(task: TaskName.Alarm_finish);
   }
 }
@@ -182,7 +172,6 @@ class AlarmManagerVM extends StateNotifier<AlarmManager> {
 
     show();
     ref.read(alarmTimeKeepingManager.notifier).start();
-    ref.read(generalManager.notifier).change_timekeeping(value: true);
   }
 
   void tooltip({required BuildContext context}) {
@@ -256,6 +245,7 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
     final duration = define_duration(target: target);
     state = state.copyWith(duration: duration);
     Logger.i('duration => $duration');
+    change_alarmTK(value: true);
     status();
     WorkManager().register(task: TaskName.Alarm_finish, duration: duration);
   }
@@ -285,5 +275,15 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
     Logger.i('$targetInSeconds-$nowInSeconds=$duration');
 
     return Duration(seconds: (duration > 0) ? duration : 3600 * 24 - duration);
+  }
+
+  void change_alarmTK({required bool value}) {
+    state = state.copyWith(alarmTK: value);
+    Logger.s('- from AlarmTKManager \n > timekeeping = $value');
+  }
+
+  void change_isAlarmFinish({required bool value}) {
+    state = state.copyWith(isAlarmFinish: value);
+    Logger.s('- from AlarmTKManager \n > isAlarmFinish = $value');
   }
 }
