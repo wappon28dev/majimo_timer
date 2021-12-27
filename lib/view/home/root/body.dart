@@ -23,7 +23,8 @@ class HomePage extends HookConsumerWidget {
     final isLandscape = orientation == Orientation.landscape;
 
     useEffect(() {
-      FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
+      FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
     });
 
     return MaterialApp(

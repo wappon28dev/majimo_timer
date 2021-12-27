@@ -14,13 +14,13 @@ class NotificationManager {
         null,
         [
           NotificationChannel(
-            channelKey: 'basic_channel',
-            channelName: 'Basic notifications',
-            channelDescription: 'Notification channel for basic tests',
-            defaultColor: const Color(0xFF9D50DD),
-            ledColor: Colors.white,
-            onlyAlertOnce: false,
-          )
+              channelKey: 'basic_channel',
+              channelName: 'Basic notifications',
+              channelDescription: 'Notification channel for basic tests',
+              defaultColor: const Color(0xFF9D50DD),
+              ledColor: Colors.white,
+              onlyAlertOnce: false,
+              importance: NotificationImportance.Max)
         ]);
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {

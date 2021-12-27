@@ -279,11 +279,13 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
 
   void change_alarmTK({required bool value}) {
     state = state.copyWith(alarmTK: value);
+    PrefManager.setBool(key: PrefKey.alarmTK, value: value);
     Logger.s('- from AlarmTKManager \n > timekeeping = $value');
   }
 
   void change_isAlarmFinish({required bool value}) {
     state = state.copyWith(isAlarmFinish: value);
+    PrefManager.setBool(key: PrefKey.isAlarmFinish, value: value);
     Logger.s('- from AlarmTKManager \n > isAlarmFinish = $value');
   }
 }

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/plugin/flutter_analog_clock/flutter_analog_clock.dart';
@@ -19,6 +21,10 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
     final alarmTKmanager = ref.read(alarmTimeKeepingManager.notifier);
     final generalmanager = ref.read(generalManager.notifier);
     final show = ref.watch(alarmManager).showFAB;
+
+    useEffect(() {
+      FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
+    });
 
     return MaterialApp(
         theme: MyTheme.lightTheme,
