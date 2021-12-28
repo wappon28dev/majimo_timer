@@ -11,6 +11,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/app_link.dart';
+import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
@@ -209,7 +210,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                       style: TextStyle(color: Colors.white),
                     ),
                     subtitle: const Text(
-                      'majimo_timer v0.1.0 - beta',
+                      version,
                       style: TextStyle(color: Colors.white, fontSize: 12),
                     ),
                     leading: const Icon(

@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lottie/lottie.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
+import 'package:rive/rive.dart';
 
-class SplashScreen extends ConsumerStatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+class Splash extends ConsumerStatefulWidget {
+  const Splash({Key? key}) : super(key: key);
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _SplashState createState() => _SplashState();
 }
 
-class _SplashScreenState extends ConsumerState<SplashScreen>
-    with TickerProviderStateMixin {
-  late AnimationController _controller;
-
+class _SplashState extends ConsumerState<Splash> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 5),
-      vsync: this,
-    );
+    navigate();
+  }
+
+  Future<void> navigate() async {
+    // await Future<void>.delayed(const Duration(seconds: 2));
+    await ref.read(generalManager.notifier).home();
+    await Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
+        builder: (BuildContext context) => const HomePage()));
   }
 
   @override
@@ -31,25 +32,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     return WillPopScope(
         onWillPop: () async => false,
         child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          color: ColorKey.orange.value,
-          child: Lottie.asset(
-            'assets/splash/splash.json',
-            controller: _controller,
-            height: MediaQuery.of(context).size.height * 1,
-            animate: true,
-            onLoaded: (composition) {
-              _controller
-                ..duration = composition.duration
-                ..forward().whenComplete(() {
-                  final alarmTK = ref.read(alarmTimeKeepingManager).alarmTK;
-                  Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const HomePage()));
-                  ref.read(generalManager.notifier).home();
-                });
-            },
-          ),
-        ));
+            padding: EdgeInsets.all(8),
+            width: double.infinity,
+            height: double.infinity,
+            color: ColorKey.orange.value,
+            child: RiveAnimation.asset('assets/splash/splash.riv')));
   }
 }
+
+
+                  // final alarmTK = ref.read(alarmTimeKeepingManager).alarmTK;
+                  // Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
+                  //     builder: (BuildContext context) => const HomePage()));
+                  // ref.read(generalManager.notifier).home();

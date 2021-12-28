@@ -80,8 +80,6 @@ class MyApp extends HookConsumerWidget {
             themeMode: ref.read(themeManager).theme_value,
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
-            home: !alarmTK
-                ? const SplashScreen()
-                : const AlarmTimeKeepingPage()));
+            home: !alarmTK ? const Splash() : const AlarmTimeKeepingPage()));
   }
 }

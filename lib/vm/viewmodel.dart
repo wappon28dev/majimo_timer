@@ -14,6 +14,7 @@ import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
 import 'package:wakelock/wakelock.dart';
+import '../../../model/helper/config.dart';
 
 import '../../../main.dart';
 
@@ -50,8 +51,7 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
     await change_status(text: '置き時計モード');
     await Future<void>.delayed(const Duration(seconds: 3));
     await change_status(
-        text:
-            '${DateTime.now().format('yMMMMEEEEd', t.lang.t)}・Majimo-Timer v0.1.0');
+        text: '${DateTime.now().format('yMMMMEEEEd', t.lang.t)}・$version');
   }
 
   Future<void> change_status({required String text}) async {

@@ -82,9 +82,16 @@ class LinkManager {
     });
     // ignore: cascade_invocations
     quickActions.setShortcutItems(<ShortcutItem>[
-      ShortcutItem(type: 'g', localizedTitle: t.goal.t, icon: 'ic_launcher'),
-      ShortcutItem(type: 't', localizedTitle: t.timer.t, icon: 'ic_launcher'),
-      ShortcutItem(type: 'a', localizedTitle: t.alarm.t, icon: 'ic_launcher'),
+      ShortcutItem(
+          type: 'g',
+          localizedTitle: t.goal.t,
+          icon: 'ic_shortcut_access_alarm'),
+      ShortcutItem(
+          type: 't',
+          localizedTitle: t.timer.t,
+          icon: 'ic_shortcut_hourglass_top'),
+      ShortcutItem(
+          type: 'a', localizedTitle: t.alarm.t, icon: 'ic_shortcut_flag'),
     ]);
   }
 
