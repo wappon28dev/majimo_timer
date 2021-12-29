@@ -4,8 +4,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dismissible_page/src/dismissible_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_color/src/helper.dart';
-import 'package:flutter_fader/flutter_fader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
@@ -21,8 +19,8 @@ import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
 import 'package:majimo_timer/view/setting/body.dart';
-import 'package:majimo_timer/vm/viewmodel.dart';
 import 'package:simple_animations/simple_animations.dart';
+import 'package:expandable_widgets/expandable_widgets.dart';
 import '../../../model/helper/theme.dart';
 import '../../../plugin/draggable_home/draggable_home.dart';
 import 'body.dart';
@@ -210,7 +208,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                       style: TextStyle(color: Colors.white),
                     ),
                     subtitle: const Text(
-                      version,
+                      '>> $version << \n $buildDate \n $changeLog',
                       style: TextStyle(color: Colors.white, fontSize: 12),
                     ),
                     leading: const Icon(
@@ -283,7 +281,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          color: Colors.blue,
+          color: Colors.cyan.shade600,
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Column(
@@ -380,7 +378,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     actions: [
       IconButton(
         onPressed: () {
-          Navigator.of(context).pushNamed('/debug');
+          ref
+              .read(generalManager.notifier)
+              .push(context: context, page: const Debug());
           Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n'
               ' > debug page opened');
         },
@@ -388,9 +388,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         color: Colors.white,
       ),
       IconButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('/setting');
-        },
+        onPressed: () => ref
+            .read(generalManager.notifier)
+            .push(context: context, page: const Setting()),
         icon: const Icon(Icons.settings),
         color: Colors.white,
       ),

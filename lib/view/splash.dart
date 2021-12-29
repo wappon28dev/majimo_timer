@@ -8,12 +8,11 @@ import 'package:rive/rive.dart';
 
 class Splash extends ConsumerStatefulWidget {
   const Splash({Key? key}) : super(key: key);
-
   @override
   _SplashState createState() => _SplashState();
 }
 
-class _SplashState extends ConsumerState<Splash> with TickerProviderStateMixin {
+class _SplashState extends ConsumerState<Splash> {
   @override
   void initState() {
     super.initState();
@@ -21,9 +20,9 @@ class _SplashState extends ConsumerState<Splash> with TickerProviderStateMixin {
   }
 
   Future<void> navigate() async {
-    // await Future<void>.delayed(const Duration(seconds: 2));
-    await ref.read(generalManager.notifier).home();
-    await Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
+    await Future<void>.delayed(const Duration(milliseconds: 1500));
+    ref.read(generalManager.notifier).home();
+    Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
         builder: (BuildContext context) => const HomePage()));
   }
 
