@@ -5,9 +5,9 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/pref.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/model/helper/work.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
@@ -15,7 +15,7 @@ import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
 import 'package:wakelock/wakelock.dart';
 import '../../../model/helper/config.dart';
-
+import 'dart:async';
 import '../../../main.dart';
 
 class GeneralManagerVM extends StateNotifier<GeneralManager> {
@@ -73,8 +73,6 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
         context,
         MaterialPageRoute<void>(builder: (context) => const HomePage()),
         (_) => false);
-
-    WorkManager().reset(task: TaskName.Alarm_finish);
   }
 }
 
@@ -146,7 +144,7 @@ class ColorManagerVM extends StateNotifier<ColorManager> {
   // change_value function
   Future<void> change({required bool isLight}) async {
     state = state.copyWith(opacity: 0);
-    await Future<void>.delayed(const Duration(milliseconds: 100)); // 何故か必要
+    // await Future<void>.delayed(const Duration(milliseconds: 100)); // 何故か必要
     state = state.copyWith(opacity: 1);
   }
 
@@ -242,12 +240,16 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
   // change_value function
   void start() {
     final target = read(alarmManager).get_value();
-    final duration = define_duration(target: target);
+    final now = DateTime.now();
+    final tar =
+        DateTime(now.year, now.month, now.day, target.hour, target.minute);
+    final duration = DateTimeRange(start: now, end: tar).duration;
     state = state.copyWith(duration: duration);
     Logger.i('duration => $duration');
-    change_alarmTK(value: true);
+    Logger.i('tar => $tar');
+    NotificationManager().alarm_finish(target: tar);
+    NotificationManager().alarm_tk(duration: duration);
     status();
-    WorkManager().register(task: TaskName.Alarm_finish, duration: duration);
   }
 
   Future<void> status() async {
@@ -265,16 +267,6 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
 
     await Future<void>.delayed(const Duration(seconds: 5));
     await read(generalManager.notifier).change_status(text: 'アラームモード');
-  }
-
-  Duration define_duration({required TimeOfDay target}) {
-    final now = DateTime.now();
-    final nowInSeconds = now.hour * 3600 + now.minute * 60 + now.second;
-    final targetInSeconds = target.hour * 3600 + target.minute * 60;
-    final duration = targetInSeconds - nowInSeconds;
-    Logger.i('$targetInSeconds-$nowInSeconds=$duration');
-
-    return Duration(seconds: (duration > 0) ? duration : 3600 * 24 - duration);
   }
 
   void change_alarmTK({required bool value}) {

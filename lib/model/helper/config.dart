@@ -1,4 +1,4 @@
-const String version = 'majimo_timer v0.1.3 β';
-const String buildDate = '2021/12/29 22:48';
+const String version = 'majimo_timer v0.1.4 β';
+const String buildDate = '2021/12/30 23:11';
 const String changeLog =
-    '[Bug fix] \n Launch problem on A12 \n [known-bug] \n native splash appears twice on A12';
+    '[fix] \n schedule notification with DateTime \n [known-bug] \n native splash appears twice on A12';

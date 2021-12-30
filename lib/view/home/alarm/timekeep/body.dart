@@ -5,6 +5,7 @@ import 'package:flutter_color/src/helper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:simple_animations/simple_animations.dart';
@@ -44,7 +45,7 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
                       onPressed: () {
                         generalmanager.push_home(context: context);
                         alarmTKmanager.change_alarmTK(value: false);
-
+                        NotificationManager().cancel_notification();
                         generalmanager.home();
                       },
                       heroTag: null,

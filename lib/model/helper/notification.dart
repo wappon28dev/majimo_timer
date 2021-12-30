@@ -6,6 +6,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart' as a;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:simple_animations/simple_animations.dart';
 
 class NotificationManager {
   static void initialize() {
@@ -50,7 +51,7 @@ class NotificationManager {
   //           body: 'from まじもタイマー'));
   // }
 
-  static void alarm_finish() {
+  void alarm_finish({required DateTime target}) {
     Logger.i('finish AlarmMode');
     AwesomeNotifications().createNotification(
         content: NotificationContent(
@@ -63,6 +64,34 @@ class NotificationManager {
           displayOnBackground: true,
           displayOnForeground: true,
           wakeUpScreen: true,
+          fullScreenIntent: true,
+        ),
+        schedule: NotificationCalendar.fromDate(date: target),
+        actionButtons: [
+          NotificationActionButton(
+              key: 'SHOW_SERVICE_DETAILS',
+              label: 'Show details',
+              showInCompactView: true),
+          NotificationActionButton(
+              key: 'SHOW_SERVICE_DETAILS', label: 'Show details'),
+        ]);
+  }
+
+  Future<void> alarm_tk({required Duration duration}) async {
+    final target = duration;
+    await Future<void>.delayed(const Duration(seconds: 1));
+    final Duration current = duration - const Duration(seconds: 1);
+    final int rate = (current.inSeconds / target.inSeconds * 100).toInt();
+
+    await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: 10,
+          channelKey: 'basic_channel',
+          title: '計測中...',
+          body: 'from まじもタイマー',
+          category: NotificationCategory.Progress,
+          notificationLayout: NotificationLayout.ProgressBar,
+          progress: rate,
         ),
         actionButtons: [
           NotificationActionButton(
@@ -71,9 +100,12 @@ class NotificationManager {
               showInCompactView: true),
           NotificationActionButton(
               key: 'SHOW_SERVICE_DETAILS', label: 'Show details'),
-          NotificationActionButton(
-              key: 'SHOW_SERVICE_DETAILS', label: 'Show details'),
         ]);
+  }
+
+  void cancel_notification() {
+    AwesomeNotifications().cancelAll();
+    Logger.i("cancel!!!");
   }
 }
 

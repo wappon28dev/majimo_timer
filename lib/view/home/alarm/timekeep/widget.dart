@@ -103,7 +103,7 @@ Widget percent({required WidgetRef ref, required double width}) {
   final duration = alarmTKmanager.duration;
 
   return PlayAnimation<double>(
-    tween: Tween(begin: 0.0, end: 1.0),
+    tween: Tween(begin: 0, end: 1),
     duration: duration,
     builder: (context, child, value) {
       return CircularPercentIndicator(

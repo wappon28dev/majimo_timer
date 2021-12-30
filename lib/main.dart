@@ -35,21 +35,10 @@ final alarmTimeKeepingManager =
     StateNotifierProvider<AlarmTimeKeepingManagerVM, AlarmTimeKeepingManager>(
         (ref) => AlarmTimeKeepingManagerVM(ref.read));
 
-const int helloAlarmID = 0;
-
-void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
-    Logger.i('are you hear?');
-    NotificationManager.alarm_finish();
-    return Future.value(true);
-  });
-}
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   NotificationManager.initialize();
-  await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   runApp(EasyLocalization(
     supportedLocales: const [Locale('en', 'US'), Locale('ja', 'JP')],
     fallbackLocale: const Locale('en', 'US'),
