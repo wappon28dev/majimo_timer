@@ -25,6 +25,8 @@ class HomePage extends HookConsumerWidget {
     useEffect(() {
       FlutterWindowManager.clearFlags(
           FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
+      FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
     });
 
     return MaterialApp(

@@ -3,6 +3,7 @@
 import 'package:dart_date/src/dart_date.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
@@ -73,6 +74,8 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
         context,
         MaterialPageRoute<void>(builder: (context) => const HomePage()),
         (_) => false);
+    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
+    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
   }
 }
 
@@ -144,7 +147,7 @@ class ColorManagerVM extends StateNotifier<ColorManager> {
   // change_value function
   Future<void> change({required bool isLight}) async {
     state = state.copyWith(opacity: 0);
-    // await Future<void>.delayed(const Duration(milliseconds: 100)); // 何故か必要
+    await Future<void>.delayed(const Duration(milliseconds: 100)); // 何故か必要
     state = state.copyWith(opacity: 1);
   }
 
@@ -170,6 +173,8 @@ class AlarmManagerVM extends StateNotifier<AlarmManager> {
 
     show();
     ref.read(alarmTimeKeepingManager.notifier).start();
+    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
+    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
   }
 
   void tooltip({required BuildContext context}) {

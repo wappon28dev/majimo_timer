@@ -9,7 +9,9 @@ import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
+import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
+import 'package:majimo_timer/view/setting/body.dart';
 import 'package:quick_actions/quick_actions.dart';
 
 late AppLinks _appLinks;
@@ -45,30 +47,31 @@ class LinkManager {
   static void launcher(BuildContext context, WidgetRef ref, String mode) {
     switch (mode) {
       case 'h':
-        Navigator.of(context).pushReplacementNamed('/home');
+        ref.read(generalManager.notifier).push_home(context: context);
         break;
 
       case 'a':
-        Navigator.of(context).pushReplacementNamed('/home');
+        ref.read(generalManager.notifier).push_home(context: context);
         context.pushTransparentRoute(const AlarmPage());
         ref.watch(alarmManager.notifier).internal();
         ref.watch(alarmManager.notifier).show();
         break;
 
       case 't':
-        Navigator.of(context).pushReplacementNamed('/home');
+        ref.read(generalManager.notifier).push_home(context: context);
         context.pushTransparentRoute(const TimerPage());
         break;
 
       case 'g':
-        Navigator.of(context).pushReplacementNamed('/home');
+        ref.read(generalManager.notifier).push_home(context: context);
         context.pushTransparentRoute(const GoalPage());
         break;
 
       case 's':
-        Navigator.of(context).pushReplacementNamed('/home');
-        Navigator.of(context).pushNamed('/setting');
-
+        ref.read(generalManager.notifier).push_home(context: context);
+        ref
+            .read(generalManager.notifier)
+            .push(context: context, page: const Setting());
         break;
     }
   }

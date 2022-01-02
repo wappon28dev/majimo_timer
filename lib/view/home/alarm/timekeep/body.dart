@@ -23,10 +23,6 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
     final generalmanager = ref.read(generalManager.notifier);
     final show = ref.watch(alarmManager).showFAB;
 
-    useEffect(() {
-      FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
-    });
-
     return MaterialApp(
         theme: MyTheme.lightTheme,
         darkTheme: MyTheme.darkTheme,
