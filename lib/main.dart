@@ -53,7 +53,6 @@ class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final alarmTK = ref.read(alarmTimeKeepingManager).alarmTK;
 
     useEffect(() {
       PrefManager.restore(ref, context);
@@ -69,6 +68,6 @@ class MyApp extends HookConsumerWidget {
             themeMode: ref.read(themeManager).theme_value,
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
-            home: !alarmTK ? const Splash() : const AlarmTimeKeepingPage()));
+            home: const Splash()));
   }
 }

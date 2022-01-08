@@ -1,12 +1,17 @@
 // ignore_for_file: avoid_classes_with_only_static_members, non_constant_identifier_names
 
+import 'dart:async';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart' as a;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:simple_animations/simple_animations.dart';
+
+enum NotificationChannelKey { general, alarmTimeKeeping, alarmFinish }
 
 class NotificationManager {
   static void initialize() {
@@ -15,13 +20,43 @@ class NotificationManager {
         null,
         [
           NotificationChannel(
-              channelKey: 'basic_channel',
-              channelName: 'Basic notifications',
+            channelKey: NotificationChannelKey.general.name,
+            channelName: NotificationChannelKey.general.name,
+            channelDescription: 'Notification channel for basic tests',
+            defaultColor: ColorKey.orange.value,
+            ledColor: Colors.orange,
+            onlyAlertOnce: true,
+            defaultRingtoneType: DefaultRingtoneType.Notification,
+            importance: NotificationImportance.None,
+          )
+        ]);
+    AwesomeNotifications().initialize(
+        // set the icon to null if you want to use the default app icon
+        null,
+        [
+          NotificationChannel(
+              channelKey: NotificationChannelKey.alarmFinish.name,
+              channelName: NotificationChannelKey.alarmFinish.name,
+              channelDescription: 'Notification channel for basic tests',
+              defaultColor: const Color(0xFF9D50DD),
+              ledColor: Colors.orange,
+              onlyAlertOnce: false,
+              defaultPrivacy: NotificationPrivacy.Public,
+              defaultRingtoneType: DefaultRingtoneType.Alarm,
+              importance: NotificationImportance.Max)
+        ]);
+    AwesomeNotifications().initialize(
+        // set the icon to null if you want to use the default app icon
+        null,
+        [
+          NotificationChannel(
+              channelKey: NotificationChannelKey.alarmTimeKeeping.name,
+              channelName: NotificationChannelKey.alarmTimeKeeping.name,
               channelDescription: 'Notification channel for basic tests',
               defaultColor: const Color(0xFF9D50DD),
               ledColor: Colors.white,
               onlyAlertOnce: false,
-              importance: NotificationImportance.Max)
+              importance: NotificationImportance.Min)
         ]);
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
@@ -52,11 +87,10 @@ class NotificationManager {
   // }
 
   void alarm_finish({required DateTime target}) {
-    Logger.i('finish AlarmMode');
     AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: 10,
-          channelKey: 'basic_channel',
+          channelKey: NotificationChannelKey.alarmFinish.name,
           title: '時間です！',
           body: 'from まじもタイマー',
           autoDismissible: true,
@@ -77,30 +111,26 @@ class NotificationManager {
         ]);
   }
 
-  Future<void> alarm_tk({required Duration duration}) async {
-    final target = duration;
-    await Future<void>.delayed(const Duration(seconds: 1));
-    final Duration current = duration - const Duration(seconds: 1);
-    final int rate = (current.inSeconds / target.inSeconds * 100).toInt();
-
+  Future<void> alarm_tk({required DateTime target}) async {
     await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: 10,
-          channelKey: 'basic_channel',
-          title: '計測中...',
-          body: 'from まじもタイマー',
-          category: NotificationCategory.Progress,
-          notificationLayout: NotificationLayout.ProgressBar,
-          progress: rate,
-        ),
-        actionButtons: [
-          NotificationActionButton(
-              key: 'SHOW_SERVICE_DETAILS',
-              label: 'Show details',
-              showInCompactView: true),
-          NotificationActionButton(
-              key: 'SHOW_SERVICE_DETAILS', label: 'Show details'),
-        ]);
+      content: NotificationContent(
+        id: 10,
+        channelKey: NotificationChannelKey.alarmTimeKeeping.name,
+        title: '計測中... ・ ${target.hour}:${target.minute}まで',
+        body: 'from まじもタイマー',
+        category: NotificationCategory.Service,
+        backgroundColor: ColorKey.orange.value,
+        notificationLayout: NotificationLayout.Default,
+      ),
+      actionButtons: [
+        NotificationActionButton(
+            key: 'SHOW_SERVICE_DETAILS',
+            label: '中止',
+            showInCompactView: true,
+            buttonType: ActionButtonType.DisabledAction),
+        NotificationActionButton(key: 'SHOW_SERVICE_DETAILS', label: '5分追加'),
+      ],
+    );
   }
 
   void cancel_notification() {

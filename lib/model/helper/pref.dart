@@ -17,7 +17,7 @@ enum PrefKey {
   showSec, // bool show clock seconds
   alarmTK, // bool alarmTimeKeeping
   isAlarmFinish, // bool isAlarmFinish
-
+  alarmDuration, // int Duration in seconds
 }
 
 class PrefManager {
@@ -31,16 +31,21 @@ class PrefManager {
     var _showSec = await PrefManager.getBool(key: PrefKey.showSec);
     var _alarmTK = await PrefManager.getBool(key: PrefKey.showSec);
     var _isAlarmFinish = await PrefManager.getBool(key: PrefKey.showSec);
+    var _alarmDuration = await PrefManager.getInt(key: PrefKey.alarmDuration);
 
-    Logger.r(' >> restore bool is24 = $_is24 \n'
-        '>> restore int theme = $_theme \n '
-        '>> restore int lang = $_lang \n'
-        '>> restore bool topToast = $_topToast \n'
-        '>> restore int toastDuration = $_toastDuration \n'
-        '>> restore int clockAnimation = $_clockAnimation \n'
-        '>> restore bool showSec = $_showSec \n'
-        '>> restore bool alarmTK = $_alarmTK \n'
-        '>> restore bool isAlarmFinish = $_isAlarmFinish \n');
+    Logger.r('''
+        restore values :
+          >> bool  is24            =   $_is24
+          >> int   theme           =   $_theme
+          >> int   lang            =   $_lang
+          >> bool  topToast        =   $_topToast
+          >> int   toastDuration   =   $_toastDuration 
+          >> int   clockAnimation  =   $_clockAnimation
+          >> bool  showSec         =   $_showSec
+          >> bool  alarmTK         =   $_alarmTK 
+          >> bool  isAlarmFinish   =   $_isAlarmFinish 
+          >> int   alarmDuration   =   $_alarmDuration
+      ''');
 
     if (_is24 == null) {
       Logger.r('Warning! : _is24 is null => true');
@@ -69,6 +74,9 @@ class PrefManager {
     if (_isAlarmFinish == null) {
       Logger.r('Warning! : _isAlarmFinish is null => false');
     }
+    if (_alarmDuration == null) {
+      Logger.e('Warning! : _alarmDuration is null! => _alarmDuration = 0');
+    }
 
     _is24 ??= true;
     _theme ??= 0;
@@ -79,6 +87,7 @@ class PrefManager {
     _showSec ??= true;
     _alarmTK ??= false;
     _isAlarmFinish ??= false;
+    _alarmDuration ??= 0;
 
     ref.read(clockManager.notifier).change_is24(value: _is24);
     ref.read(themeManager.notifier).change(value: _theme);
@@ -93,6 +102,9 @@ class PrefManager {
     ref
         .read(alarmTimeKeepingManager.notifier)
         .change_isAlarmFinish(value: _isAlarmFinish);
+    ref
+        .read(alarmTimeKeepingManager.notifier)
+        .change_alarmDuration(value: _alarmDuration);
   }
 
   static Future<bool?> getBool({required PrefKey key}) async {

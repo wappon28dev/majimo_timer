@@ -19,6 +19,7 @@ class GeneralManager with _$GeneralManager {
     @Default(false) bool topToast,
     @Default(3) int toastDuration,
     @Default(1) double opacity,
+    @Default(false) bool showFAB,
   }) = _GeneralManager;
 
   // define custom getter
@@ -225,7 +226,6 @@ class AlarmManager with _$AlarmManager {
   const factory AlarmManager({
     @Default(12) int alarmHour,
     @Default(00) int alarmMinute,
-    @Default(false) bool showFAB,
   }) = _AlarmManager;
 
   // create values
@@ -243,9 +243,12 @@ class AlarmManager with _$AlarmManager {
 
 @freezed
 class AlarmTimeKeepingManager with _$AlarmTimeKeepingManager {
+  const AlarmTimeKeepingManager._();
   const factory AlarmTimeKeepingManager({
+    @Default(0) double rate,
     @Default(Duration(seconds: 1)) Duration duration,
     @Default(false) bool alarmTK,
     @Default(false) bool isAlarmFinish,
   }) = _AlarmTimeKeepingManager;
+  int get progress => 100 - rate.round() * 100;
 }

@@ -54,7 +54,7 @@ class LinkManager {
         ref.read(generalManager.notifier).push_home(context: context);
         context.pushTransparentRoute(const AlarmPage());
         ref.watch(alarmManager.notifier).internal();
-        ref.watch(alarmManager.notifier).show();
+        ref.watch(generalManager.notifier).showFAB();
         break;
 
       case 't':

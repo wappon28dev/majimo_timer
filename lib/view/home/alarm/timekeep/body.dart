@@ -21,7 +21,7 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
     final isLandscape = orientation == Orientation.landscape;
     final alarmTKmanager = ref.read(alarmTimeKeepingManager.notifier);
     final generalmanager = ref.read(generalManager.notifier);
-    final show = ref.watch(alarmManager).showFAB;
+    final show = ref.watch(generalManager).showFAB;
 
     return MaterialApp(
         theme: MyTheme.lightTheme,

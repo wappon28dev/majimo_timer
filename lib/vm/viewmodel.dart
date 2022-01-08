@@ -77,6 +77,13 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
     FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
     FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
   }
+
+  Future<void> showFAB() async {
+    state = state.copyWith(showFAB: false);
+
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    state = state.copyWith(showFAB: true);
+  }
 }
 
 class ThemeManagerVM extends StateNotifier<ThemeManager> {
@@ -171,10 +178,8 @@ class AlarmManagerVM extends StateNotifier<AlarmManager> {
             builder: (context) => const AlarmTimeKeepingPage()),
         (_) => false);
 
-    show();
+    ref.read(generalManager.notifier).showFAB();
     ref.read(alarmTimeKeepingManager.notifier).start();
-    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
-    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
   }
 
   void tooltip({required BuildContext context}) {
@@ -229,13 +234,6 @@ class AlarmManagerVM extends StateNotifier<AlarmManager> {
     state = state.copyWith(alarmHour: value.hour);
     state = state.copyWith(alarmMinute: value.minute);
   }
-
-  Future<void> show() async {
-    state = state.copyWith(showFAB: false);
-
-    await Future<void>.delayed(const Duration(milliseconds: 300));
-    state = state.copyWith(showFAB: true);
-  }
 }
 
 class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
@@ -244,17 +242,59 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
 
   // change_value function
   void start() {
-    final target = read(alarmManager).get_value();
-    final now = DateTime.now();
-    final tar =
-        DateTime(now.year, now.month, now.day, target.hour, target.minute);
-    final duration = DateTimeRange(start: now, end: tar).duration;
-    state = state.copyWith(duration: duration);
-    Logger.i('duration => $duration');
-    Logger.i('tar => $tar');
-    NotificationManager().alarm_finish(target: tar);
-    NotificationManager().alarm_tk(duration: duration);
+    final _target = read(alarmManager).get_value();
+    final _now = DateTime.now();
+    final _tar =
+        DateTime(_now.year, _now.month, _now.day, _target.hour, _target.minute);
+
+    late Duration _duration;
+
+    try {
+      _duration = DateTimeRange(start: _now, end: _tar).duration;
+      // ignore: avoid_catches_without_on_clauses
+    } catch (e) {
+      final _tar = DateTime(
+          _now.year, _now.month, _now.day + 1, _target.hour, _target.minute);
+      _duration = DateTimeRange(start: _now, end: _tar).duration;
+    }
+    state = state.copyWith(duration: _duration);
+    final _rate = _duration.inSeconds / state.duration.inSeconds;
+    Logger.i(' ${_duration.inSeconds} / ${state.duration.inSeconds} = $_rate');
+
+    state = state.copyWith(rate: _rate);
+
+    Logger.i('duration => $_duration');
+    PrefManager.setInt(key: PrefKey.alarmDuration, value: _duration.inSeconds);
+    Logger.i('tar => $_tar');
     status();
+    NotificationManager().alarm_finish(target: _tar);
+    NotificationManager().alarm_tk(target: _tar);
+    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
+    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
+  }
+
+  void onTimer(Timer timer) {
+    final _target = read(alarmManager).get_value();
+
+    final _now = DateTime.now();
+    final _tar =
+        DateTime(_now.year, _now.month, _now.day, _target.hour, _target.minute);
+
+    late Duration _duration;
+
+    try {
+      _duration = DateTimeRange(start: _now, end: _tar).duration;
+      // ignore: avoid_catches_without_on_clauses
+    } catch (e) {
+      final _tar = DateTime(
+          _now.year, _now.month, _now.day + 1, _target.hour, _target.minute);
+      _duration = DateTimeRange(start: _now, end: _tar).duration;
+    }
+    final _rate = _duration.inSeconds / state.duration.inSeconds;
+    Logger.i(' ${_duration.inSeconds} / ${state.duration.inSeconds} = $_rate');
+
+    state = state.copyWith(rate: _rate);
+    Logger.i('onTimer => $_duration');
   }
 
   Future<void> status() async {
@@ -284,5 +324,11 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
     state = state.copyWith(isAlarmFinish: value);
     PrefManager.setBool(key: PrefKey.isAlarmFinish, value: value);
     Logger.s('- from AlarmTKManager \n > isAlarmFinish = $value');
+  }
+
+  void change_alarmDuration({required int value}) {
+    state = state.copyWith(duration: Duration(seconds: value));
+    PrefManager.setInt(key: PrefKey.alarmDuration, value: value);
+    Logger.s('- from AlarmTKManager \n > alarmDuration = $value');
   }
 }

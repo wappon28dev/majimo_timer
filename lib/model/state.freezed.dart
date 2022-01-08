@@ -21,12 +21,14 @@ class _$GeneralManagerTearOff {
       {String status = 'まじもタイマーへようこそ！',
       bool topToast = false,
       int toastDuration = 3,
-      double opacity = 1}) {
+      double opacity = 1,
+      bool showFAB = false}) {
     return _GeneralManager(
       status: status,
       topToast: topToast,
       toastDuration: toastDuration,
       opacity: opacity,
+      showFAB: showFAB,
     );
   }
 }
@@ -40,6 +42,7 @@ mixin _$GeneralManager {
   bool get topToast => throw _privateConstructorUsedError;
   int get toastDuration => throw _privateConstructorUsedError;
   double get opacity => throw _privateConstructorUsedError;
+  bool get showFAB => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GeneralManagerCopyWith<GeneralManager> get copyWith =>
@@ -51,7 +54,12 @@ abstract class $GeneralManagerCopyWith<$Res> {
   factory $GeneralManagerCopyWith(
           GeneralManager value, $Res Function(GeneralManager) then) =
       _$GeneralManagerCopyWithImpl<$Res>;
-  $Res call({String status, bool topToast, int toastDuration, double opacity});
+  $Res call(
+      {String status,
+      bool topToast,
+      int toastDuration,
+      double opacity,
+      bool showFAB});
 }
 
 /// @nodoc
@@ -69,6 +77,7 @@ class _$GeneralManagerCopyWithImpl<$Res>
     Object? topToast = freezed,
     Object? toastDuration = freezed,
     Object? opacity = freezed,
+    Object? showFAB = freezed,
   }) {
     return _then(_value.copyWith(
       status: status == freezed
@@ -87,6 +96,10 @@ class _$GeneralManagerCopyWithImpl<$Res>
           ? _value.opacity
           : opacity // ignore: cast_nullable_to_non_nullable
               as double,
+      showFAB: showFAB == freezed
+          ? _value.showFAB
+          : showFAB // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -98,7 +111,12 @@ abstract class _$GeneralManagerCopyWith<$Res>
           _GeneralManager value, $Res Function(_GeneralManager) then) =
       __$GeneralManagerCopyWithImpl<$Res>;
   @override
-  $Res call({String status, bool topToast, int toastDuration, double opacity});
+  $Res call(
+      {String status,
+      bool topToast,
+      int toastDuration,
+      double opacity,
+      bool showFAB});
 }
 
 /// @nodoc
@@ -118,6 +136,7 @@ class __$GeneralManagerCopyWithImpl<$Res>
     Object? topToast = freezed,
     Object? toastDuration = freezed,
     Object? opacity = freezed,
+    Object? showFAB = freezed,
   }) {
     return _then(_GeneralManager(
       status: status == freezed
@@ -136,6 +155,10 @@ class __$GeneralManagerCopyWithImpl<$Res>
           ? _value.opacity
           : opacity // ignore: cast_nullable_to_non_nullable
               as double,
+      showFAB: showFAB == freezed
+          ? _value.showFAB
+          : showFAB // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -147,7 +170,8 @@ class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
       {this.status = 'まじもタイマーへようこそ！',
       this.topToast = false,
       this.toastDuration = 3,
-      this.opacity = 1})
+      this.opacity = 1,
+      this.showFAB = false})
       : super._();
 
   @JsonKey()
@@ -162,10 +186,13 @@ class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final double opacity;
+  @JsonKey()
+  @override
+  final bool showFAB;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GeneralManager(status: $status, topToast: $topToast, toastDuration: $toastDuration, opacity: $opacity)';
+    return 'GeneralManager(status: $status, topToast: $topToast, toastDuration: $toastDuration, opacity: $opacity, showFAB: $showFAB)';
   }
 
   @override
@@ -176,7 +203,8 @@ class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('topToast', topToast))
       ..add(DiagnosticsProperty('toastDuration', toastDuration))
-      ..add(DiagnosticsProperty('opacity', opacity));
+      ..add(DiagnosticsProperty('opacity', opacity))
+      ..add(DiagnosticsProperty('showFAB', showFAB));
   }
 
   @override
@@ -188,7 +216,8 @@ class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.topToast, topToast) &&
             const DeepCollectionEquality()
                 .equals(other.toastDuration, toastDuration) &&
-            const DeepCollectionEquality().equals(other.opacity, opacity));
+            const DeepCollectionEquality().equals(other.opacity, opacity) &&
+            const DeepCollectionEquality().equals(other.showFAB, showFAB));
   }
 
   @override
@@ -197,7 +226,8 @@ class _$_GeneralManager extends _GeneralManager with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(topToast),
       const DeepCollectionEquality().hash(toastDuration),
-      const DeepCollectionEquality().hash(opacity));
+      const DeepCollectionEquality().hash(opacity),
+      const DeepCollectionEquality().hash(showFAB));
 
   @JsonKey(ignore: true)
   @override
@@ -210,7 +240,8 @@ abstract class _GeneralManager extends GeneralManager {
       {String status,
       bool topToast,
       int toastDuration,
-      double opacity}) = _$_GeneralManager;
+      double opacity,
+      bool showFAB}) = _$_GeneralManager;
   const _GeneralManager._() : super._();
 
   @override
@@ -221,6 +252,8 @@ abstract class _GeneralManager extends GeneralManager {
   int get toastDuration;
   @override
   double get opacity;
+  @override
+  bool get showFAB;
   @override
   @JsonKey(ignore: true)
   _$GeneralManagerCopyWith<_GeneralManager> get copyWith =>
@@ -824,12 +857,10 @@ abstract class _ColorManager extends ColorManager {
 class _$AlarmManagerTearOff {
   const _$AlarmManagerTearOff();
 
-  _AlarmManager call(
-      {int alarmHour = 12, int alarmMinute = 00, bool showFAB = false}) {
+  _AlarmManager call({int alarmHour = 12, int alarmMinute = 00}) {
     return _AlarmManager(
       alarmHour: alarmHour,
       alarmMinute: alarmMinute,
-      showFAB: showFAB,
     );
   }
 }
@@ -841,7 +872,6 @@ const $AlarmManager = _$AlarmManagerTearOff();
 mixin _$AlarmManager {
   int get alarmHour => throw _privateConstructorUsedError;
   int get alarmMinute => throw _privateConstructorUsedError;
-  bool get showFAB => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AlarmManagerCopyWith<AlarmManager> get copyWith =>
@@ -853,7 +883,7 @@ abstract class $AlarmManagerCopyWith<$Res> {
   factory $AlarmManagerCopyWith(
           AlarmManager value, $Res Function(AlarmManager) then) =
       _$AlarmManagerCopyWithImpl<$Res>;
-  $Res call({int alarmHour, int alarmMinute, bool showFAB});
+  $Res call({int alarmHour, int alarmMinute});
 }
 
 /// @nodoc
@@ -868,7 +898,6 @@ class _$AlarmManagerCopyWithImpl<$Res> implements $AlarmManagerCopyWith<$Res> {
   $Res call({
     Object? alarmHour = freezed,
     Object? alarmMinute = freezed,
-    Object? showFAB = freezed,
   }) {
     return _then(_value.copyWith(
       alarmHour: alarmHour == freezed
@@ -879,10 +908,6 @@ class _$AlarmManagerCopyWithImpl<$Res> implements $AlarmManagerCopyWith<$Res> {
           ? _value.alarmMinute
           : alarmMinute // ignore: cast_nullable_to_non_nullable
               as int,
-      showFAB: showFAB == freezed
-          ? _value.showFAB
-          : showFAB // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -894,7 +919,7 @@ abstract class _$AlarmManagerCopyWith<$Res>
           _AlarmManager value, $Res Function(_AlarmManager) then) =
       __$AlarmManagerCopyWithImpl<$Res>;
   @override
-  $Res call({int alarmHour, int alarmMinute, bool showFAB});
+  $Res call({int alarmHour, int alarmMinute});
 }
 
 /// @nodoc
@@ -911,7 +936,6 @@ class __$AlarmManagerCopyWithImpl<$Res> extends _$AlarmManagerCopyWithImpl<$Res>
   $Res call({
     Object? alarmHour = freezed,
     Object? alarmMinute = freezed,
-    Object? showFAB = freezed,
   }) {
     return _then(_AlarmManager(
       alarmHour: alarmHour == freezed
@@ -922,10 +946,6 @@ class __$AlarmManagerCopyWithImpl<$Res> extends _$AlarmManagerCopyWithImpl<$Res>
           ? _value.alarmMinute
           : alarmMinute // ignore: cast_nullable_to_non_nullable
               as int,
-      showFAB: showFAB == freezed
-          ? _value.showFAB
-          : showFAB // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -933,8 +953,7 @@ class __$AlarmManagerCopyWithImpl<$Res> extends _$AlarmManagerCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AlarmManager extends _AlarmManager with DiagnosticableTreeMixin {
-  const _$_AlarmManager(
-      {this.alarmHour = 12, this.alarmMinute = 00, this.showFAB = false})
+  const _$_AlarmManager({this.alarmHour = 12, this.alarmMinute = 00})
       : super._();
 
   @JsonKey()
@@ -943,13 +962,10 @@ class _$_AlarmManager extends _AlarmManager with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final int alarmMinute;
-  @JsonKey()
-  @override
-  final bool showFAB;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AlarmManager(alarmHour: $alarmHour, alarmMinute: $alarmMinute, showFAB: $showFAB)';
+    return 'AlarmManager(alarmHour: $alarmHour, alarmMinute: $alarmMinute)';
   }
 
   @override
@@ -958,8 +974,7 @@ class _$_AlarmManager extends _AlarmManager with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'AlarmManager'))
       ..add(DiagnosticsProperty('alarmHour', alarmHour))
-      ..add(DiagnosticsProperty('alarmMinute', alarmMinute))
-      ..add(DiagnosticsProperty('showFAB', showFAB));
+      ..add(DiagnosticsProperty('alarmMinute', alarmMinute));
   }
 
   @override
@@ -969,16 +984,14 @@ class _$_AlarmManager extends _AlarmManager with DiagnosticableTreeMixin {
             other is _AlarmManager &&
             const DeepCollectionEquality().equals(other.alarmHour, alarmHour) &&
             const DeepCollectionEquality()
-                .equals(other.alarmMinute, alarmMinute) &&
-            const DeepCollectionEquality().equals(other.showFAB, showFAB));
+                .equals(other.alarmMinute, alarmMinute));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(alarmHour),
-      const DeepCollectionEquality().hash(alarmMinute),
-      const DeepCollectionEquality().hash(showFAB));
+      const DeepCollectionEquality().hash(alarmMinute));
 
   @JsonKey(ignore: true)
   @override
@@ -987,7 +1000,7 @@ class _$_AlarmManager extends _AlarmManager with DiagnosticableTreeMixin {
 }
 
 abstract class _AlarmManager extends AlarmManager {
-  const factory _AlarmManager({int alarmHour, int alarmMinute, bool showFAB}) =
+  const factory _AlarmManager({int alarmHour, int alarmMinute}) =
       _$_AlarmManager;
   const _AlarmManager._() : super._();
 
@@ -995,8 +1008,6 @@ abstract class _AlarmManager extends AlarmManager {
   int get alarmHour;
   @override
   int get alarmMinute;
-  @override
-  bool get showFAB;
   @override
   @JsonKey(ignore: true)
   _$AlarmManagerCopyWith<_AlarmManager> get copyWith =>
@@ -1008,10 +1019,12 @@ class _$AlarmTimeKeepingManagerTearOff {
   const _$AlarmTimeKeepingManagerTearOff();
 
   _AlarmTimeKeepingManager call(
-      {Duration duration = const Duration(seconds: 1),
+      {double rate = 0,
+      Duration duration = const Duration(seconds: 1),
       bool alarmTK = false,
       bool isAlarmFinish = false}) {
     return _AlarmTimeKeepingManager(
+      rate: rate,
       duration: duration,
       alarmTK: alarmTK,
       isAlarmFinish: isAlarmFinish,
@@ -1024,6 +1037,7 @@ const $AlarmTimeKeepingManager = _$AlarmTimeKeepingManagerTearOff();
 
 /// @nodoc
 mixin _$AlarmTimeKeepingManager {
+  double get rate => throw _privateConstructorUsedError;
   Duration get duration => throw _privateConstructorUsedError;
   bool get alarmTK => throw _privateConstructorUsedError;
   bool get isAlarmFinish => throw _privateConstructorUsedError;
@@ -1038,7 +1052,7 @@ abstract class $AlarmTimeKeepingManagerCopyWith<$Res> {
   factory $AlarmTimeKeepingManagerCopyWith(AlarmTimeKeepingManager value,
           $Res Function(AlarmTimeKeepingManager) then) =
       _$AlarmTimeKeepingManagerCopyWithImpl<$Res>;
-  $Res call({Duration duration, bool alarmTK, bool isAlarmFinish});
+  $Res call({double rate, Duration duration, bool alarmTK, bool isAlarmFinish});
 }
 
 /// @nodoc
@@ -1052,11 +1066,16 @@ class _$AlarmTimeKeepingManagerCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? rate = freezed,
     Object? duration = freezed,
     Object? alarmTK = freezed,
     Object? isAlarmFinish = freezed,
   }) {
     return _then(_value.copyWith(
+      rate: rate == freezed
+          ? _value.rate
+          : rate // ignore: cast_nullable_to_non_nullable
+              as double,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -1080,7 +1099,7 @@ abstract class _$AlarmTimeKeepingManagerCopyWith<$Res>
           $Res Function(_AlarmTimeKeepingManager) then) =
       __$AlarmTimeKeepingManagerCopyWithImpl<$Res>;
   @override
-  $Res call({Duration duration, bool alarmTK, bool isAlarmFinish});
+  $Res call({double rate, Duration duration, bool alarmTK, bool isAlarmFinish});
 }
 
 /// @nodoc
@@ -1097,11 +1116,16 @@ class __$AlarmTimeKeepingManagerCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? rate = freezed,
     Object? duration = freezed,
     Object? alarmTK = freezed,
     Object? isAlarmFinish = freezed,
   }) {
     return _then(_AlarmTimeKeepingManager(
+      rate: rate == freezed
+          ? _value.rate
+          : rate // ignore: cast_nullable_to_non_nullable
+              as double,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -1120,14 +1144,18 @@ class __$AlarmTimeKeepingManagerCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AlarmTimeKeepingManager
-    with DiagnosticableTreeMixin
-    implements _AlarmTimeKeepingManager {
+class _$_AlarmTimeKeepingManager extends _AlarmTimeKeepingManager
+    with DiagnosticableTreeMixin {
   const _$_AlarmTimeKeepingManager(
-      {this.duration = const Duration(seconds: 1),
+      {this.rate = 0,
+      this.duration = const Duration(seconds: 1),
       this.alarmTK = false,
-      this.isAlarmFinish = false});
+      this.isAlarmFinish = false})
+      : super._();
 
+  @JsonKey()
+  @override
+  final double rate;
   @JsonKey()
   @override
   final Duration duration;
@@ -1140,7 +1168,7 @@ class _$_AlarmTimeKeepingManager
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AlarmTimeKeepingManager(duration: $duration, alarmTK: $alarmTK, isAlarmFinish: $isAlarmFinish)';
+    return 'AlarmTimeKeepingManager(rate: $rate, duration: $duration, alarmTK: $alarmTK, isAlarmFinish: $isAlarmFinish)';
   }
 
   @override
@@ -1148,6 +1176,7 @@ class _$_AlarmTimeKeepingManager
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AlarmTimeKeepingManager'))
+      ..add(DiagnosticsProperty('rate', rate))
       ..add(DiagnosticsProperty('duration', duration))
       ..add(DiagnosticsProperty('alarmTK', alarmTK))
       ..add(DiagnosticsProperty('isAlarmFinish', isAlarmFinish));
@@ -1158,6 +1187,7 @@ class _$_AlarmTimeKeepingManager
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AlarmTimeKeepingManager &&
+            const DeepCollectionEquality().equals(other.rate, rate) &&
             const DeepCollectionEquality().equals(other.duration, duration) &&
             const DeepCollectionEquality().equals(other.alarmTK, alarmTK) &&
             const DeepCollectionEquality()
@@ -1167,6 +1197,7 @@ class _$_AlarmTimeKeepingManager
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(rate),
       const DeepCollectionEquality().hash(duration),
       const DeepCollectionEquality().hash(alarmTK),
       const DeepCollectionEquality().hash(isAlarmFinish));
@@ -1178,12 +1209,16 @@ class _$_AlarmTimeKeepingManager
           this, _$identity);
 }
 
-abstract class _AlarmTimeKeepingManager implements AlarmTimeKeepingManager {
+abstract class _AlarmTimeKeepingManager extends AlarmTimeKeepingManager {
   const factory _AlarmTimeKeepingManager(
-      {Duration duration,
+      {double rate,
+      Duration duration,
       bool alarmTK,
       bool isAlarmFinish}) = _$_AlarmTimeKeepingManager;
+  const _AlarmTimeKeepingManager._() : super._();
 
+  @override
+  double get rate;
   @override
   Duration get duration;
   @override

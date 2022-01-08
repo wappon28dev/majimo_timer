@@ -17,7 +17,7 @@ class AlarmPage extends HookConsumerWidget {
     final isLandscape = orientation == Orientation.landscape;
     final generalmanager = ref.read(generalManager);
     final alarmmanager = ref.read(alarmManager.notifier);
-    final show = ref.watch(alarmManager).showFAB;
+    final show = ref.watch(generalManager).showFAB;
     const tag = 'alarm';
 
     return Hero(
@@ -55,49 +55,3 @@ class AlarmPage extends HookConsumerWidget {
                     : a.buildHorizontal(context))));
   }
 }
-
-// Widget fab({required BuildContext context, required WidgetRef ref}) {
-//   final generalmanager = ref.read(generalManager);
-//   final radius = ref.watch(alarmManager).FABsize;
-//   return Stack(children: [
-//     SizedBox(
-//         height: 120,
-//         child: Stack(
-//           alignment: Alignment.center,
-//           clipBehavior: Clip.antiAliasWithSaveLayer,
-//           children: [
-//             CircleAvatar(
-//               radius: radius,
-//               backgroundColor: Colors.green.shade200,
-//             ),
-//             PlayAnimation<double>(
-//                 tween: Tween(begin: 0, end: 25),
-//                 delay: Duration.zero,
-//                 duration: const Duration(milliseconds: 250),
-//                 builder: (context, child, value) {
-//                   return IconButton(
-//                       iconSize: value,
-//                       padding: const EdgeInsets.all(20),
-//                       color: Colors.black,
-//                       enableFeedback: true,
-//                       icon: const Icon(
-//                         Icons.play_arrow,
-//                       ),
-//                       onPressed: () {
-//                         Navigator.pushAndRemoveUntil<void>(
-//                             context,
-//                             MaterialPageRoute<void>(
-//                                 builder: (context) =>
-//                                     const AlarmTimeKeepingPage()),
-//                             (_) => false);
-//                         ref.read(alarmManager).show();
-//                         ref.read(alarmTimeKeepingManager).start();
-//                         ref
-//                             .read(generalManager)
-//                             .change_timekeeping(value: true);
-//                       });
-//                 })
-//           ],
-//         ))
-//   ]);
-// }

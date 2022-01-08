@@ -1,8 +1,9 @@
+// ignore_for_file: unawaited_futures
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
-import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:rive/rive.dart';
 
@@ -31,11 +32,11 @@ class _SplashState extends ConsumerState<Splash> {
     return WillPopScope(
         onWillPop: () async => false,
         child: Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             width: double.infinity,
             height: double.infinity,
             color: ColorKey.orange.value,
-            child: RiveAnimation.asset('assets/splash/splash.riv')));
+            child: const RiveAnimation.asset('assets/splash/splash.riv')));
   }
 }
 

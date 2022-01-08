@@ -1,5 +1,7 @@
 // ignore_for_file: implementation_imports
 
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dismissible_page/src/dismissible_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -72,10 +74,13 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             case 'alarm':
               context.pushTransparentRoute(const AlarmPage());
               ref.read(alarmManager.notifier).internal();
-              ref.read(alarmManager.notifier).show();
+              ref.read(generalManager.notifier).showFAB();
+
               break;
             case 'timer':
               context.pushTransparentRoute(const TimerPage());
+              ref.read(generalManager.notifier).showFAB();
+
               break;
             case 'goal':
               context.pushTransparentRoute(const GoalPage());
@@ -136,7 +141,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 style: const TextStyle(fontWeight: FontWeight.bold))),
         const SizedBox(height: 20),
         Row(
-          // 中央寄せ
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             button(tag: 'alarm'),
