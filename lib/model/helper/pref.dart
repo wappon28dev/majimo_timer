@@ -15,9 +15,8 @@ enum PrefKey {
   toastDuration, //int Duration of toast notification
   clockAnimation, //int Curve of Clock Animation
   showSec, // bool show clock seconds
-  alarmTK, // bool alarmTimeKeeping
-  isAlarmFinish, // bool isAlarmFinish
-  alarmDuration, // int Duration in seconds
+  timerTarget, // int timerTarget in minute
+  timerInterval, // int timerInterval in minute
 }
 
 class PrefManager {
@@ -29,22 +28,20 @@ class PrefManager {
     var _toastDuration = await PrefManager.getInt(key: PrefKey.toastDuration);
     var _clockAnimation = await PrefManager.getInt(key: PrefKey.clockAnimation);
     var _showSec = await PrefManager.getBool(key: PrefKey.showSec);
-    var _alarmTK = await PrefManager.getBool(key: PrefKey.showSec);
-    var _isAlarmFinish = await PrefManager.getBool(key: PrefKey.showSec);
-    var _alarmDuration = await PrefManager.getInt(key: PrefKey.alarmDuration);
+    var _timerTarget = await PrefManager.getInt(key: PrefKey.timerTarget);
+    var _timerInterval = await PrefManager.getInt(key: PrefKey.timerInterval);
 
     Logger.r('''
-        restore values :
-          >> bool  is24            =   $_is24
-          >> int   theme           =   $_theme
-          >> int   lang            =   $_lang
-          >> bool  topToast        =   $_topToast
-          >> int   toastDuration   =   $_toastDuration 
-          >> int   clockAnimation  =   $_clockAnimation
-          >> bool  showSec         =   $_showSec
-          >> bool  alarmTK         =   $_alarmTK 
-          >> bool  isAlarmFinish   =   $_isAlarmFinish 
-          >> int   alarmDuration   =   $_alarmDuration
+      restore values :
+        >> bool  is24            =   $_is24
+        >> int   theme           =   $_theme
+        >> int   lang            =   $_lang
+        >> bool  topToast        =   $_topToast
+        >> int   toastDuration   =   $_toastDuration 
+        >> int   clockAnimation  =   $_clockAnimation
+        >> bool  showSec         =   $_showSec
+        >> int   timerTarget     =   $_timerTarget
+        >> int   timerInterval   =   $_timerInterval
       ''');
 
     if (_is24 == null) {
@@ -68,14 +65,13 @@ class PrefManager {
     if (_showSec == null) {
       Logger.r('Warning! : _showSec is null => true');
     }
-    if (_alarmTK == null) {
-      Logger.r('Warning! : _alarmTK is null => false');
+
+    if (_timerTarget == null) {
+      Logger.e('Warning! : _timerTarget is null! => 30');
     }
-    if (_isAlarmFinish == null) {
-      Logger.r('Warning! : _isAlarmFinish is null => false');
-    }
-    if (_alarmDuration == null) {
-      Logger.e('Warning! : _alarmDuration is null! => _alarmDuration = 0');
+
+    if (_timerInterval == null) {
+      Logger.e('Warning! : _timerInterval is null! => 30');
     }
 
     _is24 ??= true;
@@ -85,9 +81,8 @@ class PrefManager {
     _toastDuration ??= 4;
     _clockAnimation ??= 0;
     _showSec ??= true;
-    _alarmTK ??= false;
-    _isAlarmFinish ??= false;
-    _alarmDuration ??= 0;
+    _timerTarget ??= 30;
+    _timerInterval ??= 30;
 
     ref.read(clockManager.notifier).change_is24(value: _is24);
     ref.read(themeManager.notifier).change(value: _theme);
@@ -98,13 +93,8 @@ class PrefManager {
         .change_toastDuration(value: _toastDuration);
     ref.read(clockManager.notifier).change_animation(value: _clockAnimation);
     ref.read(clockManager.notifier).change_showSec(value: _showSec);
-    ref.read(alarmTimeKeepingManager.notifier).change_alarmTK(value: _alarmTK);
-    ref
-        .read(alarmTimeKeepingManager.notifier)
-        .change_isAlarmFinish(value: _isAlarmFinish);
-    ref
-        .read(alarmTimeKeepingManager.notifier)
-        .change_alarmDuration(value: _alarmDuration);
+    ref.read(timerManager.notifier).change_target(value: _timerTarget);
+    ref.read(timerManager.notifier).change_interval(value: _timerInterval);
   }
 
   static Future<bool?> getBool({required PrefKey key}) async {

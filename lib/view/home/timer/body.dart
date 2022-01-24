@@ -13,6 +13,8 @@ import '../../../model/helper/theme.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 
+import 'timekeep/body.dart';
+
 class TimerPage extends HookConsumerWidget {
   const TimerPage({Key? key}) : super(key: key);
 
@@ -22,6 +24,7 @@ class TimerPage extends HookConsumerWidget {
     final isLandscape = orientation == Orientation.landscape;
     final generalmanager = ref.read(generalManager);
     final alarmmanager = ref.read(alarmManager.notifier);
+    final timermanager = ref.read(timerManager.notifier);
     final show = ref.watch(generalManager).showFAB;
     const tag = 'timer';
 
@@ -43,7 +46,12 @@ class TimerPage extends HookConsumerWidget {
                             onLongPressUp: () => Navigator.pop(context),
                             child: FloatingActionButton(
                               onPressed: () =>
-                                  alarmmanager.push(context: context, ref: ref),
+                                  Navigator.pushAndRemoveUntil<void>(
+                                      context,
+                                      MaterialPageRoute<void>(
+                                          builder: (context) =>
+                                              const TimerTimeKeepingPage()),
+                                      (_) => false),
                               splashColor: Colors.green.shade300,
                               backgroundColor: Colors.green.shade100,
                               heroTag: null,

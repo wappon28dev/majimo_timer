@@ -1230,3 +1230,333 @@ abstract class _AlarmTimeKeepingManager extends AlarmTimeKeepingManager {
   _$AlarmTimeKeepingManagerCopyWith<_AlarmTimeKeepingManager> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$TimerManagerTearOff {
+  const _$TimerManagerTearOff();
+
+  _TimerManager call(
+      {Duration target = const Duration(minutes: 1),
+      Duration interval = const Duration(minutes: 1),
+      bool isInterval = false}) {
+    return _TimerManager(
+      target: target,
+      interval: interval,
+      isInterval: isInterval,
+    );
+  }
+}
+
+/// @nodoc
+const $TimerManager = _$TimerManagerTearOff();
+
+/// @nodoc
+mixin _$TimerManager {
+  Duration get target => throw _privateConstructorUsedError;
+  Duration get interval => throw _privateConstructorUsedError;
+  bool get isInterval => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $TimerManagerCopyWith<TimerManager> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TimerManagerCopyWith<$Res> {
+  factory $TimerManagerCopyWith(
+          TimerManager value, $Res Function(TimerManager) then) =
+      _$TimerManagerCopyWithImpl<$Res>;
+  $Res call({Duration target, Duration interval, bool isInterval});
+}
+
+/// @nodoc
+class _$TimerManagerCopyWithImpl<$Res> implements $TimerManagerCopyWith<$Res> {
+  _$TimerManagerCopyWithImpl(this._value, this._then);
+
+  final TimerManager _value;
+  // ignore: unused_field
+  final $Res Function(TimerManager) _then;
+
+  @override
+  $Res call({
+    Object? target = freezed,
+    Object? interval = freezed,
+    Object? isInterval = freezed,
+  }) {
+    return _then(_value.copyWith(
+      target: target == freezed
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      interval: interval == freezed
+          ? _value.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      isInterval: isInterval == freezed
+          ? _value.isInterval
+          : isInterval // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$TimerManagerCopyWith<$Res>
+    implements $TimerManagerCopyWith<$Res> {
+  factory _$TimerManagerCopyWith(
+          _TimerManager value, $Res Function(_TimerManager) then) =
+      __$TimerManagerCopyWithImpl<$Res>;
+  @override
+  $Res call({Duration target, Duration interval, bool isInterval});
+}
+
+/// @nodoc
+class __$TimerManagerCopyWithImpl<$Res> extends _$TimerManagerCopyWithImpl<$Res>
+    implements _$TimerManagerCopyWith<$Res> {
+  __$TimerManagerCopyWithImpl(
+      _TimerManager _value, $Res Function(_TimerManager) _then)
+      : super(_value, (v) => _then(v as _TimerManager));
+
+  @override
+  _TimerManager get _value => super._value as _TimerManager;
+
+  @override
+  $Res call({
+    Object? target = freezed,
+    Object? interval = freezed,
+    Object? isInterval = freezed,
+  }) {
+    return _then(_TimerManager(
+      target: target == freezed
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      interval: interval == freezed
+          ? _value.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      isInterval: isInterval == freezed
+          ? _value.isInterval
+          : isInterval // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TimerManager extends _TimerManager with DiagnosticableTreeMixin {
+  const _$_TimerManager(
+      {this.target = const Duration(minutes: 1),
+      this.interval = const Duration(minutes: 1),
+      this.isInterval = false})
+      : super._();
+
+  @JsonKey()
+  @override
+  final Duration target;
+  @JsonKey()
+  @override
+  final Duration interval;
+  @JsonKey()
+  @override
+  final bool isInterval;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'TimerManager(target: $target, interval: $interval, isInterval: $isInterval)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'TimerManager'))
+      ..add(DiagnosticsProperty('target', target))
+      ..add(DiagnosticsProperty('interval', interval))
+      ..add(DiagnosticsProperty('isInterval', isInterval));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _TimerManager &&
+            const DeepCollectionEquality().equals(other.target, target) &&
+            const DeepCollectionEquality().equals(other.interval, interval) &&
+            const DeepCollectionEquality()
+                .equals(other.isInterval, isInterval));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(target),
+      const DeepCollectionEquality().hash(interval),
+      const DeepCollectionEquality().hash(isInterval));
+
+  @JsonKey(ignore: true)
+  @override
+  _$TimerManagerCopyWith<_TimerManager> get copyWith =>
+      __$TimerManagerCopyWithImpl<_TimerManager>(this, _$identity);
+}
+
+abstract class _TimerManager extends TimerManager {
+  const factory _TimerManager(
+      {Duration target, Duration interval, bool isInterval}) = _$_TimerManager;
+  const _TimerManager._() : super._();
+
+  @override
+  Duration get target;
+  @override
+  Duration get interval;
+  @override
+  bool get isInterval;
+  @override
+  @JsonKey(ignore: true)
+  _$TimerManagerCopyWith<_TimerManager> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$TimerTimeKeepingManagerTearOff {
+  const _$TimerTimeKeepingManagerTearOff();
+
+  _TimerTimeKeepingManager call({double rate = 0}) {
+    return _TimerTimeKeepingManager(
+      rate: rate,
+    );
+  }
+}
+
+/// @nodoc
+const $TimerTimeKeepingManager = _$TimerTimeKeepingManagerTearOff();
+
+/// @nodoc
+mixin _$TimerTimeKeepingManager {
+  double get rate => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $TimerTimeKeepingManagerCopyWith<TimerTimeKeepingManager> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TimerTimeKeepingManagerCopyWith<$Res> {
+  factory $TimerTimeKeepingManagerCopyWith(TimerTimeKeepingManager value,
+          $Res Function(TimerTimeKeepingManager) then) =
+      _$TimerTimeKeepingManagerCopyWithImpl<$Res>;
+  $Res call({double rate});
+}
+
+/// @nodoc
+class _$TimerTimeKeepingManagerCopyWithImpl<$Res>
+    implements $TimerTimeKeepingManagerCopyWith<$Res> {
+  _$TimerTimeKeepingManagerCopyWithImpl(this._value, this._then);
+
+  final TimerTimeKeepingManager _value;
+  // ignore: unused_field
+  final $Res Function(TimerTimeKeepingManager) _then;
+
+  @override
+  $Res call({
+    Object? rate = freezed,
+  }) {
+    return _then(_value.copyWith(
+      rate: rate == freezed
+          ? _value.rate
+          : rate // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$TimerTimeKeepingManagerCopyWith<$Res>
+    implements $TimerTimeKeepingManagerCopyWith<$Res> {
+  factory _$TimerTimeKeepingManagerCopyWith(_TimerTimeKeepingManager value,
+          $Res Function(_TimerTimeKeepingManager) then) =
+      __$TimerTimeKeepingManagerCopyWithImpl<$Res>;
+  @override
+  $Res call({double rate});
+}
+
+/// @nodoc
+class __$TimerTimeKeepingManagerCopyWithImpl<$Res>
+    extends _$TimerTimeKeepingManagerCopyWithImpl<$Res>
+    implements _$TimerTimeKeepingManagerCopyWith<$Res> {
+  __$TimerTimeKeepingManagerCopyWithImpl(_TimerTimeKeepingManager _value,
+      $Res Function(_TimerTimeKeepingManager) _then)
+      : super(_value, (v) => _then(v as _TimerTimeKeepingManager));
+
+  @override
+  _TimerTimeKeepingManager get _value =>
+      super._value as _TimerTimeKeepingManager;
+
+  @override
+  $Res call({
+    Object? rate = freezed,
+  }) {
+    return _then(_TimerTimeKeepingManager(
+      rate: rate == freezed
+          ? _value.rate
+          : rate // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TimerTimeKeepingManager extends _TimerTimeKeepingManager
+    with DiagnosticableTreeMixin {
+  const _$_TimerTimeKeepingManager({this.rate = 0}) : super._();
+
+  @JsonKey()
+  @override
+  final double rate;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'TimerTimeKeepingManager(rate: $rate)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'TimerTimeKeepingManager'))
+      ..add(DiagnosticsProperty('rate', rate));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _TimerTimeKeepingManager &&
+            const DeepCollectionEquality().equals(other.rate, rate));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(rate));
+
+  @JsonKey(ignore: true)
+  @override
+  _$TimerTimeKeepingManagerCopyWith<_TimerTimeKeepingManager> get copyWith =>
+      __$TimerTimeKeepingManagerCopyWithImpl<_TimerTimeKeepingManager>(
+          this, _$identity);
+}
+
+abstract class _TimerTimeKeepingManager extends TimerTimeKeepingManager {
+  const factory _TimerTimeKeepingManager({double rate}) =
+      _$_TimerTimeKeepingManager;
+  const _TimerTimeKeepingManager._() : super._();
+
+  @override
+  double get rate;
+  @override
+  @JsonKey(ignore: true)
+  _$TimerTimeKeepingManagerCopyWith<_TimerTimeKeepingManager> get copyWith =>
+      throw _privateConstructorUsedError;
+}

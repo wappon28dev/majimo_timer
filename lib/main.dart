@@ -34,6 +34,11 @@ final alarmManager = StateNotifierProvider<AlarmManagerVM, AlarmManager>(
 final alarmTimeKeepingManager =
     StateNotifierProvider<AlarmTimeKeepingManagerVM, AlarmTimeKeepingManager>(
         (ref) => AlarmTimeKeepingManagerVM(ref.read));
+final timerManager = StateNotifierProvider<TimerManagerVM, TimerManager>(
+    (ref) => TimerManagerVM());
+final timerTimeKeepingManager =
+    StateNotifierProvider<TimerTimeKeepingManagerVM, TimerTimeKeepingManager>(
+        (ref) => TimerTimeKeepingManagerVM());
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +58,6 @@ class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     useEffect(() {
       PrefManager.restore(ref, context);
     });

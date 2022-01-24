@@ -9,12 +9,11 @@ import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:simple_animations/simple_animations.dart';
-
 import '../../../../main.dart';
 import 'widget.dart';
 
-class AlarmTimeKeepingPage extends HookConsumerWidget {
-  const AlarmTimeKeepingPage({Key? key}) : super(key: key);
+class TimerTimeKeepingPage extends HookConsumerWidget {
+  const TimerTimeKeepingPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orientation = MediaQuery.of(context).orientation;

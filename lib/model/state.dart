@@ -1,6 +1,7 @@
-// ignore_for_file: non_constant_identifier_names, sort_unnamed_constructors_first
+// ignore_for_file: non_constant_identifier_names, sort_unnamed_constructors_first, unnecessary_parenthesis
 
 // ignore: implementation_imports
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -251,4 +252,23 @@ class AlarmTimeKeepingManager with _$AlarmTimeKeepingManager {
     @Default(false) bool isAlarmFinish,
   }) = _AlarmTimeKeepingManager;
   int get progress => 100 - rate.round() * 100;
+}
+
+@freezed
+class TimerManager with _$TimerManager {
+  const TimerManager._();
+  const factory TimerManager(
+      {@Default(Duration(minutes: 1)) Duration target,
+      @Default(Duration(minutes: 1)) Duration interval,
+      @Default(false) bool isInterval}) = _TimerManager;
+
+  String get target_str => '${target.inHours.toString().padLeft(2, '0')}h:'
+      '${target.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
+}
+
+@freezed
+class TimerTimeKeepingManager with _$TimerTimeKeepingManager {
+  const TimerTimeKeepingManager._();
+  const factory TimerTimeKeepingManager({@Default(0) double rate}) =
+      _TimerTimeKeepingManager;
 }

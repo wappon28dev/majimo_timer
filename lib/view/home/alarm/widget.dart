@@ -17,7 +17,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   final generalmanager = ref.read(generalManager);
 
   Widget content() {
-    final current = alarmmanager.alarm_value;
+    final current = ref.watch(alarmManager).alarm_value;
     Logger.i('- from majimo_timer/lib/view/home/alarm/widget.dart \n' +
         ' >> current value => ' +
         current.toString());

@@ -13,6 +13,7 @@ import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
+import 'package:majimo_timer/view/home/timer/timekeep/body.dart';
 import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
 import 'package:wakelock/wakelock.dart';
 import '../../../model/helper/config.dart';
@@ -264,7 +265,6 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
     state = state.copyWith(rate: _rate);
 
     Logger.i('duration => $_duration');
-    PrefManager.setInt(key: PrefKey.alarmDuration, value: _duration.inSeconds);
     Logger.i('tar => $_tar');
     status();
     NotificationManager().alarm_finish(target: _tar);
@@ -313,22 +313,36 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
     await Future<void>.delayed(const Duration(seconds: 5));
     await read(generalManager.notifier).change_status(text: 'アラームモード');
   }
+}
 
-  void change_alarmTK({required bool value}) {
-    state = state.copyWith(alarmTK: value);
-    PrefManager.setBool(key: PrefKey.alarmTK, value: value);
-    Logger.s('- from AlarmTKManager \n > timekeeping = $value');
+class TimerManagerVM extends StateNotifier<TimerManager> {
+  TimerManagerVM() : super(const TimerManager());
+  // void push({required BuildContext context, required WidgetRef ref}) {
+  //   WidgetsBinding.instance?.addPostFrameCallback((_) {
+  //     Navigator.pushAndRemoveUntil<void>(
+  //         context,
+  //         MaterialPageRoute<void>(
+  //             builder: (context) => const TimerTimeKeepingPage()),
+  //         (_) => false);
+
+  //     ref.read(generalManager.notifier).showFAB();
+  //     // ref.read(alarmTimeKeepingManager.notifier).start();
+  //   });
+  // }
+
+  void change_target({required int value}) {
+    state = state.copyWith(target: Duration(minutes: value));
+    PrefManager.setInt(key: PrefKey.timerTarget, value: value);
+    Logger.s('- from TimerManager \n >> save int timerTarget = $value');
   }
 
-  void change_isAlarmFinish({required bool value}) {
-    state = state.copyWith(isAlarmFinish: value);
-    PrefManager.setBool(key: PrefKey.isAlarmFinish, value: value);
-    Logger.s('- from AlarmTKManager \n > isAlarmFinish = $value');
+  void change_interval({required int value}) {
+    state = state.copyWith(interval: Duration(minutes: value));
+    PrefManager.setInt(key: PrefKey.timerInterval, value: value);
+    Logger.s('- from TimerManager \n >> save int timerInterval = $value');
   }
+}
 
-  void change_alarmDuration({required int value}) {
-    state = state.copyWith(duration: Duration(seconds: value));
-    PrefManager.setInt(key: PrefKey.alarmDuration, value: value);
-    Logger.s('- from AlarmTKManager \n > alarmDuration = $value');
-  }
+class TimerTimeKeepingManagerVM extends StateNotifier<TimerTimeKeepingManager> {
+  TimerTimeKeepingManagerVM() : super(const TimerTimeKeepingManager());
 }
