@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter_color/src/helper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/vm/viewmodel.dart';
+import 'package:majimo_timer/helper/theme.dart';
+import 'package:majimo_timer/helper/translations.dart';
+import 'package:majimo_timer/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/controller/controller.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../main.dart';
@@ -17,7 +17,7 @@ import '../../main.dart';
 Future modal(BuildContext context, WidgetRef ref, IconData icon, String title,
     String subtitle, List<Widget> widget) {
   const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
-  final value = ref.read(themeManager.notifier).isLight(context: context);
+  final value = ref.read(themeState.notifier).isLight(context: context);
   final header = <Widget>[
     Theme(
       data: MyTheme.get_theme(context: context, ref: ref),
@@ -90,11 +90,11 @@ List style(dynamic pref, dynamic value) {
 
 dynamic change_lang(BuildContext context, WidgetRef ref) {
   void func({required int lang}) {
-    ref.read(langManager.notifier).change(context: context, value: lang);
+    ref.read(langState.notifier).change(context: context, value: lang);
     Navigator.pop(context);
   }
 
-  final pref = ref.read(langManager).lang;
+  final pref = ref.read(langState).lang;
   return modal(
     context,
     ref,
@@ -136,12 +136,12 @@ dynamic change_lang(BuildContext context, WidgetRef ref) {
 
 dynamic app_theme(BuildContext context, WidgetRef ref) {
   void func({required int theme}) {
-    ref.read(themeManager.notifier).change(value: theme);
+    ref.read(themeState.notifier).change(value: theme);
 
     Navigator.pop(context);
   }
 
-  final pref = ref.read(themeManager).theme;
+  final pref = ref.read(themeState).theme;
 
   return modal(
     context,
@@ -184,15 +184,15 @@ dynamic app_theme(BuildContext context, WidgetRef ref) {
 
 dynamic clock_style(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(clockManager.notifier).change_is24(value: value);
+    ref.read(clockState.notifier).change_is24(value: value);
 
     Navigator.pop(context);
   }
 
-  final pref = ref.read(clockManager).is24;
+  final pref = ref.read(clockState).is24;
 
   Widget clock({required bool mode}) {
-    final value = ref.read(themeManager.notifier).isLight(context: context);
+    final value = ref.read(themeState.notifier).isLight(context: context);
 
     final color = (mode == pref)
         ? ColorKey.orange.value
@@ -203,9 +203,9 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
     return GestureDetector(
         onTap: () => func(value: mode),
         child: DigitalClock(
-          digitAnimationStyle: ref.read(clockManager).animation_curve,
+          digitAnimationStyle: ref.read(clockState).animation_curve,
           is24HourTimeFormat: mode,
-          showSecondsDigit: ref.read(clockManager).showSec,
+          showSecondsDigit: ref.read(clockState).showSec,
           areaDecoration: const BoxDecoration(
             color: Colors.transparent,
           ),
@@ -267,14 +267,14 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
 
 dynamic clock_showSec(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(clockManager.notifier).change_showSec(value: value);
+    ref.read(clockState.notifier).change_showSec(value: value);
     Navigator.pop(context);
   }
 
-  final pref = ref.read(clockManager).showSec;
+  final pref = ref.read(clockState).showSec;
 
   Widget clock({required bool mode}) {
-    final value = ref.read(themeManager.notifier).isLight(context: context);
+    final value = ref.read(themeState.notifier).isLight(context: context);
 
     final color = (mode == pref)
         ? ColorKey.orange.value
@@ -285,8 +285,8 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
     return GestureDetector(
         onTap: () => func(value: mode),
         child: DigitalClock(
-          digitAnimationStyle: ref.read(clockManager).animation_curve,
-          is24HourTimeFormat: ref.read(clockManager).is24,
+          digitAnimationStyle: ref.read(clockState).animation_curve,
+          is24HourTimeFormat: ref.read(clockState).is24,
           showSecondsDigit: mode,
           areaDecoration: const BoxDecoration(
             color: Colors.transparent,
@@ -347,14 +347,14 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
 
 dynamic clock_animation(BuildContext context, WidgetRef ref) {
   void func({required int value}) {
-    ref.read(clockManager.notifier).change_animation(value: value);
+    ref.read(clockState.notifier).change_animation(value: value);
     Navigator.pop(context);
   }
 
-  final pref = ref.read(clockManager).animation;
+  final pref = ref.read(clockState).animation;
 
   Widget clock({required int mode}) {
-    final value = ref.read(themeManager.notifier).isLight(context: context);
+    final value = ref.read(themeState.notifier).isLight(context: context);
 
     final color = (mode == pref)
         ? ColorKey.orange.value
@@ -368,7 +368,7 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
         child: DigitalClock(
           showSecondsDigit: true,
           digitAnimationStyle: animation(),
-          is24HourTimeFormat: ref.read(clockManager).is24,
+          is24HourTimeFormat: ref.read(clockState).is24,
           areaDecoration: const BoxDecoration(
             color: Colors.transparent,
           ),
@@ -399,7 +399,7 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
     t.clock_animation_sub.t,
     [
       Visibility(
-          visible: !(ref.read(clockManager).showSec),
+          visible: !(ref.read(clockState).showSec),
           child: Column(children: [
             const SizedBox(height: 10),
             Row(
@@ -443,12 +443,12 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
 
 dynamic toast_position(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(generalManager.notifier).change_topToast(value: value);
+    ref.read(generalState.notifier).change_topToast(value: value);
 
     Navigator.pop(context);
   }
 
-  final pref = ref.read(generalManager).topToast;
+  final pref = ref.read(generalState).topToast;
 
   return modal(
     context,
@@ -483,12 +483,12 @@ dynamic toast_position(BuildContext context, WidgetRef ref) {
 
 dynamic toast_duration(BuildContext context, WidgetRef ref) {
   void func({required int sec}) {
-    ref.read(generalManager.notifier).change_toastDuration(value: sec);
+    ref.read(generalState.notifier).change_toastDuration(value: sec);
 
     Navigator.pop(context);
   }
 
-  final pref = ref.read(generalManager).toastDuration;
+  final pref = ref.read(generalState).toastDuration;
 
   return modal(
     context,

@@ -4,41 +4,36 @@ import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/model/state.dart';
-import 'package:majimo_timer/view/debug/body.dart';
-import 'package:majimo_timer/view/setting/body.dart';
 import 'package:majimo_timer/view/splash.dart';
-import 'package:majimo_timer/vm/viewmodel.dart';
-import 'package:workmanager/workmanager.dart';
 
-import 'model/helper/notification.dart';
-import 'model/helper/pref.dart';
-import 'model/helper/theme.dart';
-import 'plugin/let_log/let_log.dart';
-import 'view/home/alarm/timekeep/body.dart';
-import 'view/home/root/body.dart';
+import 'helper/notification.dart';
+import 'helper/plugin/let_log/let_log.dart';
+import 'helper/pref.dart';
+import 'helper/theme.dart';
 
 //global
-final generalManager = StateNotifierProvider<GeneralManagerVM, GeneralManager>(
-    (ref) => GeneralManagerVM());
-final themeManager = StateNotifierProvider<ThemeManagerVM, ThemeManager>(
-    (ref) => ThemeManagerVM());
-final langManager =
-    StateNotifierProvider<LangManagerVM, LangManager>((ref) => LangManagerVM());
-final clockManager = StateNotifierProvider<ClockManagerVM, ClockManager>(
-    (ref) => ClockManagerVM());
-final colorManager = StateNotifierProvider<ColorManagerVM, ColorManager>(
-    (ref) => ColorManagerVM());
-final alarmManager = StateNotifierProvider<AlarmManagerVM, AlarmManager>(
-    (ref) => AlarmManagerVM());
-final alarmTimeKeepingManager =
-    StateNotifierProvider<AlarmTimeKeepingManagerVM, AlarmTimeKeepingManager>(
-        (ref) => AlarmTimeKeepingManagerVM(ref.read));
-final timerManager = StateNotifierProvider<TimerManagerVM, TimerManager>(
-    (ref) => TimerManagerVM());
-final timerTimeKeepingManager =
-    StateNotifierProvider<TimerTimeKeepingManagerVM, TimerTimeKeepingManager>(
-        (ref) => TimerTimeKeepingManagerVM());
+final generalState = StateNotifierProvider<GeneralController, GeneralState>(
+    (ref) => GeneralController());
+final themeState = StateNotifierProvider<ThemeController, ThemeState>(
+    (ref) => ThemeController());
+final langState =
+    StateNotifierProvider<LangController, LangState>((ref) => LangController());
+final clockState = StateNotifierProvider<ClockController, ClockState>(
+    (ref) => ClockController());
+final colorState = StateNotifierProvider<ColorController, ColorState>(
+    (ref) => ColorController());
+final alarmState = StateNotifierProvider<AlarmController, AlarmState>(
+    (ref) => AlarmController());
+final alarmTKState =
+    StateNotifierProvider<AlarmTimeKeepingController, AlarmTimeKeepingState>(
+        (ref) => AlarmTimeKeepingController(ref.read));
+final timerState = StateNotifierProvider<TimerController, TimerState>(
+    (ref) => TimerController());
+final timerTKState =
+    StateNotifierProvider<TimerTimeKeepingController, TimerTimeKeepingState>(
+        (ref) => TimerTimeKeepingController());
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,7 +64,7 @@ class MyApp extends HookConsumerWidget {
             locale: context.locale,
             theme: MyTheme.lightTheme,
             darkTheme: MyTheme.darkTheme,
-            themeMode: ref.read(themeManager).theme_value,
+            themeMode: ref.read(themeState).theme_value,
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             home: const Splash()));

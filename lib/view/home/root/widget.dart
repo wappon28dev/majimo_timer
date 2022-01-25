@@ -10,12 +10,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/app_link.dart';
-import 'package:majimo_timer/model/helper/config.dart';
-import 'package:majimo_timer/model/helper/notification.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/helper/app_link.dart';
+import 'package:majimo_timer/helper/config.dart';
+import 'package:majimo_timer/helper/notification.dart';
+import 'package:majimo_timer/helper/translations.dart';
+import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/view/debug/body.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
@@ -23,8 +23,8 @@ import 'package:majimo_timer/view/home/timer/body.dart';
 import 'package:majimo_timer/view/setting/body.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:expandable_widgets/expandable_widgets.dart';
-import '../../../model/helper/theme.dart';
-import '../../../plugin/draggable_home/draggable_home.dart';
+import '../../../helper/theme.dart';
+import '../../../helper/plugin/draggable_home/draggable_home.dart';
 import 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
@@ -73,13 +73,13 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
           switch (tag) {
             case 'alarm':
               context.pushTransparentRoute(const AlarmPage());
-              ref.read(alarmManager.notifier).internal();
-              ref.read(generalManager.notifier).showFAB();
+              ref.read(alarmState.notifier).internal();
+              ref.read(generalState.notifier).showFAB();
 
               break;
             case 'timer':
               context.pushTransparentRoute(const TimerPage());
-              ref.read(generalManager.notifier).showFAB();
+              ref.read(generalState.notifier).showFAB();
 
               break;
             case 'goal':
@@ -135,9 +135,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         AnimatedOpacity(
-            opacity: ref.watch(generalManager).opacity,
+            opacity: ref.watch(generalState).opacity,
             duration: const Duration(milliseconds: 300),
-            child: Text(ref.watch(generalManager).status,
+            child: Text(ref.watch(generalState).status,
                 style: const TextStyle(fontWeight: FontWeight.bold))),
         const SizedBox(height: 20),
         Row(
@@ -153,11 +153,10 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget expand(BuildContext context) {
-    final color =
-        ref.watch(colorManager).color_tween(context: context, ref: ref);
-    final opacity = ref.watch(colorManager).opacity;
+    final color = ref.watch(colorState).color_tween(context: context, ref: ref);
+    final opacity = ref.watch(colorState).opacity;
     final path =
-        ref.watch(colorManager).color_picture_path(context: context, ref: ref);
+        ref.watch(colorState).color_picture_path(context: context, ref: ref);
     return PlayAnimation<Color?>(
         tween: color,
         builder: (context, child, value) {
@@ -252,7 +251,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     IconButton(
                       onPressed: () {
                         ref
-                            .read(generalManager.notifier)
+                            .read(generalState.notifier)
                             .push(context: context, page: const Debug());
                         Logger.e(
                             '- from majimo_timer/lib/view/home/root/widget.dart \n'
@@ -383,7 +382,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       IconButton(
         onPressed: () {
           ref
-              .read(generalManager.notifier)
+              .read(generalState.notifier)
               .push(context: context, page: const Debug());
           Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n'
               ' > debug page opened');
@@ -393,7 +392,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       ),
       IconButton(
         onPressed: () => ref
-            .read(generalManager.notifier)
+            .read(generalState.notifier)
             .push(context: context, page: const Setting()),
         icon: const Icon(Icons.settings),
         color: Colors.white,
@@ -408,7 +407,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         IconButton(
           onPressed: () {
             ref
-                .read(generalManager.notifier)
+                .read(generalState.notifier)
                 .push(context: context, page: const Debug());
             Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n'
                 ' > debug page opened');
@@ -419,7 +418,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         IconButton(
           onPressed: () {
             ref
-                .read(generalManager.notifier)
+                .read(generalState.notifier)
                 .push(context: context, page: const Setting());
           },
           icon: const Icon(Icons.settings),

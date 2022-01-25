@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/pref.dart';
-import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/helper/pref.dart';
+import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/setting/body.dart';
-import '../../../main.dart';
+import '../../main.dart';
 import 'package:flutter_color/flutter_color.dart';
 
 enum ColorKey {
@@ -99,13 +99,13 @@ class MyTheme {
 
   static ThemeData get_theme(
       {required BuildContext context, required WidgetRef ref}) {
-    final value = ref.read(themeManager.notifier).isLight(context: context);
+    final value = ref.read(themeState.notifier).isLight(context: context);
     return value ? _lightTheme : _darkTheme;
   }
 
   static Color get_background(
       {required BuildContext context, required WidgetRef ref}) {
-    final value = ref.read(themeManager.notifier).isLight(context: context);
+    final value = ref.read(themeState.notifier).isLight(context: context);
     return value
         ? _lightTheme.scaffoldBackgroundColor
         : _darkTheme.scaffoldBackgroundColor;

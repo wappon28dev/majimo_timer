@@ -10,9 +10,9 @@ class ClockModel {
 String hTOhh_24hTrue(int hour) {
   late String sHour;
   if (hour < 10) {
-    sHour = "$hour";
+    sHour = '$hour';
   } else {
-    sHour = "$hour";
+    sHour = '$hour';
   }
   return sHour;
 }
@@ -22,17 +22,17 @@ List hTOhh_24hFalse(int hour) {
   late String h12State;
   var times = <String>[];
   if (hour < 10) {
-    sHour = "$hour";
-    h12State = "AM";
+    sHour = '$hour';
+    h12State = 'AM';
   } else if (hour > 9 && hour < 13) {
-    sHour = "$hour";
-    h12State = "AM";
+    sHour = '$hour';
+    h12State = 'AM';
   } else if (hour > 12 && hour < 22) {
-    sHour = "${hour % 12}";
-    h12State = "PM";
+    sHour = '${hour % 12}';
+    h12State = 'PM';
   } else if (hour > 21) {
-    sHour = "${hour % 12}";
-    h12State = "PM";
+    sHour = '${hour % 12}';
+    h12State = 'PM';
   }
   times.add(sHour);
   times.add(h12State);
@@ -42,9 +42,9 @@ List hTOhh_24hFalse(int hour) {
 String mTOmm(int minute) {
   late String sMinute;
   if (minute < 10) {
-    sMinute = "0$minute";
+    sMinute = '0$minute';
   } else {
-    sMinute = "$minute";
+    sMinute = '$minute';
   }
   return sMinute;
 }
@@ -52,9 +52,9 @@ String mTOmm(int minute) {
 String sTOss(int second) {
   late String sSecond;
   if (second < 10) {
-    sSecond = "0$second";
+    sSecond = '0$second';
   } else {
-    sSecond = "$second";
+    sSecond = '$second';
   }
   return sSecond;
 }

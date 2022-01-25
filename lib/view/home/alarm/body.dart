@@ -1,13 +1,8 @@
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
-import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
-import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
-import 'package:majimo_timer/view/home/alarm/widget.dart' as a;
-import 'package:simple_animations/simple_animations.dart';
-import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/view/home/alarm/widget.dart' as a;
 
 class AlarmPage extends HookConsumerWidget {
   const AlarmPage({Key? key}) : super(key: key);
@@ -15,9 +10,8 @@ class AlarmPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final orientation = MediaQuery.of(context).orientation;
     final isLandscape = orientation == Orientation.landscape;
-    final generalmanager = ref.read(generalManager);
-    final alarmmanager = ref.read(alarmManager.notifier);
-    final show = ref.watch(generalManager).showFAB;
+    final alarmstate = ref.read(alarmState.notifier);
+    final show = ref.watch(generalState).showFAB;
     const tag = 'alarm';
 
     return Hero(
@@ -34,11 +28,11 @@ class AlarmPage extends HookConsumerWidget {
                         width: 80,
                         child: GestureDetector(
                             onLongPress: () =>
-                                alarmmanager.tooltip(context: context),
+                                alarmstate.tooltip(context: context),
                             onLongPressUp: () => Navigator.pop(context),
                             child: FloatingActionButton(
                               onPressed: () =>
-                                  alarmmanager.push(context: context, ref: ref),
+                                  alarmstate.push(context: context, ref: ref),
                               splashColor: Colors.green.shade300,
                               backgroundColor: Colors.green.shade200,
                               heroTag: null,

@@ -1,15 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:majimo_timer/model/helper/notification.dart';
-import 'package:majimo_timer/model/helper/pref.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/helper/notification.dart';
+import 'package:majimo_timer/helper/pref.dart';
+import 'package:majimo_timer/helper/translations.dart';
+import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/setting/widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/vm/viewmodel.dart';
+import 'package:majimo_timer/controller/controller.dart';
 import '../../main.dart';
-import '../../model/helper/theme.dart';
+import '../../helper/theme.dart';
 import '../setting/widget.dart';
 
 class Setting extends HookConsumerWidget {
@@ -29,10 +29,10 @@ class Setting extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final thememanager = ref.watch(themeManager);
-    final clockmanager = ref.watch(clockManager);
-    final langmanager = ref.watch(langManager);
-    final generalmanager = ref.watch(generalManager);
+    final themestate = ref.watch(themeState);
+    final clockstate = ref.watch(clockState);
+    final langstate = ref.watch(langState);
+    final generalstate = ref.watch(generalState);
 
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
@@ -40,7 +40,7 @@ class Setting extends HookConsumerWidget {
       locale: context.locale,
       theme: MyTheme.lightTheme,
       darkTheme: MyTheme.darkTheme,
-      themeMode: ref.watch(themeManager).theme_value,
+      themeMode: ref.watch(themeState).theme_value,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: appbar(context: context, ref: ref),
@@ -50,7 +50,7 @@ class Setting extends HookConsumerWidget {
             section(t.app_appearance.t),
             ListTile(
               title: Text(t.change_lang.t),
-              subtitle: Text(langmanager.lang_caption),
+              subtitle: Text(langstate.lang_caption),
               leading: const Icon(Icons.language),
               onTap: () {
                 change_lang(context, ref);
@@ -58,8 +58,8 @@ class Setting extends HookConsumerWidget {
             ),
             ListTile(
               title: Text(t.app_theme.t),
-              subtitle: Text(thememanager.theme_caption),
-              leading: Icon(thememanager.theme_icon),
+              subtitle: Text(themestate.theme_caption),
+              leading: Icon(themestate.theme_icon),
               onTap: () {
                 app_theme(context, ref);
               },
@@ -67,24 +67,24 @@ class Setting extends HookConsumerWidget {
             section(t.clock_appearance.t),
             ListTile(
               title: Text(t.clock_style.t),
-              subtitle: Text(clockmanager.is24_caption),
-              leading: Icon(clockmanager.is24_icon),
+              subtitle: Text(clockstate.is24_caption),
+              leading: Icon(clockstate.is24_icon),
               onTap: () {
                 clock_style(context, ref);
               },
             ),
             ListTile(
               title: Text(t.clock_seconds.t),
-              subtitle: Text(clockmanager.showSec_caption),
-              leading: Icon(clockmanager.showSec_icon),
+              subtitle: Text(clockstate.showSec_caption),
+              leading: Icon(clockstate.showSec_icon),
               onTap: () {
                 clock_showSec(context, ref);
               },
             ),
             ListTile(
               title: Text(t.clock_animation.t),
-              subtitle: Text(clockmanager.animation_caption),
-              leading: Icon(clockmanager.animation_icon),
+              subtitle: Text(clockstate.animation_caption),
+              leading: Icon(clockstate.animation_icon),
               onTap: () {
                 clock_animation(context, ref);
               },
@@ -92,15 +92,15 @@ class Setting extends HookConsumerWidget {
             section(t.toast.t),
             ListTile(
               title: Text(t.toast_position.t),
-              subtitle: Text(generalmanager.topToast_caption),
-              leading: Icon(generalmanager.topToast_icon),
+              subtitle: Text(generalstate.topToast_caption),
+              leading: Icon(generalstate.topToast_icon),
               onTap: () {
                 toast_position(context, ref);
               },
             ),
             ListTile(
               title: Text(t.toast_duration.t),
-              subtitle: Text(generalmanager.toastDuration_caption),
+              subtitle: Text(generalstate.toastDuration_caption),
               leading: const Icon(Icons.timelapse),
               onTap: () {
                 toast_duration(context, ref);

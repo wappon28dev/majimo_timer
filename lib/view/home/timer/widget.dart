@@ -1,20 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/helper/theme.dart';
+import 'package:majimo_timer/helper/translations.dart';
+import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import '../../../main.dart';
 import 'package:duration_picker/duration_picker.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
-  final clockmanager = ref.read(clockManager);
-  final alarmmanager = ref.read(alarmManager);
-  final generalmanager = ref.read(generalManager);
-  final timermanager = ref.read(timerManager);
+  final clockstate = ref.read(clockState);
+  final alarmstate = ref.read(alarmState);
+  final generalstate = ref.read(generalState);
+  final timerstate = ref.read(timerState);
   Widget content() {
-    final current = timermanager.target;
+    final current = timerstate.target;
     Logger.i('- from majimo_timer/lib/view/home/alarm/widget.dart \n' +
         ' >> current value => ' +
         current.toString());
@@ -24,7 +24,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           const SizedBox(height: 50),
           GestureDetector(
-            child: Text(ref.watch(timerManager).target_str,
+            child: Text(ref.watch(timerState).target_str,
                 style: const TextStyle(
                     fontSize: 70, color: Colors.white, fontFamily: 'M-plus-B')),
             onTap: () async {
@@ -34,7 +34,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                   baseUnit: BaseUnit.minute);
               if (result != null && result != current) {
                 ref
-                    .read(timerManager.notifier)
+                    .read(timerState.notifier)
                     .change_target(value: result.inMinutes);
                 Logger.i(
                     '- from majimo_timer/lib/view/home/timer/widget.dart \n' +

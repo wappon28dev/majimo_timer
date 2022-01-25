@@ -1,20 +1,20 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/vm/viewmodel.dart';
+import 'package:majimo_timer/controller/controller.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart' as p;
-import '../../main.dart';
+import '../../../main.dart';
 import 'helpers/clock_model.dart';
 import 'helpers/spinner_text.dart';
 
 Widget largeclock(BuildContext context, WidgetRef ref, bool value,
     [bool? isExpand]) {
-  final clockmanager = ref.read(clockManager);
-  final colormanager = ref.read(colorManager);
-  final isLight = ref.read(themeManager.notifier).isLight(context: context);
+  final clockmanager = ref.read(clockState);
+  final colormanager = ref.read(colorState);
+  final isLight = ref.read(themeState.notifier).isLight(context: context);
 
   final color = value
-      ? ref.read(colorManager).color_clockcolor(context: context, ref: ref)
+      ? ref.read(colorState).color_clockcolor(context: context, ref: ref)
       : Colors.white;
   final flame = (isExpand ?? false)
       ? (value
@@ -25,7 +25,7 @@ Widget largeclock(BuildContext context, WidgetRef ref, bool value,
       : Colors.transparent;
 
   return DigitalClock(
-    digitAnimationStyle: ref.read(clockManager).animation_curve,
+    digitAnimationStyle: ref.read(clockState).animation_curve,
     showSecondsDigit: clockmanager.showSec,
     is24HourTimeFormat: clockmanager.is24,
     areaDecoration: const BoxDecoration(
@@ -49,16 +49,16 @@ Widget largeclock(BuildContext context, WidgetRef ref, bool value,
 }
 
 Widget smallclock(BuildContext context, WidgetRef ref, bool value) {
-  final clockmanager = ref.read(clockManager);
-  final colormanager = ref.read(colorManager);
+  final clockmanager = ref.read(clockState);
+  final colormanager = ref.read(colorState);
   final color = value
       ? colormanager.color_clockcolor(context: context, ref: ref)
       : Colors.white;
 
   return p.DigitalClock(
     digitAnimationStyle: clockmanager.animation_curve,
-    showSecondsDigit: ref.read(clockManager).showSec,
-    is24HourTimeFormat: ref.read(clockManager).is24,
+    showSecondsDigit: ref.read(clockState).showSec,
+    is24HourTimeFormat: ref.read(clockState).is24,
     areaDecoration: const BoxDecoration(
       color: Colors.transparent,
     ),

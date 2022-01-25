@@ -1,23 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/view/home/alarm/body.dart';
-import 'package:majimo_timer/view/home/root/body.dart';
-import 'package:majimo_timer/vm/viewmodel.dart';
-import 'package:simple_animations/simple_animations.dart';
-import 'package:workmanager/workmanager.dart';
+import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/helper/translations.dart';
+
 import '../../../main.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
-  final clockmanager = ref.read(clockManager);
-  final alarmmanager = ref.read(alarmManager);
-  final generalmanager = ref.read(generalManager);
+  final alarmstate = ref.read(alarmState);
 
   Widget content() {
-    final current = ref.watch(alarmManager).alarm_value;
+    final current = ref.watch(alarmState).alarm_value;
     Logger.i('- from majimo_timer/lib/view/home/alarm/widget.dart \n' +
         ' >> current value => ' +
         current.toString());
@@ -26,7 +20,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           const SizedBox(height: 50),
           GestureDetector(
-            child: Text(alarmmanager.alarm_value_str,
+            child: Text(alarmstate.alarm_value_str,
                 style: const TextStyle(
                     fontSize: 70, color: Colors.white, fontFamily: 'M-plus-B')),
             onTap: () async {
@@ -35,7 +29,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 initialTime: current,
               );
               if (result != null && result != current) {
-                ref.read(alarmManager.notifier).change(value: result);
+                ref.read(alarmState.notifier).change(value: result);
                 Logger.i(
                     '- from majimo_timer/lib/view/home/alarm/widget.dart \n' +
                         ' >> receive result => ' +

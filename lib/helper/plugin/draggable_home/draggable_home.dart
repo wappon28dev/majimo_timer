@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/notification.dart';
+import 'package:majimo_timer/helper/notification.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:fullscreen/fullscreen.dart';
@@ -157,8 +157,8 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                 expandedHeight - AppBar().preferredSize.height - 40) {
               if (!(isFullyCollapsed.value)) {
                 isFullyCollapsed.add(true);
-                ref.watch(colorManager.notifier).stop();
-                ref.watch(generalManager.notifier).home();
+                ref.watch(colorState.notifier).stop();
+                ref.watch(generalState.notifier).home();
               }
             } else {
               if ((isFullyCollapsed.value)) isFullyCollapsed.add(false);
@@ -261,11 +261,11 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                       if (streams[1] == false) {
                         isFullyExpanded.add(true);
                         WidgetsBinding.instance!.addPostFrameCallback((_) {
-                          ref.watch(generalManager.notifier).expand(0);
+                          ref.watch(generalState.notifier).expand(0);
 
-                          ref.watch(colorManager.notifier).change(
+                          ref.watch(colorState.notifier).change(
                               isLight: ref
-                                  .read(themeManager.notifier)
+                                  .read(themeState.notifier)
                                   .isLight(context: context));
 
                           ToastManager.toast(context: context, id: 1, ref: ref);

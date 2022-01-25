@@ -3,11 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/notification.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
-import 'package:majimo_timer/plugin/flutter_analog_clock/flutter_analog_clock.dart';
+import 'package:majimo_timer/helper/notification.dart';
+import 'package:majimo_timer/helper/theme.dart';
+import 'package:majimo_timer/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:simple_animations/simple_animations.dart';
 import '../../../../main.dart';
 import 'widget.dart';
@@ -18,14 +17,14 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final orientation = MediaQuery.of(context).orientation;
     final isLandscape = orientation == Orientation.landscape;
-    final alarmTKmanager = ref.read(alarmTimeKeepingManager.notifier);
-    final generalmanager = ref.read(generalManager.notifier);
-    final show = ref.watch(generalManager).showFAB;
+    final alarmTKstate = ref.read(alarmTKState.notifier);
+    final generalstate = ref.read(generalState.notifier);
+    final show = ref.watch(generalState).showFAB;
 
     return MaterialApp(
         theme: MyTheme.lightTheme,
         darkTheme: MyTheme.darkTheme,
-        themeMode: ref.watch(themeManager).theme_value,
+        themeMode: ref.watch(themeState).theme_value,
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             floatingActionButtonLocation:
@@ -38,9 +37,9 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                       splashColor: Colors.red.shade400,
                       backgroundColor: Colors.red,
                       onPressed: () {
-                        generalmanager.push_home(context: context);
+                        generalstate.push_home(context: context);
                         NotificationManager().cancel_notification();
-                        generalmanager.home();
+                        generalstate.home();
                       },
                       heroTag: null,
                       child: const Icon(
@@ -67,8 +66,8 @@ Widget buildHorizontal(BuildContext context) {
 
 Widget analogclock_timekeeping(
     {required BuildContext context, required WidgetRef ref}) {
-  final isLight = ref.read(themeManager.notifier).isLight(context: context);
-  final showSec = ref.read(clockManager).showSec;
+  final isLight = ref.read(themeState.notifier).isLight(context: context);
+  final showSec = ref.read(clockState).showSec;
   return FlutterAnalogClock(
     showNumber: true,
     dialPlateColor: Colors.transparent,
@@ -87,7 +86,7 @@ Widget analogclock_timekeeping(
 }
 
 // Widget fab({required BuildContext context, required WidgetRef ref}) {
-//   final generalmanager = ref.read(generalManager);
+//   final generalstate = ref.read(generalState);
 
 //   return Stack(children: [
 //     Container(
@@ -115,8 +114,8 @@ Widget analogclock_timekeeping(
 //                             color: Colors.white,
 //                           ),
 //                           onPressed: () {
-//                             generalmanager.push_home(context: context);
-//                             generalmanager.change_timekeeping(value: false);
+//                             generalstate.push_home(context: context);
+//                             generalstate.change_timekeeping(value: false);
 //                           });
 //                     })
 //               ],

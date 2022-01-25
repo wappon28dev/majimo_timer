@@ -7,21 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/helper/translations.dart';
 
 part 'state.freezed.dart';
 // part 'state.g.dart';
 
 @freezed
-class GeneralManager with _$GeneralManager {
-  const GeneralManager._();
-  const factory GeneralManager({
+class GeneralState with _$GeneralState {
+  const GeneralState._();
+  const factory GeneralState({
     @Default('まじもタイマーへようこそ！') String status,
     @Default(false) bool topToast,
     @Default(3) int toastDuration,
     @Default(1) double opacity,
     @Default(false) bool showFAB,
-  }) = _GeneralManager;
+  }) = _GeneralState;
 
   // define custom getter
   String get topToast_caption => topToast ? t.top.t : t.bottom.t;
@@ -31,9 +31,9 @@ class GeneralManager with _$GeneralManager {
 }
 
 @freezed
-class ThemeManager with _$ThemeManager {
-  const ThemeManager._();
-  const factory ThemeManager({@Default(0) int theme}) = _ThemeManager;
+class ThemeState with _$ThemeState {
+  const ThemeState._();
+  const factory ThemeState({@Default(0) int theme}) = _ThemeState;
 
   // define custom getter
   ThemeMode get theme_value => get()[0] as ThemeMode;
@@ -73,9 +73,9 @@ class ThemeManager with _$ThemeManager {
 }
 
 @freezed
-class LangManager with _$LangManager {
-  const LangManager._();
-  const factory LangManager({@Default(0) int lang}) = _LangManager;
+class LangState with _$LangState {
+  const LangState._();
+  const factory LangState({@Default(0) int lang}) = _LangState;
 
   // create value
   String get lang_caption {
@@ -106,12 +106,12 @@ class LangManager with _$LangManager {
 }
 
 @freezed
-class ClockManager with _$ClockManager {
-  const ClockManager._();
-  const factory ClockManager(
+class ClockState with _$ClockState {
+  const ClockState._();
+  const factory ClockState(
       {@Default(true) bool is24,
       @Default(true) bool showSec,
-      @Default(0) int animation}) = _ClockManager;
+      @Default(0) int animation}) = _ClockState;
 
   // create values
   String get is24_caption => get_is24()[0] as String;
@@ -174,9 +174,9 @@ class ClockManager with _$ClockManager {
 }
 
 @freezed
-class ColorManager with _$ColorManager {
-  const ColorManager._();
-  const factory ColorManager({@Default(0) double opacity}) = _ColorManager;
+class ColorState with _$ColorState {
+  const ColorState._();
+  const factory ColorState({@Default(0) double opacity}) = _ColorState;
 
   // create values
   Color color_clockcolor(
@@ -203,7 +203,7 @@ class ColorManager with _$ColorManager {
   /// ```
   List<dynamic> get({required BuildContext context, required WidgetRef ref}) {
     List<dynamic>? array;
-    final isLight = ref.read(themeManager.notifier).isLight(context: context);
+    final isLight = ref.read(themeState.notifier).isLight(context: context);
     isLight
         ? array = <dynamic>[
             Colors.black,
@@ -222,12 +222,12 @@ class ColorManager with _$ColorManager {
 }
 
 @freezed
-class AlarmManager with _$AlarmManager {
-  const AlarmManager._();
-  const factory AlarmManager({
+class AlarmState with _$AlarmState {
+  const AlarmState._();
+  const factory AlarmState({
     @Default(12) int alarmHour,
     @Default(00) int alarmMinute,
-  }) = _AlarmManager;
+  }) = _AlarmState;
 
   // create values
   TimeOfDay get alarm_value => TimeOfDay(hour: alarmHour, minute: alarmMinute);
@@ -243,32 +243,32 @@ class AlarmManager with _$AlarmManager {
 }
 
 @freezed
-class AlarmTimeKeepingManager with _$AlarmTimeKeepingManager {
-  const AlarmTimeKeepingManager._();
-  const factory AlarmTimeKeepingManager({
+class AlarmTimeKeepingState with _$AlarmTimeKeepingState {
+  const AlarmTimeKeepingState._();
+  const factory AlarmTimeKeepingState({
     @Default(0) double rate,
     @Default(Duration(seconds: 1)) Duration duration,
     @Default(false) bool alarmTK,
     @Default(false) bool isAlarmFinish,
-  }) = _AlarmTimeKeepingManager;
+  }) = _AlarmTimeKeepingState;
   int get progress => 100 - rate.round() * 100;
 }
 
 @freezed
-class TimerManager with _$TimerManager {
-  const TimerManager._();
-  const factory TimerManager(
+class TimerState with _$TimerState {
+  const TimerState._();
+  const factory TimerState(
       {@Default(Duration(minutes: 1)) Duration target,
       @Default(Duration(minutes: 1)) Duration interval,
-      @Default(false) bool isInterval}) = _TimerManager;
+      @Default(false) bool isInterval}) = _TimerState;
 
   String get target_str => '${target.inHours.toString().padLeft(2, '0')}h:'
       '${target.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
 }
 
 @freezed
-class TimerTimeKeepingManager with _$TimerTimeKeepingManager {
-  const TimerTimeKeepingManager._();
-  const factory TimerTimeKeepingManager({@Default(0) double rate}) =
-      _TimerTimeKeepingManager;
+class TimerTimeKeepingState with _$TimerTimeKeepingState {
+  const TimerTimeKeepingState._();
+  const factory TimerTimeKeepingState({@Default(0) double rate}) =
+      _TimerTimeKeepingState;
 }

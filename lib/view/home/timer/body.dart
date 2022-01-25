@@ -1,19 +1,9 @@
-import 'dart:math';
-
-import 'package:draggable_home/draggable_home.dart';
-import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/view/home/timer/widget.dart' as a;
-
-import '../../../main.dart';
-import '../../../model/helper/theme.dart';
-import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:dismissible_page/dismissible_page.dart';
-
-import 'timekeep/body.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/view/home/timer/timekeeping/body.dart';
+import 'package:majimo_timer/view/home/timer/widget.dart' as a;
 
 class TimerPage extends HookConsumerWidget {
   const TimerPage({Key? key}) : super(key: key);
@@ -22,10 +12,10 @@ class TimerPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final orientation = MediaQuery.of(context).orientation;
     final isLandscape = orientation == Orientation.landscape;
-    final generalmanager = ref.read(generalManager);
-    final alarmmanager = ref.read(alarmManager.notifier);
-    final timermanager = ref.read(timerManager.notifier);
-    final show = ref.watch(generalManager).showFAB;
+    final generalstate = ref.read(generalState);
+    final alarmstate = ref.read(alarmState.notifier);
+    final timerstate = ref.read(timerState.notifier);
+    final show = ref.watch(generalState).showFAB;
     const tag = 'timer';
 
     return Hero(
@@ -42,7 +32,7 @@ class TimerPage extends HookConsumerWidget {
                         width: 80,
                         child: GestureDetector(
                             onLongPress: () =>
-                                alarmmanager.tooltip(context: context),
+                                alarmstate.tooltip(context: context),
                             onLongPressUp: () => Navigator.pop(context),
                             child: FloatingActionButton(
                               onPressed: () =>

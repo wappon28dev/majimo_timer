@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum PrefKey {
@@ -84,17 +84,15 @@ class PrefManager {
     _timerTarget ??= 30;
     _timerInterval ??= 30;
 
-    ref.read(clockManager.notifier).change_is24(value: _is24);
-    ref.read(themeManager.notifier).change(value: _theme);
-    ref.read(langManager.notifier).change(context: context, value: _lang);
-    ref.read(generalManager.notifier).change_topToast(value: _topToast);
-    ref
-        .read(generalManager.notifier)
-        .change_toastDuration(value: _toastDuration);
-    ref.read(clockManager.notifier).change_animation(value: _clockAnimation);
-    ref.read(clockManager.notifier).change_showSec(value: _showSec);
-    ref.read(timerManager.notifier).change_target(value: _timerTarget);
-    ref.read(timerManager.notifier).change_interval(value: _timerInterval);
+    ref.read(clockState.notifier).change_is24(value: _is24);
+    ref.read(themeState.notifier).change(value: _theme);
+    ref.read(langState.notifier).change(context: context, value: _lang);
+    ref.read(generalState.notifier).change_topToast(value: _topToast);
+    ref.read(generalState.notifier).change_toastDuration(value: _toastDuration);
+    ref.read(clockState.notifier).change_animation(value: _clockAnimation);
+    ref.read(clockState.notifier).change_showSec(value: _showSec);
+    ref.read(timerState.notifier).change_target(value: _timerTarget);
+    ref.read(timerState.notifier).change_interval(value: _timerInterval);
   }
 
   static Future<bool?> getBool({required PrefKey key}) async {

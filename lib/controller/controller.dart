@@ -1,34 +1,36 @@
-// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars, implementation_imports
 
+import 'dart:async';
+
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:dart_date/src/dart_date.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/notification.dart';
-import 'package:majimo_timer/model/helper/pref.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/helper/notification.dart';
+import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/helper/pref.dart';
+import 'package:majimo_timer/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
-import 'package:majimo_timer/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/view/home/alarm/timekeep/body.dart';
+import 'package:majimo_timer/view/home/alarm/timekeeping/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
-import 'package:majimo_timer/view/home/timer/timekeep/body.dart';
 import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
 import 'package:wakelock/wakelock.dart';
-import '../../../model/helper/config.dart';
-import 'dart:async';
+
+import '../../../helper/config.dart';
 import '../../../main.dart';
 
-class GeneralManagerVM extends StateNotifier<GeneralManager> {
-  GeneralManagerVM() : super(const GeneralManager());
+class GeneralController extends StateNotifier<GeneralState> {
+  GeneralController() : super(const GeneralState());
 
   // change_value function
   void change_topToast({required bool value}) {
     state = state.copyWith(topToast: value);
     PrefManager.setBool(key: PrefKey.topToast, value: value);
     Logger.s(
-        '- from GeneralManager \n >> save bool toptoast = ${state.topToast}');
+        '- from GeneralState \n >> save bool toptoast = ${state.topToast}');
   }
 
   void change_toastDuration({required int value}) {
@@ -36,7 +38,7 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
     state = state.copyWith(toastDuration: value);
     PrefManager.setInt(key: PrefKey.toastDuration, value: value);
     Logger.s(
-        '- from GeneralManager \n >> save int toastDuration = ${state.toastDuration}');
+        '- from GeneralState \n >> save int toastDuration = ${state.toastDuration}');
   }
 
   Future<void> home() async {
@@ -87,13 +89,13 @@ class GeneralManagerVM extends StateNotifier<GeneralManager> {
   }
 }
 
-class ThemeManagerVM extends StateNotifier<ThemeManager> {
-  ThemeManagerVM() : super(const ThemeManager());
+class ThemeController extends StateNotifier<ThemeState> {
+  ThemeController() : super(const ThemeState());
   // change_value functions
   void change({required int value}) {
     state = state.copyWith(theme: value);
     PrefManager.setInt(key: PrefKey.appTheme, value: value);
-    Logger.s('- from ThemeManager \n >> save int theme = ${state.theme}');
+    Logger.s('- from ThemeState \n >> save int theme = ${state.theme}');
   }
 
   bool isLight({required BuildContext context}) {
@@ -105,8 +107,8 @@ class ThemeManagerVM extends StateNotifier<ThemeManager> {
   }
 }
 
-class LangManagerVM extends StateNotifier<LangManager> {
-  LangManagerVM() : super(const LangManager());
+class LangController extends StateNotifier<LangState> {
+  LangController() : super(const LangState());
   void change({required BuildContext context, required int value}) {
     void locale(Locale locale) => context.setLocale(locale);
     const japanese = Locale('ja', 'JP');
@@ -124,34 +126,34 @@ class LangManagerVM extends StateNotifier<LangManager> {
         break;
     }
     PrefManager.setInt(key: PrefKey.changeLanguage, value: state.lang);
-    Logger.s('- from LangManager \n >> save int lang = ${state.lang}');
+    Logger.s('- from LangState \n >> save int lang = ${state.lang}');
   }
 }
 
-class ClockManagerVM extends StateNotifier<ClockManager> {
-  ClockManagerVM() : super(const ClockManager());
+class ClockController extends StateNotifier<ClockState> {
+  ClockController() : super(const ClockState());
   // change_value functions
   void change_is24({required bool value}) {
     state = state.copyWith(is24: value);
     PrefManager.setBool(key: PrefKey.clockStyle, value: value);
-    Logger.s('- from ClockManager \n >> save bool is24 = $value');
+    Logger.s('- from ClockState \n >> save bool is24 = $value');
   }
 
   void change_showSec({required bool value}) {
     state = state.copyWith(showSec: value);
     PrefManager.setBool(key: PrefKey.showSec, value: value);
-    Logger.s('- from ClockManager \n >> save bool showSec = $value');
+    Logger.s('- from ClockState \n >> save bool showSec = $value');
   }
 
   void change_animation({required int value}) {
     state = state.copyWith(animation: value);
     PrefManager.setInt(key: PrefKey.clockAnimation, value: value);
-    Logger.s('- from ClockManager \n >> save int animation = $value');
+    Logger.s('- from ClockState \n >> save int animation = $value');
   }
 }
 
-class ColorManagerVM extends StateNotifier<ColorManager> {
-  ColorManagerVM() : super(const ColorManager());
+class ColorController extends StateNotifier<ColorState> {
+  ColorController() : super(const ColorState());
   // change_value function
   Future<void> change({required bool isLight}) async {
     state = state.copyWith(opacity: 0);
@@ -169,8 +171,8 @@ class ColorManagerVM extends StateNotifier<ColorManager> {
   }
 }
 
-class AlarmManagerVM extends StateNotifier<AlarmManager> {
-  AlarmManagerVM() : super(const AlarmManager());
+class AlarmController extends StateNotifier<AlarmState> {
+  AlarmController() : super(const AlarmState());
 
   void push({required BuildContext context, required WidgetRef ref}) {
     Navigator.pushAndRemoveUntil<void>(
@@ -179,8 +181,8 @@ class AlarmManagerVM extends StateNotifier<AlarmManager> {
             builder: (context) => const AlarmTimeKeepingPage()),
         (_) => false);
 
-    ref.read(generalManager.notifier).showFAB();
-    ref.read(alarmTimeKeepingManager.notifier).start();
+    ref.read(generalState.notifier).showFAB();
+    ref.read(alarmTKState.notifier).start();
   }
 
   void tooltip({required BuildContext context}) {
@@ -228,7 +230,7 @@ class AlarmManagerVM extends StateNotifier<AlarmManager> {
       state = state.copyWith(alarmMinute: minute);
     }
     Logger.s(
-        '- from AlarmManager \n > now = ${now.toString()}\n >> save int alarmHour = ${state.alarmHour}\n >> save int alarmMinute = ${state.alarmMinute}');
+        '- from AlarmState \n > now = ${now.toString()}\n >> save int alarmHour = ${state.alarmHour}\n >> save int alarmMinute = ${state.alarmMinute}');
   }
 
   void change({required TimeOfDay value}) {
@@ -237,13 +239,13 @@ class AlarmManagerVM extends StateNotifier<AlarmManager> {
   }
 }
 
-class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
-  AlarmTimeKeepingManagerVM(this.read) : super(const AlarmTimeKeepingManager());
+class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
+  AlarmTimeKeepingController(this.read) : super(const AlarmTimeKeepingState());
   final Reader read;
 
   // change_value function
   void start() {
-    final _target = read(alarmManager).get_value();
+    final _target = read(alarmState).get_value();
     final _now = DateTime.now();
     final _tar =
         DateTime(_now.year, _now.month, _now.day, _target.hour, _target.minute);
@@ -274,7 +276,7 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
   }
 
   void onTimer(Timer timer) {
-    final _target = read(alarmManager).get_value();
+    final _target = read(alarmState).get_value();
 
     final _now = DateTime.now();
     final _tar =
@@ -307,42 +309,32 @@ class AlarmTimeKeepingManagerVM extends StateNotifier<AlarmTimeKeepingManager> {
     if (state.duration.inMinutes > 60) {
       duration = '約 ${state.duration.inHours} 時間';
     }
-    await read(generalManager.notifier)
-        .change_status(text: '終了まで $duration です');
+    await read(generalState.notifier).change_status(text: '終了まで $duration です');
 
     await Future<void>.delayed(const Duration(seconds: 5));
-    await read(generalManager.notifier).change_status(text: 'アラームモード');
+    await read(generalState.notifier).change_status(text: 'アラームモード');
   }
 }
 
-class TimerManagerVM extends StateNotifier<TimerManager> {
-  TimerManagerVM() : super(const TimerManager());
-  // void push({required BuildContext context, required WidgetRef ref}) {
-  //   WidgetsBinding.instance?.addPostFrameCallback((_) {
-  //     Navigator.pushAndRemoveUntil<void>(
-  //         context,
-  //         MaterialPageRoute<void>(
-  //             builder: (context) => const TimerTimeKeepingPage()),
-  //         (_) => false);
-
-  //     ref.read(generalManager.notifier).showFAB();
-  //     // ref.read(alarmTimeKeepingManager.notifier).start();
-  //   });
-  // }
+class TimerController extends StateNotifier<TimerState> {
+  TimerController() : super(const TimerState());
 
   void change_target({required int value}) {
     state = state.copyWith(target: Duration(minutes: value));
     PrefManager.setInt(key: PrefKey.timerTarget, value: value);
-    Logger.s('- from TimerManager \n >> save int timerTarget = $value');
+    Logger.s('- from TimerState \n >> save int timerTarget = $value');
   }
 
   void change_interval({required int value}) {
     state = state.copyWith(interval: Duration(minutes: value));
     PrefManager.setInt(key: PrefKey.timerInterval, value: value);
-    Logger.s('- from TimerManager \n >> save int timerInterval = $value');
+    Logger.s('- from TimerState \n >> save int timerInterval = $value');
   }
 }
 
-class TimerTimeKeepingManagerVM extends StateNotifier<TimerTimeKeepingManager> {
-  TimerTimeKeepingManagerVM() : super(const TimerTimeKeepingManager());
+class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
+  TimerTimeKeepingController() : super(const TimerTimeKeepingState());
+
+  final controller = CountDownController();
+  void restart() => controller.restart();
 }

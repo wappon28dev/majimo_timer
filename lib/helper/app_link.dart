@@ -5,8 +5,8 @@ import 'package:dismissible_page/src/dismissible_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/helper/translations.dart';
+import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
@@ -47,30 +47,30 @@ class LinkManager {
   static void launcher(BuildContext context, WidgetRef ref, String mode) {
     switch (mode) {
       case 'h':
-        ref.read(generalManager.notifier).push_home(context: context);
+        ref.read(generalState.notifier).push_home(context: context);
         break;
 
       case 'a':
-        ref.read(generalManager.notifier).push_home(context: context);
+        ref.read(generalState.notifier).push_home(context: context);
         context.pushTransparentRoute(const AlarmPage());
-        ref.watch(alarmManager.notifier).internal();
-        ref.watch(generalManager.notifier).showFAB();
+        ref.watch(alarmState.notifier).internal();
+        ref.watch(generalState.notifier).showFAB();
         break;
 
       case 't':
-        ref.read(generalManager.notifier).push_home(context: context);
+        ref.read(generalState.notifier).push_home(context: context);
         context.pushTransparentRoute(const TimerPage());
         break;
 
       case 'g':
-        ref.read(generalManager.notifier).push_home(context: context);
+        ref.read(generalState.notifier).push_home(context: context);
         context.pushTransparentRoute(const GoalPage());
         break;
 
       case 's':
-        ref.read(generalManager.notifier).push_home(context: context);
+        ref.read(generalState.notifier).push_home(context: context);
         ref
-            .read(generalManager.notifier)
+            .read(generalState.notifier)
             .push(context: context, page: const Setting());
         break;
     }

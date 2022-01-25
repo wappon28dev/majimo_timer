@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/helper/theme.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:rive/rive.dart';
 
@@ -22,7 +22,7 @@ class _SplashState extends ConsumerState<Splash> {
 
   Future<void> navigate() async {
     await Future<void>.delayed(const Duration(milliseconds: 1500));
-    ref.read(generalManager.notifier).home();
+    ref.read(generalState.notifier).home();
     Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
         builder: (BuildContext context) => const HomePage()));
   }
