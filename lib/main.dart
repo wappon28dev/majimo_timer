@@ -6,7 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/model/state.dart';
-import 'package:majimo_timer/view/splash.dart';
+import 'package:majimo_timer/view/routes/splash.dart';
 
 import 'helper/notification.dart';
 import 'helper/plugin/let_log/let_log.dart';
@@ -14,6 +14,9 @@ import 'helper/pref.dart';
 import 'helper/theme.dart';
 
 //global
+final globalState = StateNotifierProvider<GlobalController, GlobalState>(
+    (ref) => GlobalController());
+
 final generalState = StateNotifierProvider<GeneralController, GeneralState>(
     (ref) => GeneralController());
 final themeState = StateNotifierProvider<ThemeController, ThemeState>(
@@ -62,8 +65,8 @@ class MyApp extends HookConsumerWidget {
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
-            theme: MyTheme.lightTheme,
-            darkTheme: MyTheme.darkTheme,
+            theme: MyTheme().lightTheme,
+            darkTheme: MyTheme().darkTheme,
             themeMode: ref.read(themeState).theme_value,
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',

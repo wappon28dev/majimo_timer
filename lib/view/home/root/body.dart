@@ -6,11 +6,9 @@ import 'package:flutter_color/src/helper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/helper/theme.dart';
 import 'package:majimo_timer/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
-import 'package:majimo_timer/view/home/alarm/timekeeping/body.dart';
-import 'package:simple_animations/simple_animations.dart';
+import 'package:majimo_timer/helper/theme.dart';
+import 'package:majimo_timer/main.dart';
 
 import 'widget.dart';
 
@@ -33,8 +31,8 @@ class HomePage extends HookConsumerWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        theme: MyTheme.lightTheme,
-        darkTheme: MyTheme.darkTheme,
+        theme: MyTheme().lightTheme,
+        darkTheme: MyTheme().darkTheme,
         themeMode: ref.watch(themeState).theme_value,
         debugShowCheckedModeBanner: false,
         home: !isLandscape

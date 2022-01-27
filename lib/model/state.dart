@@ -13,6 +13,13 @@ part 'state.freezed.dart';
 // part 'state.g.dart';
 
 @freezed
+class GlobalState with _$GlobalState {
+  const factory GlobalState({
+    @Default(true) bool isFirst,
+  }) = _GlobalState;
+}
+
+@freezed
 class GeneralState with _$GeneralState {
   const GeneralState._();
   const factory GeneralState({

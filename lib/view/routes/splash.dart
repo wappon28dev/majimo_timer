@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/helper/theme.dart';
+import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:rive/rive.dart';
 
@@ -35,13 +35,8 @@ class _SplashState extends ConsumerState<Splash> {
             padding: const EdgeInsets.all(8),
             width: double.infinity,
             height: double.infinity,
-            color: ColorKey.orange.value,
+            color:
+                MyTheme().get_theme(context: context, ref: ref).backgroundColor,
             child: const RiveAnimation.asset('assets/splash/splash.riv')));
   }
 }
-
-
-                  // final alarmTK = ref.read(alarmTimeKeepingManager).alarmTK;
-                  // Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
-                  //     builder: (BuildContext context) => const HomePage()));
-                  // ref.read(generalManager.notifier).home();

@@ -1,37 +1,38 @@
 library let_log;
 
 import 'dart:convert';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/helper/theme.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:majimo_timer/controller/controller.dart';
+import 'package:majimo_timer/main.dart';
+
 part 'log_widget.dart';
 
 enum _Type { info, event, save, restore }
 
 List<String> _printNames = [
-  "[Application-Info]",
-  "[Application-Event]",
-  "[Manager-Save-Info]",
-  "[Manager-Restore-Info]",
-  "❌",
-  "⬆️",
-  "⬇️"
+  '[Application-Info]',
+  '[Application-Event]',
+  '[Manager-Save-Info]',
+  '[Manager-Restore-Info]',
+  '❌',
+  '⬆️',
+  '⬇️'
 ];
 List<String> _tabNames = [
-  "[Info]",
-  "[Event]",
-  "[Save]",
-  "[Restore]",
-  "[Error]"
+  '[Info]',
+  '[Event]',
+  '[Save]',
+  '[Restore]',
+  '[Error]'
 ];
-final RegExp _tabReg = RegExp(r"\[|\]");
+final RegExp _tabReg = RegExp(r'\[|\]');
 
 String _getTabName(int index) {
-  return _tabNames[index].replaceAll(_tabReg, "");
+  return _tabNames[index].replaceAll(_tabReg, '');
 }
 
 class _Config {
@@ -52,8 +53,8 @@ class Logger extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-        theme: MyTheme.lightTheme,
-        darkTheme: MyTheme.darkTheme,
+        theme: MyTheme().lightTheme,
+        darkTheme: MyTheme().darkTheme,
         themeMode: ref.read(themeState).theme_value,
         debugShowCheckedModeBanner: false,
         home: Scaffold(appBar: appbar(context), body: const LogWidget()));
@@ -66,7 +67,7 @@ class Logger extends HookConsumerWidget {
           onPressed: () {
             Navigator.pop(context);
           }),
-      title: const AutoSizeText("Majimo_Timer-Log",
+      title: const AutoSizeText('Majimo_Timer-Log',
           maxLines: 1,
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -117,7 +118,7 @@ class Logger extends HookConsumerWidget {
 
   /// Recording network information
   static void net(String api,
-      {String type = "Http", int status = 100, Object? data}) {
+      {String type = 'Http', int status = 100, Object? data}) {
     if (enabled) _Net.request(api, type, status, data);
   }
 
@@ -157,13 +158,13 @@ class _Log {
   @override
   String toString() {
     final StringBuffer sb = StringBuffer();
-    sb.writeln("Message: $message");
-    sb.writeln("Time: $start");
+    sb.writeln('Message: $message');
+    sb.writeln('Time: $start');
     if (detail != null && detail!.length > 100) {
-      sb.writeln("Detail: ");
+      sb.writeln('Detail: ');
       sb.writeln(detail);
     } else {
-      sb.writeln("Detail: $detail");
+      sb.writeln('Detail: $detail');
     }
 
     return sb.toString();
@@ -212,7 +213,7 @@ class _Log {
 }
 
 class _Net extends ChangeNotifier {
-  static const all = "All";
+  static const all = 'All';
   static final List<_Net> list = [];
   static final ValueNotifier<int> length = ValueNotifier(0);
   static final Map<String, _Net> _map = {};
@@ -276,12 +277,12 @@ class _Net extends ChangeNotifier {
   @override
   String toString() {
     final StringBuffer sb = StringBuffer();
-    sb.writeln("[$status] $api");
-    sb.writeln("Start: $start");
-    sb.writeln("Spend: $spend ms");
-    sb.writeln("Headers: $headers");
-    sb.writeln("Request: $req");
-    sb.writeln("Response: $res");
+    sb.writeln('[$status] $api');
+    sb.writeln('Start: $start');
+    sb.writeln('Spend: $spend ms');
+    sb.writeln('Headers: $headers');
+    sb.writeln('Request: $req');
+    sb.writeln('Response: $res');
     return sb.toString();
   }
 
@@ -295,7 +296,7 @@ class _Net extends ChangeNotifier {
     );
     list.add(net);
     _map[api] = net;
-    if (type != "" && !types.contains(type)) {
+    if (type != '' && !types.contains(type)) {
       types.add(type);
       typeLength.value++;
     }

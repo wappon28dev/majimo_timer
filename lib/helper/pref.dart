@@ -8,6 +8,7 @@ import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum PrefKey {
+  isFirst, // bool isFirst ?
   changeLanguage, //int 0 = system, 1 = Japanese, 2 = English
   clockStyle, //bool true = 24h, false = 12h
   appTheme, //int 0 = system, 1 = light, 2 = dark
@@ -21,6 +22,7 @@ enum PrefKey {
 
 class PrefManager {
   static Future<void> restore(WidgetRef ref, BuildContext context) async {
+    var _isFirst = await PrefManager.getBool(key: PrefKey.isFirst);
     var _is24 = await PrefManager.getBool(key: PrefKey.clockStyle);
     var _theme = await PrefManager.getInt(key: PrefKey.appTheme);
     var _lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
@@ -33,6 +35,7 @@ class PrefManager {
 
     Logger.r('''
       restore values :
+        >> bool  isFirst         =   $_isFirst
         >> bool  is24            =   $_is24
         >> int   theme           =   $_theme
         >> int   lang            =   $_lang
@@ -43,6 +46,10 @@ class PrefManager {
         >> int   timerTarget     =   $_timerTarget
         >> int   timerInterval   =   $_timerInterval
       ''');
+
+    if (_isFirst == null) {
+      Logger.e('Warning! : _isFirst is null! => true');
+    }
 
     if (_is24 == null) {
       Logger.r('Warning! : _is24 is null => true');
@@ -74,6 +81,7 @@ class PrefManager {
       Logger.e('Warning! : _timerInterval is null! => 30');
     }
 
+    _isFirst ??= true;
     _is24 ??= true;
     _theme ??= 0;
     _lang ??= 0;
@@ -84,6 +92,7 @@ class PrefManager {
     _timerTarget ??= 30;
     _timerInterval ??= 30;
 
+    ref.read(globalState.notifier).change_isFirst(value: _isFirst);
     ref.read(clockState.notifier).change_is24(value: _is24);
     ref.read(themeState.notifier).change(value: _theme);
     ref.read(langState.notifier).change(context: context, value: _lang);

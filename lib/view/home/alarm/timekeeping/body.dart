@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/helper/notification.dart';
 import 'package:majimo_timer/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/helper/theme.dart';
+import 'package:majimo_timer/view/home/root/body.dart';
 
 import '../../../../main.dart';
 import 'widget.dart';
@@ -20,8 +21,8 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
     final show = ref.watch(generalState).showFAB;
 
     return MaterialApp(
-        theme: MyTheme.lightTheme,
-        darkTheme: MyTheme.darkTheme,
+        theme: MyTheme().lightTheme,
+        darkTheme: MyTheme().darkTheme,
         themeMode: ref.watch(themeState).theme_value,
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -35,7 +36,8 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
                       splashColor: Colors.red.shade400,
                       backgroundColor: Colors.red,
                       onPressed: () {
-                        generalstate.push_home(context: context);
+                        generalstate.push_replace(
+                            context: context, page: const HomePage());
                         NotificationManager().cancel_notification();
                         generalstate.home();
                       },

@@ -20,6 +20,7 @@ import 'package:majimo_timer/view/debug/body.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
+import 'package:majimo_timer/view/routes/tutorial.dart';
 import 'package:majimo_timer/view/setting/body.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:expandable_widgets/expandable_widgets.dart';
@@ -30,8 +31,8 @@ import 'body.dart';
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final width = MediaQuery.of(context).size.width;
   useEffect(() {
-    LinkManager.initQuickAction(context: context, ref: ref);
-    LinkManager.initDeepLinks(ref, context);
+    LinkManager().initQuickAction(context: context, ref: ref);
+    LinkManager().initDeepLinks(ref, context);
 
     // AwesomeNotifications().actionStream.listen((receivedNotification) {
     //   if (receivedNotification.channelKey == "basic_channel") {
@@ -49,7 +50,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       );
 
   Widget button({required String tag}) {
-    var value = Colors.black;
+    late Color value;
     switch (tag) {
       case 'alarm':
         value = ColorKey.blue.value;
@@ -374,36 +375,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   return DraggableHome(
-    title: Text(
-      t.app_name.t,
-      style: const TextStyle(fontWeight: FontWeight.bold),
-    ),
-    actions: [
-      IconButton(
-        onPressed: () {
-          ref
-              .read(generalState.notifier)
-              .push(context: context, page: const Debug());
-          Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n'
-              ' > debug page opened');
-        },
-        icon: const Icon(Icons.developer_mode),
-        color: Colors.white,
+      title: Text(
+        t.app_name.t,
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
-      IconButton(
-        onPressed: () => ref
-            .read(generalState.notifier)
-            .push(context: context, page: const Setting()),
-        icon: const Icon(Icons.settings),
-        color: Colors.white,
-      ),
-    ],
-    headerWidget: headerWidget(context),
-    headerBottomBar: Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      actions: [
         IconButton(
           onPressed: () {
             ref
@@ -416,18 +392,62 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
           color: Colors.white,
         ),
         IconButton(
-          onPressed: () {
-            ref
-                .read(generalState.notifier)
-                .push(context: context, page: const Setting());
-          },
+          onPressed: () => ref
+              .read(generalState.notifier)
+              .push(context: context, page: const Setting()),
           icon: const Icon(Icons.settings),
           color: Colors.white,
         ),
       ],
-    ),
-    body: [content(context), debug()],
-    fullyStretchable: true,
-    expandedBody: expand(context),
-  );
+      headerWidget: headerWidget(context),
+      headerBottomBar: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconButton(
+            onPressed: () {
+              ref
+                  .read(generalState.notifier)
+                  .push(context: context, page: const Debug());
+              Logger.e('- from majimo_timer/lib/view/home/root/widget.dart \n'
+                  ' > debug page opened');
+            },
+            icon: const Icon(Icons.developer_mode),
+            color: Colors.white,
+          ),
+          IconButton(
+            onPressed: () {
+              ref
+                  .read(generalState.notifier)
+                  .push(context: context, page: const Setting());
+            },
+            icon: const Icon(Icons.settings),
+            color: Colors.white,
+          ),
+        ],
+      ),
+      body: [content(context), debug()],
+      fullyStretchable: true,
+      expandedBody: expand(context),
+      backgroundColor: MyTheme().get_background(context: context, ref: ref),
+      floatingActionButton: SizedBox(
+        height: 80,
+        width: 80,
+        child: Visibility(
+            visible: true,
+            child: GestureDetector(
+                onLongPressUp: () => null,
+                child: FloatingActionButton(
+                  onPressed: () => ref
+                      .read(generalState.notifier)
+                      .push_replace(context: context, page: const Tutorial()),
+                  splashColor: Colors.green.shade300,
+                  backgroundColor: Colors.tealAccent,
+                  child: const Icon(
+                    Icons.accessibility_new_sharp,
+                    color: Colors.black,
+                  ),
+                ))),
+      ));
 }

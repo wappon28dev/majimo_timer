@@ -50,11 +50,11 @@ class MyTheme {
     TargetPlatform.iOS: OpenUpwardsPageTransitionsBuilder(),
   });
 
-  static final ThemeData _lightTheme = ThemeData(
+  final ThemeData _lightTheme = ThemeData(
       primarySwatch: Colors.deepOrange,
       primaryColor: Colors.deepOrange,
       scaffoldBackgroundColor: Colors.deepOrange.shade100.lighter(10),
-      backgroundColor: Colors.deepOrange.shade100.lighter(10),
+      backgroundColor: ColorKey.orange.value,
       appBarTheme: const AppBarTheme(
         centerTitle: true,
         backgroundColor: Colors.deepOrange,
@@ -70,10 +70,11 @@ class MyTheme {
       visualDensity: VisualDensity.adaptivePlatformDensity,
       pageTransitionsTheme: back);
 
-  static final ThemeData _darkTheme = ThemeData(
+  final ThemeData _darkTheme = ThemeData(
       brightness: Brightness.dark,
       primarySwatch: Colors.deepOrange,
-      backgroundColor: Colors.deepOrange.darker(70),
+      scaffoldBackgroundColor: Colors.deepOrange.shade50.darker(70),
+      backgroundColor: Colors.deepOrange.shade900.darker(50),
       appBarTheme: AppBarTheme(
         centerTitle: true,
         backgroundColor: Colors.deepOrange.shade800,
@@ -90,20 +91,18 @@ class MyTheme {
           primary: Colors.deepOrange.shade800,
         ),
       ),
-      scaffoldBackgroundColor: Colors.deepOrange.shade50.darker(70),
       fontFamily: 'M-plus-M',
       pageTransitionsTheme: back);
 
-  static ThemeData get lightTheme => _lightTheme;
-  static ThemeData get darkTheme => _darkTheme;
+  ThemeData get lightTheme => _lightTheme;
+  ThemeData get darkTheme => _darkTheme;
 
-  static ThemeData get_theme(
-      {required BuildContext context, required WidgetRef ref}) {
+  ThemeData get_theme({required BuildContext context, required WidgetRef ref}) {
     final value = ref.read(themeState.notifier).isLight(context: context);
     return value ? _lightTheme : _darkTheme;
   }
 
-  static Color get_background(
+  Color get_background(
       {required BuildContext context, required WidgetRef ref}) {
     final value = ref.read(themeState.notifier).isLight(context: context);
     return value

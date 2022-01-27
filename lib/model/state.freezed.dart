@@ -14,6 +14,142 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
+class _$GlobalStateTearOff {
+  const _$GlobalStateTearOff();
+
+  _GlobalState call({bool isFirst = true}) {
+    return _GlobalState(
+      isFirst: isFirst,
+    );
+  }
+}
+
+/// @nodoc
+const $GlobalState = _$GlobalStateTearOff();
+
+/// @nodoc
+mixin _$GlobalState {
+  bool get isFirst => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $GlobalStateCopyWith<GlobalState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GlobalStateCopyWith<$Res> {
+  factory $GlobalStateCopyWith(
+          GlobalState value, $Res Function(GlobalState) then) =
+      _$GlobalStateCopyWithImpl<$Res>;
+  $Res call({bool isFirst});
+}
+
+/// @nodoc
+class _$GlobalStateCopyWithImpl<$Res> implements $GlobalStateCopyWith<$Res> {
+  _$GlobalStateCopyWithImpl(this._value, this._then);
+
+  final GlobalState _value;
+  // ignore: unused_field
+  final $Res Function(GlobalState) _then;
+
+  @override
+  $Res call({
+    Object? isFirst = freezed,
+  }) {
+    return _then(_value.copyWith(
+      isFirst: isFirst == freezed
+          ? _value.isFirst
+          : isFirst // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$GlobalStateCopyWith<$Res>
+    implements $GlobalStateCopyWith<$Res> {
+  factory _$GlobalStateCopyWith(
+          _GlobalState value, $Res Function(_GlobalState) then) =
+      __$GlobalStateCopyWithImpl<$Res>;
+  @override
+  $Res call({bool isFirst});
+}
+
+/// @nodoc
+class __$GlobalStateCopyWithImpl<$Res> extends _$GlobalStateCopyWithImpl<$Res>
+    implements _$GlobalStateCopyWith<$Res> {
+  __$GlobalStateCopyWithImpl(
+      _GlobalState _value, $Res Function(_GlobalState) _then)
+      : super(_value, (v) => _then(v as _GlobalState));
+
+  @override
+  _GlobalState get _value => super._value as _GlobalState;
+
+  @override
+  $Res call({
+    Object? isFirst = freezed,
+  }) {
+    return _then(_GlobalState(
+      isFirst: isFirst == freezed
+          ? _value.isFirst
+          : isFirst // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_GlobalState with DiagnosticableTreeMixin implements _GlobalState {
+  const _$_GlobalState({this.isFirst = true});
+
+  @JsonKey()
+  @override
+  final bool isFirst;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'GlobalState(isFirst: $isFirst)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'GlobalState'))
+      ..add(DiagnosticsProperty('isFirst', isFirst));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _GlobalState &&
+            const DeepCollectionEquality().equals(other.isFirst, isFirst));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(isFirst));
+
+  @JsonKey(ignore: true)
+  @override
+  _$GlobalStateCopyWith<_GlobalState> get copyWith =>
+      __$GlobalStateCopyWithImpl<_GlobalState>(this, _$identity);
+}
+
+abstract class _GlobalState implements GlobalState {
+  const factory _GlobalState({bool isFirst}) = _$_GlobalState;
+
+  @override
+  bool get isFirst;
+  @override
+  @JsonKey(ignore: true)
+  _$GlobalStateCopyWith<_GlobalState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 class _$GeneralStateTearOff {
   const _$GeneralStateTearOff();
 

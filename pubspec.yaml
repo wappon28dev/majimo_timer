@@ -31,6 +31,7 @@ dependencies:
   flutter_color: ^2.0.0
   flutter_fader: ^2.0.0+1
   flutter_hooks: ^0.18.0
+  flutter_overboard: ^3.1.1
   flutter_styled_toast: ^2.0.0
   flutter_windowmanager: ^0.2.0
   freezed_annotation: ^1.1.0
@@ -78,6 +79,7 @@ flutter:
     - assets/splash/sun.json
     - assets/splash/splash.riv
     - assets/translations/langs.csv
+    - assets/me.png
   fonts:
     - family: M-plus-B
       fonts:

@@ -20,7 +20,7 @@ Future modal(BuildContext context, WidgetRef ref, IconData icon, String title,
   final value = ref.read(themeState.notifier).isLight(context: context);
   final header = <Widget>[
     Theme(
-      data: MyTheme.get_theme(context: context, ref: ref),
+      data: MyTheme().get_theme(context: context, ref: ref),
       child: Column(children: <Widget>[
         Container(
           margin: const EdgeInsets.symmetric(vertical: 3),
@@ -62,7 +62,7 @@ Future modal(BuildContext context, WidgetRef ref, IconData icon, String title,
           controller: ModalScrollController.of(context),
           child: Material(
               child: Theme(
-                  data: MyTheme.get_theme(context: context, ref: ref),
+                  data: MyTheme().get_theme(context: context, ref: ref),
                   child: Ink(
                     padding: padding,
                     color: value

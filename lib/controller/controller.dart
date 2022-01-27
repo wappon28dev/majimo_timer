@@ -22,6 +22,15 @@ import 'package:wakelock/wakelock.dart';
 import '../../../helper/config.dart';
 import '../../../main.dart';
 
+class GlobalController extends StateNotifier<GlobalState> {
+  GlobalController() : super(const GlobalState());
+  void change_isFirst({required bool value}) {
+    state = state.copyWith(isFirst: value);
+    PrefManager.setBool(key: PrefKey.isFirst, value: value);
+    Logger.s('- from GlobalState \n >> save bool isFirst = ${state.isFirst}');
+  }
+}
+
 class GeneralController extends StateNotifier<GeneralState> {
   GeneralController() : super(const GeneralState());
 
@@ -72,11 +81,9 @@ class GeneralController extends StateNotifier<GeneralState> {
         ),
       );
 
-  void push_home({required BuildContext context}) {
-    Navigator.pushAndRemoveUntil<void>(
-        context,
-        MaterialPageRoute<void>(builder: (context) => const HomePage()),
-        (_) => false);
+  void push_replace({required BuildContext context, required Widget page}) {
+    Navigator.pushAndRemoveUntil<void>(context,
+        MaterialPageRoute<void>(builder: (context) => page), (_) => false);
     FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
     FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
   }

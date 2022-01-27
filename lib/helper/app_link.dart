@@ -17,7 +17,7 @@ import 'package:quick_actions/quick_actions.dart';
 late AppLinks _appLinks;
 
 class LinkManager {
-  static void initDeepLinks(WidgetRef ref, BuildContext context) async {
+  void initDeepLinks(WidgetRef ref, BuildContext context) async {
     //receive
     _appLinks = AppLinks(onAppLink: (Uri uri, String stringUri) async {
       receiver(stringUri, context, ref);
@@ -31,7 +31,7 @@ class LinkManager {
     }
   }
 
-  static void receiver(String uri, BuildContext context, WidgetRef ref) {
+  void receiver(String uri, BuildContext context, WidgetRef ref) {
     if (uri.startsWith('m')) {
       // ignore: parameter_assignments
       uri = uri.replaceAll('majimo://app/', '');
@@ -44,31 +44,41 @@ class LinkManager {
     launcher(context, ref, uri);
   }
 
-  static void launcher(BuildContext context, WidgetRef ref, String mode) {
+  void launcher(BuildContext context, WidgetRef ref, String mode) {
     switch (mode) {
       case 'h':
-        ref.read(generalState.notifier).push_home(context: context);
+        ref
+            .read(generalState.notifier)
+            .push_replace(context: context, page: const HomePage());
         break;
 
       case 'a':
-        ref.read(generalState.notifier).push_home(context: context);
+        ref
+            .read(generalState.notifier)
+            .push_replace(context: context, page: const HomePage());
         context.pushTransparentRoute(const AlarmPage());
         ref.watch(alarmState.notifier).internal();
         ref.watch(generalState.notifier).showFAB();
         break;
 
       case 't':
-        ref.read(generalState.notifier).push_home(context: context);
+        ref
+            .read(generalState.notifier)
+            .push_replace(context: context, page: const HomePage());
         context.pushTransparentRoute(const TimerPage());
         break;
 
       case 'g':
-        ref.read(generalState.notifier).push_home(context: context);
+        ref
+            .read(generalState.notifier)
+            .push_replace(context: context, page: const HomePage());
         context.pushTransparentRoute(const GoalPage());
         break;
 
       case 's':
-        ref.read(generalState.notifier).push_home(context: context);
+        ref
+            .read(generalState.notifier)
+            .push_replace(context: context, page: const HomePage());
         ref
             .read(generalState.notifier)
             .push(context: context, page: const Setting());
@@ -76,7 +86,7 @@ class LinkManager {
     }
   }
 
-  static void initQuickAction(
+  void initQuickAction(
       {required BuildContext context, required WidgetRef ref}) {
     const quickActions = QuickActions();
     // ignore: cascade_invocations
@@ -97,6 +107,4 @@ class LinkManager {
           type: 'a', localizedTitle: t.alarm.t, icon: 'ic_shortcut_flag'),
     ]);
   }
-
-  void h() => '';
 }
