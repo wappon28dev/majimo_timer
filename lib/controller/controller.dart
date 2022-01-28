@@ -29,6 +29,20 @@ class GlobalController extends StateNotifier<GlobalState> {
     PrefManager.setBool(key: PrefKey.isFirst, value: value);
     Logger.s('- from GlobalState \n >> save bool isFirst = ${state.isFirst}');
   }
+
+  static void switch_full_screen({required bool value}) {
+    if (value) {
+      FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
+      FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
+    } else {
+      FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
+      FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
+    }
+  }
 }
 
 class GeneralController extends StateNotifier<GeneralState> {
@@ -51,6 +65,7 @@ class GeneralController extends StateNotifier<GeneralState> {
   }
 
   Future<void> home() async {
+    change_showFAB(value: true);
     await Wakelock.disable();
     state = state.copyWith(opacity: 1);
     state = state.copyWith(status: 'まじもタイマーへようこそ！');
@@ -60,6 +75,7 @@ class GeneralController extends StateNotifier<GeneralState> {
   }
 
   Future<void> expand(int i) async {
+    change_showFAB(value: false);
     await Wakelock.enable();
     await change_status(text: '置き時計モード');
     await Future<void>.delayed(const Duration(seconds: 3));
@@ -84,8 +100,6 @@ class GeneralController extends StateNotifier<GeneralState> {
   void push_replace({required BuildContext context, required Widget page}) {
     Navigator.pushAndRemoveUntil<void>(context,
         MaterialPageRoute<void>(builder: (context) => page), (_) => false);
-    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
-    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
   }
 
   Future<void> showFAB() async {
@@ -94,6 +108,9 @@ class GeneralController extends StateNotifier<GeneralState> {
     await Future<void>.delayed(const Duration(milliseconds: 300));
     state = state.copyWith(showFAB: true);
   }
+
+  void change_showFAB({required bool value}) =>
+      state = state.copyWith(showFAB: value);
 }
 
 class ThemeController extends StateNotifier<ThemeState> {
@@ -236,8 +253,12 @@ class AlarmController extends StateNotifier<AlarmState> {
       state = state.copyWith(alarmHour: now.hour);
       state = state.copyWith(alarmMinute: minute);
     }
-    Logger.s(
-        '- from AlarmState \n > now = ${now.toString()}\n >> save int alarmHour = ${state.alarmHour}\n >> save int alarmMinute = ${state.alarmMinute}');
+    Logger.s('''
+    - from AlarmState
+    > now = ${now.toString()}
+      >> save int alarmHour   =  ${state.alarmHour}
+      >> save int alarmMinute =  ${state.alarmMinute}
+    ''');
   }
 
   void change({required TimeOfDay value}) {
@@ -250,65 +271,32 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
   AlarmTimeKeepingController(this.read) : super(const AlarmTimeKeepingState());
   final Reader read;
 
-  // change_value function
+  final controller = CountDownController();
+
   void start() {
-    final _target = read(alarmState).get_value();
-    final _now = DateTime.now();
-    final _tar =
-        DateTime(_now.year, _now.month, _now.day, _target.hour, _target.minute);
-
-    late Duration _duration;
-
-    try {
-      _duration = DateTimeRange(start: _now, end: _tar).duration;
-      // ignore: avoid_catches_without_on_clauses
-    } catch (e) {
-      final _tar = DateTime(
-          _now.year, _now.month, _now.day + 1, _target.hour, _target.minute);
-      _duration = DateTimeRange(start: _now, end: _tar).duration;
-    }
+    final _tar = tar();
+    final _duration = DateTimeRange(start: DateTime.now(), end: _tar).duration;
     state = state.copyWith(duration: _duration);
-    final _rate = _duration.inSeconds / state.duration.inSeconds;
-    Logger.i(' ${_duration.inSeconds} / ${state.duration.inSeconds} = $_rate');
-
-    state = state.copyWith(rate: _rate);
-
-    Logger.i('duration => $_duration');
     Logger.i('tar => $_tar');
+    Logger.i('duration => $_duration');
     status();
     NotificationManager().alarm_finish(target: _tar);
     NotificationManager().alarm_tk(target: _tar);
-    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
-    FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
+    GlobalController.switch_full_screen(value: false);
   }
 
-  void onTimer(Timer timer) {
-    final _target = read(alarmState).get_value();
-
+  DateTime tar() {
     final _now = DateTime.now();
-    final _tar =
-        DateTime(_now.year, _now.month, _now.day, _target.hour, _target.minute);
-
-    late Duration _duration;
-
-    try {
-      _duration = DateTimeRange(start: _now, end: _tar).duration;
-      // ignore: avoid_catches_without_on_clauses
-    } catch (e) {
-      final _tar = DateTime(
-          _now.year, _now.month, _now.day + 1, _target.hour, _target.minute);
-      _duration = DateTimeRange(start: _now, end: _tar).duration;
-    }
-    final _rate = _duration.inSeconds / state.duration.inSeconds;
-    Logger.i(' ${_duration.inSeconds} / ${state.duration.inSeconds} = $_rate');
-
-    state = state.copyWith(rate: _rate);
-    Logger.i('onTimer => $_duration');
+    final _val = TimeOfDay(
+        hour: read(alarmState).alarmHour, minute: read(alarmState).alarmMinute);
+    final _now_int = (_now.hour * 3600) + (_now.minute * 60) + (_now.second);
+    final _val_int = (_val.hour * 3600) + (_val.minute * 60);
+    final _day = (_now_int < _val_int) ? _now.day : _now.day + 1;
+    return DateTime(_now.year, _now.month, _day, _val.hour, _val.minute);
   }
 
   Future<void> status() async {
     late String duration;
-
     duration = '約 ${state.duration.inMinutes} 分間';
     if (state.duration.inSeconds < 60) {
       duration = '１分未満';
@@ -317,7 +305,6 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
       duration = '約 ${state.duration.inHours} 時間';
     }
     await read(generalState.notifier).change_status(text: '終了まで $duration です');
-
     await Future<void>.delayed(const Duration(seconds: 5));
     await read(generalState.notifier).change_status(text: 'アラームモード');
   }
@@ -341,7 +328,5 @@ class TimerController extends StateNotifier<TimerState> {
 
 class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
   TimerTimeKeepingController() : super(const TimerTimeKeepingState());
-
   final controller = CountDownController();
-  void restart() => controller.restart();
 }

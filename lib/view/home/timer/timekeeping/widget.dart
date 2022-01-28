@@ -27,8 +27,19 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 )),
             const SizedBox(height: 10),
             Text(ref.read(alarmTKState).duration.toString()),
-            ElevatedButton(
-                onPressed: controller.restart, child: const Text('再スタート'))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: controller.restart, child: const Text('再スタート')),
+                const SizedBox(width: 20),
+                ElevatedButton(
+                    onPressed: controller.pause, child: const Text('ストップ')),
+                const SizedBox(width: 20),
+                ElevatedButton(
+                    onPressed: controller.resume, child: const Text('再開')),
+              ],
+            )
           ],
         ),
       ),

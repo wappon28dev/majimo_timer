@@ -50,6 +50,7 @@ Future<void> main() async {
     child: const ProviderScope(child: MyApp()),
   ));
   Logger.i(' -- Start Majimo_Timer -- ');
+  GlobalController.switch_full_screen(value: false);
 }
 
 class MyApp extends HookConsumerWidget {

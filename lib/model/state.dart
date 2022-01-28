@@ -253,12 +253,9 @@ class AlarmState with _$AlarmState {
 class AlarmTimeKeepingState with _$AlarmTimeKeepingState {
   const AlarmTimeKeepingState._();
   const factory AlarmTimeKeepingState({
-    @Default(0) double rate,
     @Default(Duration(seconds: 1)) Duration duration,
-    @Default(false) bool alarmTK,
-    @Default(false) bool isAlarmFinish,
+    @Default('') String current,
   }) = _AlarmTimeKeepingState;
-  int get progress => 100 - rate.round() * 100;
 }
 
 @freezed

@@ -6,6 +6,7 @@ import 'package:flutter_color/src/helper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/helper/theme.dart';
 import 'package:majimo_timer/main.dart';
@@ -21,10 +22,7 @@ class HomePage extends HookConsumerWidget {
     final isLandscape = orientation == Orientation.landscape;
 
     useEffect(() {
-      FlutterWindowManager.clearFlags(
-          FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
-      FlutterWindowManager.clearFlags(
-          FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
+      GlobalController.switch_full_screen(value: false);
     });
 
     return MaterialApp(

@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/helper/theme.dart';
+import 'package:majimo_timer/view/home/timer/timekeeping/widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:simple_animations/stateless_animation/play_animation.dart';
 
@@ -11,7 +13,7 @@ import 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final width = MediaQuery.of(context).size.width;
-
+  final controller = ref.read(alarmTKState.notifier).controller;
   Widget content() {
     return Stack(children: [
       Center(
@@ -33,6 +35,19 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 )),
             const SizedBox(height: 10),
             Text(ref.read(alarmTKState).duration.toString()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: controller.restart, child: const Text('再スタート')),
+                const SizedBox(width: 20),
+                ElevatedButton(
+                    onPressed: controller.pause, child: const Text('ストップ')),
+                const SizedBox(width: 20),
+                ElevatedButton(
+                    onPressed: controller.resume, child: const Text('再開')),
+              ],
+            )
           ],
         ),
       ),
@@ -95,16 +110,44 @@ Widget percent({required WidgetRef ref, required double width}) {
   final alarmTKstate = ref.watch(alarmTKState);
   final duration = alarmTKstate.duration;
 
-  return PlayAnimation<double>(
-    tween: Tween(begin: 0, end: 1),
-    duration: duration,
-    builder: (context, child, value) {
-      return CircularPercentIndicator(
-        radius: width * 0.9,
-        lineWidth: 10,
-        percent: value,
-        progressColor: ColorKey.blue.value,
-      );
+  return CircularCountDownTimer(
+    duration: duration.inSeconds,
+    initialDuration: 0,
+    controller: ref.read(alarmTKState.notifier).controller,
+    width: width,
+    height: width,
+    ringColor: Colors.blue.shade100,
+    ringGradient: null,
+    fillColor: Colors.blue,
+    fillGradient: null,
+    backgroundColor: Colors.transparent,
+    backgroundGradient: null,
+    strokeWidth: 10,
+    strokeCap: StrokeCap.butt,
+    textStyle: const TextStyle(fontSize: 33.0, fontWeight: FontWeight.bold),
+    textFormat: CountdownTextFormat.MM_SS,
+    isReverse: true,
+    isReverseAnimation: false,
+    isTimerTextShown: false,
+    autoStart: true,
+    onStart: () {
+      print('Countdown Started');
+    },
+    onComplete: () {
+      print('Countdown Ended');
     },
   );
+
+  // return PlayAnimation<double>(
+  //   tween: Tween(begin: 0, end: 1),
+  //   duration: duration,
+  //   builder: (context, child, value) {
+  //     return CircularPercentIndicator(
+  //       radius: width * 0.9,
+  //       lineWidth: 10,
+  //       percent: value,
+  //       progressColor: ColorKey.blue.value,
+  //     );
+  //   },
+  // );
 }

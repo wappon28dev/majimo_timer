@@ -1143,15 +1143,10 @@ class _$AlarmTimeKeepingStateTearOff {
   const _$AlarmTimeKeepingStateTearOff();
 
   _AlarmTimeKeepingState call(
-      {double rate = 0,
-      Duration duration = const Duration(seconds: 1),
-      bool alarmTK = false,
-      bool isAlarmFinish = false}) {
+      {Duration duration = const Duration(seconds: 1), String current = ""}) {
     return _AlarmTimeKeepingState(
-      rate: rate,
       duration: duration,
-      alarmTK: alarmTK,
-      isAlarmFinish: isAlarmFinish,
+      current: current,
     );
   }
 }
@@ -1161,10 +1156,8 @@ const $AlarmTimeKeepingState = _$AlarmTimeKeepingStateTearOff();
 
 /// @nodoc
 mixin _$AlarmTimeKeepingState {
-  double get rate => throw _privateConstructorUsedError;
   Duration get duration => throw _privateConstructorUsedError;
-  bool get alarmTK => throw _privateConstructorUsedError;
-  bool get isAlarmFinish => throw _privateConstructorUsedError;
+  String get current => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AlarmTimeKeepingStateCopyWith<AlarmTimeKeepingState> get copyWith =>
@@ -1176,7 +1169,7 @@ abstract class $AlarmTimeKeepingStateCopyWith<$Res> {
   factory $AlarmTimeKeepingStateCopyWith(AlarmTimeKeepingState value,
           $Res Function(AlarmTimeKeepingState) then) =
       _$AlarmTimeKeepingStateCopyWithImpl<$Res>;
-  $Res call({double rate, Duration duration, bool alarmTK, bool isAlarmFinish});
+  $Res call({Duration duration, String current});
 }
 
 /// @nodoc
@@ -1190,28 +1183,18 @@ class _$AlarmTimeKeepingStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? rate = freezed,
     Object? duration = freezed,
-    Object? alarmTK = freezed,
-    Object? isAlarmFinish = freezed,
+    Object? current = freezed,
   }) {
     return _then(_value.copyWith(
-      rate: rate == freezed
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
-              as double,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      alarmTK: alarmTK == freezed
-          ? _value.alarmTK
-          : alarmTK // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isAlarmFinish: isAlarmFinish == freezed
-          ? _value.isAlarmFinish
-          : isAlarmFinish // ignore: cast_nullable_to_non_nullable
-              as bool,
+      current: current == freezed
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -1223,7 +1206,7 @@ abstract class _$AlarmTimeKeepingStateCopyWith<$Res>
           $Res Function(_AlarmTimeKeepingState) then) =
       __$AlarmTimeKeepingStateCopyWithImpl<$Res>;
   @override
-  $Res call({double rate, Duration duration, bool alarmTK, bool isAlarmFinish});
+  $Res call({Duration duration, String current});
 }
 
 /// @nodoc
@@ -1239,28 +1222,18 @@ class __$AlarmTimeKeepingStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? rate = freezed,
     Object? duration = freezed,
-    Object? alarmTK = freezed,
-    Object? isAlarmFinish = freezed,
+    Object? current = freezed,
   }) {
     return _then(_AlarmTimeKeepingState(
-      rate: rate == freezed
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
-              as double,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      alarmTK: alarmTK == freezed
-          ? _value.alarmTK
-          : alarmTK // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isAlarmFinish: isAlarmFinish == freezed
-          ? _value.isAlarmFinish
-          : isAlarmFinish // ignore: cast_nullable_to_non_nullable
-              as bool,
+      current: current == freezed
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -1270,28 +1243,19 @@ class __$AlarmTimeKeepingStateCopyWithImpl<$Res>
 class _$_AlarmTimeKeepingState extends _AlarmTimeKeepingState
     with DiagnosticableTreeMixin {
   const _$_AlarmTimeKeepingState(
-      {this.rate = 0,
-      this.duration = const Duration(seconds: 1),
-      this.alarmTK = false,
-      this.isAlarmFinish = false})
+      {this.duration = const Duration(seconds: 1), this.current = ""})
       : super._();
 
-  @JsonKey()
-  @override
-  final double rate;
   @JsonKey()
   @override
   final Duration duration;
   @JsonKey()
   @override
-  final bool alarmTK;
-  @JsonKey()
-  @override
-  final bool isAlarmFinish;
+  final String current;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AlarmTimeKeepingState(rate: $rate, duration: $duration, alarmTK: $alarmTK, isAlarmFinish: $isAlarmFinish)';
+    return 'AlarmTimeKeepingState(duration: $duration, current: $current)';
   }
 
   @override
@@ -1299,10 +1263,8 @@ class _$_AlarmTimeKeepingState extends _AlarmTimeKeepingState
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AlarmTimeKeepingState'))
-      ..add(DiagnosticsProperty('rate', rate))
       ..add(DiagnosticsProperty('duration', duration))
-      ..add(DiagnosticsProperty('alarmTK', alarmTK))
-      ..add(DiagnosticsProperty('isAlarmFinish', isAlarmFinish));
+      ..add(DiagnosticsProperty('current', current));
   }
 
   @override
@@ -1310,20 +1272,15 @@ class _$_AlarmTimeKeepingState extends _AlarmTimeKeepingState
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AlarmTimeKeepingState &&
-            const DeepCollectionEquality().equals(other.rate, rate) &&
             const DeepCollectionEquality().equals(other.duration, duration) &&
-            const DeepCollectionEquality().equals(other.alarmTK, alarmTK) &&
-            const DeepCollectionEquality()
-                .equals(other.isAlarmFinish, isAlarmFinish));
+            const DeepCollectionEquality().equals(other.current, current));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(rate),
       const DeepCollectionEquality().hash(duration),
-      const DeepCollectionEquality().hash(alarmTK),
-      const DeepCollectionEquality().hash(isAlarmFinish));
+      const DeepCollectionEquality().hash(current));
 
   @JsonKey(ignore: true)
   @override
@@ -1333,21 +1290,14 @@ class _$_AlarmTimeKeepingState extends _AlarmTimeKeepingState
 }
 
 abstract class _AlarmTimeKeepingState extends AlarmTimeKeepingState {
-  const factory _AlarmTimeKeepingState(
-      {double rate,
-      Duration duration,
-      bool alarmTK,
-      bool isAlarmFinish}) = _$_AlarmTimeKeepingState;
+  const factory _AlarmTimeKeepingState({Duration duration, String current}) =
+      _$_AlarmTimeKeepingState;
   const _AlarmTimeKeepingState._() : super._();
 
   @override
-  double get rate;
-  @override
   Duration get duration;
   @override
-  bool get alarmTK;
-  @override
-  bool get isAlarmFinish;
+  String get current;
   @override
   @JsonKey(ignore: true)
   _$AlarmTimeKeepingStateCopyWith<_AlarmTimeKeepingState> get copyWith =>

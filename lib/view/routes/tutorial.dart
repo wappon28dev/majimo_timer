@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_overboard/flutter_overboard.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/helper/plugin/flutter_overboard-3.1.1/flutter_overboard.dart';
+import 'package:majimo_timer/helper/plugin/flutter_overboard-3.1.1/src/overboard.dart';
 import 'package:majimo_timer/helper/theme.dart';
 import 'package:majimo_timer/helper/translations.dart';
 import 'package:majimo_timer/main.dart';
