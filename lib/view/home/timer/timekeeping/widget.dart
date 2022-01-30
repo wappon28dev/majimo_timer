@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
+import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
 import 'package:simple_animations/stateless_animation/play_animation.dart';
 
 import '../../../../main.dart';
@@ -9,6 +11,12 @@ import '../../../../main.dart';
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final width = MediaQuery.of(context).size.width;
   final controller = ref.read(timerTKState.notifier).controller;
+
+  // useEffect(() {
+  //   final _value = ref.read(alarmTKState.notifier).recalculation().inSeconds;
+  //   controller.restart(duration: _value);
+  //   Logger.i('restart timerTK =>$_value');
+  // });
 
   Widget content() {
     return Stack(children: [
@@ -34,10 +42,13 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     onPressed: controller.restart, child: const Text('再スタート')),
                 const SizedBox(width: 20),
                 ElevatedButton(
-                    onPressed: controller.pause, child: const Text('ストップ')),
+                    onPressed: ref.read(timerTKState.notifier).pause,
+                    child: const Text('ストップ')),
                 const SizedBox(width: 20),
                 ElevatedButton(
-                    onPressed: controller.resume, child: const Text('再開')),
+                    onPressed: () =>
+                        ref.read(timerTKState.notifier).resume(ref.read),
+                    child: const Text('再開')),
               ],
             )
           ],

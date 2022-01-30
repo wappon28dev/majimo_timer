@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:dart_date/src/dart_date.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/helper/notification.dart';
+import 'package:majimo_timer/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
 import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/helper/pref.dart';
 import 'package:majimo_timer/helper/translations.dart';
@@ -65,6 +65,7 @@ class GeneralController extends StateNotifier<GeneralState> {
   }
 
   Future<void> home() async {
+    await showFAB();
     change_showFAB(value: true);
     await Wakelock.disable();
     state = state.copyWith(opacity: 1);
@@ -104,7 +105,6 @@ class GeneralController extends StateNotifier<GeneralState> {
 
   Future<void> showFAB() async {
     state = state.copyWith(showFAB: false);
-
     await Future<void>.delayed(const Duration(milliseconds: 300));
     state = state.copyWith(showFAB: true);
   }
@@ -135,18 +135,16 @@ class LangController extends StateNotifier<LangState> {
   LangController() : super(const LangState());
   void change({required BuildContext context, required int value}) {
     void locale(Locale locale) => context.setLocale(locale);
-    const japanese = Locale('ja', 'JP');
-    const english = Locale('en', 'US');
     state = state.copyWith(lang: value);
     switch (value) {
       case 0:
         context.resetLocale();
         break;
       case 1:
-        locale(japanese);
+        locale(const Locale('ja', 'JP'));
         break;
       case 2:
-        locale(english);
+        locale(const Locale('en', 'US'));
         break;
     }
     PrefManager.setInt(key: PrefKey.changeLanguage, value: state.lang);
@@ -295,6 +293,9 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
     return DateTime(_now.year, _now.month, _day, _val.hour, _val.minute);
   }
 
+  Duration recalculation() =>
+      DateTimeRange(start: DateTime.now(), end: tar()).duration;
+
   Future<void> status() async {
     late String duration;
     duration = '約 ${state.duration.inMinutes} 分間';
@@ -329,4 +330,24 @@ class TimerController extends StateNotifier<TimerState> {
 class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
   TimerTimeKeepingController() : super(const TimerTimeKeepingState());
   final controller = CountDownController();
+
+  void start() {
+    change_fabMode(value: 0);
+    // controller.start();
+  }
+
+  void change_fabMode({required int value}) =>
+      state = state.copyWith(fabMode: value);
+  void pause() {
+    controller.pause();
+    change_fabMode(value: 1);
+    Logger.i('called!');
+  }
+
+  void resume(Reader read) {
+    // read(generalState.notifier).showFAB();
+
+    controller.resume();
+    change_fabMode(value: 0);
+  }
 }

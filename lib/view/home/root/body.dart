@@ -10,6 +10,7 @@ import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/helper/theme.dart';
 import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/view/routes/tutorial.dart';
 
 import 'widget.dart';
 
@@ -62,4 +63,24 @@ Widget analogclock({required BuildContext context, required WidgetRef ref}) {
     showSecondHand: showSec,
     showTicks: false,
   );
+}
+
+Widget fab({required BuildContext context, required WidgetRef ref}) {
+  return SizedBox(
+      height: 80,
+      width: 80,
+      child: GestureDetector(
+          onLongPressUp: () => null,
+          child: FloatingActionButton(
+            heroTag: 'global',
+            onPressed: () => ref
+                .read(generalState.notifier)
+                .push_replace(context: context, page: const Tutorial()),
+            splashColor: Colors.green.shade300,
+            backgroundColor: Colors.tealAccent,
+            child: const Icon(
+              Icons.accessibility_new_sharp,
+              color: Colors.black,
+            ),
+          )));
 }

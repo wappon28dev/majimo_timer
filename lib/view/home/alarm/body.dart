@@ -31,8 +31,9 @@ class AlarmPage extends HookConsumerWidget {
                                 alarmstate.tooltip(context: context),
                             onLongPressUp: () => Navigator.pop(context),
                             child: FloatingActionButton(
-                              onPressed: () =>
-                                  alarmstate.push(context: context, ref: ref),
+                              onPressed: () {
+                                alarmstate.push(context: context, ref: ref);
+                              },
                               splashColor: Colors.green.shade300,
                               backgroundColor: Colors.green.shade200,
                               heroTag: null,

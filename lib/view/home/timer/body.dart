@@ -35,16 +35,19 @@ class TimerPage extends HookConsumerWidget {
                                 alarmstate.tooltip(context: context),
                             onLongPressUp: () => Navigator.pop(context),
                             child: FloatingActionButton(
-                              onPressed: () =>
-                                  Navigator.pushAndRemoveUntil<void>(
-                                      context,
-                                      MaterialPageRoute<void>(
-                                          builder: (context) =>
-                                              const TimerTimeKeepingPage()),
-                                      (_) => false),
+                              onPressed: () {
+                                Navigator.pushAndRemoveUntil<void>(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                        builder: (context) =>
+                                            const TimerTimeKeepingPage()),
+                                    (_) => false);
+                                ref.read(timerTKState.notifier).start();
+                                ref.read(generalState.notifier).showFAB();
+                              },
+                              heroTag: null,
                               splashColor: Colors.green.shade300,
                               backgroundColor: Colors.green.shade100,
-                              heroTag: null,
                               child: const Icon(
                                 Icons.play_arrow,
                                 color: Colors.black,

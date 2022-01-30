@@ -273,6 +273,6 @@ class TimerState with _$TimerState {
 @freezed
 class TimerTimeKeepingState with _$TimerTimeKeepingState {
   const TimerTimeKeepingState._();
-  const factory TimerTimeKeepingState({@Default(0) double rate}) =
+  const factory TimerTimeKeepingState({@Default(0) int fabMode}) =
       _TimerTimeKeepingState;
 }

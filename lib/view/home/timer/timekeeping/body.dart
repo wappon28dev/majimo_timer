@@ -22,6 +22,96 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
     final generalstate = ref.read(generalState.notifier);
     final show = ref.watch(generalState).showFAB;
 
+    Widget fab() {
+      final mode = ref.watch(timerTKState).fabMode;
+      switch (mode) {
+        case 0:
+          return SizedBox(
+              height: 80,
+              width: 80,
+              child: FloatingActionButton(
+                backgroundColor: Colors.amber,
+                onPressed: () => ref.read(timerTKState.notifier).pause(),
+                heroTag: 'global',
+                child: const Icon(
+                  Icons.pause,
+                  color: Colors.black,
+                ),
+              ));
+        case 1:
+          return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(
+              height: 50,
+              width: 50,
+              child: FloatingActionButton(
+                backgroundColor: Colors.red,
+                onPressed: () {
+                  generalstate.push_replace(
+                      context: context, page: const HomePage());
+                  NotificationManager().cancel_notification();
+                  generalstate.home();
+                },
+                child: const Icon(
+                  Icons.stop,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(width: 20),
+            SizedBox(
+              height: 80,
+              width: 80,
+              child: FloatingActionButton(
+                onPressed: () =>
+                    ref.read(timerTKState.notifier).resume(ref.read),
+                splashColor: Colors.green.shade300,
+                backgroundColor: Colors.green.shade100,
+                heroTag: 'global',
+                child: const Icon(
+                  Icons.play_arrow,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const SizedBox(width: 20),
+            SizedBox(
+              height: 50,
+              width: 50,
+              child: FloatingActionButton(
+                backgroundColor: Colors.red,
+                onPressed: () {
+                  generalstate.push_replace(
+                      context: context, page: const HomePage());
+                  NotificationManager().cancel_notification();
+                  generalstate.home();
+                },
+                child: const Icon(
+                  Icons.stop,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ]);
+        case 2:
+          return FloatingActionButton(
+            backgroundColor: Colors.red,
+            onPressed: () {
+              generalstate.push_replace(
+                  context: context, page: const HomePage());
+              NotificationManager().cancel_notification();
+              generalstate.home();
+            },
+            // heroTag: null,
+            child: const Icon(
+              Icons.stop,
+              color: Colors.white,
+            ),
+          );
+        default:
+          return const SizedBox();
+      }
+    }
+
     return MaterialApp(
         theme: MyTheme().lightTheme,
         darkTheme: MyTheme().darkTheme,
@@ -30,26 +120,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
         home: Scaffold(
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: show
-                ? SizedBox(
-                    height: 80,
-                    width: 80,
-                    child: FloatingActionButton(
-                      splashColor: Colors.red.shade400,
-                      backgroundColor: Colors.red,
-                      onPressed: () {
-                        generalstate.push_replace(
-                            context: context, page: const HomePage());
-                        NotificationManager().cancel_notification();
-                        generalstate.home();
-                      },
-                      heroTag: null,
-                      child: const Icon(
-                        Icons.stop,
-                        color: Colors.white,
-                      ),
-                    ))
-                : null,
+            floatingActionButton: show ? fab() : null,
             // floatingActionButtonLocation:
             //     FloatingActionButtonLocation.centerDocked,
             body: !isLandscape
@@ -86,41 +157,3 @@ Widget analogclock_timekeeping(
     showTicks: false,
   );
 }
-
-// Widget fab({required BuildContext context, required WidgetRef ref}) {
-//   final generalstate = ref.read(generalState);
-
-//   return Stack(children: [
-//     Container(
-//         child: SizedBox(
-//             height: 120,
-//             child: Stack(
-//               alignment: Alignment.center,
-//               children: [
-//                 CircleAvatar(
-//                   radius: 7,
-//                   backgroundColor: Colors.red,
-//                 ),
-//                 PlayAnimation<double>(
-//                     tween: Tween(begin: 0, end: 25),
-//                     duration: const Duration(milliseconds: 300),
-//                     delay: const Duration(milliseconds: 100),
-//                     builder: (context, child, value) {
-//                       return IconButton(
-//                           iconSize: value,
-//                           padding: const EdgeInsets.all(20),
-//                           color: Colors.black,
-//                           enableFeedback: true,
-//                           icon: const Icon(
-//                             Icons.stop,
-//                             color: Colors.white,
-//                           ),
-//                           onPressed: () {
-//                             generalstate.push_home(context: context);
-//                             generalstate.change_timekeeping(value: false);
-//                           });
-//                     })
-//               ],
-//             )))
-//   ]);
-// }

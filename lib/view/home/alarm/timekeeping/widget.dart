@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
 import 'package:majimo_timer/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/helper/theme.dart';
 import 'package:majimo_timer/view/home/timer/timekeeping/widget.dart';

@@ -1143,7 +1143,7 @@ class _$AlarmTimeKeepingStateTearOff {
   const _$AlarmTimeKeepingStateTearOff();
 
   _AlarmTimeKeepingState call(
-      {Duration duration = const Duration(seconds: 1), String current = ""}) {
+      {Duration duration = const Duration(seconds: 1), String current = ''}) {
     return _AlarmTimeKeepingState(
       duration: duration,
       current: current,
@@ -1243,7 +1243,7 @@ class __$AlarmTimeKeepingStateCopyWithImpl<$Res>
 class _$_AlarmTimeKeepingState extends _AlarmTimeKeepingState
     with DiagnosticableTreeMixin {
   const _$_AlarmTimeKeepingState(
-      {this.duration = const Duration(seconds: 1), this.current = ""})
+      {this.duration = const Duration(seconds: 1), this.current = ''})
       : super._();
 
   @JsonKey()
@@ -1494,9 +1494,9 @@ abstract class _TimerState extends TimerState {
 class _$TimerTimeKeepingStateTearOff {
   const _$TimerTimeKeepingStateTearOff();
 
-  _TimerTimeKeepingState call({double rate = 0}) {
+  _TimerTimeKeepingState call({int fabMode = 0}) {
     return _TimerTimeKeepingState(
-      rate: rate,
+      fabMode: fabMode,
     );
   }
 }
@@ -1506,7 +1506,7 @@ const $TimerTimeKeepingState = _$TimerTimeKeepingStateTearOff();
 
 /// @nodoc
 mixin _$TimerTimeKeepingState {
-  double get rate => throw _privateConstructorUsedError;
+  int get fabMode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TimerTimeKeepingStateCopyWith<TimerTimeKeepingState> get copyWith =>
@@ -1518,7 +1518,7 @@ abstract class $TimerTimeKeepingStateCopyWith<$Res> {
   factory $TimerTimeKeepingStateCopyWith(TimerTimeKeepingState value,
           $Res Function(TimerTimeKeepingState) then) =
       _$TimerTimeKeepingStateCopyWithImpl<$Res>;
-  $Res call({double rate});
+  $Res call({int fabMode});
 }
 
 /// @nodoc
@@ -1532,13 +1532,13 @@ class _$TimerTimeKeepingStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? rate = freezed,
+    Object? fabMode = freezed,
   }) {
     return _then(_value.copyWith(
-      rate: rate == freezed
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
-              as double,
+      fabMode: fabMode == freezed
+          ? _value.fabMode
+          : fabMode // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -1550,7 +1550,7 @@ abstract class _$TimerTimeKeepingStateCopyWith<$Res>
           $Res Function(_TimerTimeKeepingState) then) =
       __$TimerTimeKeepingStateCopyWithImpl<$Res>;
   @override
-  $Res call({double rate});
+  $Res call({int fabMode});
 }
 
 /// @nodoc
@@ -1566,13 +1566,13 @@ class __$TimerTimeKeepingStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? rate = freezed,
+    Object? fabMode = freezed,
   }) {
     return _then(_TimerTimeKeepingState(
-      rate: rate == freezed
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
-              as double,
+      fabMode: fabMode == freezed
+          ? _value.fabMode
+          : fabMode // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -1581,15 +1581,15 @@ class __$TimerTimeKeepingStateCopyWithImpl<$Res>
 
 class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
     with DiagnosticableTreeMixin {
-  const _$_TimerTimeKeepingState({this.rate = 0}) : super._();
+  const _$_TimerTimeKeepingState({this.fabMode = 0}) : super._();
 
   @JsonKey()
   @override
-  final double rate;
+  final int fabMode;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerTimeKeepingState(rate: $rate)';
+    return 'TimerTimeKeepingState(fabMode: $fabMode)';
   }
 
   @override
@@ -1597,7 +1597,7 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'TimerTimeKeepingState'))
-      ..add(DiagnosticsProperty('rate', rate));
+      ..add(DiagnosticsProperty('fabMode', fabMode));
   }
 
   @override
@@ -1605,12 +1605,12 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _TimerTimeKeepingState &&
-            const DeepCollectionEquality().equals(other.rate, rate));
+            const DeepCollectionEquality().equals(other.fabMode, fabMode));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(rate));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(fabMode));
 
   @JsonKey(ignore: true)
   @override
@@ -1620,12 +1620,12 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
 }
 
 abstract class _TimerTimeKeepingState extends TimerTimeKeepingState {
-  const factory _TimerTimeKeepingState({double rate}) =
+  const factory _TimerTimeKeepingState({int fabMode}) =
       _$_TimerTimeKeepingState;
   const _TimerTimeKeepingState._() : super._();
 
   @override
-  double get rate;
+  int get fabMode;
   @override
   @JsonKey(ignore: true)
   _$TimerTimeKeepingStateCopyWith<_TimerTimeKeepingState> get copyWith =>
