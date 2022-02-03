@@ -111,6 +111,10 @@ class GeneralController extends StateNotifier<GeneralState> {
 
   void change_showFAB({required bool value}) =>
       state = state.copyWith(showFAB: value);
+
+  void change_current({required Duration value}) {
+    state = state.copyWith(current: value);
+  }
 }
 
 class ThemeController extends StateNotifier<ThemeState> {
@@ -272,7 +276,8 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
   final controller = CountDownController();
 
   void start() {
-    final _tar = tar();
+    final _tar = calculate_duration(
+        hour: read(alarmState).alarmHour, minute: read(alarmState).alarmMinute);
     final _duration = DateTimeRange(start: DateTime.now(), end: _tar).duration;
     state = state.copyWith(duration: _duration);
     Logger.i('tar => $_tar');
@@ -282,19 +287,6 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
     NotificationManager().alarm_tk(target: _tar);
     GlobalController.switch_full_screen(value: false);
   }
-
-  DateTime tar() {
-    final _now = DateTime.now();
-    final _val = TimeOfDay(
-        hour: read(alarmState).alarmHour, minute: read(alarmState).alarmMinute);
-    final _now_int = (_now.hour * 3600) + (_now.minute * 60) + (_now.second);
-    final _val_int = (_val.hour * 3600) + (_val.minute * 60);
-    final _day = (_now_int < _val_int) ? _now.day : _now.day + 1;
-    return DateTime(_now.year, _now.month, _day, _val.hour, _val.minute);
-  }
-
-  Duration recalculation() =>
-      DateTimeRange(start: DateTime.now(), end: tar()).duration;
 
   Future<void> status() async {
     late String duration;
@@ -308,6 +300,15 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
     await read(generalState.notifier).change_status(text: '終了まで $duration です');
     await Future<void>.delayed(const Duration(seconds: 5));
     await read(generalState.notifier).change_status(text: 'アラームモード');
+  }
+
+  DateTime calculate_duration({required int hour, required int minute}) {
+    final _now = DateTime.now();
+    final _val = TimeOfDay(hour: hour, minute: minute);
+    final _now_int = (_now.hour * 3600) + (_now.minute * 60) + (_now.second);
+    final _val_int = (_val.hour * 3600) + (_val.minute * 60);
+    final _day = (_now_int < _val_int) ? _now.day : _now.day + 1;
+    return DateTime(_now.year, _now.month, _day, _val.hour, _val.minute);
   }
 }
 
@@ -328,25 +329,37 @@ class TimerController extends StateNotifier<TimerState> {
 }
 
 class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
-  TimerTimeKeepingController() : super(const TimerTimeKeepingState());
+  TimerTimeKeepingController(this.read) : super(const TimerTimeKeepingState());
+  final Reader read;
+
   final controller = CountDownController();
 
   void start() {
     change_fabMode(value: 0);
+    final _target = DateTime.now().add(read(timerState).target);
+    Logger.i(
+        ' now     => ${DateTime.now()} \n duration  => ${read(timerState).target} \n target  => $_target');
+    NotificationManager().timer_finish(target: _target);
+    NotificationManager().timer_tk(target: _target);
     // controller.start();
   }
 
   void change_fabMode({required int value}) =>
       state = state.copyWith(fabMode: value);
+
   void pause() {
     controller.pause();
+    NotificationManager().cancel_notification();
     change_fabMode(value: 1);
-    Logger.i('called!');
   }
 
   void resume(Reader read) {
     // read(generalState.notifier).showFAB();
-
+    final _target = DateTime.now().add(read(generalState).current);
+    Logger.i(
+        ' now     => ${DateTime.now()} \n current => ${read(generalState).current} \n target  => $_target');
+    NotificationManager().timer_finish(target: _target);
+    NotificationManager().timer_tk(target: _target);
     controller.resume();
     change_fabMode(value: 0);
   }

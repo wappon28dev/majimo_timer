@@ -13,6 +13,12 @@ enum t {
   timer,
   goal,
   record,
+  notification_ringtone,
+  notification_ringtone_sub,
+  notification_interval,
+  notification_interval_sub,
+  notification_timekeeping,
+  notification_timekeeping_sub,
   prefer,
   system,
   app_appearance,
@@ -46,6 +52,7 @@ enum t {
   toast_duration_sub,
   duration,
   sec,
+  notification
 }
 
 extension TypeExtension on t {

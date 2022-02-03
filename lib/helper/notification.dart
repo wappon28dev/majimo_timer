@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_classes_with_only_static_members, non_constant_identifier_names
+// ignore_for_file: avoid_classes_with_only_static_members, non_constant_identifier_names, constant_identifier_names
 
 import 'dart:async';
 
@@ -10,8 +10,9 @@ import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/helper/theme.dart';
 import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
 import 'package:simple_animations/simple_animations.dart';
+import 'package:majimo_timer/helper/translations.dart';
 
-enum NotificationChannelKey { general, alarmTimeKeeping, alarmFinish }
+enum NotificationChannelKey { ringtone, interval, timekeeping }
 
 class NotificationManager {
   static void initialize() {
@@ -20,24 +21,23 @@ class NotificationManager {
         null,
         [
           NotificationChannel(
-            channelKey: NotificationChannelKey.general.name,
-            channelName: NotificationChannelKey.general.name,
-            channelDescription: 'Notification channel for basic tests',
-            defaultColor: ColorKey.orange.value,
-            ledColor: Colors.orange,
-            onlyAlertOnce: true,
-            defaultRingtoneType: DefaultRingtoneType.Notification,
-            importance: NotificationImportance.None,
-          )
+              channelKey: NotificationChannelKey.ringtone.name,
+              channelName: t.notification_ringtone.t,
+              channelDescription: t.notification_ringtone_sub.t,
+              ledColor: Colors.orange,
+              onlyAlertOnce: false,
+              defaultPrivacy: NotificationPrivacy.Public,
+              defaultRingtoneType: DefaultRingtoneType.Alarm,
+              importance: NotificationImportance.Max)
         ]);
     AwesomeNotifications().initialize(
         // set the icon to null if you want to use the default app icon
         null,
         [
           NotificationChannel(
-              channelKey: NotificationChannelKey.alarmFinish.name,
-              channelName: NotificationChannelKey.alarmFinish.name,
-              channelDescription: 'Notification channel for basic tests',
+              channelKey: NotificationChannelKey.interval.name,
+              channelName: t.notification_interval.t,
+              channelDescription: t.notification_interval_sub.t,
               defaultColor: const Color(0xFF9D50DD),
               ledColor: Colors.orange,
               onlyAlertOnce: false,
@@ -50,9 +50,9 @@ class NotificationManager {
         null,
         [
           NotificationChannel(
-              channelKey: NotificationChannelKey.alarmTimeKeeping.name,
-              channelName: NotificationChannelKey.alarmTimeKeeping.name,
-              channelDescription: 'Notification channel for basic tests',
+              channelKey: NotificationChannelKey.timekeeping.name,
+              channelName: t.notification_timekeeping.t,
+              channelDescription: t.notification_timekeeping_sub.t,
               defaultColor: const Color(0xFF9D50DD),
               ledColor: Colors.white,
               onlyAlertOnce: false,
@@ -67,30 +67,11 @@ class NotificationManager {
     });
   }
 
-  static void test() {
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: 10,
-            channelKey: 'basic_channel',
-            title: 'フォアグラウンド処理テスト',
-            body: 'from まじもタイマー'));
-  }
-
-  // static void background() {
-  //   Logger.i('called background');
-  //   AwesomeNotifications().createNotification(
-  //       content: NotificationContent(
-  //           id: 10,
-  //           channelKey: 'basic_channel',
-  //           title: 'バックグラウンド処理テスト',
-  //           body: 'from まじもタイマー'));
-  // }
-
   void alarm_finish({required DateTime target}) {
     AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: 10,
-          channelKey: NotificationChannelKey.alarmFinish.name,
+          channelKey: NotificationChannelKey.ringtone.name,
           title: '時間です！',
           body: 'from まじもタイマー',
           autoDismissible: true,
@@ -115,7 +96,7 @@ class NotificationManager {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: 10,
-        channelKey: NotificationChannelKey.alarmTimeKeeping.name,
+        channelKey: NotificationChannelKey.timekeeping.name,
         title: '計測中... ・ ${target.hour}:${target.minute}まで',
         body: 'from まじもタイマー',
         category: NotificationCategory.Service,
@@ -133,9 +114,66 @@ class NotificationManager {
     );
   }
 
+  void timer_finish({required DateTime target}) {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: 10,
+          channelKey: NotificationChannelKey.ringtone.name,
+          title: '時間です！',
+          body: 'from まじもタイマー',
+          autoDismissible: true,
+          category: NotificationCategory.Alarm,
+          displayOnBackground: true,
+          displayOnForeground: true,
+          showWhen: true,
+          wakeUpScreen: true,
+          fullScreenIntent: true,
+        ),
+        schedule: NotificationCalendar.fromDate(date: target),
+        actionButtons: [
+          NotificationActionButton(
+              key: 'SHOW_SERVICE_DETAILS',
+              label: 'Show details',
+              showInCompactView: true),
+          NotificationActionButton(
+              key: 'SHOW_SERVICE_DETAILS', label: 'Show details'),
+        ]);
+  }
+
+  Future<void> timer_tk({required DateTime target}) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 10,
+        channelKey: NotificationChannelKey.timekeeping.name,
+        title: '計測中... ・ ${target.hour}:${target.minute}まで',
+        body: 'from まじもタイマー',
+        category: NotificationCategory.Service,
+        backgroundColor: ColorKey.orange.value,
+        notificationLayout: NotificationLayout.Default,
+      ),
+      actionButtons: [
+        NotificationActionButton(
+            key: 'SHOW_SERVICE_DETAILS',
+            label: '中止',
+            showInCompactView: true,
+            buttonType: ActionButtonType.DisabledAction),
+        NotificationActionButton(key: 'SHOW_SERVICE_DETAILS', label: '5分追加'),
+      ],
+    );
+  }
+
+  void test() {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 0,
+            channelKey: NotificationChannelKey.interval.name,
+            title: 'test'));
+  }
+
   void cancel_notification() {
     AwesomeNotifications().cancelAll();
-    Logger.i("cancel!!!");
+    Logger.e(
+        '- from NotificationManager \n >> Scheduled Notification canceled!');
   }
 }
 

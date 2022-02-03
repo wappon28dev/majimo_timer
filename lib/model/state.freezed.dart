@@ -158,13 +158,15 @@ class _$GeneralStateTearOff {
       bool topToast = false,
       int toastDuration = 3,
       double opacity = 1,
-      bool showFAB = false}) {
+      bool showFAB = false,
+      Duration current = Duration.zero}) {
     return _GeneralState(
       status: status,
       topToast: topToast,
       toastDuration: toastDuration,
       opacity: opacity,
       showFAB: showFAB,
+      current: current,
     );
   }
 }
@@ -179,6 +181,7 @@ mixin _$GeneralState {
   int get toastDuration => throw _privateConstructorUsedError;
   double get opacity => throw _privateConstructorUsedError;
   bool get showFAB => throw _privateConstructorUsedError;
+  Duration get current => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GeneralStateCopyWith<GeneralState> get copyWith =>
@@ -195,7 +198,8 @@ abstract class $GeneralStateCopyWith<$Res> {
       bool topToast,
       int toastDuration,
       double opacity,
-      bool showFAB});
+      bool showFAB,
+      Duration current});
 }
 
 /// @nodoc
@@ -213,6 +217,7 @@ class _$GeneralStateCopyWithImpl<$Res> implements $GeneralStateCopyWith<$Res> {
     Object? toastDuration = freezed,
     Object? opacity = freezed,
     Object? showFAB = freezed,
+    Object? current = freezed,
   }) {
     return _then(_value.copyWith(
       status: status == freezed
@@ -235,6 +240,10 @@ class _$GeneralStateCopyWithImpl<$Res> implements $GeneralStateCopyWith<$Res> {
           ? _value.showFAB
           : showFAB // ignore: cast_nullable_to_non_nullable
               as bool,
+      current: current == freezed
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as Duration,
     ));
   }
 }
@@ -251,7 +260,8 @@ abstract class _$GeneralStateCopyWith<$Res>
       bool topToast,
       int toastDuration,
       double opacity,
-      bool showFAB});
+      bool showFAB,
+      Duration current});
 }
 
 /// @nodoc
@@ -271,6 +281,7 @@ class __$GeneralStateCopyWithImpl<$Res> extends _$GeneralStateCopyWithImpl<$Res>
     Object? toastDuration = freezed,
     Object? opacity = freezed,
     Object? showFAB = freezed,
+    Object? current = freezed,
   }) {
     return _then(_GeneralState(
       status: status == freezed
@@ -293,6 +304,10 @@ class __$GeneralStateCopyWithImpl<$Res> extends _$GeneralStateCopyWithImpl<$Res>
           ? _value.showFAB
           : showFAB // ignore: cast_nullable_to_non_nullable
               as bool,
+      current: current == freezed
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as Duration,
     ));
   }
 }
@@ -305,7 +320,8 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
       this.topToast = false,
       this.toastDuration = 3,
       this.opacity = 1,
-      this.showFAB = false})
+      this.showFAB = false,
+      this.current = Duration.zero})
       : super._();
 
   @JsonKey()
@@ -323,10 +339,13 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final bool showFAB;
+  @JsonKey()
+  @override
+  final Duration current;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GeneralState(status: $status, topToast: $topToast, toastDuration: $toastDuration, opacity: $opacity, showFAB: $showFAB)';
+    return 'GeneralState(status: $status, topToast: $topToast, toastDuration: $toastDuration, opacity: $opacity, showFAB: $showFAB, current: $current)';
   }
 
   @override
@@ -338,7 +357,8 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('topToast', topToast))
       ..add(DiagnosticsProperty('toastDuration', toastDuration))
       ..add(DiagnosticsProperty('opacity', opacity))
-      ..add(DiagnosticsProperty('showFAB', showFAB));
+      ..add(DiagnosticsProperty('showFAB', showFAB))
+      ..add(DiagnosticsProperty('current', current));
   }
 
   @override
@@ -351,7 +371,8 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.toastDuration, toastDuration) &&
             const DeepCollectionEquality().equals(other.opacity, opacity) &&
-            const DeepCollectionEquality().equals(other.showFAB, showFAB));
+            const DeepCollectionEquality().equals(other.showFAB, showFAB) &&
+            const DeepCollectionEquality().equals(other.current, current));
   }
 
   @override
@@ -361,7 +382,8 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(topToast),
       const DeepCollectionEquality().hash(toastDuration),
       const DeepCollectionEquality().hash(opacity),
-      const DeepCollectionEquality().hash(showFAB));
+      const DeepCollectionEquality().hash(showFAB),
+      const DeepCollectionEquality().hash(current));
 
   @JsonKey(ignore: true)
   @override
@@ -375,7 +397,8 @@ abstract class _GeneralState extends GeneralState {
       bool topToast,
       int toastDuration,
       double opacity,
-      bool showFAB}) = _$_GeneralState;
+      bool showFAB,
+      Duration current}) = _$_GeneralState;
   const _GeneralState._() : super._();
 
   @override
@@ -388,6 +411,8 @@ abstract class _GeneralState extends GeneralState {
   double get opacity;
   @override
   bool get showFAB;
+  @override
+  Duration get current;
   @override
   @JsonKey(ignore: true)
   _$GeneralStateCopyWith<_GeneralState> get copyWith =>

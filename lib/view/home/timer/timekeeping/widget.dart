@@ -34,7 +34,13 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                   children: [count(context: context, ref: ref)],
                 )),
             const SizedBox(height: 10),
-            Text(ref.read(alarmTKState).duration.toString()),
+            Text(
+              ref.watch(generalState).current.toString(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontFamily: 'monospace',
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -116,7 +122,7 @@ Widget count({required BuildContext context, required WidgetRef ref}) {
         backgroundGradient: null,
         strokeWidth: 10,
         strokeCap: StrokeCap.butt,
-        textStyle: const TextStyle(fontSize: 33.0, fontWeight: FontWeight.bold),
+        textStyle: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
         textFormat: CountdownTextFormat.MM_SS,
         isReverse: true,
         isReverseAnimation: false,

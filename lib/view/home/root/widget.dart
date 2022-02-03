@@ -1,6 +1,7 @@
 // ignore_for_file: implementation_imports
 
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dismissible_page/src/dismissible_extensions.dart';
@@ -31,7 +32,6 @@ import 'body.dart';
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final width = MediaQuery.of(context).size.width;
   final show = ref.watch(generalState).showFAB;
-
   useEffect(() {
     LinkManager().initQuickAction(context: context, ref: ref);
     LinkManager().initDeepLinks(ref, context);
@@ -138,9 +138,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         AnimatedOpacity(
-            opacity: ref.watch(generalState).opacity,
+            opacity: ref.read(generalState).opacity,
             duration: const Duration(milliseconds: 300),
-            child: Text(ref.watch(generalState).status,
+            child: Text(ref.read(generalState).status,
                 style: const TextStyle(fontWeight: FontWeight.bold))),
         const SizedBox(height: 20),
         Row(
@@ -156,10 +156,10 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget expand(BuildContext context) {
-    final color = ref.watch(colorState).color_tween(context: context, ref: ref);
-    final opacity = ref.watch(colorState).opacity;
+    final color = ref.read(colorState).color_tween(context: context, ref: ref);
+    final opacity = ref.read(colorState).opacity;
     final path =
-        ref.watch(colorState).color_picture_path(context: context, ref: ref);
+        ref.read(colorState).color_picture_path(context: context, ref: ref);
     return PlayAnimation<Color?>(
         tween: color,
         builder: (context, child, value) {
@@ -215,7 +215,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     ),
                     subtitle: const Text(
                       '>> $version << \n $buildDate \n $changeLog',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontFamily: 'monospace',
+                      ),
                     ),
                     leading: const Icon(
                       Icons.bug_report,
@@ -231,7 +235,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                   children: <Widget>[
                     IconButton(
                       onPressed: () {
-                        NotificationManager.test();
+                        NotificationManager().test();
                         Logger.e(
                             '- from majimo_timer/lib/view/home/root/widget.dart \n'
                             ' > notification test');

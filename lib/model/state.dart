@@ -22,13 +22,13 @@ class GlobalState with _$GlobalState {
 @freezed
 class GeneralState with _$GeneralState {
   const GeneralState._();
-  const factory GeneralState({
-    @Default('まじもタイマーへようこそ！') String status,
-    @Default(false) bool topToast,
-    @Default(3) int toastDuration,
-    @Default(1) double opacity,
-    @Default(false) bool showFAB,
-  }) = _GeneralState;
+  const factory GeneralState(
+      {@Default('まじもタイマーへようこそ！') String status,
+      @Default(false) bool topToast,
+      @Default(3) int toastDuration,
+      @Default(1) double opacity,
+      @Default(false) bool showFAB,
+      @Default(Duration.zero) Duration current}) = _GeneralState;
 
   // define custom getter
   String get topToast_caption => topToast ? t.top.t : t.bottom.t;
@@ -273,6 +273,7 @@ class TimerState with _$TimerState {
 @freezed
 class TimerTimeKeepingState with _$TimerTimeKeepingState {
   const TimerTimeKeepingState._();
-  const factory TimerTimeKeepingState({@Default(0) int fabMode}) =
-      _TimerTimeKeepingState;
+  const factory TimerTimeKeepingState({
+    @Default(0) int fabMode,
+  }) = _TimerTimeKeepingState;
 }

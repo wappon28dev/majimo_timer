@@ -97,7 +97,9 @@ class PrefManager {
     ref.read(themeState.notifier).change(value: _theme);
     ref.read(langState.notifier).change(context: context, value: _lang);
     ref.read(generalState.notifier).change_topToast(value: _topToast);
-    ref.read(generalState.notifier).change_toastDuration(value: _toastDuration);
+    ref
+        .watch(generalState.notifier)
+        .change_toastDuration(value: _toastDuration);
     ref.read(clockState.notifier).change_animation(value: _clockAnimation);
     ref.read(clockState.notifier).change_showSec(value: _showSec);
     ref.read(timerState.notifier).change_target(value: _timerTarget);

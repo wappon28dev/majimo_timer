@@ -115,7 +115,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
     return MaterialApp(
         theme: MyTheme().lightTheme,
         darkTheme: MyTheme().darkTheme,
-        themeMode: ref.watch(themeState).theme_value,
+        themeMode: ref.read(themeState).theme_value,
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             floatingActionButtonLocation:

@@ -1,6 +1,7 @@
 library let_log;
 
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -67,14 +68,16 @@ class Logger extends HookConsumerWidget {
           onPressed: () {
             Navigator.pop(context);
           }),
-      title: const AutoSizeText('Majimo_Timer-Log',
-          maxLines: 1,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          )),
+      title: const AutoSizeText(
+        'Majimo_Timer-Log',
+        maxLines: 1,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       centerTitle: true,
       backgroundColor: Colors.deepOrange,
-      brightness: Brightness.dark,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
     );
   }
 

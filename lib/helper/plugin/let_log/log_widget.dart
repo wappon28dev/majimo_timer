@@ -71,6 +71,7 @@ class _LogWidgetState extends State<LogWidget> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'global',
         onPressed: () {
           if (_goDown) {
             _scrollController!.animateTo(
@@ -88,7 +89,6 @@ class _LogWidgetState extends State<LogWidget> {
           _goDown = !_goDown;
           setState(() {});
         },
-        mini: true,
         child: Icon(
           _goDown ? Icons.arrow_downward : Icons.arrow_upward,
         ),
@@ -124,7 +124,11 @@ class _LogWidgetState extends State<LogWidget> {
           children: [
             Text(
               "[${item.start!.hour.toString().padLeft(2, "0")}:${item.start!.minute.toString().padLeft(2, "0")}:${item.start!.second.toString().padLeft(2, "0")}] ${item.typeName} \n${item.message}",
-              style: TextStyle(color: color, fontSize: 12),
+              style: TextStyle(
+                color: color,
+                fontSize: 10,
+                fontFamily: 'monospace',
+              ),
             ),
             if (item.detail != null)
               Padding(

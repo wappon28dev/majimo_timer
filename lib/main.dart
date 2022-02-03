@@ -36,12 +36,11 @@ final timerState = StateNotifierProvider<TimerController, TimerState>(
     (ref) => TimerController());
 final timerTKState =
     StateNotifierProvider<TimerTimeKeepingController, TimerTimeKeepingState>(
-        (ref) => TimerTimeKeepingController());
+        (ref) => TimerTimeKeepingController(ref.read));
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  NotificationManager.initialize();
   runApp(EasyLocalization(
     supportedLocales: const [Locale('en', 'US'), Locale('ja', 'JP')],
     fallbackLocale: const Locale('en', 'US'),
@@ -60,6 +59,7 @@ class MyApp extends HookConsumerWidget {
     useEffect(() {
       PrefManager.restore(ref, context);
     });
+
     return BackGestureWidthTheme(
         backGestureWidth: BackGestureWidth.fraction(1 / 2),
         child: MaterialApp(

@@ -33,14 +33,13 @@ class Setting extends HookConsumerWidget {
     final clockstate = ref.watch(clockState);
     final langstate = ref.watch(langState);
     final generalstate = ref.watch(generalState);
-
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       theme: MyTheme().lightTheme,
       darkTheme: MyTheme().darkTheme,
-      themeMode: ref.watch(themeState).theme_value,
+      themeMode: ref.read(themeState).theme_value,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: appbar(context: context, ref: ref),

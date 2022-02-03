@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
 
 class CustomTimerPainter extends CustomPainter {
   CustomTimerPainter(
@@ -22,7 +23,7 @@ class CustomTimerPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
+    final paint = Paint()
       ..color = ringColor!
       ..strokeWidth = strokeWidth!
       ..strokeCap = strokeCap!
@@ -31,20 +32,20 @@ class CustomTimerPainter extends CustomPainter {
     if (ringGradient != null) {
       final rect = Rect.fromCircle(
           center: size.center(Offset.zero), radius: size.width / 2);
-      paint..shader = ringGradient!.createShader(rect);
+      paint.shader = ringGradient!.createShader(rect);
     } else {
-      paint..shader = null;
+      paint.shader = null;
     }
 
     canvas.drawCircle(size.center(Offset.zero), size.width / 2, paint);
-    double progress = (animation!.value) * 2 * math.pi;
+    final progress = (animation!.value) * 2 * math.pi;
 
     if (fillGradient != null) {
       final rect = Rect.fromCircle(
           center: size.center(Offset.zero), radius: size.width / 2);
-      paint..shader = fillGradient!.createShader(rect);
+      paint.shader = fillGradient!.createShader(rect);
     } else {
-      paint..shader = null;
+      paint.shader = null;
       paint.color = fillColor!;
     }
 
@@ -56,7 +57,7 @@ class CustomTimerPainter extends CustomPainter {
       if (backgroundGradient != null) {
         final rect = Rect.fromCircle(
             center: size.center(Offset.zero), radius: size.width / 2.2);
-        backgroundPaint..shader = backgroundGradient!.createShader(rect);
+        backgroundPaint.shader = backgroundGradient!.createShader(rect);
       } else {
         backgroundPaint.color = backgroundColor!;
       }

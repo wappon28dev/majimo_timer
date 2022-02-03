@@ -157,8 +157,8 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                 expandedHeight - AppBar().preferredSize.height - 40) {
               if (!(isFullyCollapsed.value)) {
                 isFullyCollapsed.add(true);
-                ref.watch(colorState.notifier).stop();
-                ref.watch(generalState.notifier).home();
+                ref.read(colorState.notifier).stop();
+                ref.read(generalState.notifier).home();
               }
             } else {
               if ((isFullyCollapsed.value)) isFullyCollapsed.add(false);
@@ -261,9 +261,9 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                       if (streams[1] == false) {
                         isFullyExpanded.add(true);
                         WidgetsBinding.instance!.addPostFrameCallback((_) {
-                          ref.watch(generalState.notifier).expand(0);
+                          ref.read(generalState.notifier).expand(0);
 
-                          ref.watch(colorState.notifier).change(
+                          ref.read(colorState.notifier).change(
                               isLight: ref
                                   .read(themeState.notifier)
                                   .isLight(context: context));

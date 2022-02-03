@@ -1,10 +1,15 @@
+// ignore_for_file: constant_identifier_names
+
 library circular_countdown_timer;
 
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/controller/controller.dart';
+import 'package:majimo_timer/main.dart';
 import 'custom_timer_painter.dart';
 
 /// Create a Circular Countdown Timer.
-class CircularCountDownTimer extends StatefulWidget {
+class CircularCountDownTimer extends ConsumerStatefulWidget {
   /// Key for Countdown Timer.
   final Key? key;
 
@@ -94,19 +99,14 @@ class CircularCountDownTimer extends StatefulWidget {
       this.autoStart = true,
       this.textFormat,
       required this.controller})
-      : assert(width != null),
-        assert(height != null),
-        assert(duration != null),
-        assert(initialDuration <= duration),
-        assert(fillColor != null),
-        assert(ringColor != null),
+      : assert(initialDuration <= duration),
         super(key: key);
 
   @override
   CircularCountDownTimerState createState() => CircularCountDownTimerState();
 }
 
-class CircularCountDownTimerState extends State<CircularCountDownTimer>
+class CircularCountDownTimerState extends ConsumerState<CircularCountDownTimer>
     with TickerProviderStateMixin {
   AnimationController? _controller;
   Animation<double>? _countDownAnimation;
@@ -114,16 +114,17 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
   String get time {
     if (widget.isReverse && _controller!.isDismissed) {
       if (widget.textFormat == CountdownTextFormat.MM_SS) {
-        return "00:00";
+        return '00:00';
       } else if (widget.textFormat == CountdownTextFormat.SS) {
-        return "00";
+        return '00';
       } else if (widget.textFormat == CountdownTextFormat.S) {
-        return "0";
+        return '0';
       } else {
-        return "00:00:00";
+        return '00:00:00';
       }
     } else {
-      Duration duration = _controller!.duration! * _controller!.value;
+      final duration = _controller!.duration! * _controller!.value;
+
       return _getTime(duration);
     }
   }
@@ -156,7 +157,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
       if (widget.isReverse) {
         _controller?.value = 1 - (widget.initialDuration / widget.duration);
       } else {
-        _controller?.value = (widget.initialDuration / widget.duration);
+        _controller?.value = widget.initialDuration / widget.duration;
       }
 
       widget.controller.start();
@@ -174,11 +175,11 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
     }
     // For ss format
     else if (widget.textFormat == CountdownTextFormat.SS) {
-      return '${(duration.inSeconds).toString().padLeft(2, '0')}';
+      return (duration.inSeconds).toString().padLeft(2, '0');
     }
     // For s format
     else if (widget.textFormat == CountdownTextFormat.S) {
-      return '${(duration.inSeconds)}';
+      return '${duration.inSeconds}';
     } else {
       // Default format
       return _defaultFormat(duration);
@@ -196,11 +197,15 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
   }
 
   void _onStart() {
-    if (widget.onStart != null) widget.onStart!();
+    if (widget.onStart != null) {
+      widget.onStart!();
+    }
   }
 
   void _onComplete() {
-    if (widget.onComplete != null) widget.onComplete!();
+    if (widget.onComplete != null) {
+      widget.onComplete!();
+    }
   }
 
   @override
@@ -228,9 +233,11 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
 
           /// [AnimationController]'s value is manually set to [1.0] that's why [AnimationStatus.completed] is invoked here this animation is [isReverse]
           /// Only call the [_onComplete] block when the animation is not reversed.
-          if (!widget.isReverse) _onComplete();
+          if (!widget.isReverse) {
+            _onComplete();
+          }
           break;
-        default:
+
         // Do nothing
       }
     });
@@ -242,7 +249,12 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    Future<void>.delayed(
+        Duration.zero,
+        () => ref.read(generalState.notifier).change_current(
+            value: _controller!.duration! * _controller!.value));
+
+    return SizedBox(
       width: widget.width,
       height: widget.height,
       child: AnimatedBuilder(
@@ -250,7 +262,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
           builder: (context, child) {
             return Align(
               child: AspectRatio(
-                aspectRatio: 1.0,
+                aspectRatio: 1,
                 child: Stack(
                   children: <Widget>[
                     Positioned.fill(
@@ -273,8 +285,8 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
                             child: Text(
                               time,
                               style: widget.textStyle ??
-                                  TextStyle(
-                                    fontSize: 16.0,
+                                  const TextStyle(
+                                    fontSize: 16,
                                     color: Colors.black,
                                   ),
                             ),
@@ -300,17 +312,18 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
 class CountDownController {
   late CircularCountDownTimerState _state;
   late bool _isReverse;
-  int? _initialDuration, _duration;
+  late int _duration;
+  int? _initialDuration;
 
   /// This Method Starts the Countdown Timer
   void start() {
     if (_isReverse) {
       _state._controller?.reverse(
           from:
-              _initialDuration == 0 ? 1 : 1 - (_initialDuration! / _duration!));
+              _initialDuration == 0 ? 1 : 1 - (_initialDuration! / _duration));
     } else {
       _state._controller?.forward(
-          from: _initialDuration == 0 ? 0 : (_initialDuration! / _duration!));
+          from: _initialDuration == 0 ? 0 : (_initialDuration! / _duration));
     }
   }
 
@@ -351,8 +364,8 @@ class CountDownController {
 }
 
 class CountdownTextFormat {
-  static const String HH_MM_SS = "HH:mm:ss";
-  static const String MM_SS = "mm:ss";
-  static const String SS = "ss";
-  static const String S = "s";
+  static const String HH_MM_SS = 'HH:mm:ss';
+  static const String MM_SS = 'mm:ss';
+  static const String SS = 'ss';
+  static const String S = 's';
 }

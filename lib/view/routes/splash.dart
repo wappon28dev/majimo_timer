@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/helper/notification.dart';
+import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/helper/theme.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
@@ -18,6 +20,8 @@ class _SplashState extends ConsumerState<Splash> {
   void initState() {
     super.initState();
     navigate();
+    NotificationManager.initialize();
+    Logger.i(' -- notification initialized ! -- ');
   }
 
   Future<void> navigate() async {

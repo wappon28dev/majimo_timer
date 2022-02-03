@@ -40,6 +40,13 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     '- from majimo_timer/lib/view/home/timer/widget.dart \n' +
                         ' >> receive result => ' +
                         result.toString());
+                result == Duration.zero
+                    ? ref
+                        .read(generalState.notifier)
+                        .change_showFAB(value: false)
+                    : ref
+                        .read(generalState.notifier)
+                        .change_showFAB(value: true);
               }
             },
           ),

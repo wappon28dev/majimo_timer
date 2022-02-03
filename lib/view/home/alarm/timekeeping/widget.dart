@@ -34,7 +34,20 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                   ],
                 )),
             const SizedBox(height: 10),
-            Text(ref.read(alarmTKState).duration.toString()),
+            Text(
+              'target  => ${ref.read(alarmTKState).duration.toString()}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontFamily: 'monospace',
+              ),
+            ),
+            Text(
+              'current => ${ref.watch(generalState).current.toString()}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontFamily: 'monospace',
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -107,7 +120,7 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
 }
 
 Widget percent({required WidgetRef ref, required double width}) {
-  final alarmTKstate = ref.watch(alarmTKState);
+  final alarmTKstate = ref.read(alarmTKState);
   final duration = alarmTKstate.duration;
 
   return CircularCountDownTimer(

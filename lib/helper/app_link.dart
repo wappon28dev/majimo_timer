@@ -57,8 +57,8 @@ class LinkManager {
             .read(generalState.notifier)
             .push_replace(context: context, page: const HomePage());
         context.pushTransparentRoute(const AlarmPage());
-        ref.watch(alarmState.notifier).internal();
-        ref.watch(generalState.notifier).showFAB();
+        ref.read(alarmState.notifier).internal();
+        ref.read(generalState.notifier).showFAB();
         break;
 
       case 't':
