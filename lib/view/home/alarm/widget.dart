@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/helper/translations.dart';
+import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/view/components/modal.dart';
 
 import '../../../main.dart';
 
@@ -39,10 +40,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
           ),
           ElevatedButton(
               child: const Text('set'),
-              onPressed: () {
-                Logger.i('set alarm !!');
-                // One off task registration
-              }),
+              onPressed: () => number_pad(context: context, ref: ref)),
         ]),
       ),
       Stack(

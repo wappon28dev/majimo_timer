@@ -5,9 +5,9 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:majimo_timer/helper/plugin/flutter_overboard-3.1.1/src/circular_clipper.dart';
-import 'package:majimo_timer/helper/plugin/flutter_overboard-3.1.1/src/overboard_animator.dart';
-import 'package:majimo_timer/helper/plugin/flutter_overboard-3.1.1/src/page_model.dart';
+import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/src/circular_clipper.dart';
+import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/src/overboard_animator.dart';
+import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/src/page_model.dart';
 
 enum SwipeDirection { LEFT_TO_RIGHT, RIGHT_TO_LEFT, SKIP_TO_LAST }
 

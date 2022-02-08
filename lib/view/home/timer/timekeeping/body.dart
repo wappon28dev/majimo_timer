@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/helper/notification.dart';
-import 'package:majimo_timer/helper/theme.dart';
-import 'package:majimo_timer/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
+import 'package:majimo_timer/model/helper/notification.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:simple_animations/simple_animations.dart';
 import '../../../../main.dart';
@@ -62,8 +62,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
               height: 80,
               width: 80,
               child: FloatingActionButton(
-                onPressed: () =>
-                    ref.read(timerTKState.notifier).resume(ref.read),
+                onPressed: ref.read(timerTKState.notifier).resume,
                 splashColor: Colors.green.shade300,
                 backgroundColor: Colors.green.shade100,
                 heroTag: 'global',

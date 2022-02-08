@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/helper/notification.dart';
+import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:fullscreen/fullscreen.dart';

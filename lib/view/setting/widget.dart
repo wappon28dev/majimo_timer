@@ -6,71 +6,14 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:flutter_color/src/helper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/helper/theme.dart';
-import 'package:majimo_timer/helper/translations.dart';
-import 'package:majimo_timer/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/controller/controller.dart';
+import 'package:majimo_timer/view/components/modal.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../main.dart';
-
-Future modal(BuildContext context, WidgetRef ref, IconData icon, String title,
-    String subtitle, List<Widget> widget) {
-  const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
-  final value = ref.read(themeState.notifier).isLight(context: context);
-  final header = <Widget>[
-    Theme(
-      data: MyTheme().get_theme(context: context, ref: ref),
-      child: Column(children: <Widget>[
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 3),
-          width: 35,
-          height: 4,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: Colors.grey[400]),
-        ),
-        const SizedBox(height: 10),
-        Icon(icon),
-        const SizedBox(height: 8),
-        AutoSizeText(title,
-            style: TextStyle(
-                color: value ? Colors.black : Colors.white,
-                fontWeight: FontWeight.w600),
-            minFontSize: 20,
-            maxLines: 1),
-        const SizedBox(height: 5),
-        AutoSizeText(
-          subtitle,
-          style: TextStyle(color: value ? Colors.black : Colors.white),
-          maxLines: 1,
-          minFontSize: 10,
-        ),
-        const SizedBox(height: 5),
-        const Divider(
-          thickness: 2,
-        ),
-      ]),
-    )
-  ];
-  final bottom = <Widget>[];
-  return showCupertinoModalBottomSheet<dynamic>(
-      context: context,
-      barrierColor: Colors.black54,
-      duration: const Duration(milliseconds: 300),
-      topRadius: const Radius.circular(20),
-      builder: (context) => SingleChildScrollView(
-          controller: ModalScrollController.of(context),
-          child: Material(
-              child: Theme(
-                  data: MyTheme().get_theme(context: context, ref: ref),
-                  child: Ink(
-                    padding: padding,
-                    color: value
-                        ? Colors.deepOrange.shade100.lighter(12)
-                        : Colors.deepOrange.shade50.darker(70),
-                    child: Column(children: header + widget + bottom),
-                  )))));
-}
 
 List style(dynamic pref, dynamic value) {
   // int mode : 0 => return TextStyle,

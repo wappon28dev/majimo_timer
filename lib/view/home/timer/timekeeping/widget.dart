@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
-import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
+import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:simple_animations/stateless_animation/play_animation.dart';
 
 import '../../../../main.dart';
@@ -52,8 +52,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     child: const Text('ストップ')),
                 const SizedBox(width: 20),
                 ElevatedButton(
-                    onPressed: () =>
-                        ref.read(timerTKState.notifier).resume(ref.read),
+                    onPressed: ref.read(timerTKState.notifier).resume,
                     child: const Text('再開')),
               ],
             )

@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
+import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/pref.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/routes/splash.dart';
-
-import 'helper/notification.dart';
-import 'helper/plugin/let_log/let_log.dart';
-import 'helper/pref.dart';
-import 'helper/theme.dart';
 
 //global
 final globalState = StateNotifierProvider<GlobalController, GlobalState>(

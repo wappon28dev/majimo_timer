@@ -8,19 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/helper/notification.dart';
-import 'package:majimo_timer/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
-import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/helper/pref.dart';
-import 'package:majimo_timer/helper/translations.dart';
+import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/helper/config.dart';
+import 'package:majimo_timer/model/helper/notification.dart';
+import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
+import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/pref.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/alarm/timekeeping/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
 import 'package:wakelock/wakelock.dart';
-
-import '../../../helper/config.dart';
-import '../../../main.dart';
 
 class GlobalController extends StateNotifier<GlobalState> {
   GlobalController() : super(const GlobalState());
@@ -113,7 +112,8 @@ class GeneralController extends StateNotifier<GeneralState> {
       state = state.copyWith(showFAB: value);
 
   void change_current({required Duration value}) {
-    state = state.copyWith(current: value);
+    final _value = ((value.inMilliseconds) / 100).round();
+    state = state.copyWith(current: Duration(milliseconds: _value * 100));
   }
 }
 
@@ -353,8 +353,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     change_fabMode(value: 1);
   }
 
-  void resume(Reader read) {
-    // read(generalState.notifier).showFAB();
+  void resume() {
     final _target = DateTime.now().add(read(generalState).current);
     Logger.i(
         ' now     => ${DateTime.now()} \n current => ${read(generalState).current} \n target  => $_target');

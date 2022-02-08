@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
+import 'package:majimo_timer/main.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart' as p;
-import '../../../main.dart';
 import 'helpers/clock_model.dart';
 import 'helpers/spinner_text.dart';
 

@@ -1,16 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:majimo_timer/helper/notification.dart';
-import 'package:majimo_timer/helper/pref.dart';
-import 'package:majimo_timer/helper/translations.dart';
-import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/helper/notification.dart';
+import 'package:majimo_timer/model/helper/pref.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/view/setting/widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
-import '../../main.dart';
-import '../../helper/theme.dart';
-import '../setting/widget.dart';
 
 class Setting extends HookConsumerWidget {
   const Setting({Key? key}) : super(key: key);

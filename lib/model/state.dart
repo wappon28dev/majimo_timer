@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/helper/translations.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
 
 part 'state.freezed.dart';
 // part 'state.g.dart';

@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/helper/theme.dart';
-import 'package:majimo_timer/helper/translations.dart';
-import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import '../../../main.dart';
 import 'package:duration_picker/duration_picker.dart';
 

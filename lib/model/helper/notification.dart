@@ -6,11 +6,10 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart' as a;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/helper/theme.dart';
-import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
-import 'package:simple_animations/simple_animations.dart';
-import 'package:majimo_timer/helper/translations.dart';
 
 enum NotificationChannelKey { ringtone, interval, timekeeping }
 

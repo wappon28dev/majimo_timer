@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum PrefKey {

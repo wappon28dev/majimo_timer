@@ -7,10 +7,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
-import 'package:majimo_timer/helper/notification.dart';
-import 'package:majimo_timer/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
-import 'package:majimo_timer/helper/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/helper/theme.dart';
+import 'package:majimo_timer/model/helper/notification.dart';
+import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
+import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/view/routes/tutorial.dart';
 
@@ -26,6 +26,7 @@ class HomePage extends HookConsumerWidget {
 
     useEffect(() {
       GlobalController.switch_full_screen(value: false);
+      NotificationManager.initialize();
     });
 
     return MaterialApp(

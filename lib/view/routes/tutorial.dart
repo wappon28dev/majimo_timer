@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/helper/plugin/flutter_overboard-3.1.1/flutter_overboard.dart';
-import 'package:majimo_timer/helper/plugin/flutter_overboard-3.1.1/src/overboard.dart';
-import 'package:majimo_timer/helper/theme.dart';
-import 'package:majimo_timer/helper/translations.dart';
+import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/flutter_overboard.dart';
+import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/src/overboard.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 
