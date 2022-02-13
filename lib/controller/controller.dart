@@ -56,7 +56,6 @@ class GeneralController extends StateNotifier<GeneralState> {
   }
 
   void change_toastDuration({required int value}) {
-    (value == 0) ? value = 4 : null;
     state = state.copyWith(toastDuration: value);
     PrefManager.setInt(key: PrefKey.toastDuration, value: value);
     Logger.s(
@@ -110,10 +109,14 @@ class GeneralController extends StateNotifier<GeneralState> {
 
   void change_showFAB({required bool value}) =>
       state = state.copyWith(showFAB: value);
+}
 
-  void change_current({required Duration value}) {
-    final _value = ((value.inMilliseconds) / 100).round();
-    state = state.copyWith(current: Duration(milliseconds: _value * 100));
+class CurrentDurationController extends StateNotifier<CurrentDurationState> {
+  CurrentDurationController() : super(const CurrentDurationState());
+  void change({required Duration value}) {
+    // final _value = ((value.inMilliseconds) / 100).round();
+    // state = state.copyWith(current: Duration(milliseconds: _value * 100));
+    state = state.copyWith(current: value);
   }
 }
 
@@ -354,9 +357,9 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
   }
 
   void resume() {
-    final _target = DateTime.now().add(read(generalState).current);
+    final _target = DateTime.now().add(read(currentDurationState).current);
     Logger.i(
-        ' now     => ${DateTime.now()} \n current => ${read(generalState).current} \n target  => $_target');
+        ' now     => ${DateTime.now()} \n current => ${read(currentDurationState).current} \n target  => $_target');
     NotificationManager().timer_finish(target: _target);
     NotificationManager().timer_tk(target: _target);
     controller.resume();

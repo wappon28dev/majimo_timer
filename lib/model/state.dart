@@ -10,7 +10,6 @@ import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 
 part 'state.freezed.dart';
-// part 'state.g.dart';
 
 @freezed
 class GlobalState with _$GlobalState {
@@ -22,15 +21,14 @@ class GlobalState with _$GlobalState {
 @freezed
 class GeneralState with _$GeneralState {
   const GeneralState._();
-  const factory GeneralState(
-      {@Default('まじもタイマーへようこそ！') String status,
-      @Default(false) bool topToast,
-      @Default(3) int toastDuration,
-      @Default(1) double opacity,
-      @Default(false) bool showFAB,
-      @Default(Duration.zero) Duration current}) = _GeneralState;
+  const factory GeneralState({
+    @Default('まじもタイマーへようこそ！') String status,
+    @Default(false) bool topToast,
+    @Default(3) int toastDuration,
+    @Default(1) double opacity,
+    @Default(false) bool showFAB,
+  }) = _GeneralState;
 
-  // define custom getter
   String get topToast_caption => topToast ? t.top.t : t.bottom.t;
   IconData get topToast_icon =>
       topToast ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down;
@@ -38,16 +36,20 @@ class GeneralState with _$GeneralState {
 }
 
 @freezed
+class CurrentDurationState with _$CurrentDurationState {
+  const factory CurrentDurationState(
+      {@Default(Duration.zero) Duration current}) = _CurrentDurationState;
+}
+
+@freezed
 class ThemeState with _$ThemeState {
   const ThemeState._();
   const factory ThemeState({@Default(0) int theme}) = _ThemeState;
 
-  // define custom getter
   ThemeMode get theme_value => get()[0] as ThemeMode;
   String get theme_caption => get()[1] as String;
   IconData get theme_icon => get()[2] as IconData;
 
-  // get_value function
   List<dynamic> get() {
     var array = <dynamic>[]..length = 3;
     switch (theme) {
@@ -204,7 +206,6 @@ class ColorState with _$ColorState {
           begin: color_start_color(context: context, ref: ref),
           end: color_end_color(context: context, ref: ref));
 
-  // get_value function
   /// ```
   /// return array = [Color clockcolor, Color start, Color end, String path]
   /// ```
@@ -236,13 +237,11 @@ class AlarmState with _$AlarmState {
     @Default(00) int alarmMinute,
   }) = _AlarmState;
 
-  // create values
   TimeOfDay get alarm_value => TimeOfDay(hour: alarmHour, minute: alarmMinute);
   String get alarm_value_str => get_str();
   TimeOfDay get alarm_ampm => get_ampm();
   bool get alarm_is12 => alarmHour < 12;
 
-  // get_value function
   TimeOfDay get_value() => TimeOfDay(hour: alarmHour, minute: alarmMinute);
   String get_str() =>
       '${alarmHour.toString().padLeft(2, '0')}:${alarmMinute.toString().padLeft(2, '0')}';

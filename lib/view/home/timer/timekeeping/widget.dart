@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:simple_animations/stateless_animation/play_animation.dart';
@@ -35,27 +36,38 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 )),
             const SizedBox(height: 10),
             Text(
-              ref.watch(generalState).current.toString(),
+              ref.watch(currentDurationState).current.toString(),
               style: const TextStyle(
-                color: Colors.white,
                 fontFamily: 'monospace',
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                    onPressed: controller.restart, child: const Text('再スタート')),
+                const Icon(Icons.hourglass_top),
                 const SizedBox(width: 20),
-                ElevatedButton(
-                    onPressed: ref.read(timerTKState.notifier).pause,
-                    child: const Text('ストップ')),
+                Text('${ref.read(timerState).target.inMinutes}分間'),
                 const SizedBox(width: 20),
-                ElevatedButton(
-                    onPressed: ref.read(timerTKState.notifier).resume,
-                    child: const Text('再開')),
+                const Text('・'),
+                const SizedBox(width: 20),
+                const Text('00:00まで')
               ],
-            )
+            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     ElevatedButton(
+            //         onPressed: controller.restart, child: const Text('再スタート')),
+            //     const SizedBox(width: 20),
+            //     ElevatedButton(
+            //         onPressed: ref.read(timerTKState.notifier).pause,
+            //         child: const Text('ストップ')),
+            //     const SizedBox(width: 20),
+            //     ElevatedButton(
+            //         onPressed: ref.read(timerTKState.notifier).resume,
+            //         child: const Text('再開')),
+            //   ],
+            // )
           ],
         ),
       ),

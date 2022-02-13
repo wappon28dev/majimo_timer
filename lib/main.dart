@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
+import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/pref.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
@@ -14,9 +15,12 @@ import 'package:majimo_timer/view/routes/splash.dart';
 //global
 final globalState = StateNotifierProvider<GlobalController, GlobalState>(
     (ref) => GlobalController());
-
 final generalState = StateNotifierProvider<GeneralController, GeneralState>(
     (ref) => GeneralController());
+final currentDurationState = StateNotifierProvider.autoDispose<
+    CurrentDurationController,
+    CurrentDurationState>((ref) => CurrentDurationController());
+
 final themeState = StateNotifierProvider<ThemeController, ThemeState>(
     (ref) => ThemeController());
 final langState =
@@ -37,6 +41,7 @@ final timerTKState =
         (ref) => TimerTimeKeepingController(ref.read));
 
 Future<void> main() async {
+  NotificationManager.initialize();
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   runApp(EasyLocalization(
@@ -68,7 +73,6 @@ class MyApp extends HookConsumerWidget {
             darkTheme: MyTheme().darkTheme,
             themeMode: ref.read(themeState).theme_value,
             debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
             home: const Splash()));
   }
 }

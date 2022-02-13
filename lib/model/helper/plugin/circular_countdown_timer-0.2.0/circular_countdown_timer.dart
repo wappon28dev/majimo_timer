@@ -124,7 +124,6 @@ class CircularCountDownTimerState extends ConsumerState<CircularCountDownTimer>
       }
     } else {
       final duration = _controller!.duration! * _controller!.value;
-
       return _getTime(duration);
     }
   }
@@ -250,9 +249,10 @@ class CircularCountDownTimerState extends ConsumerState<CircularCountDownTimer>
   @override
   Widget build(BuildContext context) {
     Future<void>.delayed(
-        Duration.zero,
-        () => ref.read(generalState.notifier).change_current(
-            value: _controller!.duration! * _controller!.value));
+        const Duration(milliseconds: 100),
+        () => ref
+            .read(currentDurationState.notifier)
+            .change(value: _controller!.duration! * _controller!.value));
 
     return SizedBox(
       width: widget.width,

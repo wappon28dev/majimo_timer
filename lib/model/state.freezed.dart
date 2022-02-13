@@ -158,15 +158,13 @@ class _$GeneralStateTearOff {
       bool topToast = false,
       int toastDuration = 3,
       double opacity = 1,
-      bool showFAB = false,
-      Duration current = Duration.zero}) {
+      bool showFAB = false}) {
     return _GeneralState(
       status: status,
       topToast: topToast,
       toastDuration: toastDuration,
       opacity: opacity,
       showFAB: showFAB,
-      current: current,
     );
   }
 }
@@ -181,7 +179,6 @@ mixin _$GeneralState {
   int get toastDuration => throw _privateConstructorUsedError;
   double get opacity => throw _privateConstructorUsedError;
   bool get showFAB => throw _privateConstructorUsedError;
-  Duration get current => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GeneralStateCopyWith<GeneralState> get copyWith =>
@@ -198,8 +195,7 @@ abstract class $GeneralStateCopyWith<$Res> {
       bool topToast,
       int toastDuration,
       double opacity,
-      bool showFAB,
-      Duration current});
+      bool showFAB});
 }
 
 /// @nodoc
@@ -217,7 +213,6 @@ class _$GeneralStateCopyWithImpl<$Res> implements $GeneralStateCopyWith<$Res> {
     Object? toastDuration = freezed,
     Object? opacity = freezed,
     Object? showFAB = freezed,
-    Object? current = freezed,
   }) {
     return _then(_value.copyWith(
       status: status == freezed
@@ -240,10 +235,6 @@ class _$GeneralStateCopyWithImpl<$Res> implements $GeneralStateCopyWith<$Res> {
           ? _value.showFAB
           : showFAB // ignore: cast_nullable_to_non_nullable
               as bool,
-      current: current == freezed
-          ? _value.current
-          : current // ignore: cast_nullable_to_non_nullable
-              as Duration,
     ));
   }
 }
@@ -260,8 +251,7 @@ abstract class _$GeneralStateCopyWith<$Res>
       bool topToast,
       int toastDuration,
       double opacity,
-      bool showFAB,
-      Duration current});
+      bool showFAB});
 }
 
 /// @nodoc
@@ -281,7 +271,6 @@ class __$GeneralStateCopyWithImpl<$Res> extends _$GeneralStateCopyWithImpl<$Res>
     Object? toastDuration = freezed,
     Object? opacity = freezed,
     Object? showFAB = freezed,
-    Object? current = freezed,
   }) {
     return _then(_GeneralState(
       status: status == freezed
@@ -304,10 +293,6 @@ class __$GeneralStateCopyWithImpl<$Res> extends _$GeneralStateCopyWithImpl<$Res>
           ? _value.showFAB
           : showFAB // ignore: cast_nullable_to_non_nullable
               as bool,
-      current: current == freezed
-          ? _value.current
-          : current // ignore: cast_nullable_to_non_nullable
-              as Duration,
     ));
   }
 }
@@ -320,8 +305,7 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
       this.topToast = false,
       this.toastDuration = 3,
       this.opacity = 1,
-      this.showFAB = false,
-      this.current = Duration.zero})
+      this.showFAB = false})
       : super._();
 
   @JsonKey()
@@ -339,13 +323,10 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final bool showFAB;
-  @JsonKey()
-  @override
-  final Duration current;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GeneralState(status: $status, topToast: $topToast, toastDuration: $toastDuration, opacity: $opacity, showFAB: $showFAB, current: $current)';
+    return 'GeneralState(status: $status, topToast: $topToast, toastDuration: $toastDuration, opacity: $opacity, showFAB: $showFAB)';
   }
 
   @override
@@ -357,8 +338,7 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('topToast', topToast))
       ..add(DiagnosticsProperty('toastDuration', toastDuration))
       ..add(DiagnosticsProperty('opacity', opacity))
-      ..add(DiagnosticsProperty('showFAB', showFAB))
-      ..add(DiagnosticsProperty('current', current));
+      ..add(DiagnosticsProperty('showFAB', showFAB));
   }
 
   @override
@@ -371,8 +351,7 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.toastDuration, toastDuration) &&
             const DeepCollectionEquality().equals(other.opacity, opacity) &&
-            const DeepCollectionEquality().equals(other.showFAB, showFAB) &&
-            const DeepCollectionEquality().equals(other.current, current));
+            const DeepCollectionEquality().equals(other.showFAB, showFAB));
   }
 
   @override
@@ -382,8 +361,7 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(topToast),
       const DeepCollectionEquality().hash(toastDuration),
       const DeepCollectionEquality().hash(opacity),
-      const DeepCollectionEquality().hash(showFAB),
-      const DeepCollectionEquality().hash(current));
+      const DeepCollectionEquality().hash(showFAB));
 
   @JsonKey(ignore: true)
   @override
@@ -397,8 +375,7 @@ abstract class _GeneralState extends GeneralState {
       bool topToast,
       int toastDuration,
       double opacity,
-      bool showFAB,
-      Duration current}) = _$_GeneralState;
+      bool showFAB}) = _$_GeneralState;
   const _GeneralState._() : super._();
 
   @override
@@ -412,10 +389,150 @@ abstract class _GeneralState extends GeneralState {
   @override
   bool get showFAB;
   @override
+  @JsonKey(ignore: true)
+  _$GeneralStateCopyWith<_GeneralState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$CurrentDurationStateTearOff {
+  const _$CurrentDurationStateTearOff();
+
+  _CurrentDurationState call({Duration current = Duration.zero}) {
+    return _CurrentDurationState(
+      current: current,
+    );
+  }
+}
+
+/// @nodoc
+const $CurrentDurationState = _$CurrentDurationStateTearOff();
+
+/// @nodoc
+mixin _$CurrentDurationState {
+  Duration get current => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CurrentDurationStateCopyWith<CurrentDurationState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CurrentDurationStateCopyWith<$Res> {
+  factory $CurrentDurationStateCopyWith(CurrentDurationState value,
+          $Res Function(CurrentDurationState) then) =
+      _$CurrentDurationStateCopyWithImpl<$Res>;
+  $Res call({Duration current});
+}
+
+/// @nodoc
+class _$CurrentDurationStateCopyWithImpl<$Res>
+    implements $CurrentDurationStateCopyWith<$Res> {
+  _$CurrentDurationStateCopyWithImpl(this._value, this._then);
+
+  final CurrentDurationState _value;
+  // ignore: unused_field
+  final $Res Function(CurrentDurationState) _then;
+
+  @override
+  $Res call({
+    Object? current = freezed,
+  }) {
+    return _then(_value.copyWith(
+      current: current == freezed
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as Duration,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$CurrentDurationStateCopyWith<$Res>
+    implements $CurrentDurationStateCopyWith<$Res> {
+  factory _$CurrentDurationStateCopyWith(_CurrentDurationState value,
+          $Res Function(_CurrentDurationState) then) =
+      __$CurrentDurationStateCopyWithImpl<$Res>;
+  @override
+  $Res call({Duration current});
+}
+
+/// @nodoc
+class __$CurrentDurationStateCopyWithImpl<$Res>
+    extends _$CurrentDurationStateCopyWithImpl<$Res>
+    implements _$CurrentDurationStateCopyWith<$Res> {
+  __$CurrentDurationStateCopyWithImpl(
+      _CurrentDurationState _value, $Res Function(_CurrentDurationState) _then)
+      : super(_value, (v) => _then(v as _CurrentDurationState));
+
+  @override
+  _CurrentDurationState get _value => super._value as _CurrentDurationState;
+
+  @override
+  $Res call({
+    Object? current = freezed,
+  }) {
+    return _then(_CurrentDurationState(
+      current: current == freezed
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as Duration,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CurrentDurationState
+    with DiagnosticableTreeMixin
+    implements _CurrentDurationState {
+  const _$_CurrentDurationState({this.current = Duration.zero});
+
+  @JsonKey()
+  @override
+  final Duration current;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'CurrentDurationState(current: $current)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CurrentDurationState'))
+      ..add(DiagnosticsProperty('current', current));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _CurrentDurationState &&
+            const DeepCollectionEquality().equals(other.current, current));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(current));
+
+  @JsonKey(ignore: true)
+  @override
+  _$CurrentDurationStateCopyWith<_CurrentDurationState> get copyWith =>
+      __$CurrentDurationStateCopyWithImpl<_CurrentDurationState>(
+          this, _$identity);
+}
+
+abstract class _CurrentDurationState implements CurrentDurationState {
+  const factory _CurrentDurationState({Duration current}) =
+      _$_CurrentDurationState;
+
+  @override
   Duration get current;
   @override
   @JsonKey(ignore: true)
-  _$GeneralStateCopyWith<_GeneralState> get copyWith =>
+  _$CurrentDurationStateCopyWith<_CurrentDurationState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

@@ -37,28 +37,25 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             Text(
               'target  => ${ref.read(alarmTKState).duration.toString()}',
               style: const TextStyle(
-                color: Colors.white,
                 fontFamily: 'monospace',
               ),
             ),
             Text(
-              'current => ${ref.read(generalState).current}',
+              'current => ${ref.watch(currentDurationState).current}',
               style: const TextStyle(
-                color: Colors.white,
                 fontFamily: 'monospace',
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                    onPressed: controller.restart, child: const Text('再スタート')),
+                const Icon(Icons.alarm),
                 const SizedBox(width: 20),
-                ElevatedButton(
-                    onPressed: controller.pause, child: const Text('ストップ')),
+                Text('${ref.read(alarmState).alarm_value_str}まで'),
                 const SizedBox(width: 20),
-                ElevatedButton(
-                    onPressed: controller.resume, child: const Text('再開')),
+                const Text('・'),
+                const SizedBox(width: 20),
+                Text('あと${ref.watch(currentDurationState).current.inMinutes}分')
               ],
             )
           ],
