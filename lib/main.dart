@@ -30,7 +30,7 @@ final clockState = StateNotifierProvider<ClockController, ClockState>(
 final colorState = StateNotifierProvider<ColorController, ColorState>(
     (ref) => ColorController());
 final alarmState = StateNotifierProvider<AlarmController, AlarmState>(
-    (ref) => AlarmController());
+    (ref) => AlarmController(ref.read));
 final alarmTKState =
     StateNotifierProvider<AlarmTimeKeepingController, AlarmTimeKeepingState>(
         (ref) => AlarmTimeKeepingController(ref.read));

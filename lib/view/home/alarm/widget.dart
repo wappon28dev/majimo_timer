@@ -9,10 +9,8 @@ import 'package:majimo_timer/view/components/modal.dart';
 import '../../../main.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
-  final alarmstate = ref.read(alarmState);
-
   Widget content() {
-    final current = ref.watch(alarmState).alarm_value;
+    final current = ref.watch(alarmState).targetTime;
     Logger.i('- from majimo_timer/lib/view/home/alarm/widget.dart \n' +
         ' >> current value => ' +
         current.toString());
@@ -21,7 +19,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           const SizedBox(height: 50),
           GestureDetector(
-            child: Text(alarmstate.alarm_value_str,
+            child: Text(ref.read(alarmState.notifier).targetTimeStr,
                 style: const TextStyle(
                     fontSize: 70, color: Colors.white, fontFamily: 'M-plus-B')),
             onTap: () async {
@@ -30,7 +28,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 initialTime: current,
               );
               if (result != null && result != current) {
-                ref.read(alarmState.notifier).change(value: result);
+                ref.read(alarmState.notifier).targetTimeChange(value: result);
                 Logger.i(
                     '- from majimo_timer/lib/view/home/alarm/widget.dart \n' +
                         ' >> receive result => ' +

@@ -50,7 +50,6 @@ dependencies:
   slide_digital_clock: ^1.0.2
   url_launcher: ^6.0.12
   wakelock: ^0.5.6
-  workmanager: ^0.4.1
 
 dev_dependencies:
   build_runner: ^2.1.7

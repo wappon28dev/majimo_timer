@@ -46,11 +46,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               children: [
                 const Icon(Icons.hourglass_top),
                 const SizedBox(width: 20),
-                Text('${ref.read(timerState).target.inMinutes}分間'),
+                Text('${ref.read(timerState).targetDuration.inMinutes}分間'),
                 const SizedBox(width: 20),
                 const Text('・'),
                 const SizedBox(width: 20),
-                const Text('00:00まで')
+                Text(ref.read(timerTKState).targetTime.toString()),
               ],
             ),
             // Row(
@@ -120,7 +120,7 @@ Widget count({required BuildContext context, required WidgetRef ref}) {
   return Padding(
       padding: const EdgeInsets.all(20),
       child: CircularCountDownTimer(
-        duration: ref.read(timerState).target.inSeconds,
+        duration: ref.read(timerState).targetDuration.inSeconds,
         initialDuration: 0,
         controller: ref.read(timerTKState.notifier).controller,
         width: MediaQuery.of(context).size.width / 2,

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -42,6 +44,7 @@ class TimerPage extends HookConsumerWidget {
                                         builder: (context) =>
                                             const TimerTimeKeepingPage()),
                                     (_) => false);
+
                                 ref.read(timerTKState.notifier).start();
                                 ref.read(generalState.notifier).showFAB();
                               },

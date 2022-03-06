@@ -7,8 +7,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
 
 part 'log_widget.dart';
 

@@ -35,7 +35,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 )),
             const SizedBox(height: 10),
             Text(
-              'target  => ${ref.read(alarmTKState).duration.toString()}',
+              'target  => ${ref.read(alarmTKState).targetDuration.toString()}',
               style: const TextStyle(
                 fontFamily: 'monospace',
               ),
@@ -51,7 +51,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               children: [
                 const Icon(Icons.alarm),
                 const SizedBox(width: 20),
-                Text('${ref.read(alarmState).alarm_value_str}まで'),
+                Text('${ref.read(alarmState.notifier).targetTimeStr}まで'),
                 const SizedBox(width: 20),
                 const Text('・'),
                 const SizedBox(width: 20),
@@ -118,7 +118,7 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
 
 Widget percent({required WidgetRef ref, required double width}) {
   final alarmTKstate = ref.read(alarmTKState);
-  final duration = alarmTKstate.duration;
+  final duration = alarmTKstate.targetDuration;
 
   return CircularCountDownTimer(
     duration: duration.inSeconds,

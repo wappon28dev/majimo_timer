@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:dart_date/src/dart_date.dart';
-import 'package:easy_localization/src/public_ext.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:fullscreen/fullscreen.dart';
@@ -17,7 +17,6 @@ import 'package:majimo_timer/model/helper/pref.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/alarm/timekeeping/body.dart';
-import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -201,7 +200,8 @@ class ColorController extends StateNotifier<ColorState> {
 }
 
 class AlarmController extends StateNotifier<AlarmState> {
-  AlarmController() : super(const AlarmState());
+  AlarmController(this.read) : super(const AlarmState());
+  final Reader read;
 
   void push({required BuildContext context, required WidgetRef ref}) {
     Navigator.pushAndRemoveUntil<void>(
@@ -236,39 +236,40 @@ class AlarmController extends StateNotifier<AlarmState> {
                 style: TextStyle(color: Colors.white))));
   }
 
-  // change_value function
   /// set internal time
   ///
   ///   ex.) 5:42 => 5:50
   void internal() {
-    final now = DateTime.now();
+    final _now = DateTime.now();
+    final _tar = state.targetTime;
+    final _minute = (_tar.minute / 10).ceil() * 10;
+    state =
+        state.copyWith(targetTime: TimeOfDay(hour: _tar.hour, minute: _minute));
 
-    // in case n:00, make into n:10 forcedly.
-    if (now.minute == 00) {
-      state = state.copyWith(alarmMinute: state.alarmMinute + 1);
-    }
-
-    final minute = (now.minute / 10).ceil() * 10;
-
-    // in case n:53, it'll get n:60. So, make into n+1:00 forcedly.
-    if (minute == 60) {
-      state = state.copyWith(alarmHour: now.hour + 1);
-      state = state.copyWith(alarmMinute: 0);
-    } else {
-      state = state.copyWith(alarmHour: now.hour);
-      state = state.copyWith(alarmMinute: minute);
-    }
     Logger.s('''
     - from AlarmState
-    > now = ${now.toString()}
-      >> save int alarmHour   =  ${state.alarmHour}
-      >> save int alarmMinute =  ${state.alarmMinute}
+    >   DateTime.now()      =  ${_now.toString()}
+    >> save int alarmHour   =  ${state.targetTime}
     ''');
   }
 
-  void change({required TimeOfDay value}) {
-    state = state.copyWith(alarmHour: value.hour);
-    state = state.copyWith(alarmMinute: value.minute);
+  void targetTimeChange({required TimeOfDay value}) =>
+      state = state.copyWith(targetTime: value);
+
+  String get targetTimeStr {
+    if (read(clockState).is24) {
+      final now = DateTime.now();
+      final dt = DateTime(now.year, now.month, now.day, state.targetTime.hour,
+          state.targetTime.minute);
+      final format = DateFormat.jm();
+      return format.format(dt);
+    } else {
+      final now = DateTime.now();
+      final dt = DateTime(now.year, now.month, now.day, state.targetTime.hour,
+          state.targetTime.minute);
+      final format = DateFormat.jm();
+      return format.format(dt);
+    }
   }
 }
 
@@ -279,10 +280,9 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
   final controller = CountDownController();
 
   void start() {
-    final _tar = calculate_duration(
-        hour: read(alarmState).alarmHour, minute: read(alarmState).alarmMinute);
+    final _tar = calculateDuration(target: read(alarmState).targetTime);
     final _duration = DateTimeRange(start: DateTime.now(), end: _tar).duration;
-    state = state.copyWith(duration: _duration);
+    state = state.copyWith(targetDuration: _duration);
     Logger.i('tar => $_tar');
     Logger.i('duration => $_duration');
     status();
@@ -293,25 +293,25 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
 
   Future<void> status() async {
     late String duration;
-    duration = '約 ${state.duration.inMinutes} 分間';
-    if (state.duration.inSeconds < 60) {
+    duration = '約 ${state.targetDuration.inMinutes} 分間';
+    if (state.targetDuration.inSeconds < 60) {
       duration = '１分未満';
     }
-    if (state.duration.inMinutes > 60) {
-      duration = '約 ${state.duration.inHours} 時間';
+    if (state.targetDuration.inMinutes > 60) {
+      duration = '約 ${state.targetDuration.inHours} 時間';
     }
     await read(generalState.notifier).change_status(text: '終了まで $duration です');
     await Future<void>.delayed(const Duration(seconds: 5));
     await read(generalState.notifier).change_status(text: 'アラームモード');
   }
 
-  DateTime calculate_duration({required int hour, required int minute}) {
+  DateTime calculateDuration({required TimeOfDay target}) {
     final _now = DateTime.now();
-    final _val = TimeOfDay(hour: hour, minute: minute);
+    final _tar = target;
     final _now_int = (_now.hour * 3600) + (_now.minute * 60) + (_now.second);
-    final _val_int = (_val.hour * 3600) + (_val.minute * 60);
+    final _val_int = (_tar.hour * 3600) + (_tar.minute * 60);
     final _day = (_now_int < _val_int) ? _now.day : _now.day + 1;
-    return DateTime(_now.year, _now.month, _day, _val.hour, _val.minute);
+    return DateTime(_now.year, _now.month, _day, _tar.hour, _tar.minute);
   }
 }
 
@@ -319,13 +319,13 @@ class TimerController extends StateNotifier<TimerState> {
   TimerController() : super(const TimerState());
 
   void change_target({required int value}) {
-    state = state.copyWith(target: Duration(minutes: value));
+    state = state.copyWith(targetDuration: Duration(minutes: value));
     PrefManager.setInt(key: PrefKey.timerTarget, value: value);
     Logger.s('- from TimerState \n >> save int timerTarget = $value');
   }
 
   void change_interval({required int value}) {
-    state = state.copyWith(interval: Duration(minutes: value));
+    state = state.copyWith(targetIntervalDuration: Duration(minutes: value));
     PrefManager.setInt(key: PrefKey.timerInterval, value: value);
     Logger.s('- from TimerState \n >> save int timerInterval = $value');
   }
@@ -339,9 +339,11 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
 
   void start() {
     change_fabMode(value: 0);
-    final _target = DateTime.now().add(read(timerState).target);
+    final _target = DateTime.now().add(read(timerState).targetDuration);
+    state = state.copyWith(
+        targetTime: TimeOfDay(hour: _target.hour, minute: _target.minute));
     Logger.i(
-        ' now     => ${DateTime.now()} \n duration  => ${read(timerState).target} \n target  => $_target');
+        ' now     => ${DateTime.now()} \n duration  => ${read(timerState).targetDuration} \n target  => $_target');
     NotificationManager().timer_finish(target: _target);
     NotificationManager().timer_tk(target: _target);
     // controller.start();
@@ -365,4 +367,15 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     controller.resume();
     change_fabMode(value: 0);
   }
+
+  TimeOfDay get startedTime {
+    final _now = DateTime.now();
+    final _tar = DateTime(_now.year, _now.month, _now.day,
+        state.targetTime.hour, state.targetTime.minute);
+    final _sta = _tar.add(read(timerState).targetDuration * -1);
+    return TimeOfDay(hour: _sta.hour, minute: _sta.minute);
+  }
+
+  String get startedTimeStr => '${startedTime.hour}:'
+      '${startedTime.minute}';
 }

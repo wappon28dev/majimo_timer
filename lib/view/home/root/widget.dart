@@ -77,8 +77,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               break;
             case 'timer':
               context.pushTransparentRoute(const TimerPage());
-              ref.read(generalState.notifier).showFAB();
-
+              if (ref.read(timerState).targetDuration != Duration.zero) {
+                ref.read(generalState.notifier).showFAB();
+              }
               break;
             case 'goal':
               context.pushTransparentRoute(const GoalPage());

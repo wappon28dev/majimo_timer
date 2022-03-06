@@ -109,7 +109,7 @@ Future<dynamic> number_pad(
   ];
 
   final _pad = <Widget>[
-    Text(ref.read(alarmState).alarm_value_str,
+    Text(ref.read(alarmState).targetTime.toString(),
         style: const TextStyle(
             fontSize: 70, color: Colors.white, fontFamily: 'M-plus-B')),
     SizedBox(

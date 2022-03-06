@@ -2,6 +2,7 @@
 
 // ignore: implementation_imports
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -232,28 +233,29 @@ class ColorState with _$ColorState {
 @freezed
 class AlarmState with _$AlarmState {
   const AlarmState._();
-  const factory AlarmState({
-    @Default(12) int alarmHour,
-    @Default(00) int alarmMinute,
-  }) = _AlarmState;
+  const factory AlarmState(
+          {@Default(TimeOfDay(hour: 12, minute: 00)) TimeOfDay targetTime}) =
+      _AlarmState;
 
-  TimeOfDay get alarm_value => TimeOfDay(hour: alarmHour, minute: alarmMinute);
-  String get alarm_value_str => get_str();
-  TimeOfDay get alarm_ampm => get_ampm();
-  bool get alarm_is12 => alarmHour < 12;
+  // String get targetTimeStr()
 
-  TimeOfDay get_value() => TimeOfDay(hour: alarmHour, minute: alarmMinute);
-  String get_str() =>
-      '${alarmHour.toString().padLeft(2, '0')}:${alarmMinute.toString().padLeft(2, '0')}';
-  TimeOfDay get_ampm() => alarm_value.replacing(hour: alarm_value.hourOfPeriod);
+  // String get alarm_value_str => get_str();
+  // TimeOfDay get alarm_ampm => get_ampm();
+  // bool get alarm_is12 => alarmHour < 12;
+
+  // TimeOfDay get_value() => TimeOfDay(hour: alarmHour, minute: alarmMinute);
+  // String get_str() =>
+  //     '${alarmHour.toString().padLeft(2, '0')}:${alarmMinute.toString().padLeft(2, '0')}';
+  // TimeOfDay get_ampm() => alarm_value.replacing(hour: alarm_value.hourOfPeriod);
 }
 
 @freezed
 class AlarmTimeKeepingState with _$AlarmTimeKeepingState {
   const AlarmTimeKeepingState._();
   const factory AlarmTimeKeepingState({
-    @Default(Duration(seconds: 1)) Duration duration,
-    @Default('') String current,
+    @Default(Duration(seconds: 1)) Duration targetDuration,
+    @Default(TimeOfDay(hour: 12, minute: 00)) TimeOfDay startedTime,
+    @Default('') String headerText,
   }) = _AlarmTimeKeepingState;
 }
 
@@ -261,18 +263,24 @@ class AlarmTimeKeepingState with _$AlarmTimeKeepingState {
 class TimerState with _$TimerState {
   const TimerState._();
   const factory TimerState(
-      {@Default(Duration(minutes: 1)) Duration target,
-      @Default(Duration(minutes: 1)) Duration interval,
-      @Default(false) bool isInterval}) = _TimerState;
+      {@Default(Duration(minutes: 1)) Duration targetDuration,
+      @Default(Duration(minutes: 1)) Duration targetIntervalDuration,
+      @Default(false) bool isInterval,
+      @Default(0) int intervalLoop}) = _TimerState;
 
-  String get target_str => '${target.inHours.toString().padLeft(2, '0')}h:'
-      '${target.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
+  String get targetDurationStr =>
+      '${targetDuration.inHours.toString().padLeft(2, '0')}h:'
+      '${targetDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
 }
 
 @freezed
 class TimerTimeKeepingState with _$TimerTimeKeepingState {
   const TimerTimeKeepingState._();
-  const factory TimerTimeKeepingState({
-    @Default(0) int fabMode,
-  }) = _TimerTimeKeepingState;
+  const factory TimerTimeKeepingState(
+      {@Default(0)
+          int fabMode,
+      @Default(TimeOfDay(hour: 12, minute: 0))
+          TimeOfDay targetTime,
+      @Default(TimeOfDay(hour: 12, minute: 30))
+          TimeOfDay targetIntervalTime}) = _TimerTimeKeepingState;
 }
