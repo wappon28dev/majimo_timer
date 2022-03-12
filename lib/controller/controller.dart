@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars, implementation_imports
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dart_date/src/dart_date.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -29,16 +30,22 @@ class GlobalController extends StateNotifier<GlobalState> {
   }
 
   static void switch_full_screen({required bool value}) {
-    if (value) {
-      FlutterWindowManager.clearFlags(
-          FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
-      FlutterWindowManager.clearFlags(
-          FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
-    } else {
-      FlutterWindowManager.clearFlags(
-          FlutterWindowManager.FLAG_DISMISS_KEYGUARD);
-      FlutterWindowManager.clearFlags(
-          FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED);
+    if (Platform.isAndroid) {
+      if (value) {
+        FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_DISMISS_KEYGUARD,
+        );
+        FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED,
+        );
+      } else {
+        FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_DISMISS_KEYGUARD,
+        );
+        FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_SHOW_WHEN_LOCKED,
+        );
+      }
     }
   }
 }
@@ -51,14 +58,16 @@ class GeneralController extends StateNotifier<GeneralState> {
     state = state.copyWith(topToast: value);
     PrefManager.setBool(key: PrefKey.topToast, value: value);
     Logger.s(
-        '- from GeneralState \n >> save bool toptoast = ${state.topToast}');
+      '- from GeneralState \n >> save bool toptoast = ${state.topToast}',
+    );
   }
 
   void change_toastDuration({required int value}) {
     state = state.copyWith(toastDuration: value);
     PrefManager.setInt(key: PrefKey.toastDuration, value: value);
     Logger.s(
-        '- from GeneralState \n >> save int toastDuration = ${state.toastDuration}');
+      '- from GeneralState \n >> save int toastDuration = ${state.toastDuration}',
+    );
   }
 
   Future<void> home() async {
@@ -66,7 +75,7 @@ class GeneralController extends StateNotifier<GeneralState> {
     change_showFAB(value: true);
     await Wakelock.disable();
     state = state.copyWith(opacity: 1);
-    state = state.copyWith(status: 'まじもタイマーへようこそ！');
+    state = state.copyWith(status: t.greetings.t);
 
     await Future<void>.delayed(const Duration(seconds: 2));
     await change_status(text: DateTime.now().format('yMMMMEEEEd', t.lang.t));
@@ -78,7 +87,9 @@ class GeneralController extends StateNotifier<GeneralState> {
     await change_status(text: '置き時計モード');
     await Future<void>.delayed(const Duration(seconds: 3));
     await change_status(
-        text: '${DateTime.now().format('yMMMMEEEEd', t.lang.t)}・$version');
+      text:
+          '${DateTime.now().format('yMMMMEEEEd', t.lang.t)}・${AppDataStore().versionStr}',
+    );
   }
 
   Future<void> change_status({required String text}) async {
@@ -96,8 +107,11 @@ class GeneralController extends StateNotifier<GeneralState> {
       );
 
   void push_replace({required BuildContext context, required Widget page}) {
-    Navigator.pushAndRemoveUntil<void>(context,
-        MaterialPageRoute<void>(builder: (context) => page), (_) => false);
+    Navigator.pushAndRemoveUntil<void>(
+      context,
+      MaterialPageRoute<void>(builder: (context) => page),
+      (_) => false,
+    );
   }
 
   Future<void> showFAB() async {
@@ -205,10 +219,12 @@ class AlarmController extends StateNotifier<AlarmState> {
 
   void push({required BuildContext context, required WidgetRef ref}) {
     Navigator.pushAndRemoveUntil<void>(
-        context,
-        MaterialPageRoute<void>(
-            builder: (context) => const AlarmTimeKeepingPage()),
-        (_) => false);
+      context,
+      MaterialPageRoute<void>(
+        builder: (context) => const AlarmTimeKeepingPage(),
+      ),
+      (_) => false,
+    );
 
     ref.read(generalState.notifier).showFAB();
     ref.read(alarmTKState.notifier).start();
@@ -224,33 +240,39 @@ class AlarmController extends StateNotifier<AlarmState> {
     //       child: Center(child: Text('test widget'))),
     // ));
     RippleBackdropAnimatePage.show(
-        context: context,
-        childFade: true,
-        duration: 300,
-        blurRadius: 20,
-        bottomHeight: 110,
-        child: GestureDetector(
-            behavior: HitTestBehavior.deferToChild,
-            // onTap: () => Navigator.of(context).pop(),
-            child: const Text('test widget',
-                style: TextStyle(color: Colors.white))));
+      context: context,
+      childFade: true,
+      duration: 300,
+      blurRadius: 20,
+      bottomHeight: 110,
+      child: GestureDetector(
+        behavior: HitTestBehavior.deferToChild,
+        // onTap: () => Navigator.of(context).pop(),
+        child: const Text(
+          'test widget',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
   }
 
   /// set internal time
   ///
   ///   ex.) 5:42 => 5:50
   void internal() {
-    final _now = DateTime.now();
-    final _tar = state.targetTime;
-    final _minute = (_tar.minute / 10).ceil() * 10;
+    final now = DateTime.now();
+    final tar = state.targetTime;
+    final minute = (tar.minute / 10).ceil() * 10;
     state =
-        state.copyWith(targetTime: TimeOfDay(hour: _tar.hour, minute: _minute));
+        state.copyWith(targetTime: TimeOfDay(hour: tar.hour, minute: minute));
 
-    Logger.s('''
+    Logger.s(
+      '''
     - from AlarmState
-    >   DateTime.now()      =  ${_now.toString()}
+    >   DateTime.now()      =  ${now.toString()}
     >> save int alarmHour   =  ${state.targetTime}
-    ''');
+    ''',
+    );
   }
 
   void targetTimeChange({required TimeOfDay value}) =>
@@ -259,14 +281,24 @@ class AlarmController extends StateNotifier<AlarmState> {
   String get targetTimeStr {
     if (read(clockState).is24) {
       final now = DateTime.now();
-      final dt = DateTime(now.year, now.month, now.day, state.targetTime.hour,
-          state.targetTime.minute);
+      final dt = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        state.targetTime.hour,
+        state.targetTime.minute,
+      );
       final format = DateFormat.jm();
       return format.format(dt);
     } else {
       final now = DateTime.now();
-      final dt = DateTime(now.year, now.month, now.day, state.targetTime.hour,
-          state.targetTime.minute);
+      final dt = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        state.targetTime.hour,
+        state.targetTime.minute,
+      );
       final format = DateFormat.jm();
       return format.format(dt);
     }
@@ -280,14 +312,14 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
   final controller = CountDownController();
 
   void start() {
-    final _tar = calculateDuration(target: read(alarmState).targetTime);
-    final _duration = DateTimeRange(start: DateTime.now(), end: _tar).duration;
-    state = state.copyWith(targetDuration: _duration);
-    Logger.i('tar => $_tar');
-    Logger.i('duration => $_duration');
+    final tar = calculateDuration(target: read(alarmState).targetTime);
+    final duration = DateTimeRange(start: DateTime.now(), end: tar).duration;
+    state = state.copyWith(targetDuration: duration);
+    Logger.i('tar => $tar');
+    Logger.i('duration => $duration');
     status();
-    NotificationManager().alarm_finish(target: _tar);
-    NotificationManager().alarm_tk(target: _tar);
+    NotificationManager().alarmFinish(target: tar);
+    NotificationManager().alarmTimeKeeping(target: tar);
     GlobalController.switch_full_screen(value: false);
   }
 
@@ -306,12 +338,12 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
   }
 
   DateTime calculateDuration({required TimeOfDay target}) {
-    final _now = DateTime.now();
-    final _tar = target;
-    final _now_int = (_now.hour * 3600) + (_now.minute * 60) + (_now.second);
-    final _val_int = (_tar.hour * 3600) + (_tar.minute * 60);
-    final _day = (_now_int < _val_int) ? _now.day : _now.day + 1;
-    return DateTime(_now.year, _now.month, _day, _tar.hour, _tar.minute);
+    final now = DateTime.now();
+    final tar = target;
+    final now_int = (now.hour * 3600) + (now.minute * 60) + (now.second);
+    final val_int = (tar.hour * 3600) + (tar.minute * 60);
+    final day = (now_int < val_int) ? now.day : now.day + 1;
+    return DateTime(now.year, now.month, day, tar.hour, tar.minute);
   }
 }
 
@@ -339,13 +371,15 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
 
   void start() {
     change_fabMode(value: 0);
-    final _target = DateTime.now().add(read(timerState).targetDuration);
+    final target = DateTime.now().add(read(timerState).targetDuration);
     state = state.copyWith(
-        targetTime: TimeOfDay(hour: _target.hour, minute: _target.minute));
+      targetTime: TimeOfDay(hour: target.hour, minute: target.minute),
+    );
     Logger.i(
-        ' now     => ${DateTime.now()} \n duration  => ${read(timerState).targetDuration} \n target  => $_target');
-    NotificationManager().timer_finish(target: _target);
-    NotificationManager().timer_tk(target: _target);
+      ' now     => ${DateTime.now()} \n duration  => ${read(timerState).targetDuration} \n target  => $target',
+    );
+    NotificationManager().timerFinish(target: target);
+    NotificationManager().timerTimeKeeping(target: target);
     // controller.start();
   }
 
@@ -354,26 +388,32 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
 
   void pause() {
     controller.pause();
-    NotificationManager().cancel_notification();
+    NotificationManager().cancelAllNotifications();
     change_fabMode(value: 1);
   }
 
   void resume() {
-    final _target = DateTime.now().add(read(currentDurationState).current);
+    final target = DateTime.now().add(read(currentDurationState).current);
     Logger.i(
-        ' now     => ${DateTime.now()} \n current => ${read(currentDurationState).current} \n target  => $_target');
-    NotificationManager().timer_finish(target: _target);
-    NotificationManager().timer_tk(target: _target);
+      ' now     => ${DateTime.now()} \n current => ${read(currentDurationState).current} \n target  => $target',
+    );
+    NotificationManager().timerFinish(target: target);
+    NotificationManager().timerTimeKeeping(target: target);
     controller.resume();
     change_fabMode(value: 0);
   }
 
   TimeOfDay get startedTime {
-    final _now = DateTime.now();
-    final _tar = DateTime(_now.year, _now.month, _now.day,
-        state.targetTime.hour, state.targetTime.minute);
-    final _sta = _tar.add(read(timerState).targetDuration * -1);
-    return TimeOfDay(hour: _sta.hour, minute: _sta.minute);
+    final now = DateTime.now();
+    final tar = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      state.targetTime.hour,
+      state.targetTime.minute,
+    );
+    final sta = tar.add(read(timerState).targetDuration * -1);
+    return TimeOfDay(hour: sta.hour, minute: sta.minute);
   }
 
   String get startedTimeStr => '${startedTime.hour}:'

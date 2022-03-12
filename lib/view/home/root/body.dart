@@ -26,7 +26,6 @@ class HomePage extends HookConsumerWidget {
 
     useEffect(() {
       GlobalController.switch_full_screen(value: false);
-      NotificationManager.initialize();
     });
 
     return MaterialApp(

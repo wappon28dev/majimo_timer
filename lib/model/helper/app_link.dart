@@ -4,9 +4,9 @@ import 'package:app_links/app_links.dart';
 import 'package:dismissible_page/src/dismissible_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
@@ -19,10 +19,12 @@ late AppLinks _appLinks;
 class LinkManager {
   void initDeepLinks(WidgetRef ref, BuildContext context) async {
     //receive
-    _appLinks = AppLinks(onAppLink: (Uri uri, String stringUri) async {
-      receiver(stringUri, context, ref);
-      Logger.i(' >> not late => $uri');
-    });
+    _appLinks = AppLinks(
+      onAppLink: (Uri uri, String stringUri) async {
+        receiver(stringUri, context, ref);
+        Logger.i(' >> not late => $uri');
+      },
+    );
 
     final appLink = await _appLinks.getInitialAppLink();
     if (appLink != null && appLink.hasFragment) {
@@ -86,6 +88,7 @@ class LinkManager {
     }
   }
 
+  // ignore: require_trailing_commas
   void initQuickAction(
       {required BuildContext context, required WidgetRef ref}) {
     const quickActions = QuickActions();
@@ -96,15 +99,20 @@ class LinkManager {
     // ignore: cascade_invocations
     quickActions.setShortcutItems(<ShortcutItem>[
       ShortcutItem(
-          type: 'g',
-          localizedTitle: t.goal.t,
-          icon: 'ic_shortcut_access_alarm'),
+        type: 'g',
+        localizedTitle: t.goal.t,
+        icon: 'ic_shortcut_access_alarm',
+      ),
       ShortcutItem(
-          type: 't',
-          localizedTitle: t.timer.t,
-          icon: 'ic_shortcut_hourglass_top'),
+        type: 't',
+        localizedTitle: t.timer.t,
+        icon: 'ic_shortcut_hourglass_top',
+      ),
       ShortcutItem(
-          type: 'a', localizedTitle: t.alarm.t, icon: 'ic_shortcut_flag'),
+        type: 'a',
+        localizedTitle: t.alarm.t,
+        icon: 'ic_shortcut_flag',
+      ),
     ]);
   }
 }

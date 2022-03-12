@@ -1,16 +1,17 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, lines_longer_than_80_chars
 
 library circular_countdown_timer;
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/main.dart';
 import 'custom_timer_painter.dart';
 
 /// Create a Circular Countdown Timer.
 class CircularCountDownTimer extends ConsumerStatefulWidget {
   /// Key for Countdown Timer.
+  @override
+  // ignore: overridden_fields
   final Key? key;
 
   /// Filling Color for Countdown Widget.
@@ -76,7 +77,8 @@ class CircularCountDownTimer extends ConsumerStatefulWidget {
   /// Handles the timer start.
   final bool autoStart;
 
-  CircularCountDownTimer(
+  // ignore: sort_constructors_first, require_trailing_commas
+  const CircularCountDownTimer(
       {required this.width,
       required this.height,
       required this.duration,
@@ -249,54 +251,57 @@ class CircularCountDownTimerState extends ConsumerState<CircularCountDownTimer>
   @override
   Widget build(BuildContext context) {
     Future<void>.delayed(
-        const Duration(milliseconds: 100),
-        () => ref
-            .read(currentDurationState.notifier)
-            .change(value: _controller!.duration! * _controller!.value));
+      const Duration(milliseconds: 100),
+      () => ref
+          .read(currentDurationState.notifier)
+          .change(value: _controller!.duration! * _controller!.value),
+    );
 
     return SizedBox(
       width: widget.width,
       height: widget.height,
       child: AnimatedBuilder(
-          animation: _controller!,
-          builder: (context, child) {
-            return Align(
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: Stack(
-                  children: <Widget>[
-                    Positioned.fill(
-                      child: CustomPaint(
-                        painter: CustomTimerPainter(
-                            animation: _countDownAnimation ?? _controller,
-                            fillColor: widget.fillColor,
-                            fillGradient: widget.fillGradient,
-                            ringColor: widget.ringColor,
-                            ringGradient: widget.ringGradient,
-                            strokeWidth: widget.strokeWidth,
-                            strokeCap: widget.strokeCap,
-                            backgroundColor: widget.backgroundColor,
-                            backgroundGradient: widget.backgroundGradient),
+        animation: _controller!,
+        builder: (context, child) {
+          return Align(
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: Stack(
+                children: <Widget>[
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter: CustomTimerPainter(
+                        animation: _countDownAnimation ?? _controller,
+                        fillColor: widget.fillColor,
+                        fillGradient: widget.fillGradient,
+                        ringColor: widget.ringColor,
+                        ringGradient: widget.ringGradient,
+                        strokeWidth: widget.strokeWidth,
+                        strokeCap: widget.strokeCap,
+                        backgroundColor: widget.backgroundColor,
+                        backgroundGradient: widget.backgroundGradient,
                       ),
                     ),
-                    widget.isTimerTextShown
-                        ? Align(
-                            alignment: FractionalOffset.center,
-                            child: Text(
-                              time,
-                              style: widget.textStyle ??
-                                  const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                            ),
-                          )
-                        : Container(),
-                  ],
-                ),
+                  ),
+                  widget.isTimerTextShown
+                      ? Align(
+                          alignment: FractionalOffset.center,
+                          child: Text(
+                            time,
+                            style: widget.textStyle ??
+                                const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                          ),
+                        )
+                      : Container(),
+                ],
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -319,11 +324,12 @@ class CountDownController {
   void start() {
     if (_isReverse) {
       _state._controller?.reverse(
-          from:
-              _initialDuration == 0 ? 1 : 1 - (_initialDuration! / _duration));
+        from: _initialDuration == 0 ? 1 : 1 - (_initialDuration! / _duration),
+      );
     } else {
       _state._controller?.forward(
-          from: _initialDuration == 0 ? 0 : (_initialDuration! / _duration));
+        from: _initialDuration == 0 ? 0 : (_initialDuration! / _duration),
+      );
     }
   }
 

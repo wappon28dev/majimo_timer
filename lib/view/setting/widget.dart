@@ -4,30 +4,27 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 // ignore: implementation_imports
-import 'package:flutter_color/src/helper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/view/components/modal.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../main.dart';
 
-List style(dynamic pref, dynamic value) {
+List<dynamic> style(dynamic pref, dynamic value) {
   // int mode : 0 => return TextStyle,
   //            1 => return Color,
   //            2 => return Icon
   final color = ColorKey.orange.value;
   var array = <dynamic>[]..length = 3;
-  (value == pref)
-      ? array = <dynamic>[
-          TextStyle(color: color, fontWeight: FontWeight.bold),
-          color,
-          Icon(Icons.check, color: color)
-        ]
-      : null;
+  if (value == pref) {
+    array = <dynamic>[
+      TextStyle(color: color, fontWeight: FontWeight.bold),
+      color,
+      Icon(Icons.check, color: color)
+    ];
+  }
   return array;
 }
 
@@ -46,18 +43,26 @@ dynamic change_lang(BuildContext context, WidgetRef ref) {
     t.change_lang_sub.t,
     [
       ListTile(
-        title: AutoSizeText(t.system.t,
-            maxLines: 1, style: style(pref, 0)[0] as TextStyle?),
-        leading: Icon(Icons.system_security_update_good,
-            color: style(pref, 0)[1] as Color?),
+        title: AutoSizeText(
+          t.system.t,
+          maxLines: 1,
+          style: style(pref, 0)[0] as TextStyle?,
+        ),
+        leading: Icon(
+          Icons.system_security_update_good,
+          color: style(pref, 0)[1] as Color?,
+        ),
         trailing: style(pref, 0)[2] as Widget?,
         onTap: () {
           func(lang: 0);
         },
       ),
       ListTile(
-        title: AutoSizeText('日本語/Japanese',
-            maxLines: 1, style: style(pref, 1)[0] as TextStyle?),
+        title: AutoSizeText(
+          '日本語/Japanese',
+          maxLines: 1,
+          style: style(pref, 1)[0] as TextStyle?,
+        ),
         leading: const Flag.fromString('JP', height: 25, width: 25),
         trailing: style(pref, 1)[2] as Widget?,
         onTap: () {
@@ -65,8 +70,11 @@ dynamic change_lang(BuildContext context, WidgetRef ref) {
         },
       ),
       ListTile(
-        title: AutoSizeText('英語/English',
-            maxLines: 1, style: style(pref, 2)[0] as TextStyle?),
+        title: AutoSizeText(
+          '英語/English',
+          maxLines: 1,
+          style: style(pref, 2)[0] as TextStyle?,
+        ),
         leading: const Flag.fromString('US', height: 25, width: 25),
         trailing: style(pref, 2)[2] as Widget?,
         onTap: () {
@@ -94,8 +102,11 @@ dynamic app_theme(BuildContext context, WidgetRef ref) {
     t.app_theme_sub.t,
     [
       ListTile(
-        title: AutoSizeText(t.system.t,
-            maxLines: 1, style: style(pref, 0)[0] as TextStyle?),
+        title: AutoSizeText(
+          t.system.t,
+          maxLines: 1,
+          style: style(pref, 0)[0] as TextStyle?,
+        ),
         leading:
             Icon(Icons.settings_brightness, color: style(pref, 0)[1] as Color?),
         trailing: style(pref, 0)[2] as Widget?,
@@ -104,8 +115,11 @@ dynamic app_theme(BuildContext context, WidgetRef ref) {
         },
       ),
       ListTile(
-        title: AutoSizeText(t.light.t,
-            maxLines: 1, style: style(pref, 1)[0] as TextStyle?),
+        title: AutoSizeText(
+          t.light.t,
+          maxLines: 1,
+          style: style(pref, 1)[0] as TextStyle?,
+        ),
         leading: Icon(Icons.brightness_7, color: style(pref, 1)[1] as Color?),
         trailing: style(pref, 1)[2] as Widget?,
         onTap: () {
@@ -113,8 +127,11 @@ dynamic app_theme(BuildContext context, WidgetRef ref) {
         },
       ),
       ListTile(
-        title: AutoSizeText(t.dark.t,
-            maxLines: 1, style: style(pref, 2)[0] as TextStyle?),
+        title: AutoSizeText(
+          t.dark.t,
+          maxLines: 1,
+          style: style(pref, 2)[0] as TextStyle?,
+        ),
         leading: Icon(Icons.nights_stay, color: style(pref, 2)[1] as Color?),
         trailing: style(pref, 2)[2] as Widget?,
         onTap: () {
@@ -144,31 +161,37 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
             : Colors.white;
 
     return GestureDetector(
-        onTap: () => func(value: mode),
-        child: DigitalClock(
-          digitAnimationStyle: ref.read(clockState).animation_curve,
-          is24HourTimeFormat: mode,
-          showSecondsDigit: ref.read(clockState).showSec,
-          areaDecoration: const BoxDecoration(
-            color: Colors.transparent,
-          ),
-          hourMinuteDigitTextStyle: TextStyle(
-              fontSize: 50, color: color, fontWeight: FontWeight.bold),
-          hourMinuteDigitDecoration:
-              const BoxDecoration(color: Colors.transparent),
-          amPmDigitTextStyle: TextStyle(
-              fontSize: 15,
-              height: 2,
-              color: color,
-              fontWeight: FontWeight.bold),
-          secondDigitTextStyle: TextStyle(
-              fontSize: 20,
-              height: 1.5,
-              color: color,
-              fontWeight: FontWeight.bold),
-          secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
-          areaAligment: AlignmentDirectional.center,
-        ));
+      onTap: () => func(value: mode),
+      child: DigitalClock(
+        digitAnimationStyle: ref.read(clockState).animation_curve,
+        is24HourTimeFormat: mode,
+        showSecondsDigit: ref.read(clockState).showSec,
+        areaDecoration: const BoxDecoration(
+          color: Colors.transparent,
+        ),
+        hourMinuteDigitTextStyle: TextStyle(
+          fontSize: 50,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+        hourMinuteDigitDecoration:
+            const BoxDecoration(color: Colors.transparent),
+        amPmDigitTextStyle: TextStyle(
+          fontSize: 15,
+          height: 2,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+        secondDigitTextStyle: TextStyle(
+          fontSize: 20,
+          height: 1.5,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+        secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
+        areaAligment: AlignmentDirectional.center,
+      ),
+    );
   }
 
   return modal(
@@ -179,10 +202,15 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
     t.clock_style_sub.t,
     [
       ListTile(
-        title: AutoSizeText(t.style12.t,
-            maxLines: 1, style: style(pref, false)[0] as TextStyle?),
-        leading: Icon(Icons.share_arrival_time,
-            color: style(pref, false)[1] as Color?),
+        title: AutoSizeText(
+          t.style12.t,
+          maxLines: 1,
+          style: style(pref, false)[0] as TextStyle?,
+        ),
+        leading: Icon(
+          Icons.share_arrival_time,
+          color: style(pref, false)[1] as Color?,
+        ),
         trailing: style(pref, false)[2] as Widget?,
         onTap: () {
           func(value: false);
@@ -190,10 +218,15 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
       ),
       clock(mode: false),
       ListTile(
-        title: AutoSizeText(t.style24.t,
-            maxLines: 1, style: style(pref, true)[0] as TextStyle?),
-        leading: Icon(Icons.share_arrival_time_outlined,
-            color: style(pref, true)[1] as Color?),
+        title: AutoSizeText(
+          t.style24.t,
+          maxLines: 1,
+          style: style(pref, true)[0] as TextStyle?,
+        ),
+        leading: Icon(
+          Icons.share_arrival_time_outlined,
+          color: style(pref, true)[1] as Color?,
+        ),
         trailing: style(pref, true)[2] as Widget?,
         onTap: () {
           func(value: true);
@@ -201,8 +234,11 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
       ),
       clock(mode: true),
       const SizedBox(height: 10),
-      Text(t.restart.t,
-          maxLines: 1, style: const TextStyle(color: Color(0xFF777777))),
+      Text(
+        t.restart.t,
+        maxLines: 1,
+        style: const TextStyle(color: Color(0xFF777777)),
+      ),
       const SizedBox(height: 10)
     ],
   );
@@ -226,31 +262,37 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
             : Colors.white;
 
     return GestureDetector(
-        onTap: () => func(value: mode),
-        child: DigitalClock(
-          digitAnimationStyle: ref.read(clockState).animation_curve,
-          is24HourTimeFormat: ref.read(clockState).is24,
-          showSecondsDigit: mode,
-          areaDecoration: const BoxDecoration(
-            color: Colors.transparent,
-          ),
-          hourMinuteDigitTextStyle: TextStyle(
-              fontSize: 50, color: color, fontWeight: FontWeight.bold),
-          hourMinuteDigitDecoration:
-              const BoxDecoration(color: Colors.transparent),
-          amPmDigitTextStyle: TextStyle(
-              fontSize: 15,
-              height: 2,
-              color: color,
-              fontWeight: FontWeight.bold),
-          secondDigitTextStyle: TextStyle(
-              fontSize: 20,
-              height: 1.5,
-              color: color,
-              fontWeight: FontWeight.bold),
-          secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
-          areaAligment: AlignmentDirectional.center,
-        ));
+      onTap: () => func(value: mode),
+      child: DigitalClock(
+        digitAnimationStyle: ref.read(clockState).animation_curve,
+        is24HourTimeFormat: ref.read(clockState).is24,
+        showSecondsDigit: mode,
+        areaDecoration: const BoxDecoration(
+          color: Colors.transparent,
+        ),
+        hourMinuteDigitTextStyle: TextStyle(
+          fontSize: 50,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+        hourMinuteDigitDecoration:
+            const BoxDecoration(color: Colors.transparent),
+        amPmDigitTextStyle: TextStyle(
+          fontSize: 15,
+          height: 2,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+        secondDigitTextStyle: TextStyle(
+          fontSize: 20,
+          height: 1.5,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+        secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
+        areaAligment: AlignmentDirectional.center,
+      ),
+    );
   }
 
   return modal(
@@ -261,8 +303,11 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
     t.clock_seconds_sub.t,
     [
       ListTile(
-        title: AutoSizeText(t.show_sec.t,
-            maxLines: 1, style: style(pref, true)[0] as TextStyle?),
+        title: AutoSizeText(
+          t.show_sec.t,
+          maxLines: 1,
+          style: style(pref, true)[0] as TextStyle?,
+        ),
         leading: Icon(Icons.timer, color: style(pref, true)[1] as Color?),
         trailing: style(pref, true)[2] as Widget?,
         onTap: () {
@@ -271,8 +316,11 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
       ),
       clock(mode: true),
       ListTile(
-        title: AutoSizeText(t.not_show_sec.t,
-            maxLines: 1, style: style(pref, false)[0] as TextStyle?),
+        title: AutoSizeText(
+          t.not_show_sec.t,
+          maxLines: 1,
+          style: style(pref, false)[0] as TextStyle?,
+        ),
         leading: Icon(Icons.timer_off, color: style(pref, false)[1] as Color?),
         trailing: style(pref, false)[2] as Widget?,
         onTap: () {
@@ -281,8 +329,11 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
       ),
       clock(mode: false),
       const SizedBox(height: 10),
-      Text(t.restart.t,
-          maxLines: 1, style: const TextStyle(color: Color(0xFF777777))),
+      Text(
+        t.restart.t,
+        maxLines: 1,
+        style: const TextStyle(color: Color(0xFF777777)),
+      ),
       const SizedBox(height: 10)
     ],
   );
@@ -307,31 +358,37 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
 
     Curve animation() => (mode == 0) ? Curves.easeOutExpo : Curves.elasticOut;
     return GestureDetector(
-        onTap: () => func(value: mode),
-        child: DigitalClock(
-          showSecondsDigit: true,
-          digitAnimationStyle: animation(),
-          is24HourTimeFormat: ref.read(clockState).is24,
-          areaDecoration: const BoxDecoration(
-            color: Colors.transparent,
-          ),
-          hourMinuteDigitTextStyle: TextStyle(
-              fontSize: 50, color: color, fontWeight: FontWeight.bold),
-          hourMinuteDigitDecoration:
-              const BoxDecoration(color: Colors.transparent),
-          amPmDigitTextStyle: TextStyle(
-              fontSize: 15,
-              height: 2,
-              color: color,
-              fontWeight: FontWeight.bold),
-          secondDigitTextStyle: TextStyle(
-              fontSize: 20,
-              height: 1.5,
-              color: color,
-              fontWeight: FontWeight.bold),
-          secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
-          areaAligment: AlignmentDirectional.center,
-        ));
+      onTap: () => func(value: mode),
+      child: DigitalClock(
+        showSecondsDigit: true,
+        digitAnimationStyle: animation(),
+        is24HourTimeFormat: ref.read(clockState).is24,
+        areaDecoration: const BoxDecoration(
+          color: Colors.transparent,
+        ),
+        hourMinuteDigitTextStyle: TextStyle(
+          fontSize: 50,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+        hourMinuteDigitDecoration:
+            const BoxDecoration(color: Colors.transparent),
+        amPmDigitTextStyle: TextStyle(
+          fontSize: 15,
+          height: 2,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+        secondDigitTextStyle: TextStyle(
+          fontSize: 20,
+          height: 1.5,
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+        secondDigitDecoration: const BoxDecoration(color: Colors.transparent),
+        areaAligment: AlignmentDirectional.center,
+      ),
+    );
   }
 
   return modal(
@@ -342,23 +399,31 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
     t.clock_animation_sub.t,
     [
       Visibility(
-          visible: !(ref.read(clockState).showSec),
-          child: Column(children: [
+        visible: !(ref.read(clockState).showSec),
+        child: Column(
+          children: [
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(Icons.warning, color: Colors.red),
                 const SizedBox(width: 10),
-                AutoSizeText(t.show_temp.t,
-                    style: const TextStyle(color: Colors.red))
+                AutoSizeText(
+                  t.show_temp.t,
+                  style: const TextStyle(color: Colors.red),
+                )
               ],
             ),
             const SizedBox(height: 10),
-          ])),
+          ],
+        ),
+      ),
       ListTile(
-        title: AutoSizeText(t.easeOutExpo.t,
-            maxLines: 1, style: style(pref, 0)[0] as TextStyle?),
+        title: AutoSizeText(
+          t.easeOutExpo.t,
+          maxLines: 1,
+          style: style(pref, 0)[0] as TextStyle?,
+        ),
         leading: Icon(Icons.moving, color: style(pref, 0)[1] as Color?),
         trailing: style(pref, 0)[2] as Widget?,
         onTap: () {
@@ -367,8 +432,11 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
       ),
       clock(mode: 0),
       ListTile(
-        title: AutoSizeText(t.elasticOut.t,
-            maxLines: 1, style: style(pref, 1)[0] as TextStyle?),
+        title: AutoSizeText(
+          t.elasticOut.t,
+          maxLines: 1,
+          style: style(pref, 1)[0] as TextStyle?,
+        ),
         leading: Icon(Icons.bubble_chart, color: style(pref, 1)[1] as Color?),
         trailing: style(pref, 1)[2] as Widget?,
         onTap: () {
@@ -377,8 +445,11 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
       ),
       clock(mode: 1),
       const SizedBox(height: 10),
-      Text(t.restart.t,
-          maxLines: 1, style: const TextStyle(color: Color(0xFF777777))),
+      Text(
+        t.restart.t,
+        maxLines: 1,
+        style: const TextStyle(color: Color(0xFF777777)),
+      ),
       const SizedBox(height: 10)
     ],
   );
@@ -401,20 +472,30 @@ dynamic toast_position(BuildContext context, WidgetRef ref) {
     t.toast_position_sub.t,
     [
       ListTile(
-        title: AutoSizeText(t.top.t,
-            maxLines: 1, style: style(pref, true)[0] as TextStyle?),
-        leading: Icon(Icons.keyboard_arrow_up,
-            color: style(pref, true)[1] as Color?),
+        title: AutoSizeText(
+          t.top.t,
+          maxLines: 1,
+          style: style(pref, true)[0] as TextStyle?,
+        ),
+        leading: Icon(
+          Icons.keyboard_arrow_up,
+          color: style(pref, true)[1] as Color?,
+        ),
         trailing: style(pref, true)[2] as Widget?,
         onTap: () {
           func(value: true);
         },
       ),
       ListTile(
-        title: AutoSizeText(t.bottom.t,
-            maxLines: 1, style: style(pref, false)[0] as TextStyle?),
-        leading: Icon(Icons.keyboard_arrow_down,
-            color: style(pref, false)[1] as Color?),
+        title: AutoSizeText(
+          t.bottom.t,
+          maxLines: 1,
+          style: style(pref, false)[0] as TextStyle?,
+        ),
+        leading: Icon(
+          Icons.keyboard_arrow_down,
+          color: style(pref, false)[1] as Color?,
+        ),
         trailing: style(pref, false)[2] as Widget?,
         onTap: () {
           func(value: false);
@@ -441,8 +522,11 @@ dynamic toast_duration(BuildContext context, WidgetRef ref) {
     t.toast_duration_sub.t,
     [
       ListTile(
-        title: AutoSizeText(t.sec.p(3),
-            maxLines: 1, style: style(pref, 3)[0] as TextStyle?),
+        title: AutoSizeText(
+          t.sec.p(3),
+          maxLines: 1,
+          style: style(pref, 3)[0] as TextStyle?,
+        ),
         leading: Icon(Icons.looks_3, color: style(pref, 3)[1] as Color?),
         trailing: style(pref, 3)[2] as Widget?,
         onTap: () {
@@ -450,8 +534,11 @@ dynamic toast_duration(BuildContext context, WidgetRef ref) {
         },
       ),
       ListTile(
-        title: AutoSizeText(t.sec.p(4),
-            maxLines: 1, style: style(pref, 4)[0] as TextStyle?),
+        title: AutoSizeText(
+          t.sec.p(4),
+          maxLines: 1,
+          style: style(pref, 4)[0] as TextStyle?,
+        ),
         leading: Icon(Icons.looks_4, color: style(pref, 4)[1] as Color?),
         trailing: style(pref, 4)[2] as Widget?,
         onTap: () {
@@ -459,8 +546,11 @@ dynamic toast_duration(BuildContext context, WidgetRef ref) {
         },
       ),
       ListTile(
-        title: AutoSizeText(t.sec.p(5),
-            maxLines: 1, style: style(pref, 5)[0] as TextStyle?),
+        title: AutoSizeText(
+          t.sec.p(5),
+          maxLines: 1,
+          style: style(pref, 5)[0] as TextStyle?,
+        ),
         leading: Icon(Icons.looks_5, color: style(pref, 5)[1] as Color?),
         trailing: style(pref, 5)[2] as Widget?,
         onTap: () {

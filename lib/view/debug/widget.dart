@@ -21,23 +21,24 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
           child: Column(
             children: [
               ListTile(
-                  title: const Text(
-                    'このアプリはベータ版です',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  subtitle: const Text(
-                    '>> $version << \n $buildDate \n $changeLog',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontFamily: 'monospace',
-                    ),
-                  ),
-                  leading: const Icon(
-                    Icons.bug_report,
+                title: const Text(
+                  'このアプリはベータ版です',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text(
+                  '>> ${AppDataStore().versionStr} << \n ${AppDataStore().buildDate} \n ${AppDataStore().changeLog}',
+                  style: const TextStyle(
                     color: Colors.white,
+                    fontSize: 10,
+                    fontFamily: 'monospace',
                   ),
-                  onTap: () {}),
+                ),
+                leading: const Icon(
+                  Icons.bug_report,
+                  color: Colors.white,
+                ),
+                onTap: () {},
+              ),
               const Divider(
                 thickness: 2,
                 color: Colors.white,
@@ -49,8 +50,9 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                     onPressed: () {
                       NotificationManager().test();
                       Logger.e(
-                          '- from majimo_timer/lib/view/home/root/widget.dart \n'
-                          ' > notification test');
+                        '- from majimo_timer/lib/view/home/root/widget.dart \n'
+                        ' > notification test',
+                      );
                     },
                     icon: const Icon(Icons.notifications_active),
                     color: Colors.white,
@@ -60,8 +62,9 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                     onPressed: () {
                       ToastManager.toast(context: context, ref: ref, id: 0);
                       Logger.e(
-                          '- from majimo_timer/lib/view/home/root/widget.dart \n'
-                          ' > toast test');
+                        '- from majimo_timer/lib/view/home/root/widget.dart \n'
+                        ' > toast test',
+                      );
                     },
                     icon: const Icon(Icons.circle_notifications),
                     color: Colors.white,
@@ -73,8 +76,9 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                           .read(generalState.notifier)
                           .push(context: context, page: const Debug());
                       Logger.e(
-                          '- from majimo_timer/lib/view/home/root/widget.dart \n'
-                          ' > debug page opened');
+                        '- from majimo_timer/lib/view/home/root/widget.dart \n'
+                        ' > debug page opened',
+                      );
                     },
                     icon: const Icon(Icons.developer_mode),
                     color: Colors.white,
@@ -84,14 +88,20 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const <Widget>[
-                  Text('ローカル通知を送信',
-                      style: TextStyle(color: Colors.white, fontSize: 10)),
+                  Text(
+                    'ローカル通知を送信',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ),
                   SizedBox(width: 10),
-                  Text('トースト通知を送信',
-                      style: TextStyle(color: Colors.white, fontSize: 10)),
+                  Text(
+                    'トースト通知を送信',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ),
                   SizedBox(width: 10),
-                  Text('アプリのログを見る',
-                      style: TextStyle(color: Colors.white, fontSize: 10))
+                  Text(
+                    'アプリのログを見る',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  )
                 ],
               ),
             ],

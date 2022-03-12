@@ -44,55 +44,58 @@ class MyTheme {
           CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
     },
   );
-  static const up =
-      PageTransitionsTheme(builders: <TargetPlatform, PageTransitionsBuilder>{
-    TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
-    TargetPlatform.iOS: OpenUpwardsPageTransitionsBuilder(),
-  });
+  static const up = PageTransitionsTheme(
+    builders: <TargetPlatform, PageTransitionsBuilder>{
+      TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
+      TargetPlatform.iOS: OpenUpwardsPageTransitionsBuilder(),
+    },
+  );
 
   final ThemeData _lightTheme = ThemeData(
-      primarySwatch: Colors.deepOrange,
-      primaryColor: Colors.deepOrange,
-      scaffoldBackgroundColor: Colors.deepOrange.shade100.lighter(10),
-      backgroundColor: ColorKey.orange.value,
-      appBarTheme: const AppBarTheme(
-        centerTitle: true,
-        backgroundColor: Colors.deepOrange,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
+    primarySwatch: Colors.deepOrange,
+    primaryColor: Colors.deepOrange,
+    scaffoldBackgroundColor: Colors.deepOrange.shade100.lighter(10),
+    backgroundColor: ColorKey.orange.value,
+    appBarTheme: const AppBarTheme(
+      centerTitle: true,
+      backgroundColor: Colors.deepOrange,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
         ),
-        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
-      fontFamily: 'M-plus-M',
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-      pageTransitionsTheme: back);
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+    ),
+    fontFamily: 'M-plus-M',
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    pageTransitionsTheme: back,
+  );
 
   final ThemeData _darkTheme = ThemeData(
-      brightness: Brightness.dark,
-      primarySwatch: Colors.deepOrange,
-      scaffoldBackgroundColor: Colors.deepOrange.shade50.darker(70),
-      backgroundColor: Colors.deepOrange.shade900.darker(50),
-      appBarTheme: AppBarTheme(
-        centerTitle: true,
-        backgroundColor: Colors.deepOrange.shade800,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
-        ),
-        systemOverlayStyle: SystemUiOverlayStyle.light,
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.deepOrange.shade800,
+    brightness: Brightness.dark,
+    primarySwatch: Colors.deepOrange,
+    scaffoldBackgroundColor: Colors.deepOrange.shade50.darker(70),
+    backgroundColor: Colors.deepOrange.shade900.darker(50),
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+      backgroundColor: Colors.deepOrange.shade800,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
         ),
       ),
-      fontFamily: 'M-plus-M',
-      pageTransitionsTheme: back);
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.deepOrange.shade800,
+      ),
+    ),
+    fontFamily: 'M-plus-M',
+    pageTransitionsTheme: back,
+  );
 
   ThemeData get lightTheme => _lightTheme;
   ThemeData get darkTheme => _darkTheme;
@@ -102,8 +105,10 @@ class MyTheme {
     return value ? _lightTheme : _darkTheme;
   }
 
-  Color get_background(
-      {required BuildContext context, required WidgetRef ref}) {
+  Color get_background({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) {
     final value = ref.read(themeState.notifier).isLight(context: context);
     return value
         ? _lightTheme.scaffoldBackgroundColor

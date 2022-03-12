@@ -77,7 +77,8 @@ flutter:
     - assets/splash/splash.png
     - assets/splash/wolf.json
     - assets/splash/sun.json
-    - assets/splash/splash.riv
+    - assets/splash/splash_light.riv
+    - assets/splash/splash_dark.riv
     - assets/translations/langs.csv
     - assets/me.png
   fonts:

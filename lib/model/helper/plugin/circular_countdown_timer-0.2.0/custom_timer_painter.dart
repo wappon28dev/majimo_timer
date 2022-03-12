@@ -1,3 +1,5 @@
+// ignore_for_file: require_trailing_commas
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -31,7 +33,9 @@ class CustomTimerPainter extends CustomPainter {
 
     if (ringGradient != null) {
       final rect = Rect.fromCircle(
-          center: size.center(Offset.zero), radius: size.width / 2);
+        center: size.center(Offset.zero),
+        radius: size.width / 2,
+      );
       paint.shader = ringGradient!.createShader(rect);
     } else {
       paint.shader = null;
@@ -42,7 +46,9 @@ class CustomTimerPainter extends CustomPainter {
 
     if (fillGradient != null) {
       final rect = Rect.fromCircle(
-          center: size.center(Offset.zero), radius: size.width / 2);
+        center: size.center(Offset.zero),
+        radius: size.width / 2,
+      );
       paint.shader = fillGradient!.createShader(rect);
     } else {
       paint.shader = null;
@@ -56,13 +62,18 @@ class CustomTimerPainter extends CustomPainter {
 
       if (backgroundGradient != null) {
         final rect = Rect.fromCircle(
-            center: size.center(Offset.zero), radius: size.width / 2.2);
+          center: size.center(Offset.zero),
+          radius: size.width / 2.2,
+        );
         backgroundPaint.shader = backgroundGradient!.createShader(rect);
       } else {
         backgroundPaint.color = backgroundColor!;
       }
       canvas.drawCircle(
-          size.center(Offset.zero), size.width / 2.2, backgroundPaint);
+        size.center(Offset.zero),
+        size.width / 2.2,
+        backgroundPaint,
+      );
     }
   }
 

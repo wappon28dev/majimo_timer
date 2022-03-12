@@ -52,7 +52,16 @@ enum t {
   toast_duration_sub,
   duration,
   sec,
-  notification
+  notification,
+  about,
+  change_log,
+  change_log_sub,
+  app_maker,
+  app_maker_sub,
+  github,
+  github_sub,
+  license,
+  license_sub
 }
 
 extension TypeExtension on t {

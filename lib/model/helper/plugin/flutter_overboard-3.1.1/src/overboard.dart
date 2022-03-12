@@ -1,4 +1,4 @@
-// ignore_for_file: always_declare_return_types, inference_failure_on_function_return_type, inference_failure_on_instance_creation
+// ignore_for_file: always_declare_return_types, inference_failure_on_function_return_type, inference_failure_on_instance_creation, constant_identifier_names
 
 import 'dart:math';
 

@@ -48,7 +48,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                 onPressed: () {
                   generalstate.push_replace(
                       context: context, page: const HomePage());
-                  NotificationManager().cancel_notification();
+                  NotificationManager().cancelAllNotifications();
                   generalstate.home();
                 },
                 child: const Icon(
@@ -81,7 +81,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                 onPressed: () {
                   generalstate.push_replace(
                       context: context, page: const HomePage());
-                  NotificationManager().cancel_notification();
+                  NotificationManager().cancelAllNotifications();
                   generalstate.home();
                 },
                 child: const Icon(
@@ -97,7 +97,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
             onPressed: () {
               generalstate.push_replace(
                   context: context, page: const HomePage());
-              NotificationManager().cancel_notification();
+              NotificationManager().cancelAllNotifications();
               generalstate.home();
             },
             // heroTag: null,

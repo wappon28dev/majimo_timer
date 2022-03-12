@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 
 part 'state.freezed.dart';
@@ -189,23 +190,34 @@ class ColorState with _$ColorState {
   const factory ColorState({@Default(0) double opacity}) = _ColorState;
 
   // create values
-  Color color_clockcolor(
-          {required BuildContext context, required WidgetRef ref}) =>
+  Color color_clockcolor({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) =>
       get(context: context, ref: ref)[0] as Color;
-  Color color_start_color(
-          {required BuildContext context, required WidgetRef ref}) =>
+  Color color_start_color({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) =>
       get(context: context, ref: ref)[1] as Color;
-  Color color_end_color(
-          {required BuildContext context, required WidgetRef ref}) =>
+  Color color_end_color({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) =>
       get(context: context, ref: ref)[2] as Color;
-  String color_picture_path(
-          {required BuildContext context, required WidgetRef ref}) =>
+  String color_picture_path({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) =>
       get(context: context, ref: ref)[3] as String;
-  ColorTween color_tween(
-          {required BuildContext context, required WidgetRef ref}) =>
+  ColorTween color_tween({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) =>
       ColorTween(
-          begin: color_start_color(context: context, ref: ref),
-          end: color_end_color(context: context, ref: ref));
+        begin: color_start_color(context: context, ref: ref),
+        end: color_end_color(context: context, ref: ref),
+      );
 
   /// ```
   /// return array = [Color clockcolor, Color start, Color end, String path]
@@ -218,13 +230,13 @@ class ColorState with _$ColorState {
             Colors.black,
             Colors.deepOrange,
             Colors.orangeAccent.shade200,
-            'assets/splash/sun.json'
+            PathStore().expandedPictureSun
           ]
         : array = <dynamic>[
             Colors.white,
             Colors.deepOrange.shade800,
             Colors.blue.shade900,
-            'assets/splash/wolf.json'
+            PathStore().expandedPictureNight
           ];
     return array;
   }
