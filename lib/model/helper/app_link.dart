@@ -1,5 +1,3 @@
-// ignore_for_file: implementation_imports, avoid_void_async
-
 import 'package:app_links/app_links.dart';
 import 'package:dismissible_page/src/dismissible_extensions.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +15,7 @@ import 'package:quick_actions/quick_actions.dart';
 late AppLinks _appLinks;
 
 class LinkManager {
-  void initDeepLinks(WidgetRef ref, BuildContext context) async {
+  Future<void> initDeepLinks(WidgetRef ref, BuildContext context) async {
     //receive
     _appLinks = AppLinks(
       onAppLink: (Uri uri, String stringUri) async {
@@ -35,11 +33,9 @@ class LinkManager {
 
   void receiver(String uri, BuildContext context, WidgetRef ref) {
     if (uri.startsWith('m')) {
-      // ignore: parameter_assignments
       uri = uri.replaceAll('majimo://app/', '');
     }
     if (uri.startsWith('h')) {
-      // ignore: parameter_assignments
       uri = uri.replaceAll('https://majimo.jp/app/', '');
     }
     Logger.i('transferred -> $uri');
@@ -51,53 +47,51 @@ class LinkManager {
       case 'h':
         ref
             .read(generalState.notifier)
-            .push_replace(context: context, page: const HomePage());
+            .runPush(context: context, page: const HomePage(), isReplace: true);
         break;
 
       case 'a':
         ref
             .read(generalState.notifier)
-            .push_replace(context: context, page: const HomePage());
+            .runPush(context: context, page: const HomePage(), isReplace: true);
         context.pushTransparentRoute(const AlarmPage());
-        ref.read(alarmState.notifier).internal();
-        ref.read(generalState.notifier).showFAB();
+        ref.read(alarmState.notifier).runInitialize();
+        ref.read(generalState.notifier).runFAB();
         break;
 
       case 't':
         ref
             .read(generalState.notifier)
-            .push_replace(context: context, page: const HomePage());
+            .runPush(context: context, page: const HomePage(), isReplace: true);
         context.pushTransparentRoute(const TimerPage());
         break;
 
       case 'g':
         ref
             .read(generalState.notifier)
-            .push_replace(context: context, page: const HomePage());
+            .runPush(context: context, page: const HomePage(), isReplace: true);
         context.pushTransparentRoute(const GoalPage());
         break;
 
       case 's':
         ref
             .read(generalState.notifier)
-            .push_replace(context: context, page: const HomePage());
+            .runPush(context: context, page: const HomePage(), isReplace: true);
         ref
             .read(generalState.notifier)
-            .push(context: context, page: const Setting());
+            .runPush(context: context, page: const Setting(), isReplace: true);
         break;
     }
   }
 
-  // ignore: require_trailing_commas
-  void initQuickAction(
-      {required BuildContext context, required WidgetRef ref}) {
-    const quickActions = QuickActions();
-    // ignore: cascade_invocations
-    quickActions.initialize((shortcutType) async {
+  void initQuickAction({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) {
+    const QuickActions().initialize((shortcutType) async {
       launcher(context, ref, shortcutType);
     });
-    // ignore: cascade_invocations
-    quickActions.setShortcutItems(<ShortcutItem>[
+    const QuickActions().setShortcutItems(<ShortcutItem>[
       ShortcutItem(
         type: 'g',
         localizedTitle: t.goal.t,

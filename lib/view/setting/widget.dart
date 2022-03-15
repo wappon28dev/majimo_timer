@@ -1,9 +1,6 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
-// ignore: implementation_imports
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
@@ -30,7 +27,7 @@ List<dynamic> style(dynamic pref, dynamic value) {
 
 dynamic change_lang(BuildContext context, WidgetRef ref) {
   void func({required int lang}) {
-    ref.read(langState.notifier).change(context: context, value: lang);
+    ref.read(langState.notifier).updateLang(context: context, value: lang);
     Navigator.pop(context);
   }
 
@@ -87,7 +84,7 @@ dynamic change_lang(BuildContext context, WidgetRef ref) {
 
 dynamic app_theme(BuildContext context, WidgetRef ref) {
   void func({required int theme}) {
-    ref.read(themeState.notifier).change(value: theme);
+    ref.read(themeState.notifier).updateTheme(value: theme);
 
     Navigator.pop(context);
   }
@@ -144,7 +141,7 @@ dynamic app_theme(BuildContext context, WidgetRef ref) {
 
 dynamic clock_style(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(clockState.notifier).change_is24(value: value);
+    ref.read(clockState.notifier).updateIs24(value: value);
 
     Navigator.pop(context);
   }
@@ -163,7 +160,7 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () => func(value: mode),
       child: DigitalClock(
-        digitAnimationStyle: ref.read(clockState).animation_curve,
+        digitAnimationStyle: ref.read(clockState).animationCurve,
         is24HourTimeFormat: mode,
         showSecondsDigit: ref.read(clockState).showSec,
         areaDecoration: const BoxDecoration(
@@ -246,7 +243,7 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
 
 dynamic clock_showSec(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(clockState.notifier).change_showSec(value: value);
+    ref.read(clockState.notifier).updateShowSec(value: value);
     Navigator.pop(context);
   }
 
@@ -264,7 +261,7 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () => func(value: mode),
       child: DigitalClock(
-        digitAnimationStyle: ref.read(clockState).animation_curve,
+        digitAnimationStyle: ref.read(clockState).animationCurve,
         is24HourTimeFormat: ref.read(clockState).is24,
         showSecondsDigit: mode,
         areaDecoration: const BoxDecoration(
@@ -341,7 +338,7 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
 
 dynamic clock_animation(BuildContext context, WidgetRef ref) {
   void func({required int value}) {
-    ref.read(clockState.notifier).change_animation(value: value);
+    ref.read(clockState.notifier).updateAnimation(value: value);
     Navigator.pop(context);
   }
 
@@ -457,7 +454,7 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
 
 dynamic toast_position(BuildContext context, WidgetRef ref) {
   void func({required bool value}) {
-    ref.read(generalState.notifier).change_topToast(value: value);
+    ref.read(generalState.notifier).updateTopToast(value: value);
 
     Navigator.pop(context);
   }
@@ -507,7 +504,7 @@ dynamic toast_position(BuildContext context, WidgetRef ref) {
 
 dynamic toast_duration(BuildContext context, WidgetRef ref) {
   void func({required int sec}) {
-    ref.read(generalState.notifier).change_toastDuration(value: sec);
+    ref.read(generalState.notifier).updateToastDuration(value: sec);
 
     Navigator.pop(context);
   }

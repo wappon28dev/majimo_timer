@@ -1,5 +1,3 @@
-// ignore_for_file: require_trailing_commas
-
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';

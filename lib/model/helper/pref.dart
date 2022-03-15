@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_classes_with_only_static_members, depend_on_referenced_packages
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,120 +19,124 @@ enum PrefKey {
 }
 
 class PrefManager {
-  static Future<void> restore(WidgetRef ref, BuildContext context) async {
-    var _isFirst = await PrefManager.getBool(key: PrefKey.isFirst);
-    var _is24 = await PrefManager.getBool(key: PrefKey.clockStyle);
-    var _theme = await PrefManager.getInt(key: PrefKey.appTheme);
-    var _lang = await PrefManager.getInt(key: PrefKey.changeLanguage);
-    var _topToast = await PrefManager.getBool(key: PrefKey.topToast);
-    var _toastDuration = await PrefManager.getInt(key: PrefKey.toastDuration);
-    var _clockAnimation = await PrefManager.getInt(key: PrefKey.clockAnimation);
-    var _showSec = await PrefManager.getBool(key: PrefKey.showSec);
-    var _timerTarget = await PrefManager.getInt(key: PrefKey.timerTarget);
-    var _timerInterval = await PrefManager.getInt(key: PrefKey.timerInterval);
+  Future<void> restore(WidgetRef ref, BuildContext context) async {
+    var isFirst = await getBool(key: PrefKey.isFirst);
+    var is24 = await getBool(key: PrefKey.clockStyle);
+    var theme = await getInt(key: PrefKey.appTheme);
+    var lang = await getInt(key: PrefKey.changeLanguage);
+    var topToast = await getBool(key: PrefKey.topToast);
+    var toastDuration = await getInt(key: PrefKey.toastDuration);
+    var clockAnimation = await getInt(key: PrefKey.clockAnimation);
+    var showSec = await getBool(key: PrefKey.showSec);
+    var timerTarget = await getInt(key: PrefKey.timerTarget);
+    var timerInterval = await getInt(key: PrefKey.timerInterval);
 
-    Logger.r('''
+    Logger.r(
+      '''
       restore values :
-        >> bool  isFirst         =   $_isFirst
-        >> bool  is24            =   $_is24
-        >> int   theme           =   $_theme
-        >> int   lang            =   $_lang
-        >> bool  topToast        =   $_topToast
-        >> int   toastDuration   =   $_toastDuration 
-        >> int   clockAnimation  =   $_clockAnimation
-        >> bool  showSec         =   $_showSec
-        >> int   timerTarget     =   $_timerTarget
-        >> int   timerInterval   =   $_timerInterval
-      ''');
+        >> bool  isFirst         =   $isFirst
+        >> bool  is24            =   $is24
+        >> int   theme           =   $theme
+        >> int   lang            =   $lang
+        >> bool  topToast        =   $topToast
+        >> int   toastDuration   =   $toastDuration 
+        >> int   clockAnimation  =   $clockAnimation
+        >> bool  showSec         =   $showSec
+        >> int   timerTarget     =   $timerTarget
+        >> int   timerInterval   =   $timerInterval
+      ''',
+    );
 
-    if (_isFirst == null) {
+    if (isFirst == null) {
       Logger.e('Warning! : _isFirst is null! => true');
     }
 
-    if (_is24 == null) {
+    if (is24 == null) {
       Logger.r('Warning! : _is24 is null => true');
     }
-    if (_theme == null) {
+    if (theme == null) {
       Logger.r('Warning! : _theme is null => true');
     }
-    if (_lang == null) {
+    if (lang == null) {
       Logger.r('Warning! : _lang is null => true');
     }
-    if (_topToast == null) {
+    if (topToast == null) {
       Logger.r('Warning! : _is24 is null => true');
     }
-    if (_toastDuration == null) {
+    if (toastDuration == null) {
       Logger.r('Warning! : _toastDuration is null => 4');
     }
-    if (_clockAnimation == null) {
+    if (clockAnimation == null) {
       Logger.r('Warning! : _clockAnimation is null => 0');
     }
-    if (_showSec == null) {
+    if (showSec == null) {
       Logger.r('Warning! : _showSec is null => true');
     }
 
-    if (_timerTarget == null) {
+    if (timerTarget == null) {
       Logger.e('Warning! : _timerTarget is null! => 30');
     }
 
-    if (_timerInterval == null) {
+    if (timerInterval == null) {
       Logger.e('Warning! : _timerInterval is null! => 30');
     }
 
-    _isFirst ??= true;
-    _is24 ??= true;
-    _theme ??= 0;
-    _lang ??= 0;
-    _topToast ??= true;
-    _toastDuration ??= 4;
-    _clockAnimation ??= 0;
-    _showSec ??= true;
-    _timerTarget ??= 30;
-    _timerInterval ??= 30;
+    isFirst ??= true;
+    is24 ??= true;
+    theme ??= 0;
+    lang ??= 0;
+    topToast ??= true;
+    toastDuration ??= 4;
+    clockAnimation ??= 0;
+    showSec ??= true;
+    timerTarget ??= 30;
+    timerInterval ??= 30;
 
-    ref.read(globalState.notifier).change_isFirst(value: _isFirst);
-    ref.read(clockState.notifier).change_is24(value: _is24);
-    ref.read(themeState.notifier).change(value: _theme);
-    ref.read(langState.notifier).change(context: context, value: _lang);
-    ref.read(generalState.notifier).change_topToast(value: _topToast);
+    ref.read(globalState.notifier).updateIsFirst(value: isFirst);
+    ref.read(clockState.notifier).updateIs24(value: is24);
+    ref.read(themeState.notifier).updateTheme(value: theme);
+    ref.read(langState.notifier).updateLang(context: context, value: lang);
+    ref.read(generalState.notifier).updateTopToast(value: topToast);
+    ref.watch(generalState.notifier).updateToastDuration(value: toastDuration);
+    ref.read(clockState.notifier).updateAnimation(value: clockAnimation);
+    ref.read(clockState.notifier).updateShowSec(value: showSec);
+    ref.read(timerState.notifier).updateTargetDuration(value: timerTarget);
     ref
-        .watch(generalState.notifier)
-        .change_toastDuration(value: _toastDuration);
-    ref.read(clockState.notifier).change_animation(value: _clockAnimation);
-    ref.read(clockState.notifier).change_showSec(value: _showSec);
-    ref.read(timerState.notifier).change_target(value: _timerTarget);
-    ref.read(timerState.notifier).change_interval(value: _timerInterval);
+        .read(timerState.notifier)
+        .updateTargetIntervalDuration(value: timerInterval);
   }
 
-  static Future<bool?> getBool({required PrefKey key}) async {
+  Future<bool?> getBool({required PrefKey key}) async {
     final prefs = await SharedPreferences.getInstance();
     final result = prefs.getBool(key.toString());
     return result;
   }
 
-  static Future<int?> getInt({required PrefKey key}) async {
+  Future<int?> getInt({required PrefKey key}) async {
     final prefs = await SharedPreferences.getInstance();
     final result = prefs.getInt(key.toString());
     return result;
   }
 
-  static Future<void> setBool(
-      {required PrefKey key, required bool value}) async {
+  Future<void> setBool({
+    required PrefKey key,
+    required bool value,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(key.toString(), value);
   }
 
-  static Future<void> setInt({required PrefKey key, required int value}) async {
+  Future<void> setInt({required PrefKey key, required int value}) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(key.toString(), value);
   }
 
-  static Future<void> remove({required Type key}) async {
+  Future<void> remove({required Type key}) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(key.toString());
   }
 
-  static Future<void> allremove() async {
+  Future<void> allremove() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }

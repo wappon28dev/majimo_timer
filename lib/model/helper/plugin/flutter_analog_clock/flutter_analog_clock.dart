@@ -1,5 +1,3 @@
-// ignore_for_file: require_trailing_commas, duplicate_ignore
-
 library flutter_analog_clock;
 
 import 'dart:async';
@@ -33,7 +31,6 @@ class FlutterAnalogClock extends StatefulWidget {
   final BoxDecoration decoration;
   final Widget? child;
 
-  // ignore: sort_constructors_first, require_trailing_commas
   const FlutterAnalogClock(
       {this.dateTime,
       this.dialPlateColor = Colors.white,

@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names, lines_longer_than_80_chars
-
 library circular_countdown_timer;
 
 import 'package:flutter/material.dart';
@@ -11,7 +9,6 @@ import 'custom_timer_painter.dart';
 class CircularCountDownTimer extends ConsumerStatefulWidget {
   /// Key for Countdown Timer.
   @override
-  // ignore: overridden_fields
   final Key? key;
 
   /// Filling Color for Countdown Widget.
@@ -77,7 +74,6 @@ class CircularCountDownTimer extends ConsumerStatefulWidget {
   /// Handles the timer start.
   final bool autoStart;
 
-  // ignore: sort_constructors_first, require_trailing_commas
   const CircularCountDownTimer(
       {required this.width,
       required this.height,

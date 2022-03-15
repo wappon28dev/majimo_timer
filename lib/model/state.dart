@@ -1,8 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, sort_unnamed_constructors_first, unnecessary_parenthesis
-
-// ignore: implementation_imports
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -17,12 +12,12 @@ part 'state.freezed.dart';
 class GlobalState with _$GlobalState {
   const factory GlobalState({
     @Default(true) bool isFirst,
+    @Default(false) bool isTimeKeeping,
   }) = _GlobalState;
 }
 
 @freezed
 class GeneralState with _$GeneralState {
-  const GeneralState._();
   const factory GeneralState({
     @Default('まじもタイマーへようこそ！') String status,
     @Default(false) bool topToast,
@@ -30,27 +25,29 @@ class GeneralState with _$GeneralState {
     @Default(1) double opacity,
     @Default(false) bool showFAB,
   }) = _GeneralState;
+  const GeneralState._();
 
-  String get topToast_caption => topToast ? t.top.t : t.bottom.t;
-  IconData get topToast_icon =>
+  String get topToastCaption => topToast ? t.top.t : t.bottom.t;
+  IconData get topToastIcon =>
       topToast ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down;
-  String get toastDuration_caption => t.duration.p(toastDuration);
+  String get toastDurationCaption => t.duration.p(toastDuration);
 }
 
 @freezed
 class CurrentDurationState with _$CurrentDurationState {
   const factory CurrentDurationState(
-      {@Default(Duration.zero) Duration current}) = _CurrentDurationState;
+      {@Default(Duration.zero) Duration current,
+      @Default(0) int currentIntervalLoopingNum}) = _CurrentDurationState;
 }
 
 @freezed
 class ThemeState with _$ThemeState {
-  const ThemeState._();
   const factory ThemeState({@Default(0) int theme}) = _ThemeState;
+  const ThemeState._();
 
-  ThemeMode get theme_value => get()[0] as ThemeMode;
-  String get theme_caption => get()[1] as String;
-  IconData get theme_icon => get()[2] as IconData;
+  ThemeMode get themeMode => get()[0] as ThemeMode;
+  String get themeCaption => get()[1] as String;
+  IconData get themeIcon => get()[2] as IconData;
 
   List<dynamic> get() {
     var array = <dynamic>[]..length = 3;
@@ -85,11 +82,11 @@ class ThemeState with _$ThemeState {
 
 @freezed
 class LangState with _$LangState {
-  const LangState._();
   const factory LangState({@Default(0) int lang}) = _LangState;
+  const LangState._();
 
   // create value
-  String get lang_caption {
+  String get langCaption {
     switch (lang) {
       case 0:
         return t.system.t;
@@ -102,7 +99,7 @@ class LangState with _$LangState {
     }
   }
 
-  String get lang_locale {
+  String get langLocale {
     switch (lang) {
       case 0:
         return t.lang.t;
@@ -118,27 +115,28 @@ class LangState with _$LangState {
 
 @freezed
 class ClockState with _$ClockState {
+  const factory ClockState({
+    @Default(true) bool is24,
+    @Default(true) bool showSec,
+    @Default(0) int animation,
+  }) = _ClockState;
   const ClockState._();
-  const factory ClockState(
-      {@Default(true) bool is24,
-      @Default(true) bool showSec,
-      @Default(0) int animation}) = _ClockState;
 
   // create values
-  String get is24_caption => get_is24()[0] as String;
-  IconData get is24_icon => get_is24()[1] as IconData;
+  String get is24Caption => _is24()[0] as String;
+  IconData get is24Icon => _is24()[1] as IconData;
 
-  String get showSec_caption => get_showSec()[0] as String;
-  IconData get showSec_icon => get_showSec()[1] as IconData;
+  String get showSecCaption => _showSec()[0] as String;
+  IconData get showSecIcon => _showSec()[1] as IconData;
 
-  String get animation_caption => get_animation()[0] as String;
-  IconData get animation_icon => get_animation()[1] as IconData;
-  Curve get animation_curve => get_animation()[2] as Curve;
+  String get animationCaption => _animation()[0] as String;
+  IconData get animationIcon => _animation()[1] as IconData;
+  Curve get animationCurve => _animation()[2] as Curve;
 
   /// ```
   /// return array = [String text, IconData icon];
   /// ```
-  List<dynamic> get_is24() {
+  List<dynamic> _is24() {
     List<dynamic>? array;
     is24
         ? array = <dynamic>[t.style24.t, Icons.share_arrival_time_outlined]
@@ -149,7 +147,7 @@ class ClockState with _$ClockState {
   /// ```
   /// return array = [String text, IconData icon];
   /// ```
-  List<dynamic> get_showSec() {
+  List<dynamic> _showSec() {
     List<dynamic>? array;
     showSec
         ? array = <dynamic>[t.show_sec.t, Icons.timer]
@@ -160,7 +158,7 @@ class ClockState with _$ClockState {
   /// ```
   /// return array = [String text, IconData icon, Curve curve];
   /// ```
-  List<dynamic> get_animation() {
+  List<dynamic> _animation() {
     List<dynamic>? array;
     switch (animation) {
       case 0:
@@ -186,43 +184,46 @@ class ClockState with _$ClockState {
 
 @freezed
 class ColorState with _$ColorState {
-  const ColorState._();
   const factory ColorState({@Default(0) double opacity}) = _ColorState;
+  const ColorState._();
 
   // create values
-  Color color_clockcolor({
+  Color clockColor({
     required BuildContext context,
     required WidgetRef ref,
   }) =>
-      get(context: context, ref: ref)[0] as Color;
-  Color color_start_color({
+      _color(context: context, ref: ref)[0] as Color;
+  Color startColor({
     required BuildContext context,
     required WidgetRef ref,
   }) =>
-      get(context: context, ref: ref)[1] as Color;
-  Color color_end_color({
+      _color(context: context, ref: ref)[1] as Color;
+  Color endColor({
     required BuildContext context,
     required WidgetRef ref,
   }) =>
-      get(context: context, ref: ref)[2] as Color;
-  String color_picture_path({
+      _color(context: context, ref: ref)[2] as Color;
+  String picturePath({
     required BuildContext context,
     required WidgetRef ref,
   }) =>
-      get(context: context, ref: ref)[3] as String;
-  ColorTween color_tween({
+      _color(context: context, ref: ref)[3] as String;
+  ColorTween colorTween({
     required BuildContext context,
     required WidgetRef ref,
   }) =>
       ColorTween(
-        begin: color_start_color(context: context, ref: ref),
-        end: color_end_color(context: context, ref: ref),
+        begin: startColor(context: context, ref: ref),
+        end: endColor(context: context, ref: ref),
       );
 
   /// ```
   /// return array = [Color clockcolor, Color start, Color end, String path]
   /// ```
-  List<dynamic> get({required BuildContext context, required WidgetRef ref}) {
+  List<dynamic> _color({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) {
     List<dynamic>? array;
     final isLight = ref.read(themeState.notifier).isLight(context: context);
     isLight
@@ -244,55 +245,46 @@ class ColorState with _$ColorState {
 
 @freezed
 class AlarmState with _$AlarmState {
+  const factory AlarmState({
+    @Default(TimeOfDay(hour: 12, minute: 00)) TimeOfDay targetTime,
+  }) = _AlarmState;
   const AlarmState._();
-  const factory AlarmState(
-          {@Default(TimeOfDay(hour: 12, minute: 00)) TimeOfDay targetTime}) =
-      _AlarmState;
-
-  // String get targetTimeStr()
-
-  // String get alarm_value_str => get_str();
-  // TimeOfDay get alarm_ampm => get_ampm();
-  // bool get alarm_is12 => alarmHour < 12;
-
-  // TimeOfDay get_value() => TimeOfDay(hour: alarmHour, minute: alarmMinute);
-  // String get_str() =>
-  //     '${alarmHour.toString().padLeft(2, '0')}:${alarmMinute.toString().padLeft(2, '0')}';
-  // TimeOfDay get_ampm() => alarm_value.replacing(hour: alarm_value.hourOfPeriod);
 }
 
 @freezed
 class AlarmTimeKeepingState with _$AlarmTimeKeepingState {
-  const AlarmTimeKeepingState._();
   const factory AlarmTimeKeepingState({
     @Default(Duration(seconds: 1)) Duration targetDuration,
     @Default(TimeOfDay(hour: 12, minute: 00)) TimeOfDay startedTime,
     @Default('') String headerText,
   }) = _AlarmTimeKeepingState;
+  const AlarmTimeKeepingState._();
 }
 
 @freezed
 class TimerState with _$TimerState {
-  const TimerState._();
-  const factory TimerState(
-      {@Default(Duration(minutes: 1)) Duration targetDuration,
-      @Default(Duration(minutes: 1)) Duration targetIntervalDuration,
-      @Default(false) bool isInterval,
-      @Default(0) int intervalLoop}) = _TimerState;
+  const factory TimerState({
+    @Default(Duration(minutes: 1)) Duration targetDuration,
+    @Default(Duration(minutes: 1)) Duration targetIntervalDuration,
+    @Default(false) bool isInterval,
+    @Default(0) int targetIntervalLoopingNum,
+  }) = _TimerState;
 
+  const TimerState._();
   String get targetDurationStr =>
       '${targetDuration.inHours.toString().padLeft(2, '0')}h:'
       '${targetDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
+  String get targetIntervalDurationStr =>
+      '${targetIntervalDuration.inHours.toString().padLeft(2, '0')}h:'
+      '${targetIntervalDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
 }
 
 @freezed
 class TimerTimeKeepingState with _$TimerTimeKeepingState {
+  const factory TimerTimeKeepingState({
+    @Default(0) int fabMode,
+    @Default(TimeOfDay(hour: 12, minute: 0)) TimeOfDay targetTime,
+    @Default(TimeOfDay(hour: 12, minute: 30)) TimeOfDay targetIntervalTime,
+  }) = _TimerTimeKeepingState;
   const TimerTimeKeepingState._();
-  const factory TimerTimeKeepingState(
-      {@Default(0)
-          int fabMode,
-      @Default(TimeOfDay(hour: 12, minute: 0))
-          TimeOfDay targetTime,
-      @Default(TimeOfDay(hour: 12, minute: 30))
-          TimeOfDay targetIntervalTime}) = _TimerTimeKeepingState;
 }

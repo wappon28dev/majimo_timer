@@ -41,7 +41,7 @@ class Setting extends HookConsumerWidget {
       locale: context.locale,
       theme: MyTheme().lightTheme,
       darkTheme: MyTheme().darkTheme,
-      themeMode: ref.read(themeState).theme_value,
+      themeMode: ref.read(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: appbar(context: context, ref: ref),
@@ -52,7 +52,7 @@ class Setting extends HookConsumerWidget {
               section(t.app_appearance.t),
               ListTile(
                 title: Text(t.change_lang.t),
-                subtitle: Text(langstate.lang_caption),
+                subtitle: Text(langstate.langCaption),
                 leading: const Icon(Icons.language),
                 onTap: () {
                   change_lang(context, ref);
@@ -60,8 +60,8 @@ class Setting extends HookConsumerWidget {
               ),
               ListTile(
                 title: Text(t.app_theme.t),
-                subtitle: Text(themestate.theme_caption),
-                leading: Icon(themestate.theme_icon),
+                subtitle: Text(themestate.themeCaption),
+                leading: Icon(themestate.themeIcon),
                 onTap: () {
                   app_theme(context, ref);
                 },
@@ -69,24 +69,24 @@ class Setting extends HookConsumerWidget {
               section(t.clock_appearance.t),
               ListTile(
                 title: Text(t.clock_style.t),
-                subtitle: Text(clockstate.is24_caption),
-                leading: Icon(clockstate.is24_icon),
+                subtitle: Text(clockstate.is24Caption),
+                leading: Icon(clockstate.is24Icon),
                 onTap: () {
                   clock_style(context, ref);
                 },
               ),
               ListTile(
                 title: Text(t.clock_seconds.t),
-                subtitle: Text(clockstate.showSec_caption),
-                leading: Icon(clockstate.showSec_icon),
+                subtitle: Text(clockstate.showSecCaption),
+                leading: Icon(clockstate.showSecIcon),
                 onTap: () {
                   clock_showSec(context, ref);
                 },
               ),
               ListTile(
                 title: Text(t.clock_animation.t),
-                subtitle: Text(clockstate.animation_caption),
-                leading: Icon(clockstate.animation_icon),
+                subtitle: Text(clockstate.animationCaption),
+                leading: Icon(clockstate.animationIcon),
                 onTap: () {
                   clock_animation(context, ref);
                 },
@@ -94,15 +94,15 @@ class Setting extends HookConsumerWidget {
               section(t.toast.t),
               ListTile(
                 title: Text(t.toast_position.t),
-                subtitle: Text(generalstate.topToast_caption),
-                leading: Icon(generalstate.topToast_icon),
+                subtitle: Text(generalstate.topToastCaption),
+                leading: Icon(generalstate.topToastIcon),
                 onTap: () {
                   toast_position(context, ref);
                 },
               ),
               ListTile(
                 title: Text(t.toast_duration.t),
-                subtitle: Text(generalstate.toastDuration_caption),
+                subtitle: Text(generalstate.toastDurationCaption),
                 leading: const Icon(Icons.timelapse),
                 onTap: () {
                   toast_duration(context, ref);
@@ -191,12 +191,12 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
     actions: [
       IconButton(
         onPressed: () {
-          PrefManager.allremove();
+          PrefManager().allremove();
           Logger.e(
             '- from majimo_timer/lib/view/setting/body.dart \n'
             ' >> ! SharedPreferences All Removed ! <<',
           );
-          PrefManager.restore(ref, context);
+          PrefManager().restore(ref, context);
         },
         icon: const Icon(Icons.settings_backup_restore),
       )

@@ -34,7 +34,7 @@ class TimerPage extends HookConsumerWidget {
                         width: 80,
                         child: GestureDetector(
                             onLongPress: () =>
-                                alarmstate.tooltip(context: context),
+                                alarmstate.runTooltip(context: context),
                             onLongPressUp: () => Navigator.pop(context),
                             child: FloatingActionButton(
                               onPressed: () {
@@ -45,8 +45,8 @@ class TimerPage extends HookConsumerWidget {
                                             const TimerTimeKeepingPage()),
                                     (_) => false);
 
-                                ref.read(timerTKState.notifier).start();
-                                ref.read(generalState.notifier).showFAB();
+                                ref.read(timerTKState.notifier).whenStart();
+                                ref.read(generalState.notifier).runFAB();
                               },
                               heroTag: null,
                               splashColor: Colors.green.shade300,

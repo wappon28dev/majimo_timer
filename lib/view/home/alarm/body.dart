@@ -30,11 +30,11 @@ class AlarmPage extends HookConsumerWidget {
                         width: 80,
                         child: GestureDetector(
                             onLongPress: () =>
-                                alarmstate.tooltip(context: context),
+                                alarmstate.runTooltip(context: context),
                             onLongPressUp: () => Navigator.pop(context),
                             child: FloatingActionButton(
                               onPressed: () {
-                                alarmstate.push(context: context, ref: ref);
+                                alarmstate.runPush(context: context, ref: ref);
                               },
                               splashColor: Colors.green.shade300,
                               backgroundColor: Colors.green.shade200,

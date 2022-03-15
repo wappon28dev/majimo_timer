@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'state.dart';
@@ -17,9 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$GlobalStateTearOff {
   const _$GlobalStateTearOff();
 
-  _GlobalState call({bool isFirst = true}) {
+  _GlobalState call({bool isFirst = true, bool isTimeKeeping = false}) {
     return _GlobalState(
       isFirst: isFirst,
+      isTimeKeeping: isTimeKeeping,
     );
   }
 }
@@ -30,6 +32,7 @@ const $GlobalState = _$GlobalStateTearOff();
 /// @nodoc
 mixin _$GlobalState {
   bool get isFirst => throw _privateConstructorUsedError;
+  bool get isTimeKeeping => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GlobalStateCopyWith<GlobalState> get copyWith =>
@@ -41,7 +44,7 @@ abstract class $GlobalStateCopyWith<$Res> {
   factory $GlobalStateCopyWith(
           GlobalState value, $Res Function(GlobalState) then) =
       _$GlobalStateCopyWithImpl<$Res>;
-  $Res call({bool isFirst});
+  $Res call({bool isFirst, bool isTimeKeeping});
 }
 
 /// @nodoc
@@ -55,11 +58,16 @@ class _$GlobalStateCopyWithImpl<$Res> implements $GlobalStateCopyWith<$Res> {
   @override
   $Res call({
     Object? isFirst = freezed,
+    Object? isTimeKeeping = freezed,
   }) {
     return _then(_value.copyWith(
       isFirst: isFirst == freezed
           ? _value.isFirst
           : isFirst // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTimeKeeping: isTimeKeeping == freezed
+          ? _value.isTimeKeeping
+          : isTimeKeeping // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -72,7 +80,7 @@ abstract class _$GlobalStateCopyWith<$Res>
           _GlobalState value, $Res Function(_GlobalState) then) =
       __$GlobalStateCopyWithImpl<$Res>;
   @override
-  $Res call({bool isFirst});
+  $Res call({bool isFirst, bool isTimeKeeping});
 }
 
 /// @nodoc
@@ -88,11 +96,16 @@ class __$GlobalStateCopyWithImpl<$Res> extends _$GlobalStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isFirst = freezed,
+    Object? isTimeKeeping = freezed,
   }) {
     return _then(_GlobalState(
       isFirst: isFirst == freezed
           ? _value.isFirst
           : isFirst // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTimeKeeping: isTimeKeeping == freezed
+          ? _value.isTimeKeeping
+          : isTimeKeeping // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -101,15 +114,18 @@ class __$GlobalStateCopyWithImpl<$Res> extends _$GlobalStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_GlobalState with DiagnosticableTreeMixin implements _GlobalState {
-  const _$_GlobalState({this.isFirst = true});
+  const _$_GlobalState({this.isFirst = true, this.isTimeKeeping = false});
 
   @JsonKey()
   @override
   final bool isFirst;
+  @JsonKey()
+  @override
+  final bool isTimeKeeping;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GlobalState(isFirst: $isFirst)';
+    return 'GlobalState(isFirst: $isFirst, isTimeKeeping: $isTimeKeeping)';
   }
 
   @override
@@ -117,7 +133,8 @@ class _$_GlobalState with DiagnosticableTreeMixin implements _GlobalState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'GlobalState'))
-      ..add(DiagnosticsProperty('isFirst', isFirst));
+      ..add(DiagnosticsProperty('isFirst', isFirst))
+      ..add(DiagnosticsProperty('isTimeKeeping', isTimeKeeping));
   }
 
   @override
@@ -125,12 +142,16 @@ class _$_GlobalState with DiagnosticableTreeMixin implements _GlobalState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _GlobalState &&
-            const DeepCollectionEquality().equals(other.isFirst, isFirst));
+            const DeepCollectionEquality().equals(other.isFirst, isFirst) &&
+            const DeepCollectionEquality()
+                .equals(other.isTimeKeeping, isTimeKeeping));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(isFirst));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(isFirst),
+      const DeepCollectionEquality().hash(isTimeKeeping));
 
   @JsonKey(ignore: true)
   @override
@@ -139,10 +160,13 @@ class _$_GlobalState with DiagnosticableTreeMixin implements _GlobalState {
 }
 
 abstract class _GlobalState implements GlobalState {
-  const factory _GlobalState({bool isFirst}) = _$_GlobalState;
+  const factory _GlobalState({bool isFirst, bool isTimeKeeping}) =
+      _$_GlobalState;
 
   @override
   bool get isFirst;
+  @override
+  bool get isTimeKeeping;
   @override
   @JsonKey(ignore: true)
   _$GlobalStateCopyWith<_GlobalState> get copyWith =>
@@ -398,9 +422,11 @@ abstract class _GeneralState extends GeneralState {
 class _$CurrentDurationStateTearOff {
   const _$CurrentDurationStateTearOff();
 
-  _CurrentDurationState call({Duration current = Duration.zero}) {
+  _CurrentDurationState call(
+      {Duration current = Duration.zero, int currentIntervalLoopingNum = 0}) {
     return _CurrentDurationState(
       current: current,
+      currentIntervalLoopingNum: currentIntervalLoopingNum,
     );
   }
 }
@@ -411,6 +437,7 @@ const $CurrentDurationState = _$CurrentDurationStateTearOff();
 /// @nodoc
 mixin _$CurrentDurationState {
   Duration get current => throw _privateConstructorUsedError;
+  int get currentIntervalLoopingNum => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CurrentDurationStateCopyWith<CurrentDurationState> get copyWith =>
@@ -422,7 +449,7 @@ abstract class $CurrentDurationStateCopyWith<$Res> {
   factory $CurrentDurationStateCopyWith(CurrentDurationState value,
           $Res Function(CurrentDurationState) then) =
       _$CurrentDurationStateCopyWithImpl<$Res>;
-  $Res call({Duration current});
+  $Res call({Duration current, int currentIntervalLoopingNum});
 }
 
 /// @nodoc
@@ -437,12 +464,17 @@ class _$CurrentDurationStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? current = freezed,
+    Object? currentIntervalLoopingNum = freezed,
   }) {
     return _then(_value.copyWith(
       current: current == freezed
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
               as Duration,
+      currentIntervalLoopingNum: currentIntervalLoopingNum == freezed
+          ? _value.currentIntervalLoopingNum
+          : currentIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -454,7 +486,7 @@ abstract class _$CurrentDurationStateCopyWith<$Res>
           $Res Function(_CurrentDurationState) then) =
       __$CurrentDurationStateCopyWithImpl<$Res>;
   @override
-  $Res call({Duration current});
+  $Res call({Duration current, int currentIntervalLoopingNum});
 }
 
 /// @nodoc
@@ -471,12 +503,17 @@ class __$CurrentDurationStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? current = freezed,
+    Object? currentIntervalLoopingNum = freezed,
   }) {
     return _then(_CurrentDurationState(
       current: current == freezed
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
               as Duration,
+      currentIntervalLoopingNum: currentIntervalLoopingNum == freezed
+          ? _value.currentIntervalLoopingNum
+          : currentIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -486,15 +523,19 @@ class __$CurrentDurationStateCopyWithImpl<$Res>
 class _$_CurrentDurationState
     with DiagnosticableTreeMixin
     implements _CurrentDurationState {
-  const _$_CurrentDurationState({this.current = Duration.zero});
+  const _$_CurrentDurationState(
+      {this.current = Duration.zero, this.currentIntervalLoopingNum = 0});
 
   @JsonKey()
   @override
   final Duration current;
+  @JsonKey()
+  @override
+  final int currentIntervalLoopingNum;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CurrentDurationState(current: $current)';
+    return 'CurrentDurationState(current: $current, currentIntervalLoopingNum: $currentIntervalLoopingNum)';
   }
 
   @override
@@ -502,7 +543,9 @@ class _$_CurrentDurationState
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'CurrentDurationState'))
-      ..add(DiagnosticsProperty('current', current));
+      ..add(DiagnosticsProperty('current', current))
+      ..add(DiagnosticsProperty(
+          'currentIntervalLoopingNum', currentIntervalLoopingNum));
   }
 
   @override
@@ -510,12 +553,16 @@ class _$_CurrentDurationState
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _CurrentDurationState &&
-            const DeepCollectionEquality().equals(other.current, current));
+            const DeepCollectionEquality().equals(other.current, current) &&
+            const DeepCollectionEquality().equals(
+                other.currentIntervalLoopingNum, currentIntervalLoopingNum));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(current));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(current),
+      const DeepCollectionEquality().hash(currentIntervalLoopingNum));
 
   @JsonKey(ignore: true)
   @override
@@ -525,11 +572,14 @@ class _$_CurrentDurationState
 }
 
 abstract class _CurrentDurationState implements CurrentDurationState {
-  const factory _CurrentDurationState({Duration current}) =
-      _$_CurrentDurationState;
+  const factory _CurrentDurationState(
+      {Duration current,
+      int currentIntervalLoopingNum}) = _$_CurrentDurationState;
 
   @override
   Duration get current;
+  @override
+  int get currentIntervalLoopingNum;
   @override
   @JsonKey(ignore: true)
   _$CurrentDurationStateCopyWith<_CurrentDurationState> get copyWith =>
@@ -1466,12 +1516,12 @@ class _$TimerStateTearOff {
       {Duration targetDuration = const Duration(minutes: 1),
       Duration targetIntervalDuration = const Duration(minutes: 1),
       bool isInterval = false,
-      int intervalLoop = 0}) {
+      int targetIntervalLoopingNum = 0}) {
     return _TimerState(
       targetDuration: targetDuration,
       targetIntervalDuration: targetIntervalDuration,
       isInterval: isInterval,
-      intervalLoop: intervalLoop,
+      targetIntervalLoopingNum: targetIntervalLoopingNum,
     );
   }
 }
@@ -1484,7 +1534,7 @@ mixin _$TimerState {
   Duration get targetDuration => throw _privateConstructorUsedError;
   Duration get targetIntervalDuration => throw _privateConstructorUsedError;
   bool get isInterval => throw _privateConstructorUsedError;
-  int get intervalLoop => throw _privateConstructorUsedError;
+  int get targetIntervalLoopingNum => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TimerStateCopyWith<TimerState> get copyWith =>
@@ -1500,7 +1550,7 @@ abstract class $TimerStateCopyWith<$Res> {
       {Duration targetDuration,
       Duration targetIntervalDuration,
       bool isInterval,
-      int intervalLoop});
+      int targetIntervalLoopingNum});
 }
 
 /// @nodoc
@@ -1516,7 +1566,7 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
     Object? targetDuration = freezed,
     Object? targetIntervalDuration = freezed,
     Object? isInterval = freezed,
-    Object? intervalLoop = freezed,
+    Object? targetIntervalLoopingNum = freezed,
   }) {
     return _then(_value.copyWith(
       targetDuration: targetDuration == freezed
@@ -1531,9 +1581,9 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
           ? _value.isInterval
           : isInterval // ignore: cast_nullable_to_non_nullable
               as bool,
-      intervalLoop: intervalLoop == freezed
-          ? _value.intervalLoop
-          : intervalLoop // ignore: cast_nullable_to_non_nullable
+      targetIntervalLoopingNum: targetIntervalLoopingNum == freezed
+          ? _value.targetIntervalLoopingNum
+          : targetIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -1549,7 +1599,7 @@ abstract class _$TimerStateCopyWith<$Res> implements $TimerStateCopyWith<$Res> {
       {Duration targetDuration,
       Duration targetIntervalDuration,
       bool isInterval,
-      int intervalLoop});
+      int targetIntervalLoopingNum});
 }
 
 /// @nodoc
@@ -1567,7 +1617,7 @@ class __$TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
     Object? targetDuration = freezed,
     Object? targetIntervalDuration = freezed,
     Object? isInterval = freezed,
-    Object? intervalLoop = freezed,
+    Object? targetIntervalLoopingNum = freezed,
   }) {
     return _then(_TimerState(
       targetDuration: targetDuration == freezed
@@ -1582,9 +1632,9 @@ class __$TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
           ? _value.isInterval
           : isInterval // ignore: cast_nullable_to_non_nullable
               as bool,
-      intervalLoop: intervalLoop == freezed
-          ? _value.intervalLoop
-          : intervalLoop // ignore: cast_nullable_to_non_nullable
+      targetIntervalLoopingNum: targetIntervalLoopingNum == freezed
+          ? _value.targetIntervalLoopingNum
+          : targetIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -1597,7 +1647,7 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
       {this.targetDuration = const Duration(minutes: 1),
       this.targetIntervalDuration = const Duration(minutes: 1),
       this.isInterval = false,
-      this.intervalLoop = 0})
+      this.targetIntervalLoopingNum = 0})
       : super._();
 
   @JsonKey()
@@ -1611,11 +1661,11 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
   final bool isInterval;
   @JsonKey()
   @override
-  final int intervalLoop;
+  final int targetIntervalLoopingNum;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerState(targetDuration: $targetDuration, targetIntervalDuration: $targetIntervalDuration, isInterval: $isInterval, intervalLoop: $intervalLoop)';
+    return 'TimerState(targetDuration: $targetDuration, targetIntervalDuration: $targetIntervalDuration, isInterval: $isInterval, targetIntervalLoopingNum: $targetIntervalLoopingNum)';
   }
 
   @override
@@ -1627,7 +1677,8 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
       ..add(
           DiagnosticsProperty('targetIntervalDuration', targetIntervalDuration))
       ..add(DiagnosticsProperty('isInterval', isInterval))
-      ..add(DiagnosticsProperty('intervalLoop', intervalLoop));
+      ..add(DiagnosticsProperty(
+          'targetIntervalLoopingNum', targetIntervalLoopingNum));
   }
 
   @override
@@ -1641,8 +1692,8 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
                 .equals(other.targetIntervalDuration, targetIntervalDuration) &&
             const DeepCollectionEquality()
                 .equals(other.isInterval, isInterval) &&
-            const DeepCollectionEquality()
-                .equals(other.intervalLoop, intervalLoop));
+            const DeepCollectionEquality().equals(
+                other.targetIntervalLoopingNum, targetIntervalLoopingNum));
   }
 
   @override
@@ -1651,7 +1702,7 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(targetDuration),
       const DeepCollectionEquality().hash(targetIntervalDuration),
       const DeepCollectionEquality().hash(isInterval),
-      const DeepCollectionEquality().hash(intervalLoop));
+      const DeepCollectionEquality().hash(targetIntervalLoopingNum));
 
   @JsonKey(ignore: true)
   @override
@@ -1664,7 +1715,7 @@ abstract class _TimerState extends TimerState {
       {Duration targetDuration,
       Duration targetIntervalDuration,
       bool isInterval,
-      int intervalLoop}) = _$_TimerState;
+      int targetIntervalLoopingNum}) = _$_TimerState;
   const _TimerState._() : super._();
 
   @override
@@ -1674,7 +1725,7 @@ abstract class _TimerState extends TimerState {
   @override
   bool get isInterval;
   @override
-  int get intervalLoop;
+  int get targetIntervalLoopingNum;
   @override
   @JsonKey(ignore: true)
   _$TimerStateCopyWith<_TimerState> get copyWith =>

@@ -72,9 +72,11 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                   const SizedBox(width: 5),
                   IconButton(
                     onPressed: () {
-                      ref
-                          .read(generalState.notifier)
-                          .push(context: context, page: const Debug());
+                      ref.read(generalState.notifier).runPush(
+                            context: context,
+                            page: const Debug(),
+                            isReplace: false,
+                          );
                       Logger.e(
                         '- from majimo_timer/lib/view/home/root/widget.dart \n'
                         ' > debug page opened',

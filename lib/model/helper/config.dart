@@ -7,17 +7,16 @@ class PathStore {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.3.0 β';
-  final String buildDate = '2022/03/13 2:52';
+  final String versionStr = 'majimo_timer v0.3.1 β';
+  final String buildDate = '2022/03/16 3:00';
   final String changeLog = '''
 [fix]
-  1. Follow new linter rules: dart(require_trailing_commas)
-  2. Classes & variables renamed
-  3. Switch 2 splash rive animations with themeMode
-  4. New columns in setting screen
-  5. Available Android Notification Channel's translated name
-  6. Rewrite .gitignore
-  7. Preparing iOS build !
+  1. ALL classes & variables renamed
+  2. variables' & functions' name:
+      lowercase_with_underscores
+         -> lowerCamelCase
+  3. Rewrite .gitignore
+  4. Preparing iOS build !
 
 [known-bug]
   1. Overlay TK screen always applied

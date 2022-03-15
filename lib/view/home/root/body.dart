@@ -1,5 +1,3 @@
-// ignore_for_file: implementation_imports
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
@@ -25,7 +23,7 @@ class HomePage extends HookConsumerWidget {
     final isLandscape = orientation == Orientation.landscape;
 
     useEffect(() {
-      GlobalController.switch_full_screen(value: false);
+      GlobalController.switchFullScreen(value: false);
     });
 
     return MaterialApp(
@@ -34,7 +32,7 @@ class HomePage extends HookConsumerWidget {
         locale: context.locale,
         theme: MyTheme().lightTheme,
         darkTheme: MyTheme().darkTheme,
-        themeMode: ref.watch(themeState).theme_value,
+        themeMode: ref.watch(themeState).themeMode,
         debugShowCheckedModeBanner: false,
         home: !isLandscape
             ? buildVertical(context, ref)
@@ -75,9 +73,11 @@ Widget fab({required BuildContext context, required WidgetRef ref}) {
           onLongPressUp: () => null,
           child: FloatingActionButton(
             heroTag: 'global',
-            onPressed: () => ref
-                .read(generalState.notifier)
-                .push_replace(context: context, page: const Tutorial()),
+            onPressed: () => ref.read(generalState.notifier).runPush(
+                  context: context,
+                  page: const Tutorial(),
+                  isReplace: true,
+                ),
             splashColor: Colors.green.shade300,
             backgroundColor: Colors.tealAccent,
             child: const Icon(

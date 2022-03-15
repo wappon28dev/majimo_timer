@@ -1,6 +1,3 @@
-// ignore: lines_longer_than_80_chars
-// ignore_for_file: avoid_classes_with_only_static_members, non_constant_identifier_names, constant_identifier_names
-
 import 'dart:async';
 
 import 'package:awesome_notifications/awesome_notifications.dart';

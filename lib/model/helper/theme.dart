@@ -1,16 +1,10 @@
-// ignore_for_file: non_constant_identifier_names
-
-import 'package:flutter/material.dart';
-import 'package:easy_localization_loader/easy_localization_loader.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/pref.dart';
-import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/view/setting/body.dart';
-import '../../main.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_color/flutter_color.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../main.dart';
 
 enum ColorKey {
   red,

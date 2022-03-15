@@ -69,7 +69,7 @@ Future<void> main() async {
     ),
   );
   Logger.i(' -- Start Majimo_Timer -- ');
-  GlobalController.switch_full_screen(value: false);
+  GlobalController.switchFullScreen(value: false);
 }
 
 class MyApp extends HookConsumerWidget {
@@ -78,7 +78,7 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
-      PrefManager.restore(ref, context);
+      PrefManager().restore(ref, context);
 
       return null;
     });
@@ -91,7 +91,7 @@ class MyApp extends HookConsumerWidget {
         locale: context.locale,
         theme: MyTheme().lightTheme,
         darkTheme: MyTheme().darkTheme,
-        themeMode: ref.read(themeState).theme_value,
+        themeMode: ref.read(themeState).themeMode,
         debugShowCheckedModeBanner: false,
         home: const Splash(),
       ),

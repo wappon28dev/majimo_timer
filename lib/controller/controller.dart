@@ -1,9 +1,7 @@
-// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars, implementation_imports
-
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dart_date/src/dart_date.dart';
+import 'package:dart_date/dart_date.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
@@ -23,13 +21,13 @@ import 'package:wakelock/wakelock.dart';
 
 class GlobalController extends StateNotifier<GlobalState> {
   GlobalController() : super(const GlobalState());
-  void change_isFirst({required bool value}) {
+  void updateIsFirst({required bool value}) {
     state = state.copyWith(isFirst: value);
-    PrefManager.setBool(key: PrefKey.isFirst, value: value);
+    PrefManager().setBool(key: PrefKey.isFirst, value: value);
     Logger.s('- from GlobalState \n >> save bool isFirst = ${state.isFirst}');
   }
 
-  static void switch_full_screen({required bool value}) {
+  static void switchFullScreen({required bool value}) {
     if (Platform.isAndroid) {
       if (value) {
         FlutterWindowManager.clearFlags(
@@ -54,73 +52,75 @@ class GeneralController extends StateNotifier<GeneralState> {
   GeneralController() : super(const GeneralState());
 
   // change_value function
-  void change_topToast({required bool value}) {
+  void updateTopToast({required bool value}) {
     state = state.copyWith(topToast: value);
-    PrefManager.setBool(key: PrefKey.topToast, value: value);
+    PrefManager().setBool(key: PrefKey.topToast, value: value);
     Logger.s(
       '- from GeneralState \n >> save bool toptoast = ${state.topToast}',
     );
   }
 
-  void change_toastDuration({required int value}) {
+  void updateToastDuration({required int value}) {
     state = state.copyWith(toastDuration: value);
-    PrefManager.setInt(key: PrefKey.toastDuration, value: value);
+    PrefManager().setInt(key: PrefKey.toastDuration, value: value);
     Logger.s(
       '- from GeneralState \n >> save int toastDuration = ${state.toastDuration}',
     );
   }
 
-  Future<void> home() async {
-    await showFAB();
-    change_showFAB(value: true);
+  Future<void> whenHome() async {
+    await runFAB();
+    updateShowFAB(value: true);
     await Wakelock.disable();
     state = state.copyWith(opacity: 1);
     state = state.copyWith(status: t.greetings.t);
 
     await Future<void>.delayed(const Duration(seconds: 2));
-    await change_status(text: DateTime.now().format('yMMMMEEEEd', t.lang.t));
+    await updateStatus(text: DateTime.now().format('yMMMMEEEEd', t.lang.t));
   }
 
-  Future<void> expand(int i) async {
-    change_showFAB(value: false);
+  Future<void> whenExpand(int i) async {
+    updateShowFAB(value: false);
     await Wakelock.enable();
-    await change_status(text: '置き時計モード');
+    await updateStatus(text: '置き時計モード');
     await Future<void>.delayed(const Duration(seconds: 3));
-    await change_status(
+    await updateStatus(
       text:
           '${DateTime.now().format('yMMMMEEEEd', t.lang.t)}・${AppDataStore().versionStr}',
     );
   }
 
-  Future<void> change_status({required String text}) async {
+  Future<void> updateStatus({required String text}) async {
     state = state.copyWith(opacity: 0);
     await Future<void>.delayed(const Duration(milliseconds: 600));
     state = state.copyWith(opacity: 1);
     state = state.copyWith(status: text);
   }
 
-  void push({required BuildContext context, required Widget page}) =>
-      Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => page,
-        ),
-      );
+  void runPush({
+    required BuildContext context,
+    required Widget page,
+    required bool isReplace,
+  }) =>
+      !isReplace
+          ? Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => page,
+              ),
+            )
+          : Navigator.pushAndRemoveUntil<void>(
+              context,
+              MaterialPageRoute<void>(builder: (context) => page),
+              (_) => false,
+            );
 
-  void push_replace({required BuildContext context, required Widget page}) {
-    Navigator.pushAndRemoveUntil<void>(
-      context,
-      MaterialPageRoute<void>(builder: (context) => page),
-      (_) => false,
-    );
-  }
-
-  Future<void> showFAB() async {
+  Future<void> runFAB() async {
     state = state.copyWith(showFAB: false);
     await Future<void>.delayed(const Duration(milliseconds: 300));
     state = state.copyWith(showFAB: true);
   }
 
-  void change_showFAB({required bool value}) =>
+  void updateShowFAB({required bool value}) =>
       state = state.copyWith(showFAB: value);
 }
 
@@ -136,9 +136,9 @@ class CurrentDurationController extends StateNotifier<CurrentDurationState> {
 class ThemeController extends StateNotifier<ThemeState> {
   ThemeController() : super(const ThemeState());
   // change_value functions
-  void change({required int value}) {
+  void updateTheme({required int value}) {
     state = state.copyWith(theme: value);
-    PrefManager.setInt(key: PrefKey.appTheme, value: value);
+    PrefManager().setInt(key: PrefKey.appTheme, value: value);
     Logger.s('- from ThemeState \n >> save int theme = ${state.theme}');
   }
 
@@ -153,7 +153,7 @@ class ThemeController extends StateNotifier<ThemeState> {
 
 class LangController extends StateNotifier<LangState> {
   LangController() : super(const LangState());
-  void change({required BuildContext context, required int value}) {
+  void updateLang({required BuildContext context, required int value}) {
     void locale(Locale locale) => context.setLocale(locale);
     state = state.copyWith(lang: value);
     switch (value) {
@@ -167,7 +167,7 @@ class LangController extends StateNotifier<LangState> {
         locale(const Locale('en', 'US'));
         break;
     }
-    PrefManager.setInt(key: PrefKey.changeLanguage, value: state.lang);
+    PrefManager().setInt(key: PrefKey.changeLanguage, value: state.lang);
     Logger.s('- from LangState \n >> save int lang = ${state.lang}');
   }
 }
@@ -175,21 +175,21 @@ class LangController extends StateNotifier<LangState> {
 class ClockController extends StateNotifier<ClockState> {
   ClockController() : super(const ClockState());
   // change_value functions
-  void change_is24({required bool value}) {
+  void updateIs24({required bool value}) {
     state = state.copyWith(is24: value);
-    PrefManager.setBool(key: PrefKey.clockStyle, value: value);
+    PrefManager().setBool(key: PrefKey.clockStyle, value: value);
     Logger.s('- from ClockState \n >> save bool is24 = $value');
   }
 
-  void change_showSec({required bool value}) {
+  void updateShowSec({required bool value}) {
     state = state.copyWith(showSec: value);
-    PrefManager.setBool(key: PrefKey.showSec, value: value);
+    PrefManager().setBool(key: PrefKey.showSec, value: value);
     Logger.s('- from ClockState \n >> save bool showSec = $value');
   }
 
-  void change_animation({required int value}) {
+  void updateAnimation({required int value}) {
     state = state.copyWith(animation: value);
-    PrefManager.setInt(key: PrefKey.clockAnimation, value: value);
+    PrefManager().setInt(key: PrefKey.clockAnimation, value: value);
     Logger.s('- from ClockState \n >> save int animation = $value');
   }
 }
@@ -197,7 +197,7 @@ class ClockController extends StateNotifier<ClockState> {
 class ColorController extends StateNotifier<ColorState> {
   ColorController() : super(const ColorState());
   // change_value function
-  Future<void> change({required bool isLight}) async {
+  Future<void> updateColor({required bool isLight}) async {
     state = state.copyWith(opacity: 0);
     await Future<void>.delayed(const Duration(milliseconds: 100)); // 何故か必要
     state = state.copyWith(opacity: 1);
@@ -205,10 +205,10 @@ class ColorController extends StateNotifier<ColorState> {
 
   void stop() {
     state = state.copyWith(opacity: 0);
-    exit();
+    runExit();
   }
 
-  static Future<void> exit() async {
+  static Future<void> runExit() async {
     await FullScreen.exitFullScreen();
   }
 }
@@ -217,7 +217,7 @@ class AlarmController extends StateNotifier<AlarmState> {
   AlarmController(this.read) : super(const AlarmState());
   final Reader read;
 
-  void push({required BuildContext context, required WidgetRef ref}) {
+  void runPush({required BuildContext context, required WidgetRef ref}) {
     Navigator.pushAndRemoveUntil<void>(
       context,
       MaterialPageRoute<void>(
@@ -226,11 +226,11 @@ class AlarmController extends StateNotifier<AlarmState> {
       (_) => false,
     );
 
-    ref.read(generalState.notifier).showFAB();
-    ref.read(alarmTKState.notifier).start();
+    ref.read(generalState.notifier).runFAB();
+    ref.read(alarmTKState.notifier).whenStart();
   }
 
-  void tooltip({required BuildContext context}) {
+  void runTooltip({required BuildContext context}) {
     // Navigator.of(context).push(TransparentRoute(
     //   builder: (BuildContext context) => RippleBackdropAnimatePage(
     //       childFade: true,
@@ -259,7 +259,7 @@ class AlarmController extends StateNotifier<AlarmState> {
   /// set internal time
   ///
   ///   ex.) 5:42 => 5:50
-  void internal() {
+  void runInitialize() {
     final now = DateTime.now();
     final tar = state.targetTime;
     final minute = (tar.minute / 10).ceil() * 10;
@@ -275,7 +275,7 @@ class AlarmController extends StateNotifier<AlarmState> {
     );
   }
 
-  void targetTimeChange({required TimeOfDay value}) =>
+  void updateTargetTime({required TimeOfDay value}) =>
       state = state.copyWith(targetTime: value);
 
   String get targetTimeStr {
@@ -311,19 +311,19 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
 
   final controller = CountDownController();
 
-  void start() {
-    final tar = calculateDuration(target: read(alarmState).targetTime);
+  void whenStart() {
+    final tar = _calculateDuration(target: read(alarmState).targetTime);
     final duration = DateTimeRange(start: DateTime.now(), end: tar).duration;
     state = state.copyWith(targetDuration: duration);
     Logger.i('tar => $tar');
     Logger.i('duration => $duration');
-    status();
+    _state();
     NotificationManager().alarmFinish(target: tar);
     NotificationManager().alarmTimeKeeping(target: tar);
-    GlobalController.switch_full_screen(value: false);
+    GlobalController.switchFullScreen(value: false);
   }
 
-  Future<void> status() async {
+  Future<void> _state() async {
     late String duration;
     duration = '約 ${state.targetDuration.inMinutes} 分間';
     if (state.targetDuration.inSeconds < 60) {
@@ -332,17 +332,17 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
     if (state.targetDuration.inMinutes > 60) {
       duration = '約 ${state.targetDuration.inHours} 時間';
     }
-    await read(generalState.notifier).change_status(text: '終了まで $duration です');
+    await read(generalState.notifier).updateStatus(text: '終了まで $duration です');
     await Future<void>.delayed(const Duration(seconds: 5));
-    await read(generalState.notifier).change_status(text: 'アラームモード');
+    await read(generalState.notifier).updateStatus(text: 'アラームモード');
   }
 
-  DateTime calculateDuration({required TimeOfDay target}) {
+  DateTime _calculateDuration({required TimeOfDay target}) {
     final now = DateTime.now();
     final tar = target;
-    final now_int = (now.hour * 3600) + (now.minute * 60) + (now.second);
-    final val_int = (tar.hour * 3600) + (tar.minute * 60);
-    final day = (now_int < val_int) ? now.day : now.day + 1;
+    final intNow = (now.hour * 3600) + (now.minute * 60) + (now.second);
+    final intVal = (tar.hour * 3600) + (tar.minute * 60);
+    final day = (intNow < intVal) ? now.day : now.day + 1;
     return DateTime(now.year, now.month, day, tar.hour, tar.minute);
   }
 }
@@ -350,16 +350,22 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
 class TimerController extends StateNotifier<TimerState> {
   TimerController() : super(const TimerState());
 
-  void change_target({required int value}) {
+  void updateTargetDuration({required int value}) {
     state = state.copyWith(targetDuration: Duration(minutes: value));
-    PrefManager.setInt(key: PrefKey.timerTarget, value: value);
+    PrefManager().setInt(key: PrefKey.timerTarget, value: value);
     Logger.s('- from TimerState \n >> save int timerTarget = $value');
   }
 
-  void change_interval({required int value}) {
+  void updateTargetIntervalDuration({required int value}) {
     state = state.copyWith(targetIntervalDuration: Duration(minutes: value));
-    PrefManager.setInt(key: PrefKey.timerInterval, value: value);
+    PrefManager().setInt(key: PrefKey.timerInterval, value: value);
     Logger.s('- from TimerState \n >> save int timerInterval = $value');
+  }
+
+  void updateIntervalLoopingNum({required int value}) {
+    state = state.copyWith(targetIntervalLoopingNum: value);
+    PrefManager().setInt(key: PrefKey.timerInterval, value: value);
+    Logger.s('- from TimerState \n >> save int intervalLoopingNum = $value');
   }
 }
 
@@ -369,38 +375,40 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
 
   final controller = CountDownController();
 
-  void start() {
-    change_fabMode(value: 0);
+  void whenStart() {
+    updateFabMode(value: 0);
     final target = DateTime.now().add(read(timerState).targetDuration);
     state = state.copyWith(
       targetTime: TimeOfDay(hour: target.hour, minute: target.minute),
     );
     Logger.i(
-      ' now     => ${DateTime.now()} \n duration  => ${read(timerState).targetDuration} \n target  => $target',
+      ' now     => ${DateTime.now()}'
+      'duration => ${read(timerState).targetDuration} \n target  => $target',
     );
     NotificationManager().timerFinish(target: target);
     NotificationManager().timerTimeKeeping(target: target);
     // controller.start();
   }
 
-  void change_fabMode({required int value}) =>
+  void updateFabMode({required int value}) =>
       state = state.copyWith(fabMode: value);
 
-  void pause() {
+  void whenPause() {
     controller.pause();
     NotificationManager().cancelAllNotifications();
-    change_fabMode(value: 1);
+    updateFabMode(value: 1);
   }
 
-  void resume() {
+  void whenResume() {
     final target = DateTime.now().add(read(currentDurationState).current);
     Logger.i(
-      ' now     => ${DateTime.now()} \n current => ${read(currentDurationState).current} \n target  => $target',
+      ' now     => ${DateTime.now()} \n'
+      'current => ${read(currentDurationState).current} \n target  => $target',
     );
     NotificationManager().timerFinish(target: target);
     NotificationManager().timerTimeKeeping(target: target);
     controller.resume();
-    change_fabMode(value: 0);
+    updateFabMode(value: 0);
   }
 
   TimeOfDay get startedTime {

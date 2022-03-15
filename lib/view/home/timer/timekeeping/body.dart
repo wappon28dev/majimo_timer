@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, cascade_invocations
-
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -31,7 +29,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
               width: 80,
               child: FloatingActionButton(
                 backgroundColor: Colors.amber,
-                onPressed: () => ref.read(timerTKState.notifier).pause(),
+                onPressed: () => ref.read(timerTKState.notifier).whenPause(),
                 heroTag: 'global',
                 child: const Icon(
                   Icons.pause,
@@ -46,10 +44,13 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
               child: FloatingActionButton(
                 backgroundColor: Colors.red,
                 onPressed: () {
-                  generalstate.push_replace(
-                      context: context, page: const HomePage());
+                  generalstate.runPush(
+                    context: context,
+                    page: const HomePage(),
+                    isReplace: true,
+                  );
                   NotificationManager().cancelAllNotifications();
-                  generalstate.home();
+                  generalstate.whenHome();
                 },
                 child: const Icon(
                   Icons.stop,
@@ -62,7 +63,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
               height: 80,
               width: 80,
               child: FloatingActionButton(
-                onPressed: ref.read(timerTKState.notifier).resume,
+                onPressed: ref.read(timerTKState.notifier).whenResume,
                 splashColor: Colors.green.shade300,
                 backgroundColor: Colors.green.shade100,
                 heroTag: 'global',
@@ -79,10 +80,13 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
               child: FloatingActionButton(
                 backgroundColor: Colors.red,
                 onPressed: () {
-                  generalstate.push_replace(
-                      context: context, page: const HomePage());
+                  generalstate.runPush(
+                    context: context,
+                    page: const HomePage(),
+                    isReplace: true,
+                  );
                   NotificationManager().cancelAllNotifications();
-                  generalstate.home();
+                  generalstate.whenHome();
                 },
                 child: const Icon(
                   Icons.stop,
@@ -95,10 +99,13 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
           return FloatingActionButton(
             backgroundColor: Colors.red,
             onPressed: () {
-              generalstate.push_replace(
-                  context: context, page: const HomePage());
+              generalstate.runPush(
+                context: context,
+                page: const HomePage(),
+                isReplace: true,
+              );
               NotificationManager().cancelAllNotifications();
-              generalstate.home();
+              generalstate.whenHome();
             },
             // heroTag: null,
             child: const Icon(
@@ -114,7 +121,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
     return MaterialApp(
         theme: MyTheme().lightTheme,
         darkTheme: MyTheme().darkTheme,
-        themeMode: ref.read(themeState).theme_value,
+        themeMode: ref.read(themeState).themeMode,
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             floatingActionButtonLocation:

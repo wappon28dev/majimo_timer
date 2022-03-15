@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, cascade_invocations, implementation_imports, lines_longer_than_80_chars
-
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,38 +19,43 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
     final show = ref.watch(generalState).showFAB;
 
     return MaterialApp(
-        theme: MyTheme().lightTheme,
-        darkTheme: MyTheme().darkTheme,
-        themeMode: ref.watch(themeState).theme_value,
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: show
-                ? SizedBox(
-                    height: 80,
-                    width: 80,
-                    child: FloatingActionButton(
-                      splashColor: Colors.red.shade400,
-                      backgroundColor: Colors.red,
-                      onPressed: () {
-                        generalstate.push_replace(
-                            context: context, page: const HomePage());
-                        NotificationManager().cancelAllNotifications();
-                        generalstate.home();
-                      },
-                      heroTag: null,
-                      child: const Icon(
-                        Icons.stop,
-                        color: Colors.white,
-                      ),
-                    ))
-                : null,
-            // floatingActionButtonLocation:
-            //     FloatingActionButtonLocation.centerDocked,
-            body: !isLandscape
-                ? buildVertical(context, ref)
-                : buildHorizontal(context)));
+      theme: MyTheme().lightTheme,
+      darkTheme: MyTheme().darkTheme,
+      themeMode: ref.watch(themeState).themeMode,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: show
+            ? SizedBox(
+                height: 80,
+                width: 80,
+                child: FloatingActionButton(
+                  splashColor: Colors.red.shade400,
+                  backgroundColor: Colors.red,
+                  onPressed: () {
+                    generalstate.runPush(
+                      context: context,
+                      page: const HomePage(),
+                      isReplace: true,
+                    );
+                    NotificationManager().cancelAllNotifications();
+                    generalstate.whenHome();
+                  },
+                  heroTag: null,
+                  child: const Icon(
+                    Icons.stop,
+                    color: Colors.white,
+                  ),
+                ),
+              )
+            : null,
+        // floatingActionButtonLocation:
+        //     FloatingActionButtonLocation.centerDocked,
+        body: !isLandscape
+            ? buildVertical(context, ref)
+            : buildHorizontal(context),
+      ),
+    );
   }
 }
 
@@ -64,8 +67,10 @@ Widget buildHorizontal(BuildContext context) {
   );
 }
 
-Widget analogclock_timekeeping(
-    {required BuildContext context, required WidgetRef ref}) {
+Widget analogclock_timekeeping({
+  required BuildContext context,
+  required WidgetRef ref,
+}) {
   final isLight = ref.read(themeState.notifier).isLight(context: context);
   final showSec = ref.read(clockState).showSec;
   return FlutterAnalogClock(
