@@ -237,7 +237,7 @@ class NotificationManager {
 }
 
 class ToastManager {
-  static void toast({
+  void toast({
     required BuildContext context,
     required WidgetRef ref,
     required int id,

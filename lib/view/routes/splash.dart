@@ -35,7 +35,8 @@ class _SplashState extends ConsumerState<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    Logger.i(MyTheme().get_theme(context: context, ref: ref).backgroundColor);
+    Logger.i(
+        MyTheme().getThemeData(context: context, ref: ref).backgroundColor);
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -43,7 +44,8 @@ class _SplashState extends ConsumerState<Splash> {
         padding: const EdgeInsets.all(8),
         width: double.infinity,
         height: double.infinity,
-        color: MyTheme().get_theme(context: context, ref: ref).backgroundColor,
+        color:
+            MyTheme().getThemeData(context: context, ref: ref).backgroundColor,
         child: ref.read(themeState.notifier).isLight(context: context)
             ? RiveAnimation.asset(PathStore().splashLight)
             : RiveAnimation.asset(PathStore().splashDark),

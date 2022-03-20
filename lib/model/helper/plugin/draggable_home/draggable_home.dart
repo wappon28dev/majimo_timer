@@ -267,7 +267,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                                   .read(themeState.notifier)
                                   .isLight(context: context));
 
-                          ToastManager.toast(context: context, id: 1, ref: ref);
+                          ToastManager().toast(context: context, id: 1, ref: ref);
                         });
                         await FullScreen.enterFullScreen(
                             FullScreenMode.EMERSIVE_STICKY);

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -27,10 +29,11 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                 ),
                 subtitle: Text(
                   '>> ${AppDataStore().versionStr} << \n ${AppDataStore().buildDate} \n ${AppDataStore().changeLog}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 10,
-                    fontFamily: 'monospace',
+                    fontFamily:
+                        Platform.isAndroid ? 'monospace' : 'Menlo-Regular',
                   ),
                 ),
                 leading: const Icon(
@@ -60,7 +63,7 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                   const SizedBox(width: 2),
                   IconButton(
                     onPressed: () {
-                      ToastManager.toast(context: context, ref: ref, id: 0);
+                      ToastManager().toast(context: context, ref: ref, id: 0);
                       Logger.e(
                         '- from majimo_timer/lib/view/home/root/widget.dart \n'
                         ' > toast test',

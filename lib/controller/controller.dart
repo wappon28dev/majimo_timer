@@ -17,6 +17,7 @@ import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/alarm/timekeeping/body.dart';
 import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wakelock/wakelock.dart';
 
 class GlobalController extends StateNotifier<GlobalState> {
@@ -64,7 +65,8 @@ class GeneralController extends StateNotifier<GeneralState> {
     state = state.copyWith(toastDuration: value);
     PrefManager().setInt(key: PrefKey.toastDuration, value: value);
     Logger.s(
-      '- from GeneralState \n >> save int toastDuration = ${state.toastDuration}',
+      '- from GeneralState'
+      '\n >> save int toastDuration = ${state.toastDuration}',
     );
   }
 
@@ -85,8 +87,8 @@ class GeneralController extends StateNotifier<GeneralState> {
     await updateStatus(text: '置き時計モード');
     await Future<void>.delayed(const Duration(seconds: 3));
     await updateStatus(
-      text:
-          '${DateTime.now().format('yMMMMEEEEd', t.lang.t)}・${AppDataStore().versionStr}',
+      text: '${DateTime.now().format('yMMMMEEEEd', t.lang.t)}'
+          '・${AppDataStore().versionStr}',
     );
   }
 
@@ -122,6 +124,10 @@ class GeneralController extends StateNotifier<GeneralState> {
 
   void updateShowFAB({required bool value}) =>
       state = state.copyWith(showFAB: value);
+
+  Future<void> runURL({required String url}) async {
+    await launch(url);
+  }
 }
 
 class CurrentDurationController extends StateNotifier<CurrentDurationState> {
@@ -231,14 +237,6 @@ class AlarmController extends StateNotifier<AlarmState> {
   }
 
   void runTooltip({required BuildContext context}) {
-    // Navigator.of(context).push(TransparentRoute(
-    //   builder: (BuildContext context) => RippleBackdropAnimatePage(
-    //       childFade: true,
-    //       duration: 300,
-    //       blurRadius: 20,
-    //       bottomHeight: 0,
-    //       child: Center(child: Text('test widget'))),
-    // ));
     RippleBackdropAnimatePage.show(
       context: context,
       childFade: true,
@@ -261,10 +259,10 @@ class AlarmController extends StateNotifier<AlarmState> {
   ///   ex.) 5:42 => 5:50
   void runInitialize() {
     final now = DateTime.now();
-    final tar = state.targetTime;
-    final minute = (tar.minute / 10).ceil() * 10;
-    state =
-        state.copyWith(targetTime: TimeOfDay(hour: tar.hour, minute: minute));
+    final amount = ((now.minute / 10).ceil() * 10) - now.minute;
+    final target = now.addMinutes(amount);
+
+    updateTargetTime(value: TimeOfDay.fromDateTime(target));
 
     Logger.s(
       '''

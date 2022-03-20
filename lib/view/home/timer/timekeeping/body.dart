@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
-import 'package:simple_animations/simple_animations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/controller/controller.dart';
+import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
+import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
+import 'package:simple_animations/stateless_animation/play_animation.dart';
+
 import '../../../../main.dart';
-import 'widget.dart';
+
+part 'vertical.dart';
 
 class TimerTimeKeepingPage extends HookConsumerWidget {
   const TimerTimeKeepingPage({Key? key}) : super(key: key);
@@ -37,64 +45,67 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                 ),
               ));
         case 1:
-          return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            SizedBox(
-              height: 50,
-              width: 50,
-              child: FloatingActionButton(
-                backgroundColor: Colors.red,
-                onPressed: () {
-                  generalstate.runPush(
-                    context: context,
-                    page: const HomePage(),
-                    isReplace: true,
-                  );
-                  NotificationManager().cancelAllNotifications();
-                  generalstate.whenHome();
-                },
-                child: const Icon(
-                  Icons.stop,
-                  color: Colors.white,
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.red,
+                  onPressed: () {
+                    generalstate.runPush(
+                      context: context,
+                      page: const HomePage(),
+                      isReplace: true,
+                    );
+                    NotificationManager().cancelAllNotifications();
+                    generalstate.whenHome();
+                  },
+                  child: const Icon(
+                    Icons.stop,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 20),
-            SizedBox(
-              height: 80,
-              width: 80,
-              child: FloatingActionButton(
-                onPressed: ref.read(timerTKState.notifier).whenResume,
-                splashColor: Colors.green.shade300,
-                backgroundColor: Colors.green.shade100,
-                heroTag: 'global',
-                child: const Icon(
-                  Icons.play_arrow,
-                  color: Colors.black,
+              const SizedBox(width: 20),
+              SizedBox(
+                height: 80,
+                width: 80,
+                child: FloatingActionButton(
+                  onPressed: ref.read(timerTKState.notifier).whenResume,
+                  splashColor: Colors.green.shade300,
+                  backgroundColor: Colors.green.shade100,
+                  heroTag: 'global',
+                  child: const Icon(
+                    Icons.play_arrow,
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 20),
-            SizedBox(
-              height: 50,
-              width: 50,
-              child: FloatingActionButton(
-                backgroundColor: Colors.red,
-                onPressed: () {
-                  generalstate.runPush(
-                    context: context,
-                    page: const HomePage(),
-                    isReplace: true,
-                  );
-                  NotificationManager().cancelAllNotifications();
-                  generalstate.whenHome();
-                },
-                child: const Icon(
-                  Icons.stop,
-                  color: Colors.white,
+              const SizedBox(width: 20),
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.red,
+                  onPressed: () {
+                    generalstate.runPush(
+                      context: context,
+                      page: const HomePage(),
+                      isReplace: true,
+                    );
+                    NotificationManager().cancelAllNotifications();
+                    generalstate.whenHome();
+                  },
+                  child: const Icon(
+                    Icons.stop,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
-          ]);
+            ],
+          );
         case 2:
           return FloatingActionButton(
             backgroundColor: Colors.red,
@@ -119,19 +130,20 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
     }
 
     return MaterialApp(
-        theme: MyTheme().lightTheme,
-        darkTheme: MyTheme().darkTheme,
-        themeMode: ref.read(themeState).themeMode,
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: show ? fab() : null,
-            // floatingActionButtonLocation:
-            //     FloatingActionButtonLocation.centerDocked,
-            body: !isLandscape
-                ? buildVertical(context, ref)
-                : buildHorizontal(context)));
+      theme: MyTheme().lightTheme,
+      darkTheme: MyTheme().darkTheme,
+      themeMode: ref.read(themeState).themeMode,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: show ? fab() : null,
+        // floatingActionButtonLocation:
+        //     FloatingActionButtonLocation.centerDocked,
+        body: !isLandscape
+            ? buildVertical(context, ref)
+            : buildHorizontal(context),
+      ),
+    );
   }
 }
 

@@ -1,18 +1,11 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flag/flag.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/view/components/modal.dart';
+// ignore_for_file: non_constant_identifier_names
 
-import '../../main.dart';
+part of 'body.dart';
 
+/// int mode : 0 => return TextStyle,
+///            1 => return Color,
+///            2 => return Icon
 List<dynamic> style(dynamic pref, dynamic value) {
-  // int mode : 0 => return TextStyle,
-  //            1 => return Color,
-  //            2 => return Icon
   final color = ColorKey.orange.value;
   var array = <dynamic>[]..length = 3;
   if (value == pref) {
@@ -305,7 +298,8 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
           maxLines: 1,
           style: style(pref, true)[0] as TextStyle?,
         ),
-        leading: Icon(Icons.timer, color: style(pref, true)[1] as Color?),
+        leading:
+            Icon(Icons.timer_outlined, color: style(pref, true)[1] as Color?),
         trailing: style(pref, true)[2] as Widget?,
         onTap: () {
           func(value: true);
@@ -318,7 +312,10 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
           maxLines: 1,
           style: style(pref, false)[0] as TextStyle?,
         ),
-        leading: Icon(Icons.timer_off, color: style(pref, false)[1] as Color?),
+        leading: Icon(
+          Icons.timer_off_outlined,
+          color: style(pref, false)[1] as Color?,
+        ),
         trailing: style(pref, false)[2] as Widget?,
         onTap: () {
           func(value: false);
@@ -349,7 +346,7 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
 
     final color = (mode == pref)
         ? ColorKey.orange.value
-        : (value)
+        : value
             ? Colors.black
             : Colors.white;
 
@@ -396,7 +393,7 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
     t.clock_animation_sub.t,
     [
       Visibility(
-        visible: !(ref.read(clockState).showSec),
+        visible: !ref.read(clockState).showSec,
         child: Column(
           children: [
             const SizedBox(height: 10),

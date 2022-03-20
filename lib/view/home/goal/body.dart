@@ -15,30 +15,39 @@ class GoalPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    String tag = "goal";
+    const tag = 'goal';
     return Material(
-        color: Colors.transparent,
-        child: Hero(
-            tag: tag,
-            child: DismissiblePage(
-                onDismiss: () => Navigator.of(context).pop(),
-                isFullScreen: true,
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.alarm, color: Colors.white),
-                          Text(tag.tr(),
-                              style: const TextStyle(color: Colors.white)),
-                        ]),
+      color: Colors.transparent,
+      child: Hero(
+        tag: tag,
+        child: DismissiblePage(
+          onDismiss: () => Navigator.of(context).pop(),
+          isFullScreen: true,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(95, 216, 49, 1),
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.alarm, color: Colors.white),
+                  Text(
+                    tag.tr(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
-                      color: Color.fromRGBO(95, 216, 49, 1)),
-                ))));
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

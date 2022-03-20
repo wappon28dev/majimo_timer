@@ -28,7 +28,6 @@ extension TypeExtension on ColorKey {
   Color get value => colorKeys[this]!;
 }
 
-// テーマ変更用の状態クラス
 class MyTheme {
   static const back = PageTransitionsTheme(
     builders: {
@@ -94,12 +93,15 @@ class MyTheme {
   ThemeData get lightTheme => _lightTheme;
   ThemeData get darkTheme => _darkTheme;
 
-  ThemeData get_theme({required BuildContext context, required WidgetRef ref}) {
+  ThemeData getThemeData({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) {
     final value = ref.read(themeState.notifier).isLight(context: context);
     return value ? _lightTheme : _darkTheme;
   }
 
-  Color get_background({
+  Color getBackgroundColor({
     required BuildContext context,
     required WidgetRef ref,
   }) {
@@ -109,7 +111,7 @@ class MyTheme {
         : _darkTheme.scaffoldBackgroundColor;
   }
 
-  static Color get_color(ColorKey color) {
+  static Color getColor(ColorKey color) {
     return color.value;
   }
 

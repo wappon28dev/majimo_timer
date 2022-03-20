@@ -1,13 +1,4 @@
-import 'package:duration_picker/duration_picker.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
-
-import '../../../main.dart';
+part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final timerstate = ref.read(timerState);
@@ -131,27 +122,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     child: Material(
       color: Colors.transparent,
       child: SafeArea(child: content()),
-    ),
-  );
-}
-
-Widget buildHorizontal(BuildContext context) {
-  const tag = 'timer';
-
-  return Container(
-    padding: const EdgeInsets.all(20),
-    clipBehavior: Clip.antiAlias,
-    decoration: BoxDecoration(color: ColorKey.red.value.withOpacity(0.5)),
-    child: Material(
-      color: Colors.transparent,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.alarm, color: Colors.white),
-          Text(tag.tr(), style: const TextStyle(color: Colors.white)),
-        ],
-      ),
     ),
   );
 }

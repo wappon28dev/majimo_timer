@@ -35,9 +35,10 @@ class GeneralState with _$GeneralState {
 
 @freezed
 class CurrentDurationState with _$CurrentDurationState {
-  const factory CurrentDurationState(
-      {@Default(Duration.zero) Duration current,
-      @Default(0) int currentIntervalLoopingNum}) = _CurrentDurationState;
+  const factory CurrentDurationState({
+    @Default(Duration.zero) Duration current,
+    @Default(0) int currentIntervalLoopingNum,
+  }) = _CurrentDurationState;
 }
 
 @freezed
@@ -150,8 +151,8 @@ class ClockState with _$ClockState {
   List<dynamic> _showSec() {
     List<dynamic>? array;
     showSec
-        ? array = <dynamic>[t.show_sec.t, Icons.timer]
-        : array = <dynamic>[t.not_show_sec.t, Icons.timer_off];
+        ? array = <dynamic>[t.show_sec.t, Icons.timer_outlined]
+        : array = <dynamic>[t.not_show_sec.t, Icons.timer_off_outlined];
     return array;
   }
 
@@ -266,7 +267,6 @@ class TimerState with _$TimerState {
   const factory TimerState({
     @Default(Duration(minutes: 1)) Duration targetDuration,
     @Default(Duration(minutes: 1)) Duration targetIntervalDuration,
-    @Default(false) bool isInterval,
     @Default(0) int targetIntervalLoopingNum,
   }) = _TimerState;
 
@@ -285,6 +285,7 @@ class TimerTimeKeepingState with _$TimerTimeKeepingState {
     @Default(0) int fabMode,
     @Default(TimeOfDay(hour: 12, minute: 0)) TimeOfDay targetTime,
     @Default(TimeOfDay(hour: 12, minute: 30)) TimeOfDay targetIntervalTime,
+    @Default(false) bool isCountingInterval,
   }) = _TimerTimeKeepingState;
   const TimerTimeKeepingState._();
 }

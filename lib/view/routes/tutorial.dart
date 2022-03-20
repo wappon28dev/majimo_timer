@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/flutter_overboard.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/src/overboard.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
@@ -25,14 +26,13 @@ class _TutorialState extends ConsumerState<Tutorial> {
         pages: pages,
         showBullets: true,
         skipCallback: () {
-          _globalKey.currentState?.showSnackBar(const SnackBar(
-            content: Text('Skip clicked'),
-          ));
+          ref.read(generalState.notifier).runPush(
+                context: context,
+                page: const HomePage(),
+                isReplace: true,
+              );
         },
         finishCallback: () {
-          _globalKey.currentState?.showSnackBar(const SnackBar(
-            content: Text('Finish clicked'),
-          ));
           ref.read(generalState.notifier).runPush(
                 context: context,
                 page: const HomePage(),
@@ -47,9 +47,9 @@ class _TutorialState extends ConsumerState<Tutorial> {
   final pages = [
     PageModel(
       color: ColorKey.orange.value,
-      imageAssetPath: 'assets/me.png',
-      title: 'Majimo-Timer',
-      body: '- OSS light study-timer - \n  >> Get started ! <<',
+      imageAssetPath: PathStore().appIcon,
+      title: t.app_name.t,
+      body: '${AppDataStore().versionStr} \n  >> Get started ! <<',
       doAnimateImage: true,
     ),
     PageModel.withChild(

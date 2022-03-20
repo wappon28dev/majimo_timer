@@ -1515,12 +1515,10 @@ class _$TimerStateTearOff {
   _TimerState call(
       {Duration targetDuration = const Duration(minutes: 1),
       Duration targetIntervalDuration = const Duration(minutes: 1),
-      bool isInterval = false,
       int targetIntervalLoopingNum = 0}) {
     return _TimerState(
       targetDuration: targetDuration,
       targetIntervalDuration: targetIntervalDuration,
-      isInterval: isInterval,
       targetIntervalLoopingNum: targetIntervalLoopingNum,
     );
   }
@@ -1533,7 +1531,6 @@ const $TimerState = _$TimerStateTearOff();
 mixin _$TimerState {
   Duration get targetDuration => throw _privateConstructorUsedError;
   Duration get targetIntervalDuration => throw _privateConstructorUsedError;
-  bool get isInterval => throw _privateConstructorUsedError;
   int get targetIntervalLoopingNum => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -1549,7 +1546,6 @@ abstract class $TimerStateCopyWith<$Res> {
   $Res call(
       {Duration targetDuration,
       Duration targetIntervalDuration,
-      bool isInterval,
       int targetIntervalLoopingNum});
 }
 
@@ -1565,7 +1561,6 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
   $Res call({
     Object? targetDuration = freezed,
     Object? targetIntervalDuration = freezed,
-    Object? isInterval = freezed,
     Object? targetIntervalLoopingNum = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1577,10 +1572,6 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
           ? _value.targetIntervalDuration
           : targetIntervalDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      isInterval: isInterval == freezed
-          ? _value.isInterval
-          : isInterval // ignore: cast_nullable_to_non_nullable
-              as bool,
       targetIntervalLoopingNum: targetIntervalLoopingNum == freezed
           ? _value.targetIntervalLoopingNum
           : targetIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
@@ -1598,7 +1589,6 @@ abstract class _$TimerStateCopyWith<$Res> implements $TimerStateCopyWith<$Res> {
   $Res call(
       {Duration targetDuration,
       Duration targetIntervalDuration,
-      bool isInterval,
       int targetIntervalLoopingNum});
 }
 
@@ -1616,7 +1606,6 @@ class __$TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
   $Res call({
     Object? targetDuration = freezed,
     Object? targetIntervalDuration = freezed,
-    Object? isInterval = freezed,
     Object? targetIntervalLoopingNum = freezed,
   }) {
     return _then(_TimerState(
@@ -1628,10 +1617,6 @@ class __$TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
           ? _value.targetIntervalDuration
           : targetIntervalDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      isInterval: isInterval == freezed
-          ? _value.isInterval
-          : isInterval // ignore: cast_nullable_to_non_nullable
-              as bool,
       targetIntervalLoopingNum: targetIntervalLoopingNum == freezed
           ? _value.targetIntervalLoopingNum
           : targetIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
@@ -1646,7 +1631,6 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
   const _$_TimerState(
       {this.targetDuration = const Duration(minutes: 1),
       this.targetIntervalDuration = const Duration(minutes: 1),
-      this.isInterval = false,
       this.targetIntervalLoopingNum = 0})
       : super._();
 
@@ -1658,14 +1642,11 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
   final Duration targetIntervalDuration;
   @JsonKey()
   @override
-  final bool isInterval;
-  @JsonKey()
-  @override
   final int targetIntervalLoopingNum;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerState(targetDuration: $targetDuration, targetIntervalDuration: $targetIntervalDuration, isInterval: $isInterval, targetIntervalLoopingNum: $targetIntervalLoopingNum)';
+    return 'TimerState(targetDuration: $targetDuration, targetIntervalDuration: $targetIntervalDuration, targetIntervalLoopingNum: $targetIntervalLoopingNum)';
   }
 
   @override
@@ -1676,7 +1657,6 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('targetDuration', targetDuration))
       ..add(
           DiagnosticsProperty('targetIntervalDuration', targetIntervalDuration))
-      ..add(DiagnosticsProperty('isInterval', isInterval))
       ..add(DiagnosticsProperty(
           'targetIntervalLoopingNum', targetIntervalLoopingNum));
   }
@@ -1690,8 +1670,6 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
                 .equals(other.targetDuration, targetDuration) &&
             const DeepCollectionEquality()
                 .equals(other.targetIntervalDuration, targetIntervalDuration) &&
-            const DeepCollectionEquality()
-                .equals(other.isInterval, isInterval) &&
             const DeepCollectionEquality().equals(
                 other.targetIntervalLoopingNum, targetIntervalLoopingNum));
   }
@@ -1701,7 +1679,6 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
       runtimeType,
       const DeepCollectionEquality().hash(targetDuration),
       const DeepCollectionEquality().hash(targetIntervalDuration),
-      const DeepCollectionEquality().hash(isInterval),
       const DeepCollectionEquality().hash(targetIntervalLoopingNum));
 
   @JsonKey(ignore: true)
@@ -1714,7 +1691,6 @@ abstract class _TimerState extends TimerState {
   const factory _TimerState(
       {Duration targetDuration,
       Duration targetIntervalDuration,
-      bool isInterval,
       int targetIntervalLoopingNum}) = _$_TimerState;
   const _TimerState._() : super._();
 
@@ -1722,8 +1698,6 @@ abstract class _TimerState extends TimerState {
   Duration get targetDuration;
   @override
   Duration get targetIntervalDuration;
-  @override
-  bool get isInterval;
   @override
   int get targetIntervalLoopingNum;
   @override
@@ -1739,11 +1713,13 @@ class _$TimerTimeKeepingStateTearOff {
   _TimerTimeKeepingState call(
       {int fabMode = 0,
       TimeOfDay targetTime = const TimeOfDay(hour: 12, minute: 0),
-      TimeOfDay targetIntervalTime = const TimeOfDay(hour: 12, minute: 30)}) {
+      TimeOfDay targetIntervalTime = const TimeOfDay(hour: 12, minute: 30),
+      bool isCountingInterval = false}) {
     return _TimerTimeKeepingState(
       fabMode: fabMode,
       targetTime: targetTime,
       targetIntervalTime: targetIntervalTime,
+      isCountingInterval: isCountingInterval,
     );
   }
 }
@@ -1756,6 +1732,7 @@ mixin _$TimerTimeKeepingState {
   int get fabMode => throw _privateConstructorUsedError;
   TimeOfDay get targetTime => throw _privateConstructorUsedError;
   TimeOfDay get targetIntervalTime => throw _privateConstructorUsedError;
+  bool get isCountingInterval => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TimerTimeKeepingStateCopyWith<TimerTimeKeepingState> get copyWith =>
@@ -1767,7 +1744,11 @@ abstract class $TimerTimeKeepingStateCopyWith<$Res> {
   factory $TimerTimeKeepingStateCopyWith(TimerTimeKeepingState value,
           $Res Function(TimerTimeKeepingState) then) =
       _$TimerTimeKeepingStateCopyWithImpl<$Res>;
-  $Res call({int fabMode, TimeOfDay targetTime, TimeOfDay targetIntervalTime});
+  $Res call(
+      {int fabMode,
+      TimeOfDay targetTime,
+      TimeOfDay targetIntervalTime,
+      bool isCountingInterval});
 }
 
 /// @nodoc
@@ -1784,6 +1765,7 @@ class _$TimerTimeKeepingStateCopyWithImpl<$Res>
     Object? fabMode = freezed,
     Object? targetTime = freezed,
     Object? targetIntervalTime = freezed,
+    Object? isCountingInterval = freezed,
   }) {
     return _then(_value.copyWith(
       fabMode: fabMode == freezed
@@ -1798,6 +1780,10 @@ class _$TimerTimeKeepingStateCopyWithImpl<$Res>
           ? _value.targetIntervalTime
           : targetIntervalTime // ignore: cast_nullable_to_non_nullable
               as TimeOfDay,
+      isCountingInterval: isCountingInterval == freezed
+          ? _value.isCountingInterval
+          : isCountingInterval // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1809,7 +1795,11 @@ abstract class _$TimerTimeKeepingStateCopyWith<$Res>
           $Res Function(_TimerTimeKeepingState) then) =
       __$TimerTimeKeepingStateCopyWithImpl<$Res>;
   @override
-  $Res call({int fabMode, TimeOfDay targetTime, TimeOfDay targetIntervalTime});
+  $Res call(
+      {int fabMode,
+      TimeOfDay targetTime,
+      TimeOfDay targetIntervalTime,
+      bool isCountingInterval});
 }
 
 /// @nodoc
@@ -1828,6 +1818,7 @@ class __$TimerTimeKeepingStateCopyWithImpl<$Res>
     Object? fabMode = freezed,
     Object? targetTime = freezed,
     Object? targetIntervalTime = freezed,
+    Object? isCountingInterval = freezed,
   }) {
     return _then(_TimerTimeKeepingState(
       fabMode: fabMode == freezed
@@ -1842,6 +1833,10 @@ class __$TimerTimeKeepingStateCopyWithImpl<$Res>
           ? _value.targetIntervalTime
           : targetIntervalTime // ignore: cast_nullable_to_non_nullable
               as TimeOfDay,
+      isCountingInterval: isCountingInterval == freezed
+          ? _value.isCountingInterval
+          : isCountingInterval // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1853,7 +1848,8 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
   const _$_TimerTimeKeepingState(
       {this.fabMode = 0,
       this.targetTime = const TimeOfDay(hour: 12, minute: 0),
-      this.targetIntervalTime = const TimeOfDay(hour: 12, minute: 30)})
+      this.targetIntervalTime = const TimeOfDay(hour: 12, minute: 30),
+      this.isCountingInterval = false})
       : super._();
 
   @JsonKey()
@@ -1865,10 +1861,13 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
   @JsonKey()
   @override
   final TimeOfDay targetIntervalTime;
+  @JsonKey()
+  @override
+  final bool isCountingInterval;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerTimeKeepingState(fabMode: $fabMode, targetTime: $targetTime, targetIntervalTime: $targetIntervalTime)';
+    return 'TimerTimeKeepingState(fabMode: $fabMode, targetTime: $targetTime, targetIntervalTime: $targetIntervalTime, isCountingInterval: $isCountingInterval)';
   }
 
   @override
@@ -1878,7 +1877,8 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
       ..add(DiagnosticsProperty('type', 'TimerTimeKeepingState'))
       ..add(DiagnosticsProperty('fabMode', fabMode))
       ..add(DiagnosticsProperty('targetTime', targetTime))
-      ..add(DiagnosticsProperty('targetIntervalTime', targetIntervalTime));
+      ..add(DiagnosticsProperty('targetIntervalTime', targetIntervalTime))
+      ..add(DiagnosticsProperty('isCountingInterval', isCountingInterval));
   }
 
   @override
@@ -1890,7 +1890,9 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
             const DeepCollectionEquality()
                 .equals(other.targetTime, targetTime) &&
             const DeepCollectionEquality()
-                .equals(other.targetIntervalTime, targetIntervalTime));
+                .equals(other.targetIntervalTime, targetIntervalTime) &&
+            const DeepCollectionEquality()
+                .equals(other.isCountingInterval, isCountingInterval));
   }
 
   @override
@@ -1898,7 +1900,8 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
       runtimeType,
       const DeepCollectionEquality().hash(fabMode),
       const DeepCollectionEquality().hash(targetTime),
-      const DeepCollectionEquality().hash(targetIntervalTime));
+      const DeepCollectionEquality().hash(targetIntervalTime),
+      const DeepCollectionEquality().hash(isCountingInterval));
 
   @JsonKey(ignore: true)
   @override
@@ -1911,7 +1914,8 @@ abstract class _TimerTimeKeepingState extends TimerTimeKeepingState {
   const factory _TimerTimeKeepingState(
       {int fabMode,
       TimeOfDay targetTime,
-      TimeOfDay targetIntervalTime}) = _$_TimerTimeKeepingState;
+      TimeOfDay targetIntervalTime,
+      bool isCountingInterval}) = _$_TimerTimeKeepingState;
   const _TimerTimeKeepingState._() : super._();
 
   @override
@@ -1920,6 +1924,8 @@ abstract class _TimerTimeKeepingState extends TimerTimeKeepingState {
   TimeOfDay get targetTime;
   @override
   TimeOfDay get targetIntervalTime;
+  @override
+  bool get isCountingInterval;
   @override
   @JsonKey(ignore: true)
   _$TimerTimeKeepingStateCopyWith<_TimerTimeKeepingState> get copyWith =>

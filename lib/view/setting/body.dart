@@ -1,15 +1,20 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/helper/pref.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/view/setting/widget.dart';
+import 'package:majimo_timer/view/setting/about.dart';
+import 'package:majimo_timer/view/components/modal.dart';
+
+part 'widget.dart';
 
 class Setting extends HookConsumerWidget {
   const Setting({Key? key}) : super(key: key);
@@ -111,17 +116,15 @@ class Setting extends HookConsumerWidget {
               OutlinedButton.icon(
                 icon: const Icon(Icons.notifications_active_outlined),
                 onPressed: () =>
-                    ToastManager.toast(context: context, ref: ref, id: 0),
+                    ToastManager().toast(context: context, ref: ref, id: 0),
                 label: const Text('test toast'),
               ),
               section(t.about.t),
               ListTile(
-                title: Text('${t.app_name.t} β'),
+                title: Text('${t.app_name.t} - ベータ版'),
                 subtitle: Text(AppDataStore().versionStr),
-                leading: const Icon(Icons.timelapse),
-                onTap: () {
-                  null;
-                },
+                leading: const Icon(Icons.info_outline),
+                onTap: () => AboutApp().about(context),
               ),
               ListTile(
                 title: Text(t.change_log.t),
@@ -135,9 +138,12 @@ class Setting extends HookConsumerWidget {
                 title: Text(t.app_maker.t),
                 subtitle: Text(t.app_maker_sub.t),
                 leading: const Icon(Icons.emoji_people),
-                trailing: const Icon(Icons.launch),
                 onTap: () {
-                  null;
+                  ref.read(generalState.notifier).runPush(
+                        context: context,
+                        page: const AboutDeveloper(),
+                        isReplace: false,
+                      );
                 },
               ),
               ListTile(
@@ -146,7 +152,9 @@ class Setting extends HookConsumerWidget {
                 leading: const Icon(Icons.receipt_long),
                 trailing: const Icon(Icons.launch),
                 onTap: () {
-                  null;
+                  ref
+                      .read(generalState.notifier)
+                      .runURL(url: PathStore().githubURL);
                 },
               ),
               ListTile(
@@ -155,7 +163,9 @@ class Setting extends HookConsumerWidget {
                 leading: const Icon(Icons.balance),
                 trailing: const Icon(Icons.launch),
                 onTap: () {
-                  null;
+                  ref
+                      .read(generalState.notifier)
+                      .runURL(url: PathStore().licenseURL);
                 },
               ),
             ],

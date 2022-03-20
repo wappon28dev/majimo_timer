@@ -19,7 +19,7 @@ Future<dynamic> modal(
   final value = ref.read(themeState.notifier).isLight(context: context);
   final header = <Widget>[
     Theme(
-      data: MyTheme().get_theme(context: context, ref: ref),
+      data: MyTheme().getThemeData(context: context, ref: ref),
       child: Column(
         children: <Widget>[
           Container(
@@ -68,7 +68,7 @@ Future<dynamic> modal(
       controller: ModalScrollController.of(context),
       child: Material(
         child: Theme(
-          data: MyTheme().get_theme(context: context, ref: ref),
+          data: MyTheme().getThemeData(context: context, ref: ref),
           child: Ink(
             padding: padding,
             color: value
@@ -88,7 +88,7 @@ Future<dynamic> number_pad(
   final value = ref.read(themeState.notifier).isLight(context: context);
   final _header = <Widget>[
     Theme(
-      data: MyTheme().get_theme(context: context, ref: ref),
+      data: MyTheme().getThemeData(context: context, ref: ref),
       child: Column(
         children: <Widget>[
           Container(
@@ -184,7 +184,7 @@ Future<dynamic> number_pad(
       controller: ModalScrollController.of(context),
       child: Material(
         child: Theme(
-          data: MyTheme().get_theme(context: context, ref: ref),
+          data: MyTheme().getThemeData(context: context, ref: ref),
           child: Ink(
             padding: padding,
             color: value

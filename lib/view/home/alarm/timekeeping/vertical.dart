@@ -1,15 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
-import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
-import 'package:majimo_timer/view/home/timer/timekeeping/widget.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:simple_animations/stateless_animation/play_animation.dart';
-
-import '../../../../main.dart';
-import 'body.dart';
+part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final width = MediaQuery.of(context).size.width;

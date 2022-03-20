@@ -1,25 +1,4 @@
-import 'package:dismissible_page/src/dismissible_extensions.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lottie/lottie.dart';
-import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/app_link.dart';
-import 'package:majimo_timer/model/helper/plugin/draggable_home/draggable_home.dart';
-import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
-import 'package:majimo_timer/model/helper/translations.dart';
-import 'package:majimo_timer/view/debug/body.dart';
-import 'package:majimo_timer/view/debug/widget.dart';
-import 'package:majimo_timer/view/home/alarm/body.dart';
-import 'package:majimo_timer/view/home/goal/body.dart';
-import 'package:majimo_timer/view/home/timer/body.dart';
-import 'package:majimo_timer/view/setting/body.dart';
-import 'package:simple_animations/simple_animations.dart';
-
-import 'body.dart';
+part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final width = MediaQuery.of(context).size.width;
@@ -265,7 +244,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     body: [content(context), debug(context: context, ref: ref)],
     fullyStretchable: true,
     expandedBody: expand(context),
-    backgroundColor: MyTheme().get_background(context: context, ref: ref),
+    backgroundColor: MyTheme().getBackgroundColor(context: context, ref: ref),
     floatingActionButton: show ? fab(context: context, ref: ref) : null,
   );
 }
