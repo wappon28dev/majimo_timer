@@ -127,7 +127,7 @@ class _LogWidgetState extends State<LogWidget> {
               style: TextStyle(
                 color: color,
                 fontSize: 10,
-                fontFamily: 'monospace',
+                fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
               ),
             ),
             if (item.detail != null)

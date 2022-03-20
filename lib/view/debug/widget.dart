@@ -32,8 +32,7 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 10,
-                    fontFamily:
-                        Platform.isAndroid ? 'monospace' : 'Menlo-Regular',
+                    fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
                   ),
                 ),
                 leading: const Icon(
