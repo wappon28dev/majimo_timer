@@ -1,6 +1,5 @@
 library draggable_home;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -105,8 +104,9 @@ class DraggableHome extends ConsumerStatefulWidget {
     this.floatingActionButton,
     this.floatingActionButtonLocation,
     this.floatingActionButtonAnimator,
-  })  : assert(headerExpandedHeight > 0.0 &&
-            headerExpandedHeight < stretchMaxHeight),
+  })  : assert(
+          headerExpandedHeight > 0.0 && headerExpandedHeight < stretchMaxHeight,
+        ),
         assert(
           (stretchMaxHeight > headerExpandedHeight) && (stretchMaxHeight < .95),
         ),
@@ -128,15 +128,15 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
 
   @override
   Widget build(BuildContext context) {
-    final double appBarHeight =
+    final appBarHeight =
         AppBar().preferredSize.height + widget.curvedBodyRadius;
 
-    final double topPadding = MediaQuery.of(context).padding.top;
+    final topPadding = MediaQuery.of(context).padding.top;
 
-    final double expandedHeight =
+    final expandedHeight =
         MediaQuery.of(context).size.height * widget.headerExpandedHeight;
 
-    final double fullyExpandedHeight =
+    final fullyExpandedHeight =
         MediaQuery.of(context).size.height * (widget.stretchMaxHeight);
 
     return Scaffold(
@@ -154,19 +154,26 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
             //isFullyCollapsed
             if (notification.metrics.extentBefore >
                 expandedHeight - AppBar().preferredSize.height - 40) {
-              if (!(isFullyCollapsed.value)) {
+              if (!isFullyCollapsed.value) {
                 isFullyCollapsed.add(true);
                 ref.read(colorState.notifier).stop();
                 ref.read(generalState.notifier).whenHome();
               }
             } else {
-              if ((isFullyCollapsed.value)) isFullyCollapsed.add(false);
+              if (isFullyCollapsed.value) {
+                isFullyCollapsed.add(false);
+              }
             }
           }
           return false;
         },
-        child: sliver(context, appBarHeight, fullyExpandedHeight,
-            expandedHeight, topPadding),
+        child: sliver(
+          context,
+          appBarHeight,
+          fullyExpandedHeight,
+          expandedHeight,
+          topPadding,
+        ),
       ),
       bottomSheet: widget.bottomSheet,
       bottomNavigationBar: widget.bottomNavigationBar,
@@ -188,11 +195,15 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
       slivers: [
         StreamBuilder<List<bool>>(
           stream: CombineLatestStream.list<bool>(
-              [isFullyCollapsed.stream, isFullyExpanded.stream]),
+            [isFullyCollapsed.stream, isFullyExpanded.stream],
+          ),
           builder: (BuildContext context, AsyncSnapshot<List<bool>> snapshot) {
-            List<bool> streams = (snapshot.data ?? [false, false]);
+            final streams = snapshot.data ?? [false, false];
 
             return SliverAppBar(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
               leading: widget.alwaysShowLeadingAndAction
                   ? widget.leading
                   : !streams[0]
@@ -212,7 +223,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                 builder: (context, snapshot) {
                   return AnimatedOpacity(
                     opacity: streams[0] ? 1 : 0,
-                    duration: Duration(milliseconds: 100),
+                    duration: const Duration(milliseconds: 100),
                     child: widget.title,
                   );
                 },
@@ -223,9 +234,10 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                 children: [
                   FlexibleSpaceBar(
                     background: Container(
-                        child: streams[1]
-                            ? (widget.expandedBody ?? Container())
-                            : widget.headerWidget),
+                      child: streams[1]
+                          ? (widget.expandedBody ?? Container())
+                          : widget.headerWidget,
+                    ),
                   ),
                   Positioned(
                     bottom: -2,
@@ -236,9 +248,9 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                   Positioned(
                     bottom: 0 + widget.curvedBodyRadius,
                     child: AnimatedContainer(
-                      padding: EdgeInsets.only(left: 10, right: 10),
+                      padding: const EdgeInsets.only(left: 10, right: 10),
                       curve: Curves.easeInOutCirc,
-                      duration: Duration(milliseconds: 100),
+                      duration: const Duration(milliseconds: 100),
                       height: streams[0]
                           ? 0
                           : streams[1]
@@ -246,9 +258,9 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                               : kToolbarHeight,
                       width: MediaQuery.of(context).size.width,
                       child: streams[0]
-                          ? SizedBox()
+                          ? const SizedBox()
                           : streams[1]
-                              ? SizedBox()
+                              ? const SizedBox()
                               : widget.headerBottomBar ?? Container(),
                     ),
                   )
@@ -260,17 +272,20 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                       if (streams[1] == false) {
                         isFullyExpanded.add(true);
                         WidgetsBinding.instance!.addPostFrameCallback((_) {
-                          ref.read(generalState.notifier).whenExpand(0);
+                          ref.read(generalState.notifier).whenExpand();
 
                           ref.read(colorState.notifier).updateColor(
-                              isLight: ref
-                                  .read(themeState.notifier)
-                                  .isLight(context: context));
+                                isLight: ref
+                                    .read(themeState.notifier)
+                                    .isLight(context: context),
+                              );
 
-                          ToastManager().toast(context: context, id: 1, ref: ref);
+                          ToastManager()
+                              .toast(context: context, id: 1, ref: ref);
                         });
                         await FullScreen.enterFullScreen(
-                            FullScreenMode.EMERSIVE_STICKY);
+                          FullScreenMode.EMERSIVE_STICKY,
+                        );
                       }
                     }
                   : () async {},
@@ -296,7 +311,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
   }
 
   SliverList sliverList(BuildContext context, double topHeight) {
-    final double bottomPadding =
+    final bottomPadding =
         widget.bottomNavigationBar == null ? 0 : kBottomNavigationBarHeight;
     return SliverList(
       delegate: SliverChildListDelegate(
@@ -326,19 +341,20 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
 
   StreamBuilder<bool> expandedUpArrow() {
     return StreamBuilder<bool>(
-        stream: isFullyExpanded.stream,
-        builder: (context, snapshot) {
-          return AnimatedContainer(
-            duration: Duration(milliseconds: 500),
-            height: (snapshot.data ?? false) ? 25 : 0,
-            width: MediaQuery.of(context).size.width,
-            child: Center(
-              child: Icon(
-                Icons.keyboard_arrow_up_rounded,
-                color: (snapshot.data ?? false) ? null : Colors.transparent,
-              ),
+      stream: isFullyExpanded.stream,
+      builder: (context, snapshot) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 500),
+          height: (snapshot.data ?? false) ? 25 : 0,
+          width: MediaQuery.of(context).size.width,
+          child: Center(
+            child: Icon(
+              Icons.keyboard_arrow_up_rounded,
+              color: (snapshot.data ?? false) ? null : Colors.transparent,
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

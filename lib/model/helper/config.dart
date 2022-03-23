@@ -1,6 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:majimo_timer/view/setting/about.dart';
+
 class PathStore {
-  final String appIcon = 'assets/icons/icon.png';
-  final String translationCSV = 'assets/translations/langs.csv';
+  final String appIcon = 'assets/images/icons/icon.png';
+  final String meidenLogo = 'assets/images/meiden_logo.png';
+  final String translationJSON = 'assets/i18n';
   final String splashLight = 'assets/splash/splash_light.riv';
   final String splashDark = 'assets/splash/splash_dark.riv';
   final String expandedPictureSun = 'assets/splash/sun.json';
@@ -8,24 +12,43 @@ class PathStore {
   final String licenseURL =
       'https://github.com/wappon-28-dev/majimo_timer/blob/main/LICENSE';
   final String githubURL = 'https://github.com/wappon-28-dev/majimo_timer/';
+  final String meidenURL = 'https://www.meiden.ed.jp/sp/';
+  final String syscomURL = 'https://www.meiden.ed.jp/club/detail.html?id=305';
+}
+
+class AppTeam extends AboutAppTeam {
+  AppTeam({Key? key}) : super(key: key);
+  final Map<String, String> debuggers = {
+    'katoso_1': 'assets/images/me.png',
+    'katoso_2': 'assets/images/me.png',
+    'katoso_3': 'assets/images/me.png',
+  };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.3.3 β';
-  final String buildDate = '2022/03/20 2:23';
+  final String versionStr = 'majimo_timer v0.3.6 β';
+  final String buildDate = '2022/03/24 2:50';
   final String changeLog = '''
 [fix]
-  1. body, widget renamed to body, horizontal, vertical
-  2. updated tutorial screen
-  3. include url_launcher
-  4. showSecond icon changed
-  5. Added AboutDialog, LicensePage
-  6. Preparing iOS build !
+  1. Optimized for iOS build
+  2. Changed some translations
+  3. Changed format i18n: csv -> JSON
+      due to existing bug with LF/CRLF
+      in launching iOS with building MacOS
+  4. Added school header in "about team"
+  5. Added element aboutDebugger with
+      avatar within Map<Str, Str>.expand()
+  6. Optimized assets folder
+      /translation -> /i18n
+  7. Changed info.plist
+  8. Follow some Lint with custom Packages
 
 [known-bug]
   1. Overlay TK screen always applied
   2. native splash appears twice on A12
   3. home shortcut icons are blank
-  4. multiple heroes exception appears
+
+solved! :
+>> multiple heroes exception appears <<
     ''';
 }

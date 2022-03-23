@@ -53,6 +53,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                 width: 50,
                 child: FloatingActionButton(
                   backgroundColor: Colors.red,
+                  heroTag: null,
                   onPressed: () {
                     generalstate.runPush(
                       context: context,
@@ -88,7 +89,8 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                 height: 50,
                 width: 50,
                 child: FloatingActionButton(
-                  backgroundColor: Colors.red,
+                  backgroundColor: Colors.amber.shade900,
+                  heroTag: null,
                   onPressed: () {
                     generalstate.runPush(
                       context: context,
@@ -99,7 +101,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                     generalstate.whenHome();
                   },
                   child: const Icon(
-                    Icons.stop,
+                    Icons.arrow_forward,
                     color: Colors.white,
                   ),
                 ),
@@ -109,6 +111,8 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
         case 2:
           return FloatingActionButton(
             backgroundColor: Colors.red,
+            heroTag: null,
+
             onPressed: () {
               generalstate.runPush(
                 context: context,
@@ -155,8 +159,10 @@ Widget buildHorizontal(BuildContext context) {
   );
 }
 
-Widget analogclock_timekeeping(
-    {required BuildContext context, required WidgetRef ref}) {
+Widget analogclockTimekeeping({
+  required BuildContext context,
+  required WidgetRef ref,
+}) {
   final isLight = ref.read(themeState.notifier).isLight(context: context);
   final showSec = ref.read(clockState).showSec;
   return FlutterAnalogClock(

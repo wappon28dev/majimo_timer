@@ -75,14 +75,11 @@ flutter_native_splash:
 flutter:
   uses-material-design: true
   assets:
-    - assets/icons/icon.png
-    - assets/splash/splash.png
-    - assets/splash/wolf.json
-    - assets/splash/sun.json
-    - assets/splash/splash_light.riv
-    - assets/splash/splash_dark.riv
-    - assets/translations/langs.csv
-    - assets/me.png
+    - assets/images/
+    - assets/images/icons/
+    - assets/splash/
+    - assets/i18n/
+
   fonts:
     - family: M-plus-B
       fonts:

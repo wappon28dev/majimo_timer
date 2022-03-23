@@ -81,7 +81,7 @@ class GeneralController extends StateNotifier<GeneralState> {
     await updateStatus(text: DateTime.now().format('yMMMMEEEEd', t.lang.t));
   }
 
-  Future<void> whenExpand(int i) async {
+  Future<void> whenExpand() async {
     updateShowFAB(value: false);
     await Wakelock.enable();
     await updateStatus(text: '置き時計モード');

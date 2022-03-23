@@ -59,6 +59,12 @@
 		<key>UIStatusBarHidden</key>
 		<false/>
 		
+		<key>CFBundleLocalizations</key>
+		<array>
+			<string>ja</string>
+			<string>en</string>
+		</array>
+
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
 			<string>https</string>

@@ -63,8 +63,10 @@ Future<void> main() async {
     EasyLocalization(
       supportedLocales: const [Locale('en', 'US'), Locale('ja', 'JP')],
       fallbackLocale: const Locale('en', 'US'),
-      path: PathStore().translationCSV,
-      assetLoader: CsvAssetLoader(),
+      path: PathStore().translationJSON,
+      useOnlyLangCode: false,
+      // 追加すると, なぜか動かない
+      // assetLoader: JsonAssetLoader(),
       child: const ProviderScope(child: MyApp()),
     ),
   );
@@ -79,7 +81,6 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
       PrefManager().restore(ref, context);
-
       return null;
     });
 
