@@ -24,7 +24,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final orientation = MediaQuery.of(context).orientation;
     final isLandscape = orientation == Orientation.landscape;
-    final alarmTKstate = ref.read(alarmTKState.notifier);
+    final timerTKstate = ref.read(timerTKState.notifier);
     final generalstate = ref.read(generalState.notifier);
     final show = ref.watch(generalState).showFAB;
 
@@ -37,7 +37,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
               width: 80,
               child: FloatingActionButton(
                 backgroundColor: Colors.amber,
-                onPressed: () => ref.read(timerTKState.notifier).whenPause(),
+                onPressed: () => ref.read(timerTKState.notifier).runPause(),
                 heroTag: 'global',
                 child: const Icon(
                   Icons.pause,
@@ -74,7 +74,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                 height: 80,
                 width: 80,
                 child: FloatingActionButton(
-                  onPressed: ref.read(timerTKState.notifier).whenResume,
+                  onPressed: ref.read(timerTKState.notifier).runResume,
                   splashColor: Colors.green.shade300,
                   backgroundColor: Colors.green.shade100,
                   heroTag: 'global',
@@ -91,6 +91,25 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                 child: FloatingActionButton(
                   backgroundColor: Colors.amber.shade900,
                   heroTag: null,
+                  onPressed: timerTKstate.whenFinished,
+                  child: const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          );
+        case 2:
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.red,
+                  heroTag: null,
                   onPressed: () {
                     generalstate.runPush(
                       context: context,
@@ -101,6 +120,35 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                     generalstate.whenHome();
                   },
                   child: const Icon(
+                    Icons.stop,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 20),
+              SizedBox(
+                height: 80,
+                width: 80,
+                child: FloatingActionButton(
+                  onPressed: ref.read(timerTKState.notifier).runResume,
+                  splashColor: Colors.green.shade300,
+                  backgroundColor: Colors.green.shade100,
+                  heroTag: 'global',
+                  child: const Icon(
+                    Icons.play_arrow,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 20),
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.amber.shade900,
+                  heroTag: null,
+                  onPressed: timerTKstate.whenIntervalFinished,
+                  child: const Icon(
                     Icons.arrow_forward,
                     color: Colors.white,
                   ),
@@ -108,28 +156,29 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
               ),
             ],
           );
-        case 2:
-          return FloatingActionButton(
-            backgroundColor: Colors.red,
-            heroTag: null,
 
-            onPressed: () {
-              generalstate.runPush(
-                context: context,
-                page: const HomePage(),
-                isReplace: true,
-              );
-              NotificationManager().cancelAllNotifications();
-              generalstate.whenHome();
-            },
-            // heroTag: null,
-            child: const Icon(
-              Icons.stop,
-              color: Colors.white,
-            ),
-          );
+        // case 3:
+        //   return FloatingActionButton(
+        //     backgroundColor: Colors.red,
+        //     heroTag: null,
+
+        //     onPressed: () {
+        //       generalstate.runPush(
+        //         context: context,
+        //         page: const HomePage(),
+        //         isReplace: true,
+        //       );
+        //       NotificationManager().cancelAllNotifications();
+        //       generalstate.whenHome();
+        //     },
+        //     // heroTag: null,
+        //     child: const Icon(
+        //       Icons.stop,
+        //       color: Colors.white,
+        //     ),
+        //   );
         default:
-          return const SizedBox();
+          throw Exception('switch-case error!');
       }
     }
 

@@ -2,8 +2,11 @@ part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final width = MediaQuery.of(context).size.width;
-  final controller = ref.read(timerTKState.notifier).controller;
+  final timerstate = ref.read(timerState);
+  final timerTKstate = ref.read(timerTKState);
 
+  final targetDuration = timerstate.targetDuration;
+  final targetIntervalDuration = timerstate.targetIntervalDuration;
   Widget content() {
     return Stack(
       children: [
@@ -30,15 +33,31 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.hourglass_top),
-                  const SizedBox(width: 20),
-                  Text('${ref.read(timerState).targetDuration.inMinutes}分間'),
-                  const SizedBox(width: 20),
-                  const Text('・'),
-                  const SizedBox(width: 20),
-                  Text(ref.read(timerTKState).targetTime.toString()),
-                ],
+                children: !timerTKstate.isCountingInterval
+                    ? <Widget>[
+                        const Icon(Icons.hourglass_top),
+                        const SizedBox(width: 20),
+                        Text(
+                          '${targetDuration.inMinutes}分間',
+                        ),
+                        const SizedBox(width: 20),
+                        const Text('・'),
+                        const SizedBox(width: 20),
+                        Text(ref.read(timerTKState).targetTime.toString()),
+                      ]
+                    : [
+                        const Icon(Icons.hourglass_top),
+                        const SizedBox(width: 20),
+                        Text(
+                          '${targetIntervalDuration.inMinutes}分間',
+                        ),
+                        const SizedBox(width: 20),
+                        const Text('・'),
+                        const SizedBox(width: 20),
+                        Text(
+                          ref.read(timerTKState).targetIntervalTime.toString(),
+                        ),
+                      ],
               ),
             ],
           ),
@@ -91,36 +110,72 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
 }
 
 Widget count({required BuildContext context, required WidgetRef ref}) {
+  final timerstate = ref.read(timerState);
+  final timerTKstate = ref.read(timerTKState);
+  final size = MediaQuery.of(context).size;
+  final controller = ref.read(currentDurationState.notifier).controller;
+  final isLight = ref.read(themeState.notifier).isLight(context: context);
+  final isLessAnHour = ref.read(currentDurationState).current.inHours > 0;
+
   return Padding(
     padding: const EdgeInsets.all(20),
-    child: CircularCountDownTimer(
-      duration: ref.read(timerState).targetDuration.inSeconds,
-      initialDuration: 0,
-      controller: ref.read(timerTKState.notifier).controller,
-      width: MediaQuery.of(context).size.width / 2,
-      height: MediaQuery.of(context).size.height / 2,
-      ringColor: Colors.red.shade100,
-      ringGradient: null,
-      fillColor: Colors.redAccent.shade200,
-      fillGradient: null,
-      backgroundColor: Colors.transparent,
-      backgroundGradient: null,
-      strokeWidth: 10,
-      strokeCap: StrokeCap.butt,
-      textStyle: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-      textFormat: (ref.read(currentDurationState).current.inHours > 0)
-          ? CountdownTextFormat.HH_MM_SS
-          : CountdownTextFormat.MM_SS,
-      isReverse: true,
-      isReverseAnimation: false,
-      isTimerTextShown: true,
-      autoStart: true,
-      onStart: () {
-        print('Countdown Started');
-      },
-      onComplete: () {
-        print('Countdown Ended');
-      },
-    ),
+    child: !timerTKstate.isCountingInterval
+        ? CircularCountDownTimer(
+            duration: timerstate.targetDuration.inSeconds,
+            initialDuration: 0,
+            controller: controller,
+            width: size.width / 2,
+            height: size.height / 2,
+            ringColor: Colors.red.shade100,
+            ringGradient: null,
+            fillColor: Colors.redAccent.shade200,
+            fillGradient: null,
+            backgroundColor: Colors.transparent,
+            backgroundGradient: null,
+            strokeWidth: 10,
+            strokeCap: StrokeCap.butt,
+            textStyle:
+                const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+            textFormat: (ref.read(currentDurationState).current.inHours > 0)
+                ? CountdownTextFormat.HH_MM_SS
+                : CountdownTextFormat.MM_SS,
+            isReverse: true,
+            isReverseAnimation: false,
+            isTimerTextShown: true,
+            autoStart: true, // trueじゃないとなぜか動かない
+            onStart: null,
+            onComplete: ref.read(timerTKState.notifier).whenFinished,
+          )
+        : CircularCountDownTimer(
+            duration: timerstate.targetIntervalDuration.inSeconds,
+            initialDuration: 0,
+            controller: controller,
+            width: size.width / 2,
+            height: size.height / 2,
+            ringColor: Colors.blue.shade100,
+            ringGradient: null,
+            fillColor: Colors.blueAccent.shade200,
+            fillGradient: null,
+            backgroundColor: Colors.transparent,
+            backgroundGradient: null,
+            strokeWidth: 10,
+            strokeCap: StrokeCap.butt,
+            textStyle: TextStyle(
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+              color: isLight
+                  ? Colors.blueAccent.shade200
+                  : Colors.blueAccent.shade100,
+            ),
+            textFormat: isLessAnHour
+                ? CountdownTextFormat.HH_MM_SS
+                : CountdownTextFormat.MM_SS,
+            isReverse: true,
+            isReverseAnimation: false,
+            isTimerTextShown: true,
+            autoStart: false,
+            onStart: null,
+            onComplete: ref.read(timerTKState.notifier).whenIntervalFinished,
+          ),
   );
 }

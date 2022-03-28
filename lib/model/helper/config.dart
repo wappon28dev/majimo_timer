@@ -26,29 +26,19 @@ class AppTeam extends AboutAppTeam {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.3.6 β';
-  final String buildDate = '2022/03/24 2:50';
+  final String versionStr = 'majimo_timer v0.3.8 β';
+  final String buildDate = '2022/03/29 3:20';
   final String changeLog = '''
 [fix]
-  1. Optimized for iOS build
-  2. Changed some translations
-  3. Changed format i18n: csv -> JSON
-      due to existing bug with LF/CRLF
-      in launching iOS with building MacOS
-  4. Added school header in "about team"
-  5. Added element aboutDebugger with
-      avatar within Map<Str, Str>.expand()
-  6. Optimized assets folder
-      /translation -> /i18n
-  7. Changed info.plist
-  8. Follow some Lint with custom Packages
+  1. Added interval logic
+  2. Optimized controller file
+            due to avoid god-class!
+  3. Prepare digital signature
+      for Google Play Console, AppStore!
 
 [known-bug]
   1. Overlay TK screen always applied
   2. native splash appears twice on A12
   3. home shortcut icons are blank
-
-solved! :
->> multiple heroes exception appears <<
     ''';
 }

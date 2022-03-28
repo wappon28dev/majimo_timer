@@ -51,7 +51,7 @@ class TimerPage extends HookConsumerWidget {
                           (_) => false,
                         );
 
-                        ref.read(timerTKState.notifier).whenStart();
+                        ref.read(timerTKState.notifier).runStart();
                         ref.read(generalState.notifier).runFAB();
                       },
                       heroTag: null,

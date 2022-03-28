@@ -19,7 +19,7 @@ class NotificationManager {
         [
           NotificationChannel(
             channelKey: NotificationChannelKey.ringtone.name,
-            channelName: t.notification_ringtone.t,
+            channelName: t.notification_ringtone.name,
             channelDescription: t.notification_ringtone_sub.t,
             ledColor: Colors.orange,
             onlyAlertOnce: false,
@@ -35,7 +35,7 @@ class NotificationManager {
         [
           NotificationChannel(
             channelKey: NotificationChannelKey.interval.name,
-            channelName: t.notification_interval.t,
+            channelName: t.notification_interval.name,
             channelDescription: t.notification_interval_sub.t,
             defaultColor: const Color(0xFF9D50DD),
             ledColor: Colors.orange,
@@ -52,7 +52,7 @@ class NotificationManager {
         [
           NotificationChannel(
             channelKey: NotificationChannelKey.timekeeping.name,
-            channelName: t.notification_timekeeping.t,
+            channelName: t.notification_timekeeping.name,
             channelDescription: t.notification_timekeeping_sub.t,
             defaultColor: const Color(0xFF9D50DD),
             ledColor: Colors.white,

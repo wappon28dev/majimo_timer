@@ -65,7 +65,7 @@ Future<void> main() async {
       fallbackLocale: const Locale('en', 'US'),
       path: PathStore().translationJSON,
       useOnlyLangCode: false,
-      // 追加すると, なぜか動かない
+      // 追加するとなぜか動かない
       // assetLoader: JsonAssetLoader(),
       child: const ProviderScope(child: MyApp()),
     ),
