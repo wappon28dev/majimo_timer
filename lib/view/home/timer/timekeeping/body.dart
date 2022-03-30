@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -147,7 +149,8 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
                 child: FloatingActionButton(
                   backgroundColor: Colors.amber.shade900,
                   heroTag: null,
-                  onPressed: timerTKstate.whenIntervalFinished,
+                  onPressed: () =>
+                      timerTKstate.whenIntervalFinished(context: context),
                   child: const Icon(
                     Icons.arrow_forward,
                     color: Colors.white,

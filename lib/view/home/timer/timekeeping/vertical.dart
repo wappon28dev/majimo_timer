@@ -26,9 +26,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               ),
               const SizedBox(height: 10),
               Text(
-                ref.watch(currentDurationState).current.toString(),
-                style: const TextStyle(
-                  fontFamily: 'monospace',
+                ref.watch(currentValueState).currentDuration.toString(),
+                style: TextStyle(
+                  fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
                 ),
               ),
               Row(
@@ -58,6 +58,12 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                           ref.read(timerTKState).targetIntervalTime.toString(),
                         ),
                       ],
+              ),
+              Text(
+                'phase : '
+                '${ref.read(currentValueState).currentIntervalLoopingNum + 1}'
+                ' / '
+                '${ref.read(timerState).targetIntervalLoopingNum}',
               ),
             ],
           ),
@@ -113,9 +119,9 @@ Widget count({required BuildContext context, required WidgetRef ref}) {
   final timerstate = ref.read(timerState);
   final timerTKstate = ref.read(timerTKState);
   final size = MediaQuery.of(context).size;
-  final controller = ref.read(currentDurationState.notifier).controller;
+  final controller = ref.read(currentValueState.notifier).controller;
   final isLight = ref.read(themeState.notifier).isLight(context: context);
-  final isLessAnHour = ref.read(currentDurationState).current.inHours > 0;
+  final isLessAnHour = ref.read(currentValueState).currentDuration.inHours > 0;
 
   return Padding(
     padding: const EdgeInsets.all(20),
@@ -136,9 +142,10 @@ Widget count({required BuildContext context, required WidgetRef ref}) {
             strokeCap: StrokeCap.butt,
             textStyle:
                 const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-            textFormat: (ref.read(currentDurationState).current.inHours > 0)
-                ? CountdownTextFormat.HH_MM_SS
-                : CountdownTextFormat.MM_SS,
+            textFormat:
+                (ref.read(currentValueState).currentDuration.inHours > 0)
+                    ? CountdownTextFormat.HH_MM_SS
+                    : CountdownTextFormat.MM_SS,
             isReverse: true,
             isReverseAnimation: false,
             isTimerTextShown: true,
@@ -175,7 +182,9 @@ Widget count({required BuildContext context, required WidgetRef ref}) {
             isTimerTextShown: true,
             autoStart: false,
             onStart: null,
-            onComplete: ref.read(timerTKState.notifier).whenIntervalFinished,
+            onComplete: () => ref
+                .read(timerTKState.notifier)
+                .whenIntervalFinished(context: context),
           ),
   );
 }

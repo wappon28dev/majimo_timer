@@ -25,8 +25,8 @@ class _SplashState extends ConsumerState<Splash> {
 
   Future<void> navigate() async {
     await Future<void>.delayed(const Duration(milliseconds: 1500));
-    ref.read(generalState.notifier).whenHome();
-    Navigator.of(context).pushReplacement(
+    await ref.read(generalState.notifier).whenHome();
+    await Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
         builder: (BuildContext context) => const HomePage(),
       ),
@@ -36,7 +36,8 @@ class _SplashState extends ConsumerState<Splash> {
   @override
   Widget build(BuildContext context) {
     Logger.i(
-        MyTheme().getThemeData(context: context, ref: ref).backgroundColor);
+      MyTheme().getThemeData(context: context, ref: ref).backgroundColor,
+    );
 
     return WillPopScope(
       onWillPop: () async => false,

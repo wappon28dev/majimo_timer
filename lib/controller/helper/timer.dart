@@ -1,25 +1,32 @@
 part of '../controller.dart';
 
 class TimerController extends StateNotifier<TimerState> {
-  TimerController() : super(const TimerState());
+  TimerController(this.read) : super(const TimerState());
+  final Reader read;
 
   void updateTargetDuration({required int value}) {
     state = state.copyWith(targetDuration: Duration(minutes: value));
     PrefManager().setInt(key: PrefKey.timerTarget, value: value);
     Logger.s('- from TimerState \n >> save int timerTarget = $value');
+    _detectCanRun();
   }
 
   void updateTargetIntervalDuration({required int value}) {
     state = state.copyWith(targetIntervalDuration: Duration(minutes: value));
     PrefManager().setInt(key: PrefKey.timerInterval, value: value);
     Logger.s('- from TimerState \n >> save int timerInterval = $value');
+    _detectCanRun();
   }
 
   void updateIntervalLoopingNum({required int value}) {
     state = state.copyWith(targetIntervalLoopingNum: value);
     PrefManager().setInt(key: PrefKey.timerInterval, value: value);
-    Logger.s('- from TimerState \n >> save int intervalLoopingNum = $value');
+    // Logger.s('- from TimerState \n >> save int intervalLoopingNum = $value');
+    _detectCanRun();
   }
+
+  void _detectCanRun() =>
+      read(generalState.notifier).updateShowFAB(value: state.canStart);
 }
 
 class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
@@ -27,11 +34,15 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
   final Reader read;
 
   CountDownController get controller =>
-      read(currentDurationState.notifier).controller;
+      read(currentValueState.notifier).controller;
 
-  void runStart() {
+  void runInitialStart() {
+    read(currentValueState.notifier).initializeCurrentIntervalDuration();
+    _runStart();
+  }
+
+  void _runStart() {
     final targetTime = DateTime.now().add(read(timerState).targetDuration);
-
     _updateFabMode(value: 0);
     state = state.copyWith(
       targetTime: TimeOfDay(hour: targetTime.hour, minute: targetTime.minute),
@@ -45,9 +56,9 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     state = state.copyWith(isCountingInterval: false);
   }
 
-  void runIntervalStart() {
+  void _runIntervalStart() {
     final targetIntervalDuration = read(timerState).targetIntervalDuration;
-    final currentNum = read(currentDurationState).currentIntervalLoopingNum;
+    final currentNum = read(currentValueState).currentIntervalLoopingNum;
     final targetNum = read(timerState).targetIntervalLoopingNum;
     final targetTime =
         DateTime.now().add(read(timerState).targetIntervalDuration);
@@ -57,7 +68,6 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
       targetTime: TimeOfDay(hour: targetTime.hour, minute: targetTime.minute),
     );
     Logger.i(
-      ' -- interval begin =>  $currentNum / $targetNum -- \n'
       ' now     => ${DateTime.now()} \n'
       'duration => $targetIntervalDuration \n target  => $targetTime',
     );
@@ -74,10 +84,11 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
   }
 
   void runResume() {
-    final target = DateTime.now().add(read(currentDurationState).current);
+    final target = DateTime.now().add(read(currentValueState).currentDuration);
     Logger.i(
       ' now     => ${DateTime.now()} \n'
-      'current => ${read(currentDurationState).current} \n target  => $target',
+      'current => ${read(currentValueState).currentDuration} \n'
+      'target  => $target',
     );
     NotificationManager().timerFinish(target: target);
     NotificationManager().timerTimeKeeping(target: target);
@@ -86,15 +97,35 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
   }
 
   void whenFinished() {
-    runIntervalStart();
+    _runIntervalStart();
   }
 
-  void whenIntervalFinished() {
+  void whenIntervalFinished({required BuildContext context}) {
     final targetDuration = read(timerState).targetDuration;
-    controller.restart(duration: targetDuration.inSeconds);
-    runStart();
+    final targetNum = read(timerState).targetIntervalLoopingNum;
+    final currentNum = read(currentValueState).currentIntervalLoopingNum;
+    final isContinue = targetNum > currentNum + 1; // なぜか +1 しないといけない
+
+    // core code of interval timer
+    read(currentValueState.notifier).incrementCurrentIntervalDuration();
+    if (isContinue) {
+      controller.restart(duration: targetDuration.inSeconds);
+      _runStart();
+    } else {
+      _runExit(context: context);
+    }
   }
 
   void _updateFabMode({required int value}) =>
       state = state.copyWith(fabMode: value);
+
+  void _runExit({required BuildContext context}) {
+    read(generalState.notifier).runPush(
+      context: context,
+      page: const HomePage(),
+      isReplace: true,
+    );
+    NotificationManager().cancelAllNotifications();
+    read(generalState.notifier).whenHome();
+  }
 }

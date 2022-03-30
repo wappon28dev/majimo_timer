@@ -72,22 +72,24 @@ Widget analogclock({required BuildContext context, required WidgetRef ref}) {
 
 Widget fab({required BuildContext context, required WidgetRef ref}) {
   return SizedBox(
-      height: 80,
-      width: 80,
-      child: GestureDetector(
-          onLongPressUp: () => null,
-          child: FloatingActionButton(
-            heroTag: 'global',
-            onPressed: () => ref.read(generalState.notifier).runPush(
-                  context: context,
-                  page: const Tutorial(),
-                  isReplace: true,
-                ),
-            splashColor: Colors.green.shade300,
-            backgroundColor: Colors.tealAccent,
-            child: const Icon(
-              Icons.accessibility_new_sharp,
-              color: Colors.black,
+    height: 80,
+    width: 80,
+    child: GestureDetector(
+      onLongPressUp: () => null,
+      child: FloatingActionButton(
+        heroTag: 'global',
+        onPressed: () => ref.read(generalState.notifier).runPush(
+              context: context,
+              page: const Tutorial(),
+              isReplace: true,
             ),
-          )));
+        splashColor: Colors.green.shade300,
+        backgroundColor: Colors.tealAccent,
+        child: const Icon(
+          Icons.accessibility_new_sharp,
+          color: Colors.black,
+        ),
+      ),
+    ),
+  );
 }

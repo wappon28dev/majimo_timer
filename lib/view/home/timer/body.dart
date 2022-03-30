@@ -2,6 +2,7 @@ import 'package:dismissible_page/dismissible_page.dart';
 import 'package:duration_picker/duration_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
@@ -51,7 +52,7 @@ class TimerPage extends HookConsumerWidget {
                           (_) => false,
                         );
 
-                        ref.read(timerTKState.notifier).runStart();
+                        ref.read(timerTKState.notifier).runInitialStart();
                         ref.read(generalState.notifier).runFAB();
                       },
                       heroTag: null,

@@ -1,7 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,9 +20,9 @@ final globalState = StateNotifierProvider<GlobalController, GlobalState>(
 final generalState = StateNotifierProvider<GeneralController, GeneralState>(
   (ref) => GeneralController(),
 );
-final currentDurationState = StateNotifierProvider.autoDispose<
-    CurrentDurationController,
-    CurrentDurationState>((ref) => CurrentDurationController());
+final currentValueState = StateNotifierProvider.autoDispose<
+    CurrentValueController,
+    CurrentValueState>((ref) => CurrentValueController());
 
 final themeState = StateNotifierProvider<ThemeController, ThemeState>(
   (ref) => ThemeController(),
@@ -44,7 +43,7 @@ final alarmTKState =
   (ref) => AlarmTimeKeepingController(ref.read),
 );
 final timerState = StateNotifierProvider<TimerController, TimerState>(
-  (ref) => TimerController(),
+  (ref) => TimerController(ref.read),
 );
 final timerTKState =
     StateNotifierProvider<TimerTimeKeepingController, TimerTimeKeepingState>(

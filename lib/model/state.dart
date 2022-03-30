@@ -34,11 +34,11 @@ class GeneralState with _$GeneralState {
 }
 
 @freezed
-class CurrentDurationState with _$CurrentDurationState {
-  const factory CurrentDurationState({
-    @Default(Duration.zero) Duration current,
+class CurrentValueState with _$CurrentValueState {
+  const factory CurrentValueState({
+    @Default(Duration.zero) Duration currentDuration,
     @Default(0) int currentIntervalLoopingNum,
-  }) = _CurrentDurationState;
+  }) = _CurrentValueState;
 }
 
 @freezed
@@ -271,12 +271,19 @@ class TimerState with _$TimerState {
   }) = _TimerState;
 
   const TimerState._();
+
   String get targetDurationStr =>
       '${targetDuration.inHours.toString().padLeft(2, '0')}h:'
       '${targetDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
   String get targetIntervalDurationStr =>
       '${targetIntervalDuration.inHours.toString().padLeft(2, '0')}h:'
       '${targetIntervalDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
+
+  bool get canStart {
+    final value =
+        targetDuration != Duration.zero && targetIntervalLoopingNum != 0;
+    return value;
+  }
 }
 
 @freezed

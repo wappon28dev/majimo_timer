@@ -419,57 +419,58 @@ abstract class _GeneralState extends GeneralState {
 }
 
 /// @nodoc
-class _$CurrentDurationStateTearOff {
-  const _$CurrentDurationStateTearOff();
+class _$CurrentValueStateTearOff {
+  const _$CurrentValueStateTearOff();
 
-  _CurrentDurationState call(
-      {Duration current = Duration.zero, int currentIntervalLoopingNum = 0}) {
-    return _CurrentDurationState(
-      current: current,
+  _CurrentValueState call(
+      {Duration currentDuration = Duration.zero,
+      int currentIntervalLoopingNum = 0}) {
+    return _CurrentValueState(
+      currentDuration: currentDuration,
       currentIntervalLoopingNum: currentIntervalLoopingNum,
     );
   }
 }
 
 /// @nodoc
-const $CurrentDurationState = _$CurrentDurationStateTearOff();
+const $CurrentValueState = _$CurrentValueStateTearOff();
 
 /// @nodoc
-mixin _$CurrentDurationState {
-  Duration get current => throw _privateConstructorUsedError;
+mixin _$CurrentValueState {
+  Duration get currentDuration => throw _privateConstructorUsedError;
   int get currentIntervalLoopingNum => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CurrentDurationStateCopyWith<CurrentDurationState> get copyWith =>
+  $CurrentValueStateCopyWith<CurrentValueState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CurrentDurationStateCopyWith<$Res> {
-  factory $CurrentDurationStateCopyWith(CurrentDurationState value,
-          $Res Function(CurrentDurationState) then) =
-      _$CurrentDurationStateCopyWithImpl<$Res>;
-  $Res call({Duration current, int currentIntervalLoopingNum});
+abstract class $CurrentValueStateCopyWith<$Res> {
+  factory $CurrentValueStateCopyWith(
+          CurrentValueState value, $Res Function(CurrentValueState) then) =
+      _$CurrentValueStateCopyWithImpl<$Res>;
+  $Res call({Duration currentDuration, int currentIntervalLoopingNum});
 }
 
 /// @nodoc
-class _$CurrentDurationStateCopyWithImpl<$Res>
-    implements $CurrentDurationStateCopyWith<$Res> {
-  _$CurrentDurationStateCopyWithImpl(this._value, this._then);
+class _$CurrentValueStateCopyWithImpl<$Res>
+    implements $CurrentValueStateCopyWith<$Res> {
+  _$CurrentValueStateCopyWithImpl(this._value, this._then);
 
-  final CurrentDurationState _value;
+  final CurrentValueState _value;
   // ignore: unused_field
-  final $Res Function(CurrentDurationState) _then;
+  final $Res Function(CurrentValueState) _then;
 
   @override
   $Res call({
-    Object? current = freezed,
+    Object? currentDuration = freezed,
     Object? currentIntervalLoopingNum = freezed,
   }) {
     return _then(_value.copyWith(
-      current: current == freezed
-          ? _value.current
-          : current // ignore: cast_nullable_to_non_nullable
+      currentDuration: currentDuration == freezed
+          ? _value.currentDuration
+          : currentDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
       currentIntervalLoopingNum: currentIntervalLoopingNum == freezed
           ? _value.currentIntervalLoopingNum
@@ -480,35 +481,35 @@ class _$CurrentDurationStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$CurrentDurationStateCopyWith<$Res>
-    implements $CurrentDurationStateCopyWith<$Res> {
-  factory _$CurrentDurationStateCopyWith(_CurrentDurationState value,
-          $Res Function(_CurrentDurationState) then) =
-      __$CurrentDurationStateCopyWithImpl<$Res>;
+abstract class _$CurrentValueStateCopyWith<$Res>
+    implements $CurrentValueStateCopyWith<$Res> {
+  factory _$CurrentValueStateCopyWith(
+          _CurrentValueState value, $Res Function(_CurrentValueState) then) =
+      __$CurrentValueStateCopyWithImpl<$Res>;
   @override
-  $Res call({Duration current, int currentIntervalLoopingNum});
+  $Res call({Duration currentDuration, int currentIntervalLoopingNum});
 }
 
 /// @nodoc
-class __$CurrentDurationStateCopyWithImpl<$Res>
-    extends _$CurrentDurationStateCopyWithImpl<$Res>
-    implements _$CurrentDurationStateCopyWith<$Res> {
-  __$CurrentDurationStateCopyWithImpl(
-      _CurrentDurationState _value, $Res Function(_CurrentDurationState) _then)
-      : super(_value, (v) => _then(v as _CurrentDurationState));
+class __$CurrentValueStateCopyWithImpl<$Res>
+    extends _$CurrentValueStateCopyWithImpl<$Res>
+    implements _$CurrentValueStateCopyWith<$Res> {
+  __$CurrentValueStateCopyWithImpl(
+      _CurrentValueState _value, $Res Function(_CurrentValueState) _then)
+      : super(_value, (v) => _then(v as _CurrentValueState));
 
   @override
-  _CurrentDurationState get _value => super._value as _CurrentDurationState;
+  _CurrentValueState get _value => super._value as _CurrentValueState;
 
   @override
   $Res call({
-    Object? current = freezed,
+    Object? currentDuration = freezed,
     Object? currentIntervalLoopingNum = freezed,
   }) {
-    return _then(_CurrentDurationState(
-      current: current == freezed
-          ? _value.current
-          : current // ignore: cast_nullable_to_non_nullable
+    return _then(_CurrentValueState(
+      currentDuration: currentDuration == freezed
+          ? _value.currentDuration
+          : currentDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
       currentIntervalLoopingNum: currentIntervalLoopingNum == freezed
           ? _value.currentIntervalLoopingNum
@@ -520,30 +521,31 @@ class __$CurrentDurationStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CurrentDurationState
+class _$_CurrentValueState
     with DiagnosticableTreeMixin
-    implements _CurrentDurationState {
-  const _$_CurrentDurationState(
-      {this.current = Duration.zero, this.currentIntervalLoopingNum = 0});
+    implements _CurrentValueState {
+  const _$_CurrentValueState(
+      {this.currentDuration = Duration.zero,
+      this.currentIntervalLoopingNum = 0});
 
   @JsonKey()
   @override
-  final Duration current;
+  final Duration currentDuration;
   @JsonKey()
   @override
   final int currentIntervalLoopingNum;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CurrentDurationState(current: $current, currentIntervalLoopingNum: $currentIntervalLoopingNum)';
+    return 'CurrentValueState(currentDuration: $currentDuration, currentIntervalLoopingNum: $currentIntervalLoopingNum)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CurrentDurationState'))
-      ..add(DiagnosticsProperty('current', current))
+      ..add(DiagnosticsProperty('type', 'CurrentValueState'))
+      ..add(DiagnosticsProperty('currentDuration', currentDuration))
       ..add(DiagnosticsProperty(
           'currentIntervalLoopingNum', currentIntervalLoopingNum));
   }
@@ -552,8 +554,9 @@ class _$_CurrentDurationState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CurrentDurationState &&
-            const DeepCollectionEquality().equals(other.current, current) &&
+            other is _CurrentValueState &&
+            const DeepCollectionEquality()
+                .equals(other.currentDuration, currentDuration) &&
             const DeepCollectionEquality().equals(
                 other.currentIntervalLoopingNum, currentIntervalLoopingNum));
   }
@@ -561,28 +564,27 @@ class _$_CurrentDurationState
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(current),
+      const DeepCollectionEquality().hash(currentDuration),
       const DeepCollectionEquality().hash(currentIntervalLoopingNum));
 
   @JsonKey(ignore: true)
   @override
-  _$CurrentDurationStateCopyWith<_CurrentDurationState> get copyWith =>
-      __$CurrentDurationStateCopyWithImpl<_CurrentDurationState>(
-          this, _$identity);
+  _$CurrentValueStateCopyWith<_CurrentValueState> get copyWith =>
+      __$CurrentValueStateCopyWithImpl<_CurrentValueState>(this, _$identity);
 }
 
-abstract class _CurrentDurationState implements CurrentDurationState {
-  const factory _CurrentDurationState(
-      {Duration current,
-      int currentIntervalLoopingNum}) = _$_CurrentDurationState;
+abstract class _CurrentValueState implements CurrentValueState {
+  const factory _CurrentValueState(
+      {Duration currentDuration,
+      int currentIntervalLoopingNum}) = _$_CurrentValueState;
 
   @override
-  Duration get current;
+  Duration get currentDuration;
   @override
   int get currentIntervalLoopingNum;
   @override
   @JsonKey(ignore: true)
-  _$CurrentDurationStateCopyWith<_CurrentDurationState> get copyWith =>
+  _$CurrentValueStateCopyWith<_CurrentValueState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

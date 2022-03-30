@@ -2,13 +2,7 @@ part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final timerstate = ref.read(timerState);
-
   Widget content() {
-    Logger.i(
-      '- from majimo_timer/lib/view/home/alarm/widget.dart \n'
-      ' >> timerstate.targetDuration value => ${timerstate.targetDuration.toString()}',
-    );
-
     return Stack(
       children: [
         Center(
@@ -38,13 +32,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     Logger.i(
                       '- from majimo_timer/lib/view/home/timer/widget.dart \n >> receive result => $result',
                     );
-                    result == Duration.zero
-                        ? ref
-                            .read(generalState.notifier)
-                            .updateShowFAB(value: false)
-                        : ref
-                            .read(generalState.notifier)
-                            .updateShowFAB(value: true);
                   }
                 },
               ),
@@ -72,18 +59,24 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     Logger.i(
                       '- from majimo_timer/lib/view/home/timer/widget.dart \n >> receive result => $result',
                     );
-                    result == Duration.zero
-                        ? ref
-                            .read(generalState.notifier)
-                            .updateShowFAB(value: false)
-                        : ref
-                            .read(generalState.notifier)
-                            .updateShowFAB(value: true);
                   }
                 },
               ),
               const Text('\n\n set targetIntervalLoopingNum !'),
-              Text(ref.read(timerState).targetIntervalLoopingNum.toString())
+              Text(ref.read(timerState).targetIntervalLoopingNum.toString()),
+              Slider(
+                label: timerstate.targetIntervalLoopingNum.toString(),
+                min: 0,
+                max: 10,
+                value: timerstate.targetIntervalLoopingNum.toDouble(),
+                activeColor: Colors.orange,
+                inactiveColor: Colors.blueAccent,
+                divisions: 10,
+                onChanged: (value) => ref
+                    .read(timerState.notifier)
+                    .updateIntervalLoopingNum(value: value.toInt()),
+              ),
+              Text(timerstate.canStart.toString()),
             ],
           ),
         ),

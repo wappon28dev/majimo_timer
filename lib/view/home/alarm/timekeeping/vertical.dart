@@ -25,14 +25,14 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             const SizedBox(height: 10),
             Text(
               'target  => ${ref.read(alarmTKState).targetDuration.toString()}',
-              style: const TextStyle(
-                fontFamily: 'monospace',
+              style: TextStyle(
+                fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
               ),
             ),
             Text(
-              'current => ${ref.watch(currentDurationState).current}',
-              style: const TextStyle(
-                fontFamily: 'monospace',
+              'current => ${ref.watch(currentValueState).currentDuration}',
+              style: TextStyle(
+                fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
               ),
             ),
             Row(
@@ -44,9 +44,10 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 const SizedBox(width: 20),
                 const Text('・'),
                 const SizedBox(width: 20),
-                Text('あと${ref.watch(currentDurationState).current.inMinutes}分')
+                Text(
+                    'あと${ref.watch(currentValueState).currentDuration.inMinutes}分')
               ],
-            )
+            ),
           ],
         ),
       ),
