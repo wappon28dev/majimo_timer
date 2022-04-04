@@ -280,8 +280,9 @@ class TimerState with _$TimerState {
       '${targetIntervalDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
 
   bool get canStart {
-    final value =
-        targetDuration != Duration.zero && targetIntervalLoopingNum != 0;
+    final value = targetDuration != Duration.zero &&
+        targetIntervalDuration != Duration.zero &&
+        targetIntervalLoopingNum != 0;
     return value;
   }
 }

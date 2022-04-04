@@ -13,7 +13,7 @@ class PathStore {
       'https://github.com/wappon-28-dev/majimo_timer/blob/main/LICENSE';
   final String githubURL = 'https://github.com/wappon-28-dev/majimo_timer/';
   final String meidenURL = 'https://www.meiden.ed.jp/sp/';
-  final String syscomURL = 'https://www.meiden.ed.jp/club/detail.html?id=305';
+  final String miscURL = 'https://www.meiden.ed.jp/club/detail.html?id=305';
 }
 
 class AppTeam extends AboutAppTeam {
@@ -26,15 +26,15 @@ class AppTeam extends AboutAppTeam {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.4.0 β';
-  final String buildDate = '2022/03/31 3:22';
+  final String versionStr = 'majimo_timer v0.4.2 β';
+  final String buildDate = '2022/04/05 3:34';
   final String changeLog = '''
 [fix]
-  1. Added interval looping logic
-  2. Renamed i18n to l10n
-  3. Renamed CurrentDurationState
-               to CurrentValueState
-  4. Prepare digital signature
+  1. Made interval logic more safe
+  2. Renamed some function & name names
+  3. Added goal page & auto focus to keyboard
+  4. Improved 3 pages' UI using Scaffold
+  5. Prepare digital signature
       for Google Play Console, AppStore!
 
 [known-bug]

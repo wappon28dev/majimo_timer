@@ -75,7 +75,7 @@ Widget fab({required BuildContext context, required WidgetRef ref}) {
     height: 80,
     width: 80,
     child: GestureDetector(
-      onLongPressUp: () => null,
+      onLongPressUp: null,
       child: FloatingActionButton(
         heroTag: 'global',
         onPressed: () => ref.read(generalState.notifier).runPush(

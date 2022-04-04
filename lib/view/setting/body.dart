@@ -50,7 +50,7 @@ class Setting extends HookConsumerWidget {
       themeMode: ref.read(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: appbar(context: context, ref: ref),
+        appBar: _appbar(context: context, ref: ref),
         body: CupertinoScrollbar(
           child: SingleChildScrollView(
             child: Column(
@@ -179,7 +179,7 @@ class Setting extends HookConsumerWidget {
   }
 }
 
-AppBar appbar({required BuildContext context, required WidgetRef ref}) {
+AppBar _appbar({required BuildContext context, required WidgetRef ref}) {
   return AppBar(
     centerTitle: true,
     leading: IconButton(

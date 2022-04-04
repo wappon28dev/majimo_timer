@@ -1,19 +1,14 @@
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_color/src/helper.dart';
+import 'package:flutter_color/flutter_color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
+import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/controller/controller.dart';
-import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
-import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:simple_animations/stateless_animation/play_animation.dart';
 
 import '../../../../main.dart';
@@ -35,17 +30,18 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
       switch (mode) {
         case 0:
           return SizedBox(
-              height: 80,
-              width: 80,
-              child: FloatingActionButton(
-                backgroundColor: Colors.amber,
-                onPressed: () => ref.read(timerTKState.notifier).runPause(),
-                heroTag: 'global',
-                child: const Icon(
-                  Icons.pause,
-                  color: Colors.black,
-                ),
-              ));
+            height: 80,
+            width: 80,
+            child: FloatingActionButton(
+              backgroundColor: Colors.amber,
+              onPressed: () => ref.read(timerTKState.notifier).runPause(),
+              heroTag: 'global',
+              child: const Icon(
+                Icons.pause,
+                color: Colors.black,
+              ),
+            ),
+          );
         case 1:
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -159,27 +155,6 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
               ),
             ],
           );
-
-        // case 3:
-        //   return FloatingActionButton(
-        //     backgroundColor: Colors.red,
-        //     heroTag: null,
-
-        //     onPressed: () {
-        //       generalstate.runPush(
-        //         context: context,
-        //         page: const HomePage(),
-        //         isReplace: true,
-        //       );
-        //       NotificationManager().cancelAllNotifications();
-        //       generalstate.whenHome();
-        //     },
-        //     // heroTag: null,
-        //     child: const Icon(
-        //       Icons.stop,
-        //       color: Colors.white,
-        //     ),
-        //   );
         default:
           throw Exception('switch-case error!');
       }
@@ -193,8 +168,6 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
       home: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: show ? fab() : null,
-        // floatingActionButtonLocation:
-        //     FloatingActionButtonLocation.centerDocked,
         body: !isLandscape
             ? buildVertical(context, ref)
             : buildHorizontal(context),

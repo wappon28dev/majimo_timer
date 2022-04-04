@@ -140,8 +140,11 @@ Widget count({required BuildContext context, required WidgetRef ref}) {
             backgroundGradient: null,
             strokeWidth: 10,
             strokeCap: StrokeCap.butt,
-            textStyle:
-                const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+            textStyle: TextStyle(
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+              color: isLight ? Colors.redAccent.shade200 : Colors.red.shade100,
+            ),
             textFormat:
                 (ref.read(currentValueState).currentDuration.inHours > 0)
                     ? CountdownTextFormat.HH_MM_SS
@@ -170,9 +173,8 @@ Widget count({required BuildContext context, required WidgetRef ref}) {
             textStyle: TextStyle(
               fontSize: 50,
               fontWeight: FontWeight.bold,
-              color: isLight
-                  ? Colors.blueAccent.shade200
-                  : Colors.blueAccent.shade100,
+              color:
+                  isLight ? Colors.blueAccent.shade200 : Colors.blue.shade100,
             ),
             textFormat: isLessAnHour
                 ? CountdownTextFormat.HH_MM_SS

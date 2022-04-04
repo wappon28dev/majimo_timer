@@ -82,7 +82,7 @@ Future<dynamic> modal(
   );
 }
 
-Future<dynamic> number_pad(
+Future<dynamic> numberPad(
     {required BuildContext context, required WidgetRef ref}) {
   const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
   final value = ref.read(themeState.notifier).isLight(context: context);

@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/config.dart';
-import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/model/helper/pref.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 
@@ -56,7 +54,7 @@ class AboutAppTeam extends HookConsumerWidget {
               child: Image.asset(PathStore().meidenLogo, height: 100),
             ),
             const Text(
-              '主なメンバーの所属校：\n愛知工業大学名電高等学校・情報システム部',
+              '  主なメンバーの所属校：\n愛知工業大学名電高等学校・情報システム部',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
@@ -100,11 +98,7 @@ class AboutAppTeam extends HookConsumerWidget {
                     ),
                     child: Row(
                       children: const [
-                        Icon(
-                          Icons.baby_changing_station,
-                          color: Colors.purple,
-                        ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 5),
                         Text(
                           '情報システム部',
                           style: TextStyle(color: Colors.purple),
@@ -115,7 +109,7 @@ class AboutAppTeam extends HookConsumerWidget {
                     ),
                     onPressed: () => ref
                         .read(generalState.notifier)
-                        .runURL(url: PathStore().syscomURL),
+                        .runURL(url: PathStore().miscURL),
                   ),
                 ],
               ),
@@ -152,8 +146,8 @@ class AboutAppTeam extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: size.width / 2.5,
-                    height: size.width / 2.5,
+                    width: size.width / 3,
+                    height: size.width / 3,
                     child: Image.asset('assets/images/me.png'),
                   ),
                   const Text(

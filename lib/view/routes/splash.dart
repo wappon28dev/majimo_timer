@@ -1,3 +1,5 @@
+// ignore_for_file: unawaited_futures
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
@@ -25,8 +27,8 @@ class _SplashState extends ConsumerState<Splash> {
 
   Future<void> navigate() async {
     await Future<void>.delayed(const Duration(milliseconds: 1500));
-    await ref.read(generalState.notifier).whenHome();
-    await Navigator.of(context).pushReplacement(
+    ref.read(generalState.notifier).whenHome();
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
         builder: (BuildContext context) => const HomePage(),
       ),
