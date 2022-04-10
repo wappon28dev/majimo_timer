@@ -7,6 +7,7 @@ import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/view/debug/body.dart';
 
 Widget debug({required BuildContext context, required WidgetRef ref}) {
@@ -74,11 +75,11 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                   const SizedBox(width: 5),
                   IconButton(
                     onPressed: () {
-                      ref.read(generalState.notifier).runPush(
-                            context: context,
-                            page: const Debug(),
-                            isReplace: false,
-                          );
+                      RouteManager().runPush(
+                        context: context,
+                        page: const Debug(),
+                        isReplace: false,
+                      );
                       Logger.e(
                         '- from majimo_timer/lib/view/home/root/widget.dart \n'
                         ' > debug page opened',

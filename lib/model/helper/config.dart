@@ -19,23 +19,24 @@ class PathStore {
 class AppTeam extends AboutAppTeam {
   AppTeam({Key? key}) : super(key: key);
   final Map<String, String> debuggers = {
-    'katoso_1': 'assets/images/me.png',
-    'katoso_2': 'assets/images/me.png',
-    'katoso_3': 'assets/images/me.png',
+    'nagi': 'assets/images/me.png',
+    'yukina': 'assets/images/me.png',
+    'katoso': 'assets/images/me.png',
   };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.4.2 β';
-  final String buildDate = '2022/04/05 3:34';
+  final String versionStr = 'majimo_timer v0.4.3 β';
+  final String buildDate = '2022/04/11 0:56';
   final String changeLog = '''
 [fix]
-  1. Made interval logic more safe
-  2. Renamed some function & name names
-  3. Added goal page & auto focus to keyboard
-  4. Improved 3 pages' UI using Scaffold
-  5. Prepare digital signature
-      for Google Play Console, AppStore!
+  1. Added goal/goal timekeeping page
+  2. Added RouteManager class
+  3. Added freezed class (goal/goalTK)
+  4. Separated rounded_card Widget
+  5. Applied Apple AppStore Signature
+  6. Prepare digital signature
+      for Google Play Console !
 
 [known-bug]
   1. Overlay TK screen always applied

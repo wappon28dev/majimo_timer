@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/config.dart';
+import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 
@@ -85,9 +86,8 @@ class AboutAppTeam extends HookConsumerWidget {
                         Icon(Icons.launch, color: Colors.purple),
                       ],
                     ),
-                    onPressed: () => ref
-                        .read(generalState.notifier)
-                        .runURL(url: PathStore().meidenURL),
+                    onPressed: () =>
+                        RouteManager().runURL(url: PathStore().meidenURL),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -107,9 +107,8 @@ class AboutAppTeam extends HookConsumerWidget {
                         Icon(Icons.launch, color: Colors.purple),
                       ],
                     ),
-                    onPressed: () => ref
-                        .read(generalState.notifier)
-                        .runURL(url: PathStore().miscURL),
+                    onPressed: () =>
+                        RouteManager().runURL(url: PathStore().miscURL),
                   ),
                 ],
               ),

@@ -20,7 +20,7 @@ class TimerController extends StateNotifier<TimerState> {
 
   void updateIntervalLoopingNum({required int value}) {
     state = state.copyWith(targetIntervalLoopingNum: value);
-    PrefManager().setInt(key: PrefKey.timerInterval, value: value);
+    PrefManager().setInt(key: PrefKey.timerIntervalNum, value: value);
     // Logger.s('- from TimerState \n >> save int intervalLoopingNum = $value');
     _detectCanRun();
   }
@@ -58,14 +58,13 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
 
   void _runIntervalStart() {
     final targetIntervalDuration = read(timerState).targetIntervalDuration;
-    final currentNum = read(currentValueState).currentIntervalLoopingNum;
-    final targetNum = read(timerState).targetIntervalLoopingNum;
     final targetTime =
         DateTime.now().add(read(timerState).targetIntervalDuration);
 
     _updateFabMode(value: 0);
     state = state.copyWith(
-      targetTime: TimeOfDay(hour: targetTime.hour, minute: targetTime.minute),
+      targetIntervalTime:
+          TimeOfDay(hour: targetTime.hour, minute: targetTime.minute),
     );
     Logger.i(
       ' now     => ${DateTime.now()} \n'
@@ -120,7 +119,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
       state = state.copyWith(fabMode: value);
 
   void _runExit({required BuildContext context}) {
-    read(generalState.notifier).runPush(
+    RouteManager().runPush(
       context: context,
       page: const HomePage(),
       isReplace: true,

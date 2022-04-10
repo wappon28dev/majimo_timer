@@ -61,7 +61,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               break;
             case 'goal':
               context.pushTransparentRoute(const GoalPage());
-              ref.read(generalState.notifier).runFAB();
+              ref
+                ..read(generalState.notifier).runFAB()
+                ..read(goalTKState.notifier).runStart();
 
               break;
           }
@@ -192,8 +194,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     actions: [
       IconButton(
         onPressed: () {
-          ref
-              .read(generalState.notifier)
+          RouteManager()
               .runPush(context: context, page: const Debug(), isReplace: false);
           Logger.e(
             '- from majimo_timer/lib/view/home/root/widget.dart \n'
@@ -204,8 +205,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         color: Colors.white,
       ),
       IconButton(
-        onPressed: () => ref
-            .read(generalState.notifier)
+        onPressed: () => RouteManager()
             .runPush(context: context, page: const Setting(), isReplace: false),
         icon: const Icon(Icons.settings),
         color: Colors.white,
@@ -219,11 +219,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       children: [
         IconButton(
           onPressed: () {
-            ref.read(generalState.notifier).runPush(
-                  context: context,
-                  page: const Debug(),
-                  isReplace: false,
-                );
+            RouteManager().runPush(
+              context: context,
+              page: const Debug(),
+              isReplace: false,
+            );
             Logger.e(
               '- from majimo_timer/lib/view/home/root/widget.dart \n'
               ' > debug page opened',
@@ -234,11 +234,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         ),
         IconButton(
           onPressed: () {
-            ref.read(generalState.notifier).runPush(
-                  context: context,
-                  page: const Setting(),
-                  isReplace: false,
-                );
+            RouteManager().runPush(
+              context: context,
+              page: const Setting(),
+              isReplace: false,
+            );
           },
           icon: const Icon(Icons.settings),
           color: Colors.white,

@@ -11,6 +11,7 @@ import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/view/components/rounded_card.dart';
 import 'package:majimo_timer/view/home/timer/timekeeping/body.dart';
 
 part 'horizontal.dart';

@@ -1933,3 +1933,301 @@ abstract class _TimerTimeKeepingState extends TimerTimeKeepingState {
   _$TimerTimeKeepingStateCopyWith<_TimerTimeKeepingState> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$GoalStateTearOff {
+  const _$GoalStateTearOff();
+
+  _GoalState call({String goal = ''}) {
+    return _GoalState(
+      goal: goal,
+    );
+  }
+}
+
+/// @nodoc
+const $GoalState = _$GoalStateTearOff();
+
+/// @nodoc
+mixin _$GoalState {
+  String get goal => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $GoalStateCopyWith<GoalState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GoalStateCopyWith<$Res> {
+  factory $GoalStateCopyWith(GoalState value, $Res Function(GoalState) then) =
+      _$GoalStateCopyWithImpl<$Res>;
+  $Res call({String goal});
+}
+
+/// @nodoc
+class _$GoalStateCopyWithImpl<$Res> implements $GoalStateCopyWith<$Res> {
+  _$GoalStateCopyWithImpl(this._value, this._then);
+
+  final GoalState _value;
+  // ignore: unused_field
+  final $Res Function(GoalState) _then;
+
+  @override
+  $Res call({
+    Object? goal = freezed,
+  }) {
+    return _then(_value.copyWith(
+      goal: goal == freezed
+          ? _value.goal
+          : goal // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$GoalStateCopyWith<$Res> implements $GoalStateCopyWith<$Res> {
+  factory _$GoalStateCopyWith(
+          _GoalState value, $Res Function(_GoalState) then) =
+      __$GoalStateCopyWithImpl<$Res>;
+  @override
+  $Res call({String goal});
+}
+
+/// @nodoc
+class __$GoalStateCopyWithImpl<$Res> extends _$GoalStateCopyWithImpl<$Res>
+    implements _$GoalStateCopyWith<$Res> {
+  __$GoalStateCopyWithImpl(_GoalState _value, $Res Function(_GoalState) _then)
+      : super(_value, (v) => _then(v as _GoalState));
+
+  @override
+  _GoalState get _value => super._value as _GoalState;
+
+  @override
+  $Res call({
+    Object? goal = freezed,
+  }) {
+    return _then(_GoalState(
+      goal: goal == freezed
+          ? _value.goal
+          : goal // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_GoalState extends _GoalState with DiagnosticableTreeMixin {
+  const _$_GoalState({this.goal = ''}) : super._();
+
+  @JsonKey()
+  @override
+  final String goal;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'GoalState(goal: $goal)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'GoalState'))
+      ..add(DiagnosticsProperty('goal', goal));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _GoalState &&
+            const DeepCollectionEquality().equals(other.goal, goal));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(goal));
+
+  @JsonKey(ignore: true)
+  @override
+  _$GoalStateCopyWith<_GoalState> get copyWith =>
+      __$GoalStateCopyWithImpl<_GoalState>(this, _$identity);
+}
+
+abstract class _GoalState extends GoalState {
+  const factory _GoalState({String goal}) = _$_GoalState;
+  const _GoalState._() : super._();
+
+  @override
+  String get goal;
+  @override
+  @JsonKey(ignore: true)
+  _$GoalStateCopyWith<_GoalState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$GoalTimeKeepingStateTearOff {
+  const _$GoalTimeKeepingStateTearOff();
+
+  _GoalTimeKeepingState call({int fabMode = 0, DateTime? startedTime}) {
+    return _GoalTimeKeepingState(
+      fabMode: fabMode,
+      startedTime: startedTime,
+    );
+  }
+}
+
+/// @nodoc
+const $GoalTimeKeepingState = _$GoalTimeKeepingStateTearOff();
+
+/// @nodoc
+mixin _$GoalTimeKeepingState {
+  int get fabMode => throw _privateConstructorUsedError;
+  DateTime? get startedTime => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $GoalTimeKeepingStateCopyWith<GoalTimeKeepingState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GoalTimeKeepingStateCopyWith<$Res> {
+  factory $GoalTimeKeepingStateCopyWith(GoalTimeKeepingState value,
+          $Res Function(GoalTimeKeepingState) then) =
+      _$GoalTimeKeepingStateCopyWithImpl<$Res>;
+  $Res call({int fabMode, DateTime? startedTime});
+}
+
+/// @nodoc
+class _$GoalTimeKeepingStateCopyWithImpl<$Res>
+    implements $GoalTimeKeepingStateCopyWith<$Res> {
+  _$GoalTimeKeepingStateCopyWithImpl(this._value, this._then);
+
+  final GoalTimeKeepingState _value;
+  // ignore: unused_field
+  final $Res Function(GoalTimeKeepingState) _then;
+
+  @override
+  $Res call({
+    Object? fabMode = freezed,
+    Object? startedTime = freezed,
+  }) {
+    return _then(_value.copyWith(
+      fabMode: fabMode == freezed
+          ? _value.fabMode
+          : fabMode // ignore: cast_nullable_to_non_nullable
+              as int,
+      startedTime: startedTime == freezed
+          ? _value.startedTime
+          : startedTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$GoalTimeKeepingStateCopyWith<$Res>
+    implements $GoalTimeKeepingStateCopyWith<$Res> {
+  factory _$GoalTimeKeepingStateCopyWith(_GoalTimeKeepingState value,
+          $Res Function(_GoalTimeKeepingState) then) =
+      __$GoalTimeKeepingStateCopyWithImpl<$Res>;
+  @override
+  $Res call({int fabMode, DateTime? startedTime});
+}
+
+/// @nodoc
+class __$GoalTimeKeepingStateCopyWithImpl<$Res>
+    extends _$GoalTimeKeepingStateCopyWithImpl<$Res>
+    implements _$GoalTimeKeepingStateCopyWith<$Res> {
+  __$GoalTimeKeepingStateCopyWithImpl(
+      _GoalTimeKeepingState _value, $Res Function(_GoalTimeKeepingState) _then)
+      : super(_value, (v) => _then(v as _GoalTimeKeepingState));
+
+  @override
+  _GoalTimeKeepingState get _value => super._value as _GoalTimeKeepingState;
+
+  @override
+  $Res call({
+    Object? fabMode = freezed,
+    Object? startedTime = freezed,
+  }) {
+    return _then(_GoalTimeKeepingState(
+      fabMode: fabMode == freezed
+          ? _value.fabMode
+          : fabMode // ignore: cast_nullable_to_non_nullable
+              as int,
+      startedTime: startedTime == freezed
+          ? _value.startedTime
+          : startedTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_GoalTimeKeepingState extends _GoalTimeKeepingState
+    with DiagnosticableTreeMixin {
+  const _$_GoalTimeKeepingState({this.fabMode = 0, this.startedTime})
+      : super._();
+
+  @JsonKey()
+  @override
+  final int fabMode;
+  @override
+  final DateTime? startedTime;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'GoalTimeKeepingState(fabMode: $fabMode, startedTime: $startedTime)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'GoalTimeKeepingState'))
+      ..add(DiagnosticsProperty('fabMode', fabMode))
+      ..add(DiagnosticsProperty('startedTime', startedTime));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _GoalTimeKeepingState &&
+            const DeepCollectionEquality().equals(other.fabMode, fabMode) &&
+            const DeepCollectionEquality()
+                .equals(other.startedTime, startedTime));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(fabMode),
+      const DeepCollectionEquality().hash(startedTime));
+
+  @JsonKey(ignore: true)
+  @override
+  _$GoalTimeKeepingStateCopyWith<_GoalTimeKeepingState> get copyWith =>
+      __$GoalTimeKeepingStateCopyWithImpl<_GoalTimeKeepingState>(
+          this, _$identity);
+}
+
+abstract class _GoalTimeKeepingState extends GoalTimeKeepingState {
+  const factory _GoalTimeKeepingState({int fabMode, DateTime? startedTime}) =
+      _$_GoalTimeKeepingState;
+  const _GoalTimeKeepingState._() : super._();
+
+  @override
+  int get fabMode;
+  @override
+  DateTime? get startedTime;
+  @override
+  @JsonKey(ignore: true)
+  _$GoalTimeKeepingStateCopyWith<_GoalTimeKeepingState> get copyWith =>
+      throw _privateConstructorUsedError;
+}

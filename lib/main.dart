@@ -49,7 +49,12 @@ final timerTKState =
     StateNotifierProvider<TimerTimeKeepingController, TimerTimeKeepingState>(
   (ref) => TimerTimeKeepingController(ref.read),
 );
-
+final goalState =
+    StateNotifierProvider<GoalController, GoalState>((ref) => GoalController());
+final goalTKState =
+    StateNotifierProvider<GoalTimeKeepingController, GoalTimeKeepingState>(
+  (ref) => GoalTimeKeepingController(ref.read),
+);
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationManager().initialize();

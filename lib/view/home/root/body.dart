@@ -12,6 +12,7 @@ import 'package:majimo_timer/model/helper/plugin/draggable_home/draggable_home.d
 import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
+import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/view/debug/body.dart';
@@ -78,11 +79,11 @@ Widget fab({required BuildContext context, required WidgetRef ref}) {
       onLongPressUp: null,
       child: FloatingActionButton(
         heroTag: 'global',
-        onPressed: () => ref.read(generalState.notifier).runPush(
-              context: context,
-              page: const Tutorial(),
-              isReplace: true,
-            ),
+        onPressed: () => RouteManager().runPush(
+          context: context,
+          page: const Tutorial(),
+          isReplace: true,
+        ),
         splashColor: Colors.green.shade300,
         backgroundColor: Colors.tealAccent,
         child: const Icon(

@@ -16,6 +16,7 @@ enum PrefKey {
   showSec, // bool show clock seconds
   timerTarget, // int timerTarget in minute
   timerInterval, // int timerInterval in minute
+  timerIntervalNum, // int how many intervals of timer
 }
 
 class PrefManager {
@@ -30,27 +31,28 @@ class PrefManager {
     var showSec = await getBool(key: PrefKey.showSec);
     var timerTarget = await getInt(key: PrefKey.timerTarget);
     var timerInterval = await getInt(key: PrefKey.timerInterval);
+    var timerIntervalNum = await getInt(key: PrefKey.timerIntervalNum);
 
     Logger.r(
       '''
       restore values :
-        >> bool  isFirst         =   $isFirst
-        >> bool  is24            =   $is24
-        >> int   theme           =   $theme
-        >> int   lang            =   $lang
-        >> bool  topToast        =   $topToast
-        >> int   toastDuration   =   $toastDuration 
-        >> int   clockAnimation  =   $clockAnimation
-        >> bool  showSec         =   $showSec
-        >> int   timerTarget     =   $timerTarget
-        >> int   timerInterval   =   $timerInterval
+        >> bool  isFirst           =   $isFirst
+        >> bool  is24              =   $is24
+        >> int   theme             =   $theme
+        >> int   lang              =   $lang
+        >> bool  topToast          =   $topToast
+        >> int   toastDuration     =   $toastDuration 
+        >> int   clockAnimation    =   $clockAnimation
+        >> bool  showSec           =   $showSec
+        >> int   timerTarget       =   $timerTarget
+        >> int   timerInterval     =   $timerInterval
+        >> int   timerIntervalNum  =   $timerIntervalNum
       ''',
     );
 
     if (isFirst == null) {
       Logger.e('Warning! : _isFirst is null! => true');
     }
-
     if (is24 == null) {
       Logger.r('Warning! : _is24 is null => true');
     }
@@ -72,13 +74,14 @@ class PrefManager {
     if (showSec == null) {
       Logger.r('Warning! : _showSec is null => true');
     }
-
     if (timerTarget == null) {
       Logger.e('Warning! : _timerTarget is null! => 30');
     }
-
     if (timerInterval == null) {
       Logger.e('Warning! : _timerInterval is null! => 30');
+    }
+    if (timerIntervalNum == null) {
+      Logger.e('Warning! : timerIntervalNum is null! => 1');
     }
 
     isFirst ??= true;
@@ -91,19 +94,32 @@ class PrefManager {
     showSec ??= true;
     timerTarget ??= 30;
     timerInterval ??= 30;
+    timerIntervalNum ??= 1;
 
-    ref.read(globalState.notifier).updateIsFirst(value: isFirst);
-    ref.read(clockState.notifier).updateIs24(value: is24);
-    ref.read(themeState.notifier).updateTheme(value: theme);
-    ref.read(langState.notifier).updateLang(context: context, value: lang);
-    ref.read(generalState.notifier).updateTopToast(value: topToast);
-    ref.watch(generalState.notifier).updateToastDuration(value: toastDuration);
-    ref.read(clockState.notifier).updateAnimation(value: clockAnimation);
-    ref.read(clockState.notifier).updateShowSec(value: showSec);
-    ref.read(timerState.notifier).updateTargetDuration(value: timerTarget);
-    ref
-        .read(timerState.notifier)
-        .updateTargetIntervalDuration(value: timerInterval);
+    final globalFunc = ref.read(globalState.notifier);
+    final generalFunc = ref.read(generalState.notifier);
+    // final currentFunc = ref.read(currentValueState.notifier);
+    final themeFunc = ref.read(themeState.notifier);
+    final langFunc = ref.read(langState.notifier);
+    final clockFunc = ref.read(clockState.notifier);
+    // final colorFunc = ref.read(clockState.notifier);
+    // final alarmFunc = ref.read(alarmState.notifier);
+    final timerFunc = ref.read(timerState.notifier);
+
+    globalFunc.updateIsFirst(value: isFirst);
+    clockFunc.updateIs24(value: is24);
+    themeFunc.updateTheme(value: theme);
+    langFunc.updateLang(context: context, value: lang);
+    generalFunc
+      ..updateTopToast(value: topToast)
+      ..updateToastDuration(value: toastDuration);
+    clockFunc
+      ..updateAnimation(value: clockAnimation)
+      ..updateShowSec(value: showSec);
+    timerFunc
+      ..updateTargetDuration(value: timerTarget)
+      ..updateTargetIntervalDuration(value: timerInterval)
+      ..updateIntervalLoopingNum(value: timerIntervalNum);
   }
 
   Future<bool?> getBool({required PrefKey key}) async {

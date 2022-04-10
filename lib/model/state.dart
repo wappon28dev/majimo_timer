@@ -297,3 +297,20 @@ class TimerTimeKeepingState with _$TimerTimeKeepingState {
   }) = _TimerTimeKeepingState;
   const TimerTimeKeepingState._();
 }
+
+@freezed
+class GoalState with _$GoalState {
+  const factory GoalState({
+    @Default('') String goal,
+  }) = _GoalState;
+  const GoalState._();
+}
+
+@freezed
+class GoalTimeKeepingState with _$GoalTimeKeepingState {
+  const factory GoalTimeKeepingState({
+    @Default(0) int fabMode,
+    DateTime? startedTime,
+  }) = _GoalTimeKeepingState;
+  const GoalTimeKeepingState._();
+}

@@ -50,23 +50,6 @@ class GeneralController extends StateNotifier<GeneralState> {
     state = state.copyWith(status: text);
   }
 
-  void runPush({
-    required BuildContext context,
-    required Widget page,
-    required bool isReplace,
-  }) =>
-      !isReplace
-          ? Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => page,
-              ),
-            )
-          : Navigator.pushAndRemoveUntil<void>(
-              context,
-              MaterialPageRoute<void>(builder: (context) => page),
-              (_) => false,
-            );
-
   Future<void> runFAB() async {
     state = state.copyWith(showFAB: false);
     await Future<void>.delayed(const Duration(milliseconds: 300));
@@ -75,8 +58,4 @@ class GeneralController extends StateNotifier<GeneralState> {
 
   void updateShowFAB({required bool value}) =>
       state = state.copyWith(showFAB: value);
-
-  Future<void> runURL({required String url}) async {
-    await launch(url);
-  }
 }

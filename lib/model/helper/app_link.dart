@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
+import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
@@ -45,14 +46,12 @@ class LinkManager {
   void launcher(BuildContext context, WidgetRef ref, String mode) {
     switch (mode) {
       case 'h':
-        ref
-            .read(generalState.notifier)
+        RouteManager()
             .runPush(context: context, page: const HomePage(), isReplace: true);
         break;
 
       case 'a':
-        ref
-            .read(generalState.notifier)
+        RouteManager()
             .runPush(context: context, page: const HomePage(), isReplace: true);
         context.pushTransparentRoute(const AlarmPage());
         ref.read(alarmState.notifier).runInitialize();
@@ -60,26 +59,22 @@ class LinkManager {
         break;
 
       case 't':
-        ref
-            .read(generalState.notifier)
+        RouteManager()
             .runPush(context: context, page: const HomePage(), isReplace: true);
         context.pushTransparentRoute(const TimerPage());
         break;
 
       case 'g':
-        ref
-            .read(generalState.notifier)
+        RouteManager()
             .runPush(context: context, page: const HomePage(), isReplace: true);
         context.pushTransparentRoute(const GoalPage());
         break;
 
       case 's':
-        ref
-            .read(generalState.notifier)
+        RouteManager()
             .runPush(context: context, page: const HomePage(), isReplace: true);
-        ref
-            .read(generalState.notifier)
-            .runPush(context: context, page: const Setting(), isReplace: true);
+        RouteManager()
+            .runPush(context: context, page: const Setting(), isReplace: false);
         break;
     }
   }

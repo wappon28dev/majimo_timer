@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_color/flutter_color.dart';
@@ -16,8 +14,8 @@ import '../../../../main.dart';
 
 part 'vertical.dart';
 
-class TimerTimeKeepingPage extends HookConsumerWidget {
-  const TimerTimeKeepingPage({Key? key}) : super(key: key);
+class GoalTimeKeepingPage extends HookConsumerWidget {
+  const GoalTimeKeepingPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orientation = MediaQuery.of(context).orientation;
@@ -27,7 +25,7 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
     final show = ref.watch(generalState).showFAB;
 
     Widget fab() {
-      final mode = ref.watch(timerTKState).fabMode;
+      final mode = ref.watch(goalTKState).fabMode;
       switch (mode) {
         case 0:
           return SizedBox(

@@ -10,6 +10,7 @@ import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/helper/pref.dart';
+import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/view/components/modal.dart';
@@ -61,59 +62,45 @@ class Setting extends HookConsumerWidget {
                   title: Text(t.change_lang.t),
                   subtitle: Text(langstate.langCaption),
                   leading: const Icon(Icons.language),
-                  onTap: () {
-                    change_lang(context, ref);
-                  },
+                  onTap: () => change_lang(context, ref),
                 ),
                 ListTile(
                   title: Text(t.app_theme.t),
                   subtitle: Text(themestate.themeCaption),
                   leading: Icon(themestate.themeIcon),
-                  onTap: () {
-                    app_theme(context, ref);
-                  },
+                  onTap: () => app_theme(context, ref),
                 ),
                 section(t.clock_appearance.t),
                 ListTile(
                   title: Text(t.clock_style.t),
                   subtitle: Text(clockstate.is24Caption),
                   leading: Icon(clockstate.is24Icon),
-                  onTap: () {
-                    clock_style(context, ref);
-                  },
+                  onTap: () => clock_style(context, ref),
                 ),
                 ListTile(
                   title: Text(t.clock_seconds.t),
                   subtitle: Text(clockstate.showSecCaption),
                   leading: Icon(clockstate.showSecIcon),
-                  onTap: () {
-                    clock_showSec(context, ref);
-                  },
+                  onTap: () => clock_showSec(context, ref),
                 ),
                 ListTile(
                   title: Text(t.clock_animation.t),
                   subtitle: Text(clockstate.animationCaption),
                   leading: Icon(clockstate.animationIcon),
-                  onTap: () {
-                    clock_animation(context, ref);
-                  },
+                  onTap: () => clock_animation(context, ref),
                 ),
                 section(t.toast.t),
                 ListTile(
                   title: Text(t.toast_position.t),
                   subtitle: Text(generalstate.topToastCaption),
                   leading: Icon(generalstate.topToastIcon),
-                  onTap: () {
-                    toast_position(context, ref);
-                  },
+                  onTap: () => toast_position(context, ref),
                 ),
                 ListTile(
                   title: Text(t.toast_duration.t),
                   subtitle: Text(generalstate.toastDurationCaption),
                   leading: const Icon(Icons.timelapse),
-                  onTap: () {
-                    toast_duration(context, ref);
-                  },
+                  onTap: () => toast_duration(context, ref),
                 ),
                 OutlinedButton.icon(
                   icon: const Icon(Icons.notifications_active_outlined),
@@ -132,43 +119,33 @@ class Setting extends HookConsumerWidget {
                   title: Text(t.change_log.t),
                   subtitle: Text(t.change_log_sub.t),
                   leading: const Icon(Icons.edit_note),
-                  onTap: () {
-                    null;
-                  },
+                  onTap: null,
                 ),
                 ListTile(
                   title: Text(t.about_app_team.t),
                   subtitle: Text(t.about_app_team_sub.t),
                   leading: const Icon(Icons.emoji_people),
-                  onTap: () {
-                    ref.read(generalState.notifier).runPush(
-                          context: context,
-                          page: const AboutAppTeam(),
-                          isReplace: false,
-                        );
-                  },
+                  onTap: () => RouteManager().runPush(
+                    context: context,
+                    page: const AboutAppTeam(),
+                    isReplace: false,
+                  ),
                 ),
                 ListTile(
                   title: Text(t.github.t),
                   subtitle: Text(t.github_sub.t),
                   leading: const Icon(Icons.receipt_long),
                   trailing: const Icon(Icons.launch),
-                  onTap: () {
-                    ref
-                        .read(generalState.notifier)
-                        .runURL(url: PathStore().githubURL);
-                  },
+                  onTap: () =>
+                      RouteManager().runURL(url: PathStore().githubURL),
                 ),
                 ListTile(
                   title: Text(t.license.t),
                   subtitle: Text(t.license_sub.t),
                   leading: const Icon(Icons.balance),
                   trailing: const Icon(Icons.launch),
-                  onTap: () {
-                    ref
-                        .read(generalState.notifier)
-                        .runURL(url: PathStore().licenseURL);
-                  },
+                  onTap: () =>
+                      RouteManager().runURL(url: PathStore().licenseURL),
                 ),
               ],
             ),

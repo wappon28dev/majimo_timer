@@ -4,6 +4,7 @@ import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/flutter_overboard.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/src/overboard.dart';
+import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
@@ -26,18 +27,18 @@ class _TutorialState extends ConsumerState<Tutorial> {
         pages: pages,
         showBullets: true,
         skipCallback: () {
-          ref.read(generalState.notifier).runPush(
-                context: context,
-                page: const HomePage(),
-                isReplace: true,
-              );
+          RouteManager().runPush(
+            context: context,
+            page: const HomePage(),
+            isReplace: true,
+          );
         },
         finishCallback: () {
-          ref.read(generalState.notifier).runPush(
-                context: context,
-                page: const HomePage(),
-                isReplace: true,
-              );
+          RouteManager().runPush(
+            context: context,
+            page: const HomePage(),
+            isReplace: true,
+          );
           ref.read(globalState.notifier).updateIsFirst(value: false);
         },
       ),

@@ -9,6 +9,7 @@ import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digit
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/view/components/modal.dart';
+import 'package:majimo_timer/view/components/rounded_card.dart';
 
 import '../../../main.dart';
 

@@ -8,8 +8,11 @@ import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/helper/pref.dart';
+import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/view/components/rounded_card.dart';
+import 'package:majimo_timer/view/home/goal/timekeeping/body.dart';
 import 'package:majimo_timer/view/home/timer/timekeeping/body.dart';
 
 part 'horizontal.dart';
@@ -34,12 +37,10 @@ class GoalPage extends HookConsumerWidget {
             onLongPressUp: () => Navigator.pop(context),
             child: FloatingActionButton(
               onPressed: () {
-                Navigator.pushAndRemoveUntil<void>(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const TimerTimeKeepingPage(),
-                  ),
-                  (_) => false,
+                RouteManager().runPush(
+                  context: context,
+                  page: const GoalTimeKeepingPage(),
+                  isReplace: true,
                 );
 
                 ref.read(timerTKState.notifier).runInitialStart();
