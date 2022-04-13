@@ -39,6 +39,7 @@ class CurrentValueState with _$CurrentValueState {
     @Default(Duration.zero) Duration currentDuration,
     @Default(0) int currentIntervalLoopingNum,
   }) = _CurrentValueState;
+  const CurrentValueState._();
 }
 
 @freezed

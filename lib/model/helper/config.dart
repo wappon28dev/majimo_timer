@@ -20,21 +20,22 @@ class AppTeam extends AboutAppTeam {
   AppTeam({Key? key}) : super(key: key);
   final Map<String, String> debuggers = {
     'nagi': 'assets/images/me.png',
+    'HiRO': 'assets/images/me.png',
     'yukina': 'assets/images/me.png',
     'katoso': 'assets/images/me.png',
   };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.4.3 β';
-  final String buildDate = '2022/04/11 0:56';
+  final String versionStr = 'majimo_timer v0.4.4 β';
+  final String buildDate = '2022/04/14 1:10';
   final String changeLog = '''
 [fix]
-  1. Added goal/goal timekeeping page
-  2. Added RouteManager class
-  3. Added freezed class (goal/goalTK)
-  4. Separated rounded_card Widget
-  5. Applied Apple AppStore Signature
+  1. Added goal timekeeping logic
+  2. Modified goalState/goalTKState class
+  3. Declined freezed class (goal/goalTK)
+  4. Changed methods' access keys
+  5. Applied Apple AppStore Signature (+2 ppl)
   6. Prepare digital signature
       for Google Play Console !
 

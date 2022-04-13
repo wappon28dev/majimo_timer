@@ -14,8 +14,17 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 20),
+          Container(
+            height: 0,
+            alignment: Alignment.center,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [count(context: context, ref: ref)],
+            ),
+          ),
           Text(ref.read(goalState).goal),
           Text(ref.read(goalTKState).startedTime.toString()),
+          Text(ref.watch(currentValueState).currentDuration.toString())
         ],
       ),
     );
@@ -68,7 +77,7 @@ Widget count({required BuildContext context, required WidgetRef ref}) {
   final timerstate = ref.read(timerState);
   final timerTKstate = ref.read(timerTKState);
   final size = MediaQuery.of(context).size;
-  final controller = ref.read(currentValueState.notifier).controller;
+  final controller = ref.watch(currentValueState.notifier).controller;
   final isLight = ref.read(themeState.notifier).isLight(context: context);
   final isLessAnHour = ref.read(currentValueState).currentDuration.inHours > 0;
 

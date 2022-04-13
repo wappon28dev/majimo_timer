@@ -43,8 +43,8 @@ class GoalPage extends HookConsumerWidget {
                   isReplace: true,
                 );
 
-                ref.read(timerTKState.notifier).runInitialStart();
                 ref.read(generalState.notifier).runFAB();
+                ref.read(goalTKState.notifier).runStart();
               },
               heroTag: null,
               splashColor: Colors.green.shade300,

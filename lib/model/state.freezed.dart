@@ -521,12 +521,12 @@ class __$CurrentValueStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CurrentValueState
-    with DiagnosticableTreeMixin
-    implements _CurrentValueState {
+class _$_CurrentValueState extends _CurrentValueState
+    with DiagnosticableTreeMixin {
   const _$_CurrentValueState(
       {this.currentDuration = Duration.zero,
-      this.currentIntervalLoopingNum = 0});
+      this.currentIntervalLoopingNum = 0})
+      : super._();
 
   @JsonKey()
   @override
@@ -573,10 +573,11 @@ class _$_CurrentValueState
       __$CurrentValueStateCopyWithImpl<_CurrentValueState>(this, _$identity);
 }
 
-abstract class _CurrentValueState implements CurrentValueState {
+abstract class _CurrentValueState extends CurrentValueState {
   const factory _CurrentValueState(
       {Duration currentDuration,
       int currentIntervalLoopingNum}) = _$_CurrentValueState;
+  const _CurrentValueState._() : super._();
 
   @override
   Duration get currentDuration;

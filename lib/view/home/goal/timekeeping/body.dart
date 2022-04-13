@@ -33,7 +33,7 @@ class GoalTimeKeepingPage extends HookConsumerWidget {
             width: 80,
             child: FloatingActionButton(
               backgroundColor: Colors.amber,
-              onPressed: () => ref.read(timerTKState.notifier).runPause(),
+              onPressed: () => ref.read(goalTKState.notifier).runPause(),
               heroTag: 'global',
               child: const Icon(
                 Icons.pause,
@@ -71,7 +71,7 @@ class GoalTimeKeepingPage extends HookConsumerWidget {
                 height: 80,
                 width: 80,
                 child: FloatingActionButton(
-                  onPressed: ref.read(timerTKState.notifier).runResume,
+                  onPressed: ref.read(goalTKState.notifier).runResume,
                   splashColor: Colors.green.shade300,
                   backgroundColor: Colors.green.shade100,
                   heroTag: 'global',

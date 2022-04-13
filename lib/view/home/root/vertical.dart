@@ -61,9 +61,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               break;
             case 'goal':
               context.pushTransparentRoute(const GoalPage());
-              ref
-                ..read(generalState.notifier).runFAB()
-                ..read(goalTKState.notifier).runStart();
+              ref.read(generalState.notifier).runFAB();
 
               break;
           }

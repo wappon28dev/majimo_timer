@@ -55,6 +55,7 @@ final goalTKState =
     StateNotifierProvider<GoalTimeKeepingController, GoalTimeKeepingState>(
   (ref) => GoalTimeKeepingController(ref.read),
 );
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationManager().initialize();

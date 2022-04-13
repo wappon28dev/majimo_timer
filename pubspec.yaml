@@ -3,10 +3,10 @@ description: A new Flutter project.
 
 publish_to: 'none'
 
-version: 0.4.3+beta
+version: 0.4.4+beta
 
 environment:
-  sdk: '>=2.14.0 <3.0.0'
+  sdk: '>=2.16.0 <3.0.0'
 
 dependencies:
   app_links: ^2.2.0
@@ -19,6 +19,7 @@ dependencies:
   dart_date: ^1.1.0
   day_night_time_picker: ^1.0.3+1
   dismissible_page: ^0.6.3
+  dp_stopwatch: ^0.0.3
   draggable_home: ^1.0.2
   duration_picker: ^1.1.0+1
   easy_localization: ^3.0.0

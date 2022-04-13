@@ -14,6 +14,9 @@ class GoalTimeKeepingController extends StateNotifier<GoalTimeKeepingState> {
   GoalTimeKeepingController(this.read) : super(const GoalTimeKeepingState());
   Reader read;
 
+  CountDownController get _controller =>
+      read(currentValueState.notifier).controller;
+
   void _updateStartedTime() {
     final now = DateTime.now();
     state = state.copyWith(startedTime: now);
@@ -24,6 +27,17 @@ class GoalTimeKeepingController extends StateNotifier<GoalTimeKeepingState> {
 
   void runStart() {
     _updateStartedTime();
-    state = state.copyWith(fabMode: 3);
+    state = state.copyWith(fabMode: 0);
+    _controller.restart(duration: const Duration(days: 360).inSeconds);
+  }
+
+  void runPause() {
+    _controller.pause();
+    state = state.copyWith(fabMode: 1);
+  }
+
+  void runResume() {
+    _controller.resume();
+    state = state.copyWith(fabMode: 0);
   }
 }

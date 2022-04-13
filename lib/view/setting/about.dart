@@ -63,54 +63,59 @@ class AboutAppTeam extends HookConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      onPrimary: Colors.purple,
-                      shape: const StadiumBorder(),
-                      padding: const EdgeInsets.all(10),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Colors.purple,
+                        shape: const StadiumBorder(),
+                        padding: const EdgeInsets.all(10),
+                      ),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.language, color: Colors.purple),
+                          SizedBox(width: 10),
+                          Text(
+                            '学校公式HP',
+                            style: TextStyle(color: Colors.purple),
+                          ),
+                          SizedBox(width: 10),
+                          Icon(Icons.launch, color: Colors.purple),
+                        ],
+                      ),
+                      onPressed: () =>
+                          RouteManager().runURL(url: PathStore().meidenURL),
                     ),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.language, color: Colors.purple),
-                        SizedBox(width: 10),
-                        Text(
-                          '学校公式HP',
-                          style: TextStyle(color: Colors.purple),
-                        ),
-                        SizedBox(width: 10),
-                        Icon(Icons.launch, color: Colors.purple),
-                      ],
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Colors.purple,
+                        shape: const StadiumBorder(),
+                        padding: const EdgeInsets.all(10),
+                      ),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.language, color: Colors.purple),
+                          SizedBox(width: 5),
+                          Text(
+                            '情報システム部',
+                            style: TextStyle(color: Colors.purple),
+                          ),
+                          SizedBox(width: 10),
+                          Icon(Icons.launch, color: Colors.purple),
+                        ],
+                      ),
+                      onPressed: () =>
+                          RouteManager().runURL(url: PathStore().miscURL),
                     ),
-                    onPressed: () =>
-                        RouteManager().runURL(url: PathStore().meidenURL),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      onPrimary: Colors.purple,
-                      shape: const StadiumBorder(),
-                      padding: const EdgeInsets.all(10),
-                    ),
-                    child: Row(
-                      children: const [
-                        SizedBox(width: 5),
-                        Text(
-                          '情報システム部',
-                          style: TextStyle(color: Colors.purple),
-                        ),
-                        SizedBox(width: 10),
-                        Icon(Icons.launch, color: Colors.purple),
-                      ],
-                    ),
-                    onPressed: () =>
-                        RouteManager().runURL(url: PathStore().miscURL),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
