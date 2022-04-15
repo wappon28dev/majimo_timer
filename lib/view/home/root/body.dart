@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/app_link.dart';
+import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/draggable_home/draggable_home.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';

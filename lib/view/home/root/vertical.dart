@@ -133,6 +133,16 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             button(tag: 'goal'),
           ],
         ),
+        const SizedBox(height: 20),
+        ElevatedButton.icon(
+          onPressed: () => NotificationManager().alarmFinish(
+            target: DateTime.now().add(
+              const Duration(seconds: 5),
+            ),
+          ),
+          icon: const Icon(Icons.abc),
+          label: const Text('test Device Notification'),
+        ),
       ],
     );
   }

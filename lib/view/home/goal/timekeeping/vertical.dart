@@ -111,6 +111,7 @@ Widget count({required BuildContext context, required WidgetRef ref}) {
       autoStart: true, // trueじゃないとなぜか動かない
       onStart: null,
       onComplete: ref.read(timerTKState.notifier).whenFinished,
+      isUpCount: true,
     ),
   );
 }

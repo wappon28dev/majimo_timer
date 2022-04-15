@@ -22,13 +22,16 @@ class GoalTimeKeepingController extends StateNotifier<GoalTimeKeepingState> {
     state = state.copyWith(startedTime: now);
     // PrefManager().setInt(key: PrefKey., value: value);
     Logger.s(
-        '- from GoalState \n >> save DateTime startedTime = ${state.startedTime}');
+      '- from GoalState \n'
+      ' >> save DateTime startedTime = ${state.startedTime}',
+    );
   }
 
   void runStart() {
     _updateStartedTime();
     state = state.copyWith(fabMode: 0);
     _controller.restart(duration: const Duration(days: 360).inSeconds);
+    NotificationManager().goalTimeKeeping(from: state.startedTime!);
   }
 
   void runPause() {
@@ -40,4 +43,6 @@ class GoalTimeKeepingController extends StateNotifier<GoalTimeKeepingState> {
     _controller.resume();
     state = state.copyWith(fabMode: 0);
   }
+
+  void runQuit() => NotificationManager().cancelAllNotifications();
 }

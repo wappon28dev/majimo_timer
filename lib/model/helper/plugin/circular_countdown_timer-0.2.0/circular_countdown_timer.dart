@@ -74,30 +74,33 @@ class CircularCountDownTimer extends ConsumerStatefulWidget {
   /// Handles the timer start.
   final bool autoStart;
 
-  const CircularCountDownTimer(
-      {required this.width,
-      required this.height,
-      required this.duration,
-      required this.fillColor,
-      required this.ringColor,
-      this.backgroundColor,
-      this.fillGradient,
-      this.ringGradient,
-      this.backgroundGradient,
-      this.initialDuration = 0,
-      this.isReverse = false,
-      this.isReverseAnimation = false,
-      this.onComplete,
-      this.onStart,
-      this.strokeWidth = 5.0,
-      this.strokeCap = StrokeCap.butt,
-      this.textStyle,
-      this.key,
-      this.isTimerTextShown = true,
-      this.autoStart = true,
-      this.textFormat,
-      required this.controller})
-      : assert(initialDuration <= duration),
+  final bool isUpCount;
+
+  const CircularCountDownTimer({
+    required this.width,
+    required this.height,
+    required this.duration,
+    required this.fillColor,
+    required this.ringColor,
+    this.backgroundColor,
+    this.fillGradient,
+    this.ringGradient,
+    this.backgroundGradient,
+    this.initialDuration = 0,
+    this.isReverse = false,
+    this.isReverseAnimation = false,
+    this.onComplete,
+    this.onStart,
+    this.strokeWidth = 5.0,
+    this.strokeCap = StrokeCap.butt,
+    this.textStyle,
+    this.key,
+    this.isTimerTextShown = true,
+    this.autoStart = true,
+    this.textFormat,
+    this.isUpCount = false,
+    required this.controller,
+  })  : assert(initialDuration <= duration),
         super(key: key);
 
   @override
@@ -249,7 +252,9 @@ class CircularCountDownTimerState extends ConsumerState<CircularCountDownTimer>
     Future<void>.delayed(
       const Duration(milliseconds: 100),
       () => ref.read(currentValueState.notifier).updateCurrentDuration(
-          value: _controller!.duration! * _controller!.value),
+            value: _controller!.duration! * _controller!.value,
+            isUpCount: widget.isUpCount,
+          ),
     );
 
     return SizedBox(

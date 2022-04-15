@@ -19,9 +19,7 @@ import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/alarm/timekeeping/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 part './helper/global.dart';
 part './helper/general.dart';

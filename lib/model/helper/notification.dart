@@ -10,8 +10,26 @@ import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 
 enum NotificationChannelKey { ringtone, interval, timekeeping }
+enum NotificationActionKey { terminate, timerAdd, intervalAdd }
+enum NotificationIdKey {
+  test,
+  alarmFinish,
+  timerFinish,
+  alarmTimeKeeping,
+  timerAlarmKeeping,
+  goalTimeKeeping,
+}
 
 class NotificationManager {
+  Map<NotificationIdKey, int> key = {
+    NotificationIdKey.test: 0,
+    NotificationIdKey.alarmFinish: 1,
+    NotificationIdKey.timerFinish: 2,
+    NotificationIdKey.alarmTimeKeeping: 3,
+    NotificationIdKey.timerAlarmKeeping: 4,
+    NotificationIdKey.goalTimeKeeping: 5
+  };
+
   void initialize() {
     AwesomeNotifications().initialize(
         // set the icon to null if you want to use the default app icon
@@ -113,10 +131,20 @@ class NotificationManager {
     );
   }
 
+  void test() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: key[NotificationIdKey.test]!,
+        channelKey: NotificationChannelKey.interval.name,
+        title: 'test',
+      ),
+    );
+  }
+
   void alarmFinish({required DateTime target}) {
     AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: 10,
+        id: key[NotificationIdKey.alarmFinish]!,
         channelKey: NotificationChannelKey.ringtone.name,
         title: '時間です！',
         body: 'from まじもタイマー',
@@ -142,33 +170,10 @@ class NotificationManager {
     );
   }
 
-  Future<void> alarmTimeKeeping({required DateTime target}) async {
-    await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: 10,
-        channelKey: NotificationChannelKey.timekeeping.name,
-        title: '計測中... ・ ${target.hour}:${target.minute}まで',
-        body: 'from まじもタイマー',
-        category: NotificationCategory.Service,
-        backgroundColor: ColorKey.orange.value,
-        notificationLayout: NotificationLayout.Default,
-      ),
-      actionButtons: [
-        NotificationActionButton(
-          key: 'SHOW_SERVICE_DETAILS',
-          label: '中止',
-          showInCompactView: true,
-          buttonType: ActionButtonType.DisabledAction,
-        ),
-        NotificationActionButton(key: 'SHOW_SERVICE_DETAILS', label: '5分追加'),
-      ],
-    );
-  }
-
   void timerFinish({required DateTime target}) {
     AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: 10,
+        id: key[NotificationIdKey.timerFinish]!,
         channelKey: NotificationChannelKey.ringtone.name,
         title: '時間です！',
         body: 'from まじもタイマー',
@@ -195,14 +200,14 @@ class NotificationManager {
     );
   }
 
-  Future<void> timerTimeKeeping({required DateTime target}) async {
+  Future<void> alarmTimeKeeping({required DateTime target}) async {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: 10,
+        id: key[NotificationIdKey.alarmTimeKeeping]!,
         channelKey: NotificationChannelKey.timekeeping.name,
-        title: '計測中... ・ ${target.hour}:${target.minute}まで',
+        title: 'じこくモードで計測中... ・ ${target.hour}:${target.minute}まで',
         body: 'from まじもタイマー',
-        category: NotificationCategory.StopWatch,
+        category: NotificationCategory.Service,
         backgroundColor: ColorKey.orange.value,
         notificationLayout: NotificationLayout.Default,
       ),
@@ -218,13 +223,53 @@ class NotificationManager {
     );
   }
 
-  void test() {
-    AwesomeNotifications().createNotification(
+  Future<void> timerTimeKeeping({required DateTime target}) async {
+    await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: 0,
-        channelKey: NotificationChannelKey.interval.name,
-        title: 'test',
+        id: key[NotificationIdKey.timerAlarmKeeping]!,
+        channelKey: NotificationChannelKey.timekeeping.name,
+        title: 'じかんモードで計測中... ・ ${target.hour}:${target.minute}まで',
+        body: 'from まじもタイマー',
+        category: NotificationCategory.StopWatch,
+        backgroundColor: ColorKey.orange.value,
+        notificationLayout: NotificationLayout.Default,
       ),
+      actionButtons: [
+        NotificationActionButton(
+          key: NotificationActionKey.terminate.name,
+          label: '中止',
+          showInCompactView: true,
+        ),
+        NotificationActionButton(
+          key: NotificationActionKey.timerAdd.name,
+          label: '5分追加',
+        ),
+      ],
+    );
+  }
+
+  Future<void> goalTimeKeeping({required DateTime from}) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: key[NotificationIdKey.goalTimeKeeping]!,
+        channelKey: NotificationChannelKey.timekeeping.name,
+        title: 'もくひょうモードで計測中... ${from.hour}:${from.minute}から',
+        body: 'from まじもタイマー',
+        category: NotificationCategory.StopWatch,
+        backgroundColor: ColorKey.orange.value,
+        notificationLayout: NotificationLayout.Default,
+      ),
+      actionButtons: [
+        NotificationActionButton(
+          key: NotificationActionKey.terminate.name,
+          label: '中止',
+          showInCompactView: true,
+        ),
+        NotificationActionButton(
+          key: NotificationActionKey.timerAdd.name,
+          label: '5分追加',
+        ),
+      ],
     );
   }
 

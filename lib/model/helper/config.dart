@@ -23,19 +23,22 @@ class AppTeam extends AboutAppTeam {
     'HiRO': 'assets/images/me.png',
     'yukina': 'assets/images/me.png',
     'katoso': 'assets/images/me.png',
+    'minemine': 'assets/images/me.png',
+    'ta': 'assets/images/me.png',
+    'zakky': 'assets/images/me.png',
   };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.4.4 β';
-  final String buildDate = '2022/04/14 1:10';
+  final String versionStr = 'majimo_timer v0.4.5 β';
+  final String buildDate = '2022/04/16 3:10';
   final String changeLog = '''
 [fix]
-  1. Added goal timekeeping logic
-  2. Modified goalState/goalTKState class
-  3. Declined freezed class (goal/goalTK)
-  4. Changed methods' access keys
-  5. Applied Apple AppStore Signature (+2 ppl)
+  1. Optimized alarm/timer/goal logic
+  2. Added field bool isUpCount in circle, current_duration class
+  3. Added NotificationKeys int -> enum
+  4. Fix broken layout in debug Widget of root screen
+  5. Follow some lint rules
   6. Prepare digital signature
       for Google Play Console !
 

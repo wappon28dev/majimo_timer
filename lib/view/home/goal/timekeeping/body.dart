@@ -144,8 +144,7 @@ class GoalTimeKeepingPage extends HookConsumerWidget {
                 child: FloatingActionButton(
                   backgroundColor: Colors.amber.shade900,
                   heroTag: null,
-                  onPressed: () =>
-                      timerTKstate.whenIntervalFinished(context: context),
+                  onPressed: null,
                   child: const Icon(
                     Icons.arrow_forward,
                     color: Colors.white,

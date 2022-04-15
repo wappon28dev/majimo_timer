@@ -22,6 +22,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     prefixIcon: const Icon(Icons.flag),
                     labelText: '目標を入力しよう！',
                   ),
+                  style: const TextStyle(color: Colors.black),
                   onChanged: (value) =>
                       ref.read(goalState.notifier).updateGoal(value: value),
                 ),

@@ -29,7 +29,9 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                   style: TextStyle(color: Colors.white),
                 ),
                 subtitle: Text(
-                  '>> ${AppDataStore().versionStr} << \n ${AppDataStore().buildDate} \n ${AppDataStore().changeLog}',
+                  '>> ${AppDataStore().versionStr}\n'
+                  ' ${AppDataStore().buildDate}\n'
+                  '${AppDataStore().changeLog}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 10,
@@ -49,64 +51,75 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  IconButton(
-                    onPressed: () {
-                      NotificationManager().test();
-                      Logger.e(
-                        '- from majimo_timer/lib/view/home/root/widget.dart \n'
-                        ' > notification test',
-                      );
-                    },
-                    icon: const Icon(Icons.notifications_active),
-                    color: Colors.white,
+                  Column(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          NotificationManager().test();
+                          Logger.e(
+                            '- from majimo_timer/lib/view/home/root/widget.dart \n'
+                            ' > notification test',
+                          );
+                        },
+                        icon: const Icon(Icons.notifications_active),
+                        color: Colors.white,
+                      ),
+                      const Text(
+                        'ローカル通知を送信',
+                        style: TextStyle(color: Colors.white, fontSize: 10),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 2),
-                  IconButton(
-                    onPressed: () {
-                      ToastManager().toast(context: context, ref: ref, id: 0);
-                      Logger.e(
-                        '- from majimo_timer/lib/view/home/root/widget.dart \n'
-                        ' > toast test',
-                      );
-                    },
-                    icon: const Icon(Icons.circle_notifications),
-                    color: Colors.white,
+                  Column(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          ToastManager()
+                              .toast(context: context, ref: ref, id: 0);
+                          Logger.e(
+                            '- from majimo_timer/lib/view/home/root/widget.dart \n'
+                            ' > toast test',
+                          );
+                        },
+                        icon: const Icon(Icons.circle_notifications),
+                        color: Colors.white,
+                      ),
+                      const Text(
+                        'トースト通知を送信',
+                        style: TextStyle(color: Colors.white, fontSize: 10),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 5),
-                  IconButton(
-                    onPressed: () {
-                      RouteManager().runPush(
-                        context: context,
-                        page: const Debug(),
-                        isReplace: false,
-                      );
-                      Logger.e(
-                        '- from majimo_timer/lib/view/home/root/widget.dart \n'
-                        ' > debug page opened',
-                      );
-                    },
-                    icon: const Icon(Icons.developer_mode),
-                    color: Colors.white,
+                  Column(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          RouteManager().runPush(
+                            context: context,
+                            page: const Debug(),
+                            isReplace: false,
+                          );
+                          Logger.e(
+                            '- from majimo_timer/lib/view/home/root/widget.dart \n'
+                            ' > debug page opened',
+                          );
+                        },
+                        icon: const Icon(Icons.developer_mode),
+                        color: Colors.white,
+                      ),
+                      const Text(
+                        'アプリのログを見る',
+                        style: TextStyle(color: Colors.white, fontSize: 10),
+                      ),
+                    ],
                   ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const <Widget>[
-                  Text(
-                    'ローカル通知を送信',
-                    style: TextStyle(color: Colors.white, fontSize: 10),
-                  ),
                   SizedBox(width: 10),
-                  Text(
-                    'トースト通知を送信',
-                    style: TextStyle(color: Colors.white, fontSize: 10),
-                  ),
                   SizedBox(width: 10),
-                  Text(
-                    'アプリのログを見る',
-                    style: TextStyle(color: Colors.white, fontSize: 10),
-                  )
                 ],
               ),
             ],
