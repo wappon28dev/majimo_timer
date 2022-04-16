@@ -19,28 +19,26 @@ class PathStore {
 class AppTeam extends AboutAppTeam {
   AppTeam({Key? key}) : super(key: key);
   final Map<String, String> debuggers = {
-    'nagi': 'assets/images/me.png',
+    'nagi65536': 'assets/images/me.png',
     'HiRO': 'assets/images/me.png',
-    'yukina': 'assets/images/me.png',
     'katoso': 'assets/images/me.png',
+    'yukina': 'assets/images/me.png',
     'minemine': 'assets/images/me.png',
     'ta': 'assets/images/me.png',
     'zakky': 'assets/images/me.png',
+    'katohiro': 'assets/images/me.png',
   };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.4.5 β';
-  final String buildDate = '2022/04/16 3:10';
+  final String versionStr = 'majimo_timer v0.4.6 β';
+  final String buildDate = '2022/04/16 14:43';
   final String changeLog = '''
 [fix]
-  1. Optimized alarm/timer/goal logic
-  2. Added field bool isUpCount in circle, current_duration class
-  3. Added NotificationKeys int -> enum
-  4. Fix broken layout in debug Widget of root screen
-  5. Follow some lint rules
-  6. Prepare digital signature
-      for Google Play Console !
+  1. Changed build.gradle for release signing
+  2. Applied PlayStore digital signing
+  3. Added user katohiro
+  4. Careful NOT to be public key.properties
 
 [known-bug]
   1. Overlay TK screen always applied

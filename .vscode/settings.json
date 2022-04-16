@@ -35,6 +35,7 @@
         "getduration",
         "gettop",
         "Iconsize",
+        "katohiro",
         "KEYGUARD",
         "Kmanager",
         "Kstate",
@@ -50,6 +51,7 @@
         "MMMMEEE",
         "monospace",
         "MPLUS",
+        "nagi",
         "nodoc",
         "nullsafety",
         "prefs",
@@ -77,6 +79,7 @@
         "Wakelock",
         "wappon",
         "windowmanager",
-        "workmanager"
+        "workmanager",
+        "yukina"
     ]
 }
