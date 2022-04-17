@@ -24,7 +24,7 @@ class GeneralController extends StateNotifier<GeneralState> {
   Future<void> whenHome() async {
     await runFAB();
     updateShowFAB(value: true);
-    await Wakelock.disable();
+    await updateWakelock(value: false);
     state = state.copyWith(opacity: 1);
     state = state.copyWith(status: t.greetings.t);
 
@@ -34,7 +34,7 @@ class GeneralController extends StateNotifier<GeneralState> {
 
   Future<void> whenExpand() async {
     updateShowFAB(value: false);
-    await Wakelock.enable();
+    await updateWakelock(value: true);
     await updateStatus(text: '置き時計モード');
     await Future<void>.delayed(const Duration(seconds: 3));
     await updateStatus(
@@ -58,4 +58,18 @@ class GeneralController extends StateNotifier<GeneralState> {
 
   void updateShowFAB({required bool value}) =>
       state = state.copyWith(showFAB: value);
+
+  static Future<void> updateWakelock({required bool value}) async {
+    if (value) {
+      await Wakelock.enable();
+      Logger.i(
+        '- from GeneralState \n >> Wakelock enabled',
+      );
+    } else {
+      await Wakelock.disable();
+      Logger.i(
+        '- from GeneralState \n >> Wakelock disabled',
+      );
+    }
+  }
 }

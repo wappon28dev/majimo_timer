@@ -8,28 +8,90 @@ import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/view/components/rounded_card.dart';
 
-class AboutApp {
-  void about(BuildContext context) => showAboutDialog(
-        context: context,
-        applicationVersion: AppDataStore().versionStr,
-        applicationIcon: SizedBox(
-          height: 40,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(13),
-            child: Image.asset(PathStore().appIcon),
+class AboutApp extends HookConsumerWidget {
+  const AboutApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    void about(BuildContext context) => showAboutDialog(
+          context: context,
+          applicationVersion: AppDataStore().versionStr,
+          applicationIcon: SizedBox(
+            height: 40,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Image.asset(PathStore().appIcon),
+            ),
+          ),
+          applicationName: t.app_name.t,
+          applicationLegalese:
+              'This application has been approved for all audiences.',
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Text('ここにアプリの説明、概要などを表示させます。'),
+            ),
+          ],
+        );
+
+    return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      theme: MyTheme().lightTheme,
+      darkTheme: MyTheme().darkTheme,
+      themeMode: ref.read(themeState).themeMode,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: appbar(context: context, ref: ref),
+        body: CupertinoScrollbar(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: roundedCard(
+                    context: context,
+                    ref: ref,
+                    isOrange: true,
+                    body: <Widget>[
+                      Image.asset(PathStore().appIcon),
+                      Text(
+                        AppDataStore().versionStr,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
-        applicationName: t.app_name.t,
-        applicationLegalese:
-            'This application has been approved for all audiences.',
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Text('ここにアプリの説明、概要などを表示させます。'),
-          ),
-        ],
-      );
+      ),
+    );
+  }
+
+  AppBar appbar({required BuildContext context, required WidgetRef ref}) {
+    return AppBar(
+      centerTitle: true,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      title: AutoSizeText(
+        t.about.t,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+        maxLines: 1,
+      ),
+    );
+  }
 }
 
 class AboutAppTeam extends HookConsumerWidget {
@@ -43,7 +105,6 @@ class AboutAppTeam extends HookConsumerWidget {
       final size = MediaQuery.of(context).size;
 
       return Container(
-        height: 270,
         width: size.width,
         color: Colors.purple,
         child: Column(
@@ -62,63 +123,55 @@ class AboutAppTeam extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: CupertinoScrollbar(
-                scrollbarOrientation: ScrollbarOrientation.bottom,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          onPrimary: Colors.purple,
-                          shape: const StadiumBorder(),
-                          padding: const EdgeInsets.all(10),
-                        ),
-                        child: Row(
-                          children: const [
-                            Icon(Icons.language, color: Colors.purple),
-                            SizedBox(width: 10),
-                            Text(
-                              '学校公式HP',
-                              style: TextStyle(color: Colors.purple),
-                            ),
-                            SizedBox(width: 10),
-                            Icon(Icons.launch, color: Colors.purple),
-                          ],
-                        ),
-                        onPressed: () =>
-                            RouteManager().runURL(url: PathStore().meidenURL),
-                      ),
-                      const SizedBox(width: 10),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          onPrimary: Colors.purple,
-                          shape: const StadiumBorder(),
-                          padding: const EdgeInsets.all(10),
-                        ),
-                        child: Row(
-                          children: const [
-                            Icon(Icons.language, color: Colors.purple),
-                            SizedBox(width: 5),
-                            Text(
-                              '情報システム部',
-                              style: TextStyle(color: Colors.purple),
-                            ),
-                            SizedBox(width: 10),
-                            Icon(Icons.launch, color: Colors.purple),
-                          ],
-                        ),
-                        onPressed: () =>
-                            RouteManager().runURL(url: PathStore().miscURL),
-                      ),
-                    ],
-                  ),
+              padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  onPrimary: Colors.purple,
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.all(10),
                 ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [
+                    Icon(Icons.language, color: Colors.purple),
+                    SizedBox(width: 25),
+                    Text(
+                      '学校公式HP',
+                      style: TextStyle(color: Colors.purple),
+                    ),
+                    SizedBox(width: 25),
+                    Icon(Icons.launch, color: Colors.purple),
+                  ],
+                ),
+                onPressed: () =>
+                    RouteManager().runURL(url: PathStore().meidenURL),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  onPrimary: Colors.purple,
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.all(10),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [
+                    Icon(Icons.language, color: Colors.purple),
+                    SizedBox(width: 1),
+                    Text(
+                      '情報システム部HP',
+                      style: TextStyle(color: Colors.purple),
+                    ),
+                    SizedBox(width: 1),
+                    Icon(Icons.launch, color: Colors.purple),
+                  ],
+                ),
+                onPressed: () =>
+                    RouteManager().runURL(url: PathStore().miscURL),
               ),
             ),
           ],
@@ -185,6 +238,7 @@ class AboutAppTeam extends HookConsumerWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              contentPadding: EdgeInsets.zero,
               leading: CircleAvatar(
                 backgroundColor: Colors.blue,
                 radius: 50,

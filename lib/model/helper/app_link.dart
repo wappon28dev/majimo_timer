@@ -1,5 +1,5 @@
 import 'package:app_links/app_links.dart';
-import 'package:dismissible_page/src/dismissible_extensions.dart';
+import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';

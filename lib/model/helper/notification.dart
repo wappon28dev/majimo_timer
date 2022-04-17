@@ -75,6 +75,8 @@ class NotificationManager {
             defaultColor: const Color(0xFF9D50DD),
             ledColor: Colors.white,
             onlyAlertOnce: false,
+            defaultPrivacy: NotificationPrivacy.Public,
+            defaultRingtoneType: DefaultRingtoneType.Notification,
             importance: NotificationImportance.Min,
             playSound: false,
           )
@@ -125,6 +127,8 @@ class NotificationManager {
         defaultColor: const Color(0xFF9D50DD),
         ledColor: Colors.white,
         onlyAlertOnce: false,
+        defaultPrivacy: NotificationPrivacy.Public,
+        defaultRingtoneType: DefaultRingtoneType.Notification,
         importance: NotificationImportance.Min,
         playSound: false,
       ),

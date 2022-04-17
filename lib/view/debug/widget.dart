@@ -42,7 +42,7 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                   Icons.bug_report,
                   color: Colors.white,
                 ),
-                onTap: () {},
+                onTap: null,
               ),
               const Divider(
                 thickness: 2,
@@ -135,83 +135,90 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
-            children: [
+            children: const [
               ListTile(
-                  title: const AutoSizeText(
-                    '皆さんにやってほしいこと',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  leading: const Icon(
-                    Icons.info_outline,
-                    color: Colors.white,
-                  ),
-                  onTap: () {}),
-              const Divider(
+                title: AutoSizeText(
+                  '皆さんにやってほしいこと',
+                  style: TextStyle(color: Colors.white),
+                ),
+                leading: Icon(
+                  Icons.info_outline,
+                  color: Colors.white,
+                ),
+                onTap: null,
+              ),
+              Divider(
                 thickness: 2,
                 color: Colors.white,
               ),
               ListTile(
-                  title: const AutoSizeText(
-                    '１. アプリが強制終了しないか',
-                    style: TextStyle(color: Colors.white),
-                    maxLines: 1,
-                  ),
-                  leading: const Icon(
-                    Icons.running_with_errors_sharp,
-                    color: Colors.white,
-                  ),
-                  onTap: () {}),
+                title: AutoSizeText(
+                  '１. アプリが強制終了しないか',
+                  style: TextStyle(color: Colors.white),
+                  maxLines: 1,
+                ),
+                leading: Icon(
+                  Icons.running_with_errors_sharp,
+                  color: Colors.white,
+                ),
+                onTap: null,
+              ),
               ListTile(
-                  title: const AutoSizeText(
-                    '２. レイアウトが崩れてないか',
-                    style: TextStyle(color: Colors.white),
-                    maxLines: 1,
-                  ),
-                  leading: const Icon(
-                    Icons.layers,
-                    color: Colors.white,
-                  ),
-                  onTap: () {}),
+                title: AutoSizeText(
+                  '２. レイアウトが崩れてないか',
+                  style: TextStyle(color: Colors.white),
+                  maxLines: 1,
+                ),
+                leading: Icon(
+                  Icons.layers,
+                  color: Colors.white,
+                ),
+                onTap: null,
+              ),
               ListTile(
-                  title: const AutoSizeText(
-                    '３. 変な挙動はないか',
-                    style: TextStyle(color: Colors.white),
-                    maxLines: 1,
-                  ),
-                  leading: const Icon(
-                    Icons.account_tree,
-                    color: Colors.white,
-                  ),
-                  onTap: () {}),
+                title: AutoSizeText(
+                  '３. 変な挙動はないか',
+                  style: TextStyle(color: Colors.white),
+                  maxLines: 1,
+                ),
+                leading: Icon(
+                  Icons.account_tree,
+                  color: Colors.white,
+                ),
+                onTap: null,
+              ),
               ListTile(
-                  title: const AutoSizeText(
-                    '４. 通知は機能しているか',
-                    style: TextStyle(color: Colors.white),
-                    maxLines: 1,
-                  ),
-                  leading: const Icon(
-                    Icons.notification_important,
-                    color: Colors.white,
-                  ),
-                  onTap: () {}),
+                title: AutoSizeText(
+                  '４. 通知は機能しているか',
+                  style: TextStyle(color: Colors.white),
+                  maxLines: 1,
+                ),
+                leading: Icon(
+                  Icons.notification_important,
+                  color: Colors.white,
+                ),
+                onTap: null,
+              ),
               ListTile(
-                  title: const AutoSizeText(
-                    '５. アラームは作動するか',
-                    style: TextStyle(color: Colors.white),
-                    maxLines: 1,
-                  ),
-                  leading: const Icon(
-                    Icons.alarm_on,
-                    color: Colors.white,
-                  ),
-                  onTap: () {}),
-              const Divider(
+                title: AutoSizeText(
+                  '５. アラームは作動するか',
+                  style: TextStyle(color: Colors.white),
+                  maxLines: 1,
+                ),
+                leading: Icon(
+                  Icons.alarm_on,
+                  color: Colors.white,
+                ),
+                onTap: null,
+              ),
+              Divider(
                 thickness: 2,
                 color: Colors.white,
               ),
-              const Text(
-                  '上記に当てはまる挙動があったら, \nその手順をdiscordまで！\n(ログをスクショしてくれると嬉しい！)',
-                  style: TextStyle(color: Colors.white))
+              Text(
+                '上記に当てはまる挙動があったら, \nその手順をslackまで！\n(ログをスクショしてくれると嬉しい！)',
+                style: TextStyle(color: Colors.white),
+              )
             ],
           ),
         ),

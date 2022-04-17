@@ -49,11 +49,13 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     );
     Logger.i(
       ' now     => ${DateTime.now()}\n'
-      'duration => ${_read(timerState).targetDuration}\n target  => $targetTime',
+      'duration => ${_read(timerState).targetDuration}\n'
+      'target   => $targetTime',
     );
     NotificationManager().timerFinish(target: targetTime);
     NotificationManager().timerTimeKeeping(target: targetTime);
     state = state.copyWith(isCountingInterval: false);
+    GeneralController.updateWakelock(value: true);
   }
 
   void _runIntervalStart() {
@@ -74,12 +76,14 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     NotificationManager().timerTimeKeeping(target: targetTime);
     state = state.copyWith(isCountingInterval: true);
     _controller.restart(duration: targetIntervalDuration.inSeconds);
+    GeneralController.updateWakelock(value: true);
   }
 
   void runPause() {
     _controller.pause();
     NotificationManager().cancelAllNotifications();
     _updateFabMode(value: !state.isCountingInterval ? 1 : 2);
+    GeneralController.updateWakelock(value: false);
   }
 
   void runResume() {
@@ -93,6 +97,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     NotificationManager().timerTimeKeeping(target: target);
     _controller.resume();
     _updateFabMode(value: 0);
+    GeneralController.updateWakelock(value: true);
   }
 
   void whenFinished() {
@@ -126,5 +131,6 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     );
     NotificationManager().cancelAllNotifications();
     _read(generalState.notifier).whenHome();
+    GeneralController.updateWakelock(value: false);
   }
 }

@@ -1,6 +1,14 @@
 part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
+  final focusNode = FocusNode();
+
+  useEffect(() {
+    Logger.i('keyboard method called');
+    focusNode.requestFocus();
+    return null;
+  });
+
   Widget content() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -12,7 +20,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               ref: ref,
               body: <Widget>[
                 TextField(
-                  autofocus: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -25,6 +32,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                   style: const TextStyle(color: Colors.black),
                   onChanged: (value) =>
                       ref.read(goalState.notifier).updateGoal(value: value),
+                  focusNode: focusNode,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -48,7 +56,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   return GestureDetector(
-    onTap: () => FocusScope.of(context).unfocus(),
+    // onTap: () => FocusScope.of(context).unfocus(),
     child: content(),
   );
 }

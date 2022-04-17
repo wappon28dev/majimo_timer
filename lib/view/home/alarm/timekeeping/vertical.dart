@@ -4,14 +4,15 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   final width = MediaQuery.of(context).size.width;
   final controller = ref.read(alarmTKState.notifier).controller;
   Widget content() {
-    return Stack(children: [
-      Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            Container(
+    return Stack(
+      children: [
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 20),
+              Container(
                 height: width * 0.9,
                 alignment: Alignment.center,
                 child: Stack(
@@ -21,37 +22,40 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     largeclock(context, ref, true, true),
                     percent(ref: ref, width: width)
                   ],
-                )),
-            const SizedBox(height: 10),
-            Text(
-              'target  => ${ref.read(alarmTKState).targetDuration.toString()}',
-              style: TextStyle(
-                fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
+                ),
               ),
-            ),
-            Text(
-              'current => ${ref.watch(currentValueState).currentDuration}',
-              style: TextStyle(
-                fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
+              const SizedBox(height: 10),
+              Text(
+                'target  => ${ref.read(alarmTKState).targetDuration.toString()}',
+                style: TextStyle(
+                  fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.alarm),
-                const SizedBox(width: 20),
-                Text('${ref.read(alarmState.notifier).targetTimeStr}まで'),
-                const SizedBox(width: 20),
-                const Text('・'),
-                const SizedBox(width: 20),
-                Text(
-                    'あと${ref.watch(currentValueState).currentDuration.inMinutes}分')
-              ],
-            ),
-          ],
+              Text(
+                'current => ${ref.watch(currentValueState).currentDuration}',
+                style: TextStyle(
+                  fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.alarm),
+                  const SizedBox(width: 20),
+                  Text('${ref.read(alarmState.notifier).targetTimeStr}まで'),
+                  const SizedBox(width: 20),
+                  const Text('・'),
+                  const SizedBox(width: 20),
+                  Text(
+                    'あと${ref.watch(currentValueState).currentDuration.inMinutes}分',
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 
   return Scaffold(
@@ -65,7 +69,7 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
     centerTitle: true,
     leading: PlayAnimation(
       tween: Tween<double>(begin: 0, end: 1),
-      delay: const Duration(milliseconds: 5900),
+      delay: const Duration(seconds: 6),
       duration: const Duration(milliseconds: 300),
       builder: (context, child, value) {
         return Opacity(
@@ -79,13 +83,14 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
       },
     ),
     title: AnimatedOpacity(
-        opacity: ref.watch(generalState).opacity,
-        duration: const Duration(milliseconds: 300),
-        child: AutoSizeText(
-          ref.watch(generalState).status,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-          maxLines: 1,
-        )),
+      opacity: ref.watch(generalState).opacity,
+      duration: const Duration(milliseconds: 300),
+      child: AutoSizeText(
+        ref.watch(generalState).status,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+        maxLines: 1,
+      ),
+    ),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(10),
@@ -93,16 +98,6 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
       ),
     ),
     backgroundColor: Colors.blue,
-    // actions: [
-    //   IconButton(
-    //       onPressed: () {
-    //         PrefState.allremove();
-    //         Logger.e("- from majimo_timer/lib/view/setting/body.dart \n" +
-    //             " >> ! SharedPreferences All Removed ! <<");
-    //         PrefState.restore(ref, context);
-    //       },
-    //       icon: const Icon(Icons.settings_backup_restore))
-    // ],
   );
 }
 
@@ -124,7 +119,10 @@ Widget percent({required WidgetRef ref, required double width}) {
     backgroundGradient: null,
     strokeWidth: 10,
     strokeCap: StrokeCap.butt,
-    textStyle: const TextStyle(fontSize: 33.0, fontWeight: FontWeight.bold),
+    textStyle: const TextStyle(
+      fontSize: 33,
+      fontWeight: FontWeight.bold,
+    ),
     textFormat: CountdownTextFormat.MM_SS,
     isReverse: true,
     isReverseAnimation: false,

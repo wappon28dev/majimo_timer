@@ -4,6 +4,7 @@ import 'package:flag/flag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
@@ -113,7 +114,11 @@ class Setting extends HookConsumerWidget {
                   title: Text('${t.app_name.t} - ベータ版'),
                   subtitle: Text(AppDataStore().versionStr),
                   leading: const Icon(Icons.info_outline),
-                  onTap: () => AboutApp().about(context),
+                  onTap: () => RouteManager().runPush(
+                    context: context,
+                    page: const AboutApp(),
+                    isReplace: false,
+                  ),
                 ),
                 ListTile(
                   title: Text(t.change_log.t),

@@ -31,14 +31,16 @@ class AppTeam extends AboutAppTeam {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.4.6 β';
-  final String buildDate = '2022/04/16 14:43';
+  final String versionStr = 'majimo_timer v0.4.8 β';
+  final String buildDate = '2022/04/18 2:49';
   final String changeLog = '''
 [fix]
-  1. Changed build.gradle for release signing
-  2. Applied PlayStore digital signing
-  3. Added user katohiro
-  4. Careful NOT to be public key.properties
+  1. Changed access private -> static in GeneralController
+  2. Used `useEffect()` to show keyboard
+  3. Changed Notification Setting
+  4. Changed UI in AboutApp/AboutAppTeam
+  5. Added TestFlight configure
+  6. Followed some lint rules
 
 [known-bug]
   1. Overlay TK screen always applied

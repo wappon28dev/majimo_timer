@@ -4,7 +4,7 @@ class AlarmController extends StateNotifier<AlarmState> {
   AlarmController(this.read) : super(const AlarmState());
   final Reader read;
 
-  void runPush({required BuildContext context, required WidgetRef ref}) {
+  static void runPush({required BuildContext context, required WidgetRef ref}) {
     Navigator.pushAndRemoveUntil<void>(
       context,
       MaterialPageRoute<void>(
@@ -17,7 +17,7 @@ class AlarmController extends StateNotifier<AlarmState> {
     ref.read(alarmTKState.notifier).runStart();
   }
 
-  void runTooltip({required BuildContext context}) {
+  static void runTooltip({required BuildContext context}) {
     RippleBackdropAnimatePage.show(
       context: context,
       childFade: true,

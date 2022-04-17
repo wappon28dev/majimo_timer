@@ -1,19 +1,18 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dismissible_page/dismissible_page.dart';
-import 'package:duration_picker/duration_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/model/helper/pref.dart';
 import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/view/components/rounded_card.dart';
 import 'package:majimo_timer/view/home/goal/timekeeping/body.dart';
-import 'package:majimo_timer/view/home/timer/timekeeping/body.dart';
 
 part 'horizontal.dart';
 part 'vertical.dart';
@@ -25,7 +24,6 @@ class GoalPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final orientation = MediaQuery.of(context).orientation;
     final isLandscape = orientation == Orientation.landscape;
-    final alarmstate = ref.read(alarmState.notifier);
     final show = ref.watch(generalState).showFAB;
     const tag = 'goal';
 
@@ -33,7 +31,7 @@ class GoalPage extends HookConsumerWidget {
           height: 80,
           width: 80,
           child: GestureDetector(
-            onLongPress: () => alarmstate.runTooltip(context: context),
+            onLongPress: () => AlarmController.runTooltip(context: context),
             onLongPressUp: () => Navigator.pop(context),
             child: FloatingActionButton(
               onPressed: () {
