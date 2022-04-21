@@ -2,11 +2,7 @@ part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final width = MediaQuery.of(context).size.width;
-  final timerstate = ref.read(timerState);
-  final timerTKstate = ref.read(timerTKState);
 
-  final targetDuration = timerstate.targetDuration;
-  final targetIntervalDuration = timerstate.targetIntervalDuration;
   Widget content() {
     return Center(
       child: Column(
@@ -22,6 +18,18 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
               children: [count(context: context, ref: ref)],
             ),
           ),
+          Container(
+            height: width * 0.9,
+            alignment: Alignment.center,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                analogclockTimekeeping(context: context, ref: ref),
+                largeclock(context, ref, true, true),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
           Text(ref.read(goalState).goal),
           Text(ref.read(goalTKState).startedTime.toString()),
           Text(ref.watch(currentValueState).currentDuration.toString())
@@ -74,12 +82,9 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
 }
 
 Widget count({required BuildContext context, required WidgetRef ref}) {
-  final timerstate = ref.read(timerState);
-  final timerTKstate = ref.read(timerTKState);
   final size = MediaQuery.of(context).size;
   final controller = ref.watch(currentValueState.notifier).controller;
   final isLight = ref.read(themeState.notifier).isLight(context: context);
-  final isLessAnHour = ref.read(currentValueState).currentDuration.inHours > 0;
 
   return Padding(
     padding: const EdgeInsets.all(20),

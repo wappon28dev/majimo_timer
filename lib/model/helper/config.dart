@@ -14,6 +14,8 @@ class PathStore {
   final String githubURL = 'https://github.com/wappon-28-dev/majimo_timer/';
   final String meidenURL = 'https://www.meiden.ed.jp/sp/';
   final String miscURL = 'https://www.meiden.ed.jp/club/detail.html?id=305';
+  final String privacyURL =
+      'https://github.com/wappon-28-dev/majimo_timer/blob/main/privacy_policy.txt';
 }
 
 class AppTeam extends AboutAppTeam {
@@ -27,20 +29,22 @@ class AppTeam extends AboutAppTeam {
     'ta': 'assets/images/me.png',
     'zakky': 'assets/images/me.png',
     'katohiro': 'assets/images/me.png',
+    'takumi': 'assets/images/me.png',
   };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.4.8 β';
-  final String buildDate = '2022/04/18 2:49';
+  final String versionStr = 'majimo_timer v0.4.9 β';
+  final String buildDate = '2022/04/22 2:22';
   final String changeLog = '''
 [fix]
-  1. Changed access private -> static in GeneralController
-  2. Used `useEffect()` to show keyboard
-  3. Changed Notification Setting
-  4. Changed UI in AboutApp/AboutAppTeam
-  5. Added TestFlight configure
-  6. Followed some lint rules
+  1. Changed `useEffect()` -> `autoFocus`(true)
+  2. Used not-null assertion operator on opacity value
+  3. Made notification Channel independence each other 
+  4. Added clock in goalTimeKeepingPage
+  5. Included privacy policy in repository
+  6. Added some translation
+  7. Followed some lint rules
 
 [known-bug]
   1. Overlay TK screen always applied

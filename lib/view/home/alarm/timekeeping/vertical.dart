@@ -18,7 +18,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    analogclock_timekeeping(context: context, ref: ref),
+                    analogclockTimekeeping(context: context, ref: ref),
                     largeclock(context, ref, true, true),
                     percent(ref: ref, width: width)
                   ],
@@ -73,7 +73,7 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
       duration: const Duration(milliseconds: 300),
       builder: (context, child, value) {
         return Opacity(
-          opacity: value as double,
+          opacity: value! as double,
           child: IconButton(
             icon: const Icon(Icons.alarm),
             onPressed: () {},

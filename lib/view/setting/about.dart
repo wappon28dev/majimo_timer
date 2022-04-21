@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/route.dart';
@@ -66,6 +67,12 @@ class AboutApp extends HookConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
+                ElevatedButton.icon(
+                  onPressed: () =>
+                      RouteManager().runURL(url: PathStore().privacyURL),
+                  icon: const Icon(Icons.launch),
+                  label: Text(t.privacy_policy.t),
+                ),
               ],
             ),
           ),
@@ -115,10 +122,11 @@ class AboutAppTeam extends HookConsumerWidget {
               padding: const EdgeInsets.all(20),
               child: Image.asset(PathStore().meidenLogo, height: 100),
             ),
-            const Text(
-              '  主なメンバーの所属校：\n愛知工業大学名電高等学校・情報システム部',
+            Text(
+              '  ${t.about_member_0.t}'
+              '\n${t.about_member_1.t}',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),
@@ -133,15 +141,15 @@ class AboutAppTeam extends HookConsumerWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [
-                    Icon(Icons.language, color: Colors.purple),
-                    SizedBox(width: 25),
+                  children: [
+                    const Icon(Icons.language, color: Colors.purple),
+                    const SizedBox(width: 25),
                     Text(
-                      '学校公式HP',
-                      style: TextStyle(color: Colors.purple),
+                      t.hp_0.t,
+                      style: const TextStyle(color: Colors.purple),
                     ),
-                    SizedBox(width: 25),
-                    Icon(Icons.launch, color: Colors.purple),
+                    const SizedBox(width: 25),
+                    const Icon(Icons.launch, color: Colors.purple),
                   ],
                 ),
                 onPressed: () =>
@@ -159,15 +167,15 @@ class AboutAppTeam extends HookConsumerWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [
-                    Icon(Icons.language, color: Colors.purple),
-                    SizedBox(width: 1),
+                  children: [
+                    const Icon(Icons.language, color: Colors.purple),
+                    const SizedBox(width: 1),
                     Text(
-                      '情報システム部HP',
-                      style: TextStyle(color: Colors.purple),
+                      t.hp_1.t,
+                      style: const TextStyle(color: Colors.purple),
                     ),
-                    SizedBox(width: 1),
-                    Icon(Icons.launch, color: Colors.purple),
+                    const SizedBox(width: 1),
+                    const Icon(Icons.launch, color: Colors.purple),
                   ],
                 ),
                 onPressed: () =>

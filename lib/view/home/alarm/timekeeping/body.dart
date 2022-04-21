@@ -75,7 +75,7 @@ Widget buildHorizontal(BuildContext context) {
   );
 }
 
-Widget analogclock_timekeeping({
+Widget analogclockTimekeeping({
   required BuildContext context,
   required WidgetRef ref,
 }) {

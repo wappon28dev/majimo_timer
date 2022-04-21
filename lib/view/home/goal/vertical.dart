@@ -3,12 +3,6 @@ part of 'body.dart';
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final focusNode = FocusNode();
 
-  useEffect(() {
-    Logger.i('keyboard method called');
-    focusNode.requestFocus();
-    return null;
-  });
-
   Widget content() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -27,18 +21,18 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     focusColor: ColorKey.green.value,
                     fillColor: ColorKey.green.value,
                     prefixIcon: const Icon(Icons.flag),
-                    labelText: '目標を入力しよう！',
+                    labelText: t.input_goal.t,
                   ),
                   style: const TextStyle(color: Colors.black),
                   onChanged: (value) =>
                       ref.read(goalState.notifier).updateGoal(value: value),
-                  focusNode: focusNode,
+                  autofocus: true,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      'が終わるまで',
+                      t.until_end.t,
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,

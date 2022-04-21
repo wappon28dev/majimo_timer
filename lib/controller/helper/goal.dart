@@ -31,7 +31,8 @@ class GoalTimeKeepingController extends StateNotifier<GoalTimeKeepingState> {
     _updateStartedTime();
     state = state.copyWith(fabMode: 0);
     _controller.restart(duration: const Duration(days: 360).inSeconds);
-    NotificationManager().goalTimeKeeping(from: state.startedTime!);
+    NotificationManager()
+        .goalTimeKeeping(from: state.startedTime ?? DateTime.now());
   }
 
   void runPause() {

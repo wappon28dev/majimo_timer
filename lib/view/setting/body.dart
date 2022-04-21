@@ -110,8 +110,10 @@ class Setting extends HookConsumerWidget {
                   label: const Text('test toast'),
                 ),
                 section(t.about.t),
+                const SizedBox(height: 20),
+                section(t.about.t),
                 ListTile(
-                  title: Text('${t.app_name.t} - ベータ版'),
+                  title: Text('${t.app_name.t} - ${t.beta.t}'),
                   subtitle: Text(AppDataStore().versionStr),
                   leading: const Icon(Icons.info_outline),
                   onTap: () => RouteManager().runPush(
