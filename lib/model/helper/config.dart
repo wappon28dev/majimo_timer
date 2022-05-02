@@ -22,29 +22,33 @@ class AppTeam extends AboutAppTeam {
   AppTeam({Key? key}) : super(key: key);
   final Map<String, String> debuggers = {
     'nagi65536': 'assets/images/me.png',
-    'HiRO': 'assets/images/me.png',
-    'katoso': 'assets/images/me.png',
     'yukina': 'assets/images/me.png',
-    'minemine': 'assets/images/me.png',
-    'ta': 'assets/images/me.png',
-    'zakky': 'assets/images/me.png',
+    'HiRO': 'assets/images/me.png',
     'katohiro': 'assets/images/me.png',
+    'oyama': 'assets/images/me.png',
+    'nasubi': 'assets/images/me.png',
     'takumi': 'assets/images/me.png',
+    'naka': 'assets/images/me.png',
+    'Ta': 'assets/images/me.png',
+    'aisukeee': 'assets/images/me.png',
+    'moto0701': 'assets/images/me.png',
+    'Yoyoyoyoyoyo': 'assets/images/me.png',
   };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.4.9 β';
-  final String buildDate = '2022/04/22 2:22';
+  final String versionStr = 'majimo_timer v0.5.4 β';
+  final String buildDate = '2022/05/03 2:30';
   final String changeLog = '''
 [fix]
-  1. Changed `useEffect()` -> `autoFocus`(true)
-  2. Used not-null assertion operator on opacity value
-  3. Made notification Channel independence each other 
-  4. Added clock in goalTimeKeepingPage
-  5. Included privacy policy in repository
-  6. Added some translation
-  7. Followed some lint rules
+  1. Changed all logic based on TIME-STAMP
+  2. Changed to countdown Widget without state
+  3. Changed freezed objects timer and goal 
+  4. Added function delayedNotification (create/cancel)
+  5. Added callback function view and controller
+  6. Added some tester
+  7. Added Future<void> function
+  8. Followed some lint rules
 
 [known-bug]
   1. Overlay TK screen always applied

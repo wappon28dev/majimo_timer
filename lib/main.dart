@@ -20,10 +20,6 @@ final globalState = StateNotifierProvider<GlobalController, GlobalState>(
 final generalState = StateNotifierProvider<GeneralController, GeneralState>(
   (ref) => GeneralController(),
 );
-final currentValueState = StateNotifierProvider.autoDispose<
-    CurrentValueController,
-    CurrentValueState>((ref) => CurrentValueController());
-
 final themeState = StateNotifierProvider<ThemeController, ThemeState>(
   (ref) => ThemeController(),
 );
@@ -55,7 +51,12 @@ final goalTKState =
     StateNotifierProvider<GoalTimeKeepingController, GoalTimeKeepingState>(
   (ref) => GoalTimeKeepingController(ref.read),
 );
-
+final nowStream = StreamProvider.autoDispose<DateTime>((ref) async* {
+  while (true) {
+    await Future<void>.delayed(const Duration(milliseconds: 10));
+    yield DateTime.now();
+  }
+});
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationManager().initialize();

@@ -1,5 +1,6 @@
 part of '../controller.dart';
 
+/*
 class CurrentValueController extends StateNotifier<CurrentValueState> {
   CurrentValueController() : super(const CurrentValueState());
 
@@ -26,3 +27,4 @@ class CurrentValueController extends StateNotifier<CurrentValueState> {
         currentIntervalLoopingNum: state.currentIntervalLoopingNum + 1,
       );
 }
+*/

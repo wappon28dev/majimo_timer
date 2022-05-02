@@ -419,177 +419,6 @@ abstract class _GeneralState extends GeneralState {
 }
 
 /// @nodoc
-class _$CurrentValueStateTearOff {
-  const _$CurrentValueStateTearOff();
-
-  _CurrentValueState call(
-      {Duration currentDuration = Duration.zero,
-      int currentIntervalLoopingNum = 0}) {
-    return _CurrentValueState(
-      currentDuration: currentDuration,
-      currentIntervalLoopingNum: currentIntervalLoopingNum,
-    );
-  }
-}
-
-/// @nodoc
-const $CurrentValueState = _$CurrentValueStateTearOff();
-
-/// @nodoc
-mixin _$CurrentValueState {
-  Duration get currentDuration => throw _privateConstructorUsedError;
-  int get currentIntervalLoopingNum => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $CurrentValueStateCopyWith<CurrentValueState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CurrentValueStateCopyWith<$Res> {
-  factory $CurrentValueStateCopyWith(
-          CurrentValueState value, $Res Function(CurrentValueState) then) =
-      _$CurrentValueStateCopyWithImpl<$Res>;
-  $Res call({Duration currentDuration, int currentIntervalLoopingNum});
-}
-
-/// @nodoc
-class _$CurrentValueStateCopyWithImpl<$Res>
-    implements $CurrentValueStateCopyWith<$Res> {
-  _$CurrentValueStateCopyWithImpl(this._value, this._then);
-
-  final CurrentValueState _value;
-  // ignore: unused_field
-  final $Res Function(CurrentValueState) _then;
-
-  @override
-  $Res call({
-    Object? currentDuration = freezed,
-    Object? currentIntervalLoopingNum = freezed,
-  }) {
-    return _then(_value.copyWith(
-      currentDuration: currentDuration == freezed
-          ? _value.currentDuration
-          : currentDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      currentIntervalLoopingNum: currentIntervalLoopingNum == freezed
-          ? _value.currentIntervalLoopingNum
-          : currentIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-abstract class _$CurrentValueStateCopyWith<$Res>
-    implements $CurrentValueStateCopyWith<$Res> {
-  factory _$CurrentValueStateCopyWith(
-          _CurrentValueState value, $Res Function(_CurrentValueState) then) =
-      __$CurrentValueStateCopyWithImpl<$Res>;
-  @override
-  $Res call({Duration currentDuration, int currentIntervalLoopingNum});
-}
-
-/// @nodoc
-class __$CurrentValueStateCopyWithImpl<$Res>
-    extends _$CurrentValueStateCopyWithImpl<$Res>
-    implements _$CurrentValueStateCopyWith<$Res> {
-  __$CurrentValueStateCopyWithImpl(
-      _CurrentValueState _value, $Res Function(_CurrentValueState) _then)
-      : super(_value, (v) => _then(v as _CurrentValueState));
-
-  @override
-  _CurrentValueState get _value => super._value as _CurrentValueState;
-
-  @override
-  $Res call({
-    Object? currentDuration = freezed,
-    Object? currentIntervalLoopingNum = freezed,
-  }) {
-    return _then(_CurrentValueState(
-      currentDuration: currentDuration == freezed
-          ? _value.currentDuration
-          : currentDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      currentIntervalLoopingNum: currentIntervalLoopingNum == freezed
-          ? _value.currentIntervalLoopingNum
-          : currentIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_CurrentValueState extends _CurrentValueState
-    with DiagnosticableTreeMixin {
-  const _$_CurrentValueState(
-      {this.currentDuration = Duration.zero,
-      this.currentIntervalLoopingNum = 0})
-      : super._();
-
-  @JsonKey()
-  @override
-  final Duration currentDuration;
-  @JsonKey()
-  @override
-  final int currentIntervalLoopingNum;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CurrentValueState(currentDuration: $currentDuration, currentIntervalLoopingNum: $currentIntervalLoopingNum)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'CurrentValueState'))
-      ..add(DiagnosticsProperty('currentDuration', currentDuration))
-      ..add(DiagnosticsProperty(
-          'currentIntervalLoopingNum', currentIntervalLoopingNum));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _CurrentValueState &&
-            const DeepCollectionEquality()
-                .equals(other.currentDuration, currentDuration) &&
-            const DeepCollectionEquality().equals(
-                other.currentIntervalLoopingNum, currentIntervalLoopingNum));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(currentDuration),
-      const DeepCollectionEquality().hash(currentIntervalLoopingNum));
-
-  @JsonKey(ignore: true)
-  @override
-  _$CurrentValueStateCopyWith<_CurrentValueState> get copyWith =>
-      __$CurrentValueStateCopyWithImpl<_CurrentValueState>(this, _$identity);
-}
-
-abstract class _CurrentValueState extends CurrentValueState {
-  const factory _CurrentValueState(
-      {Duration currentDuration,
-      int currentIntervalLoopingNum}) = _$_CurrentValueState;
-  const _CurrentValueState._() : super._();
-
-  @override
-  Duration get currentDuration;
-  @override
-  int get currentIntervalLoopingNum;
-  @override
-  @JsonKey(ignore: true)
-  _$CurrentValueStateCopyWith<_CurrentValueState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 class _$ThemeStateTearOff {
   const _$ThemeStateTearOff();
 
@@ -1714,15 +1543,25 @@ class _$TimerTimeKeepingStateTearOff {
   const _$TimerTimeKeepingStateTearOff();
 
   _TimerTimeKeepingState call(
-      {int fabMode = 0,
-      TimeOfDay targetTime = const TimeOfDay(hour: 12, minute: 0),
-      TimeOfDay targetIntervalTime = const TimeOfDay(hour: 12, minute: 30),
-      bool isCountingInterval = false}) {
+      {DateTime? startedTime,
+      DateTime? startedIntervalTime,
+      bool isPaused = false,
+      DateTime? pausedTime,
+      DateTime? pausedIntervalTime,
+      Duration pausedDuration = Duration.zero,
+      Duration pausedIntervalDuration = Duration.zero,
+      bool isCountingInterval = false,
+      int currentIntervalLoopingNum = 0}) {
     return _TimerTimeKeepingState(
-      fabMode: fabMode,
-      targetTime: targetTime,
-      targetIntervalTime: targetIntervalTime,
+      startedTime: startedTime,
+      startedIntervalTime: startedIntervalTime,
+      isPaused: isPaused,
+      pausedTime: pausedTime,
+      pausedIntervalTime: pausedIntervalTime,
+      pausedDuration: pausedDuration,
+      pausedIntervalDuration: pausedIntervalDuration,
       isCountingInterval: isCountingInterval,
+      currentIntervalLoopingNum: currentIntervalLoopingNum,
     );
   }
 }
@@ -1732,10 +1571,18 @@ const $TimerTimeKeepingState = _$TimerTimeKeepingStateTearOff();
 
 /// @nodoc
 mixin _$TimerTimeKeepingState {
-  int get fabMode => throw _privateConstructorUsedError;
-  TimeOfDay get targetTime => throw _privateConstructorUsedError;
-  TimeOfDay get targetIntervalTime => throw _privateConstructorUsedError;
+// started
+  DateTime? get startedTime => throw _privateConstructorUsedError;
+  DateTime? get startedIntervalTime =>
+      throw _privateConstructorUsedError; // paused
+  bool get isPaused => throw _privateConstructorUsedError;
+  DateTime? get pausedTime => throw _privateConstructorUsedError;
+  DateTime? get pausedIntervalTime => throw _privateConstructorUsedError;
+  Duration get pausedDuration => throw _privateConstructorUsedError;
+  Duration get pausedIntervalDuration =>
+      throw _privateConstructorUsedError; // interval
   bool get isCountingInterval => throw _privateConstructorUsedError;
+  int get currentIntervalLoopingNum => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TimerTimeKeepingStateCopyWith<TimerTimeKeepingState> get copyWith =>
@@ -1748,10 +1595,15 @@ abstract class $TimerTimeKeepingStateCopyWith<$Res> {
           $Res Function(TimerTimeKeepingState) then) =
       _$TimerTimeKeepingStateCopyWithImpl<$Res>;
   $Res call(
-      {int fabMode,
-      TimeOfDay targetTime,
-      TimeOfDay targetIntervalTime,
-      bool isCountingInterval});
+      {DateTime? startedTime,
+      DateTime? startedIntervalTime,
+      bool isPaused,
+      DateTime? pausedTime,
+      DateTime? pausedIntervalTime,
+      Duration pausedDuration,
+      Duration pausedIntervalDuration,
+      bool isCountingInterval,
+      int currentIntervalLoopingNum});
 }
 
 /// @nodoc
@@ -1765,28 +1617,53 @@ class _$TimerTimeKeepingStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? fabMode = freezed,
-    Object? targetTime = freezed,
-    Object? targetIntervalTime = freezed,
+    Object? startedTime = freezed,
+    Object? startedIntervalTime = freezed,
+    Object? isPaused = freezed,
+    Object? pausedTime = freezed,
+    Object? pausedIntervalTime = freezed,
+    Object? pausedDuration = freezed,
+    Object? pausedIntervalDuration = freezed,
     Object? isCountingInterval = freezed,
+    Object? currentIntervalLoopingNum = freezed,
   }) {
     return _then(_value.copyWith(
-      fabMode: fabMode == freezed
-          ? _value.fabMode
-          : fabMode // ignore: cast_nullable_to_non_nullable
-              as int,
-      targetTime: targetTime == freezed
-          ? _value.targetTime
-          : targetTime // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
-      targetIntervalTime: targetIntervalTime == freezed
-          ? _value.targetIntervalTime
-          : targetIntervalTime // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
+      startedTime: startedTime == freezed
+          ? _value.startedTime
+          : startedTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      startedIntervalTime: startedIntervalTime == freezed
+          ? _value.startedIntervalTime
+          : startedIntervalTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isPaused: isPaused == freezed
+          ? _value.isPaused
+          : isPaused // ignore: cast_nullable_to_non_nullable
+              as bool,
+      pausedTime: pausedTime == freezed
+          ? _value.pausedTime
+          : pausedTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      pausedIntervalTime: pausedIntervalTime == freezed
+          ? _value.pausedIntervalTime
+          : pausedIntervalTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      pausedDuration: pausedDuration == freezed
+          ? _value.pausedDuration
+          : pausedDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      pausedIntervalDuration: pausedIntervalDuration == freezed
+          ? _value.pausedIntervalDuration
+          : pausedIntervalDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
       isCountingInterval: isCountingInterval == freezed
           ? _value.isCountingInterval
           : isCountingInterval // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentIntervalLoopingNum: currentIntervalLoopingNum == freezed
+          ? _value.currentIntervalLoopingNum
+          : currentIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -1799,10 +1676,15 @@ abstract class _$TimerTimeKeepingStateCopyWith<$Res>
       __$TimerTimeKeepingStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int fabMode,
-      TimeOfDay targetTime,
-      TimeOfDay targetIntervalTime,
-      bool isCountingInterval});
+      {DateTime? startedTime,
+      DateTime? startedIntervalTime,
+      bool isPaused,
+      DateTime? pausedTime,
+      DateTime? pausedIntervalTime,
+      Duration pausedDuration,
+      Duration pausedIntervalDuration,
+      bool isCountingInterval,
+      int currentIntervalLoopingNum});
 }
 
 /// @nodoc
@@ -1818,28 +1700,53 @@ class __$TimerTimeKeepingStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? fabMode = freezed,
-    Object? targetTime = freezed,
-    Object? targetIntervalTime = freezed,
+    Object? startedTime = freezed,
+    Object? startedIntervalTime = freezed,
+    Object? isPaused = freezed,
+    Object? pausedTime = freezed,
+    Object? pausedIntervalTime = freezed,
+    Object? pausedDuration = freezed,
+    Object? pausedIntervalDuration = freezed,
     Object? isCountingInterval = freezed,
+    Object? currentIntervalLoopingNum = freezed,
   }) {
     return _then(_TimerTimeKeepingState(
-      fabMode: fabMode == freezed
-          ? _value.fabMode
-          : fabMode // ignore: cast_nullable_to_non_nullable
-              as int,
-      targetTime: targetTime == freezed
-          ? _value.targetTime
-          : targetTime // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
-      targetIntervalTime: targetIntervalTime == freezed
-          ? _value.targetIntervalTime
-          : targetIntervalTime // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
+      startedTime: startedTime == freezed
+          ? _value.startedTime
+          : startedTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      startedIntervalTime: startedIntervalTime == freezed
+          ? _value.startedIntervalTime
+          : startedIntervalTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isPaused: isPaused == freezed
+          ? _value.isPaused
+          : isPaused // ignore: cast_nullable_to_non_nullable
+              as bool,
+      pausedTime: pausedTime == freezed
+          ? _value.pausedTime
+          : pausedTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      pausedIntervalTime: pausedIntervalTime == freezed
+          ? _value.pausedIntervalTime
+          : pausedIntervalTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      pausedDuration: pausedDuration == freezed
+          ? _value.pausedDuration
+          : pausedDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      pausedIntervalDuration: pausedIntervalDuration == freezed
+          ? _value.pausedIntervalDuration
+          : pausedIntervalDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
       isCountingInterval: isCountingInterval == freezed
           ? _value.isCountingInterval
           : isCountingInterval // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentIntervalLoopingNum: currentIntervalLoopingNum == freezed
+          ? _value.currentIntervalLoopingNum
+          : currentIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -1849,28 +1756,44 @@ class __$TimerTimeKeepingStateCopyWithImpl<$Res>
 class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
     with DiagnosticableTreeMixin {
   const _$_TimerTimeKeepingState(
-      {this.fabMode = 0,
-      this.targetTime = const TimeOfDay(hour: 12, minute: 0),
-      this.targetIntervalTime = const TimeOfDay(hour: 12, minute: 30),
-      this.isCountingInterval = false})
+      {this.startedTime,
+      this.startedIntervalTime,
+      this.isPaused = false,
+      this.pausedTime,
+      this.pausedIntervalTime,
+      this.pausedDuration = Duration.zero,
+      this.pausedIntervalDuration = Duration.zero,
+      this.isCountingInterval = false,
+      this.currentIntervalLoopingNum = 0})
       : super._();
 
+  @override // started
+  final DateTime? startedTime;
+  @override
+  final DateTime? startedIntervalTime;
+  @JsonKey()
+  @override // paused
+  final bool isPaused;
+  @override
+  final DateTime? pausedTime;
+  @override
+  final DateTime? pausedIntervalTime;
   @JsonKey()
   @override
-  final int fabMode;
+  final Duration pausedDuration;
   @JsonKey()
   @override
-  final TimeOfDay targetTime;
+  final Duration pausedIntervalDuration;
   @JsonKey()
-  @override
-  final TimeOfDay targetIntervalTime;
-  @JsonKey()
-  @override
+  @override // interval
   final bool isCountingInterval;
+  @JsonKey()
+  @override
+  final int currentIntervalLoopingNum;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerTimeKeepingState(fabMode: $fabMode, targetTime: $targetTime, targetIntervalTime: $targetIntervalTime, isCountingInterval: $isCountingInterval)';
+    return 'TimerTimeKeepingState(startedTime: $startedTime, startedIntervalTime: $startedIntervalTime, isPaused: $isPaused, pausedTime: $pausedTime, pausedIntervalTime: $pausedIntervalTime, pausedDuration: $pausedDuration, pausedIntervalDuration: $pausedIntervalDuration, isCountingInterval: $isCountingInterval, currentIntervalLoopingNum: $currentIntervalLoopingNum)';
   }
 
   @override
@@ -1878,10 +1801,17 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'TimerTimeKeepingState'))
-      ..add(DiagnosticsProperty('fabMode', fabMode))
-      ..add(DiagnosticsProperty('targetTime', targetTime))
-      ..add(DiagnosticsProperty('targetIntervalTime', targetIntervalTime))
-      ..add(DiagnosticsProperty('isCountingInterval', isCountingInterval));
+      ..add(DiagnosticsProperty('startedTime', startedTime))
+      ..add(DiagnosticsProperty('startedIntervalTime', startedIntervalTime))
+      ..add(DiagnosticsProperty('isPaused', isPaused))
+      ..add(DiagnosticsProperty('pausedTime', pausedTime))
+      ..add(DiagnosticsProperty('pausedIntervalTime', pausedIntervalTime))
+      ..add(DiagnosticsProperty('pausedDuration', pausedDuration))
+      ..add(
+          DiagnosticsProperty('pausedIntervalDuration', pausedIntervalDuration))
+      ..add(DiagnosticsProperty('isCountingInterval', isCountingInterval))
+      ..add(DiagnosticsProperty(
+          'currentIntervalLoopingNum', currentIntervalLoopingNum));
   }
 
   @override
@@ -1889,22 +1819,37 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _TimerTimeKeepingState &&
-            const DeepCollectionEquality().equals(other.fabMode, fabMode) &&
             const DeepCollectionEquality()
-                .equals(other.targetTime, targetTime) &&
+                .equals(other.startedTime, startedTime) &&
             const DeepCollectionEquality()
-                .equals(other.targetIntervalTime, targetIntervalTime) &&
+                .equals(other.startedIntervalTime, startedIntervalTime) &&
+            const DeepCollectionEquality().equals(other.isPaused, isPaused) &&
             const DeepCollectionEquality()
-                .equals(other.isCountingInterval, isCountingInterval));
+                .equals(other.pausedTime, pausedTime) &&
+            const DeepCollectionEquality()
+                .equals(other.pausedIntervalTime, pausedIntervalTime) &&
+            const DeepCollectionEquality()
+                .equals(other.pausedDuration, pausedDuration) &&
+            const DeepCollectionEquality()
+                .equals(other.pausedIntervalDuration, pausedIntervalDuration) &&
+            const DeepCollectionEquality()
+                .equals(other.isCountingInterval, isCountingInterval) &&
+            const DeepCollectionEquality().equals(
+                other.currentIntervalLoopingNum, currentIntervalLoopingNum));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(fabMode),
-      const DeepCollectionEquality().hash(targetTime),
-      const DeepCollectionEquality().hash(targetIntervalTime),
-      const DeepCollectionEquality().hash(isCountingInterval));
+      const DeepCollectionEquality().hash(startedTime),
+      const DeepCollectionEquality().hash(startedIntervalTime),
+      const DeepCollectionEquality().hash(isPaused),
+      const DeepCollectionEquality().hash(pausedTime),
+      const DeepCollectionEquality().hash(pausedIntervalTime),
+      const DeepCollectionEquality().hash(pausedDuration),
+      const DeepCollectionEquality().hash(pausedIntervalDuration),
+      const DeepCollectionEquality().hash(isCountingInterval),
+      const DeepCollectionEquality().hash(currentIntervalLoopingNum));
 
   @JsonKey(ignore: true)
   @override
@@ -1915,20 +1860,35 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
 
 abstract class _TimerTimeKeepingState extends TimerTimeKeepingState {
   const factory _TimerTimeKeepingState(
-      {int fabMode,
-      TimeOfDay targetTime,
-      TimeOfDay targetIntervalTime,
-      bool isCountingInterval}) = _$_TimerTimeKeepingState;
+      {DateTime? startedTime,
+      DateTime? startedIntervalTime,
+      bool isPaused,
+      DateTime? pausedTime,
+      DateTime? pausedIntervalTime,
+      Duration pausedDuration,
+      Duration pausedIntervalDuration,
+      bool isCountingInterval,
+      int currentIntervalLoopingNum}) = _$_TimerTimeKeepingState;
   const _TimerTimeKeepingState._() : super._();
 
+  @override // started
+  DateTime? get startedTime;
   @override
-  int get fabMode;
+  DateTime? get startedIntervalTime;
+  @override // paused
+  bool get isPaused;
   @override
-  TimeOfDay get targetTime;
+  DateTime? get pausedTime;
   @override
-  TimeOfDay get targetIntervalTime;
+  DateTime? get pausedIntervalTime;
   @override
+  Duration get pausedDuration;
+  @override
+  Duration get pausedIntervalDuration;
+  @override // interval
   bool get isCountingInterval;
+  @override
+  int get currentIntervalLoopingNum;
   @override
   @JsonKey(ignore: true)
   _$TimerTimeKeepingStateCopyWith<_TimerTimeKeepingState> get copyWith =>
@@ -2073,10 +2033,18 @@ abstract class _GoalState extends GoalState {
 class _$GoalTimeKeepingStateTearOff {
   const _$GoalTimeKeepingStateTearOff();
 
-  _GoalTimeKeepingState call({int fabMode = 0, DateTime? startedTime}) {
+  _GoalTimeKeepingState call(
+      {int fabMode = 0,
+      DateTime? startedTime,
+      bool isPaused = false,
+      DateTime? pausedTime,
+      Duration pausedDuration = Duration.zero}) {
     return _GoalTimeKeepingState(
       fabMode: fabMode,
       startedTime: startedTime,
+      isPaused: isPaused,
+      pausedTime: pausedTime,
+      pausedDuration: pausedDuration,
     );
   }
 }
@@ -2086,8 +2054,12 @@ const $GoalTimeKeepingState = _$GoalTimeKeepingStateTearOff();
 
 /// @nodoc
 mixin _$GoalTimeKeepingState {
-  int get fabMode => throw _privateConstructorUsedError;
-  DateTime? get startedTime => throw _privateConstructorUsedError;
+// fab
+  int get fabMode => throw _privateConstructorUsedError; // started
+  DateTime? get startedTime => throw _privateConstructorUsedError; // paused
+  bool get isPaused => throw _privateConstructorUsedError;
+  DateTime? get pausedTime => throw _privateConstructorUsedError;
+  Duration get pausedDuration => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GoalTimeKeepingStateCopyWith<GoalTimeKeepingState> get copyWith =>
@@ -2099,7 +2071,12 @@ abstract class $GoalTimeKeepingStateCopyWith<$Res> {
   factory $GoalTimeKeepingStateCopyWith(GoalTimeKeepingState value,
           $Res Function(GoalTimeKeepingState) then) =
       _$GoalTimeKeepingStateCopyWithImpl<$Res>;
-  $Res call({int fabMode, DateTime? startedTime});
+  $Res call(
+      {int fabMode,
+      DateTime? startedTime,
+      bool isPaused,
+      DateTime? pausedTime,
+      Duration pausedDuration});
 }
 
 /// @nodoc
@@ -2115,6 +2092,9 @@ class _$GoalTimeKeepingStateCopyWithImpl<$Res>
   $Res call({
     Object? fabMode = freezed,
     Object? startedTime = freezed,
+    Object? isPaused = freezed,
+    Object? pausedTime = freezed,
+    Object? pausedDuration = freezed,
   }) {
     return _then(_value.copyWith(
       fabMode: fabMode == freezed
@@ -2125,6 +2105,18 @@ class _$GoalTimeKeepingStateCopyWithImpl<$Res>
           ? _value.startedTime
           : startedTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isPaused: isPaused == freezed
+          ? _value.isPaused
+          : isPaused // ignore: cast_nullable_to_non_nullable
+              as bool,
+      pausedTime: pausedTime == freezed
+          ? _value.pausedTime
+          : pausedTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      pausedDuration: pausedDuration == freezed
+          ? _value.pausedDuration
+          : pausedDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
     ));
   }
 }
@@ -2136,7 +2128,12 @@ abstract class _$GoalTimeKeepingStateCopyWith<$Res>
           $Res Function(_GoalTimeKeepingState) then) =
       __$GoalTimeKeepingStateCopyWithImpl<$Res>;
   @override
-  $Res call({int fabMode, DateTime? startedTime});
+  $Res call(
+      {int fabMode,
+      DateTime? startedTime,
+      bool isPaused,
+      DateTime? pausedTime,
+      Duration pausedDuration});
 }
 
 /// @nodoc
@@ -2154,6 +2151,9 @@ class __$GoalTimeKeepingStateCopyWithImpl<$Res>
   $Res call({
     Object? fabMode = freezed,
     Object? startedTime = freezed,
+    Object? isPaused = freezed,
+    Object? pausedTime = freezed,
+    Object? pausedDuration = freezed,
   }) {
     return _then(_GoalTimeKeepingState(
       fabMode: fabMode == freezed
@@ -2164,6 +2164,18 @@ class __$GoalTimeKeepingStateCopyWithImpl<$Res>
           ? _value.startedTime
           : startedTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isPaused: isPaused == freezed
+          ? _value.isPaused
+          : isPaused // ignore: cast_nullable_to_non_nullable
+              as bool,
+      pausedTime: pausedTime == freezed
+          ? _value.pausedTime
+          : pausedTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      pausedDuration: pausedDuration == freezed
+          ? _value.pausedDuration
+          : pausedDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
     ));
   }
 }
@@ -2172,18 +2184,31 @@ class __$GoalTimeKeepingStateCopyWithImpl<$Res>
 
 class _$_GoalTimeKeepingState extends _GoalTimeKeepingState
     with DiagnosticableTreeMixin {
-  const _$_GoalTimeKeepingState({this.fabMode = 0, this.startedTime})
+  const _$_GoalTimeKeepingState(
+      {this.fabMode = 0,
+      this.startedTime,
+      this.isPaused = false,
+      this.pausedTime,
+      this.pausedDuration = Duration.zero})
       : super._();
 
   @JsonKey()
-  @override
+  @override // fab
   final int fabMode;
-  @override
+  @override // started
   final DateTime? startedTime;
+  @JsonKey()
+  @override // paused
+  final bool isPaused;
+  @override
+  final DateTime? pausedTime;
+  @JsonKey()
+  @override
+  final Duration pausedDuration;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GoalTimeKeepingState(fabMode: $fabMode, startedTime: $startedTime)';
+    return 'GoalTimeKeepingState(fabMode: $fabMode, startedTime: $startedTime, isPaused: $isPaused, pausedTime: $pausedTime, pausedDuration: $pausedDuration)';
   }
 
   @override
@@ -2192,7 +2217,10 @@ class _$_GoalTimeKeepingState extends _GoalTimeKeepingState
     properties
       ..add(DiagnosticsProperty('type', 'GoalTimeKeepingState'))
       ..add(DiagnosticsProperty('fabMode', fabMode))
-      ..add(DiagnosticsProperty('startedTime', startedTime));
+      ..add(DiagnosticsProperty('startedTime', startedTime))
+      ..add(DiagnosticsProperty('isPaused', isPaused))
+      ..add(DiagnosticsProperty('pausedTime', pausedTime))
+      ..add(DiagnosticsProperty('pausedDuration', pausedDuration));
   }
 
   @override
@@ -2202,14 +2230,22 @@ class _$_GoalTimeKeepingState extends _GoalTimeKeepingState
             other is _GoalTimeKeepingState &&
             const DeepCollectionEquality().equals(other.fabMode, fabMode) &&
             const DeepCollectionEquality()
-                .equals(other.startedTime, startedTime));
+                .equals(other.startedTime, startedTime) &&
+            const DeepCollectionEquality().equals(other.isPaused, isPaused) &&
+            const DeepCollectionEquality()
+                .equals(other.pausedTime, pausedTime) &&
+            const DeepCollectionEquality()
+                .equals(other.pausedDuration, pausedDuration));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(fabMode),
-      const DeepCollectionEquality().hash(startedTime));
+      const DeepCollectionEquality().hash(startedTime),
+      const DeepCollectionEquality().hash(isPaused),
+      const DeepCollectionEquality().hash(pausedTime),
+      const DeepCollectionEquality().hash(pausedDuration));
 
   @JsonKey(ignore: true)
   @override
@@ -2219,14 +2255,24 @@ class _$_GoalTimeKeepingState extends _GoalTimeKeepingState
 }
 
 abstract class _GoalTimeKeepingState extends GoalTimeKeepingState {
-  const factory _GoalTimeKeepingState({int fabMode, DateTime? startedTime}) =
-      _$_GoalTimeKeepingState;
+  const factory _GoalTimeKeepingState(
+      {int fabMode,
+      DateTime? startedTime,
+      bool isPaused,
+      DateTime? pausedTime,
+      Duration pausedDuration}) = _$_GoalTimeKeepingState;
   const _GoalTimeKeepingState._() : super._();
 
-  @override
+  @override // fab
   int get fabMode;
-  @override
+  @override // started
   DateTime? get startedTime;
+  @override // paused
+  bool get isPaused;
+  @override
+  DateTime? get pausedTime;
+  @override
+  Duration get pausedDuration;
   @override
   @JsonKey(ignore: true)
   _$GoalTimeKeepingStateCopyWith<_GoalTimeKeepingState> get copyWith =>

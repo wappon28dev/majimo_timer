@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_color/flutter_color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
-import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:simple_animations/stateless_animation/play_animation.dart';
 
 import '../../../../main.dart';
@@ -27,137 +27,86 @@ class TimerTimeKeepingPage extends HookConsumerWidget {
     final show = ref.watch(generalState).showFAB;
 
     Widget fab() {
-      final mode = ref.watch(timerTKState).fabMode;
-      switch (mode) {
-        case 0:
-          return SizedBox(
-            height: 80,
-            width: 80,
-            child: FloatingActionButton(
-              backgroundColor: Colors.amber,
-              onPressed: () => ref.read(timerTKState.notifier).runPause(),
-              heroTag: 'global',
-              child: const Icon(
-                Icons.pause,
-                color: Colors.black,
+      final timerTKstateFunc = ref.read(timerTKState.notifier);
+      final isCountingInterval = ref.read(timerTKState).isCountingInterval;
+      final isPaused = ref.read(timerTKState).isPaused;
+
+      if (!isPaused) {
+        return SizedBox(
+          height: 80,
+          width: 80,
+          child: FloatingActionButton(
+            backgroundColor: Colors.amber,
+            onPressed: !isCountingInterval
+                ? timerTKstateFunc.runPause
+                : timerTKstateFunc.runIntervalPause,
+            heroTag: 'global',
+            child: const Icon(
+              Icons.pause,
+              color: Colors.black,
+            ),
+          ),
+        );
+      } else {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 50,
+              width: 50,
+              child: FloatingActionButton(
+                backgroundColor: Colors.red,
+                heroTag: null,
+                onPressed: () {
+                  RouteManager().runPush(
+                    context: context,
+                    page: const HomePage(),
+                    isReplace: true,
+                  );
+                  NotificationManager().cancelAllNotifications();
+                  generalstate.whenHome();
+                },
+                child: const Icon(
+                  Icons.stop,
+                  color: Colors.white,
+                ),
               ),
             ),
-          );
-        case 1:
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.red,
-                  heroTag: null,
-                  onPressed: () {
-                    RouteManager().runPush(
-                      context: context,
-                      page: const HomePage(),
-                      isReplace: true,
-                    );
-                    NotificationManager().cancelAllNotifications();
-                    generalstate.whenHome();
-                  },
-                  child: const Icon(
-                    Icons.stop,
-                    color: Colors.white,
-                  ),
+            const SizedBox(width: 20),
+            SizedBox(
+              height: 80,
+              width: 80,
+              child: FloatingActionButton(
+                onPressed: !isCountingInterval
+                    ? timerTKstateFunc.runResume
+                    : timerTKstateFunc.runIntervalResume,
+                splashColor: Colors.green.shade300,
+                backgroundColor: Colors.green.shade100,
+                heroTag: 'global',
+                child: const Icon(
+                  Icons.play_arrow,
+                  color: Colors.black,
                 ),
               ),
-              const SizedBox(width: 20),
-              SizedBox(
-                height: 80,
-                width: 80,
-                child: FloatingActionButton(
-                  onPressed: ref.read(timerTKState.notifier).runResume,
-                  splashColor: Colors.green.shade300,
-                  backgroundColor: Colors.green.shade100,
-                  heroTag: 'global',
-                  child: const Icon(
-                    Icons.play_arrow,
-                    color: Colors.black,
-                  ),
+            ),
+            const SizedBox(width: 20),
+            SizedBox(
+              height: 50,
+              width: 50,
+              child: FloatingActionButton(
+                backgroundColor: Colors.amber.shade900,
+                heroTag: null,
+                onPressed: () => !isCountingInterval
+                    ? timerTKstate.whenFinished()
+                    : timerTKstate.whenIntervalFinished(context: context),
+                child: const Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
                 ),
               ),
-              const SizedBox(width: 20),
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.amber.shade900,
-                  heroTag: null,
-                  onPressed: timerTKstate.whenFinished,
-                  child: const Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          );
-        case 2:
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.red,
-                  heroTag: null,
-                  onPressed: () {
-                    RouteManager().runPush(
-                      context: context,
-                      page: const HomePage(),
-                      isReplace: true,
-                    );
-                    NotificationManager().cancelAllNotifications();
-                    generalstate.whenHome();
-                  },
-                  child: const Icon(
-                    Icons.stop,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              SizedBox(
-                height: 80,
-                width: 80,
-                child: FloatingActionButton(
-                  onPressed: ref.read(timerTKState.notifier).runResume,
-                  splashColor: Colors.green.shade300,
-                  backgroundColor: Colors.green.shade100,
-                  heroTag: 'global',
-                  child: const Icon(
-                    Icons.play_arrow,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.amber.shade900,
-                  heroTag: null,
-                  onPressed: () =>
-                      timerTKstate.whenIntervalFinished(context: context),
-                  child: const Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          );
-        default:
-          throw Exception('switch-case error!');
+            ),
+          ],
+        );
       }
     }
 

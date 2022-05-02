@@ -18,6 +18,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     // });
   });
 
+  // ignore: avoid_unnecessary_containers
   Container headerWidget(BuildContext context) => Container(
         child: Container(child: largeclock(context, ref, false)),
       );

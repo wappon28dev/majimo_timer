@@ -4,36 +4,30 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   final width = MediaQuery.of(context).size.width;
 
   Widget content() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 20),
-          Container(
-            height: 0,
-            alignment: Alignment.center,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [count(context: context, ref: ref)],
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            Container(
+              height: width * 0.9,
+              alignment: Alignment.center,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  analogclockTimekeeping(context: context, ref: ref),
+                  largeclock(context, ref, true, true),
+                ],
+              ),
             ),
-          ),
-          Container(
-            height: width * 0.9,
-            alignment: Alignment.center,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                analogclockTimekeeping(context: context, ref: ref),
-                largeclock(context, ref, true, true),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(ref.read(goalState).goal),
-          Text(ref.read(goalTKState).startedTime.toString()),
-          Text(ref.watch(currentValueState).currentDuration.toString())
-        ],
+            const SizedBox(height: 10),
+            Text(ref.read(goalState).goal),
+            Text(ref.read(goalTKState).startedTime.toString()),
+            Text(ref.watch(goalTKState).diff(ref: ref).toString()),
+          ],
+        ),
       ),
     );
   }
@@ -78,45 +72,5 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
       ),
     ),
     backgroundColor: Colors.red,
-  );
-}
-
-Widget count({required BuildContext context, required WidgetRef ref}) {
-  final size = MediaQuery.of(context).size;
-  final controller = ref.watch(currentValueState.notifier).controller;
-  final isLight = ref.read(themeState.notifier).isLight(context: context);
-
-  return Padding(
-    padding: const EdgeInsets.all(20),
-    child: CircularCountDownTimer(
-      duration: const Duration(days: 360).inSeconds,
-      initialDuration: 0,
-      controller: controller,
-      width: size.width / 2,
-      height: size.height / 2,
-      ringColor: Colors.red.shade100,
-      ringGradient: null,
-      fillColor: Colors.redAccent.shade200,
-      fillGradient: null,
-      backgroundColor: Colors.transparent,
-      backgroundGradient: null,
-      strokeWidth: 10,
-      strokeCap: StrokeCap.butt,
-      textStyle: TextStyle(
-        fontSize: 50,
-        fontWeight: FontWeight.bold,
-        color: isLight ? Colors.redAccent.shade200 : Colors.red.shade100,
-      ),
-      textFormat: (ref.read(currentValueState).currentDuration.inHours > 0)
-          ? CountdownTextFormat.HH_MM_SS
-          : CountdownTextFormat.MM_SS,
-      isReverse: true,
-      isReverseAnimation: false,
-      isTimerTextShown: true,
-      autoStart: true, // trueじゃないとなぜか動かない
-      onStart: null,
-      onComplete: ref.read(timerTKState.notifier).whenFinished,
-      isUpCount: true,
-    ),
   );
 }

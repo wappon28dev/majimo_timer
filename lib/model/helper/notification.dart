@@ -174,8 +174,8 @@ class NotificationManager {
     );
   }
 
-  void timerFinish({required DateTime target}) {
-    AwesomeNotifications().createNotification(
+  Future<void> timerFinish({required DateTime target}) async {
+    await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: key[NotificationIdKey.timerFinish]!,
         channelKey: NotificationChannelKey.ringtone.name,
@@ -277,8 +277,8 @@ class NotificationManager {
     );
   }
 
-  void cancelAllNotifications() {
-    AwesomeNotifications().cancelAll();
+  Future<void> cancelAllNotifications() async {
+    await AwesomeNotifications().cancelAll();
     Logger.e(
       '- from NotificationManager \n >> Scheduled Notification canceled!',
     );

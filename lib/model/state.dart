@@ -34,15 +34,6 @@ class GeneralState with _$GeneralState {
 }
 
 @freezed
-class CurrentValueState with _$CurrentValueState {
-  const factory CurrentValueState({
-    @Default(Duration.zero) Duration currentDuration,
-    @Default(0) int currentIntervalLoopingNum,
-  }) = _CurrentValueState;
-  const CurrentValueState._();
-}
-
-@freezed
 class ThemeState with _$ThemeState {
   const factory ThemeState({@Default(0) int theme}) = _ThemeState;
   const ThemeState._();
@@ -291,12 +282,23 @@ class TimerState with _$TimerState {
 @freezed
 class TimerTimeKeepingState with _$TimerTimeKeepingState {
   const factory TimerTimeKeepingState({
-    @Default(0) int fabMode,
-    @Default(TimeOfDay(hour: 12, minute: 0)) TimeOfDay targetTime,
-    @Default(TimeOfDay(hour: 12, minute: 30)) TimeOfDay targetIntervalTime,
+    // started
+    DateTime? startedTime,
+    DateTime? startedIntervalTime,
+
+    // paused
+    @Default(false) bool isPaused,
+    DateTime? pausedTime,
+    DateTime? pausedIntervalTime,
+    @Default(Duration.zero) Duration pausedDuration,
+    @Default(Duration.zero) Duration pausedIntervalDuration,
+
+    // interval
     @Default(false) bool isCountingInterval,
+    @Default(0) int currentIntervalLoopingNum,
   }) = _TimerTimeKeepingState;
   const TimerTimeKeepingState._();
+  
 }
 
 @freezed
@@ -310,8 +312,26 @@ class GoalState with _$GoalState {
 @freezed
 class GoalTimeKeepingState with _$GoalTimeKeepingState {
   const factory GoalTimeKeepingState({
+    // fab
     @Default(0) int fabMode,
+
+    // started
     DateTime? startedTime,
+
+    // paused
+    @Default(false) bool isPaused,
+    DateTime? pausedTime,
+    @Default(Duration.zero) Duration pausedDuration,
   }) = _GoalTimeKeepingState;
   const GoalTimeKeepingState._();
+
+  Duration diff({required WidgetRef ref}) {
+    final now = ref.watch(nowStream).value ?? DateTime.now();
+    final diff = now.difference(startedTime!);
+    if (!isPaused) {
+      return diff - pausedDuration;
+    } else {
+      return pausedTime!.difference(startedTime!) - pausedDuration;
+    }
+  }
 }

@@ -14,36 +14,46 @@ class GoalTimeKeepingController extends StateNotifier<GoalTimeKeepingState> {
   GoalTimeKeepingController(this.read) : super(const GoalTimeKeepingState());
   Reader read;
 
-  CountDownController get _controller =>
-      read(currentValueState.notifier).controller;
+  void runStart() {
+    _updateStartedTime();
+    state = state.copyWith(fabMode: 0);
+    state = state.copyWith(isPaused: false);
+
+    NotificationManager().goalTimeKeeping(from: state.startedTime!);
+  }
+
+  void runPause() {
+    final now = DateTime.now();
+    state = state.copyWith(fabMode: 1);
+    state = state.copyWith(pausedTime: now);
+    state = state.copyWith(isPaused: true);
+    Logger.s(
+      '- from GoalTKState \n'
+      ' >> save DateTime? pausedTime = ${state.pausedTime}',
+    );
+  }
+
+  void runResume() {
+    state = state.copyWith(fabMode: 0);
+    final diffPaused = DateTime.now().diff(state.pausedTime ?? DateTime.now());
+    state = state.copyWith(pausedDuration: state.pausedDuration + diffPaused);
+    state = state.copyWith(isPaused: false);
+    Logger.s(
+      '- from GoalTKState \n'
+      ' >       Duration diffPaused     = $diffPaused \n'
+      ' >> save Duration pausedDuration = ${state.pausedDuration}',
+    );
+  }
+
+  void runQuit() => NotificationManager().cancelAllNotifications();
 
   void _updateStartedTime() {
     final now = DateTime.now();
     state = state.copyWith(startedTime: now);
-    // PrefManager().setInt(key: PrefKey., value: value);
+    state = state.copyWith(pausedDuration: Duration.zero);
     Logger.s(
-      '- from GoalState \n'
-      ' >> save DateTime startedTime = ${state.startedTime}',
+      '- from GoalTLState \n'
+      ' >> save DateTime? startedTime = ${state.startedTime}',
     );
   }
-
-  void runStart() {
-    _updateStartedTime();
-    state = state.copyWith(fabMode: 0);
-    _controller.restart(duration: const Duration(days: 360).inSeconds);
-    NotificationManager()
-        .goalTimeKeeping(from: state.startedTime ?? DateTime.now());
-  }
-
-  void runPause() {
-    _controller.pause();
-    state = state.copyWith(fabMode: 1);
-  }
-
-  void runResume() {
-    _controller.resume();
-    state = state.copyWith(fabMode: 0);
-  }
-
-  void runQuit() => NotificationManager().cancelAllNotifications();
 }

@@ -7,7 +7,27 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
 
   final targetDuration = timerstate.targetDuration;
   final targetIntervalDuration = timerstate.targetIntervalDuration;
+
+  final diff = ref.watch(timerTKState.notifier).diff(ref: ref);
+
+  // if (diff.inSeconds < 0) {
+  //   (!timerTKstate.isCountingInterval)
+  //       ? ref.read(timerTKState.notifier).whenFinished()
+  //       : ref
+  //           .read(timerTKState.notifier)
+  //           .whenIntervalFinished(context: context);
+  // }
   Widget content() {
+    if (timerTKstate.isCountingInterval && diff.inSeconds == 0) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        (!timerTKstate.isCountingInterval)
+            ? ref.read(timerTKState.notifier).whenFinished()
+            : ref
+                .read(timerTKState.notifier)
+                .whenIntervalFinished(context: context);
+      });
+    }
+
     return Stack(
       children: [
         Center(
@@ -16,17 +36,17 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 20),
-              Container(
+              SizedBox(
                 height: width * 0.9,
-                alignment: Alignment.center,
+                width: width * 0.9,
                 child: Stack(
-                  fit: StackFit.expand,
-                  children: [count(context: context, ref: ref)],
+                  alignment: AlignmentDirectional.center,
+                  children: count(context: context, ref: ref),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Text(
-                ref.watch(currentValueState).currentDuration.toString(),
+                diff.toString(),
                 style: TextStyle(
                   fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
                 ),
@@ -43,7 +63,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                         const SizedBox(width: 20),
                         const Text('・'),
                         const SizedBox(width: 20),
-                        Text(ref.read(timerTKState).targetTime.toString()),
+                        Text(
+                          ref.read(timerTKState.notifier).targetTime.toString(),
+                        ),
                       ]
                     : [
                         const Icon(Icons.hourglass_top),
@@ -55,13 +77,16 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                         const Text('・'),
                         const SizedBox(width: 20),
                         Text(
-                          ref.read(timerTKState).targetIntervalTime.toString(),
+                          ref
+                              .read(timerTKState.notifier)
+                              .targetIntervalTime
+                              .toString(),
                         ),
                       ],
               ),
               Text(
                 'phase : '
-                '${ref.read(currentValueState).currentIntervalLoopingNum + 1}'
+                '${ref.read(timerTKState).currentIntervalLoopingNum}'
                 ' / '
                 '${ref.read(timerState).targetIntervalLoopingNum}',
               ),
@@ -115,6 +140,43 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
   );
 }
 
+List<Widget> count({required BuildContext context, required WidgetRef ref}) {
+  final width = MediaQuery.of(context).size.width;
+  final isLight = ref.read(themeState.notifier).isLight(context: context);
+  final isCountingInterval = ref.read(timerTKState).isCountingInterval;
+  final indicator = ref.watch(timerTKState.notifier).indicator(ref: ref);
+
+  Color _front() => !isCountingInterval
+      ? Colors.redAccent.shade200
+      : Colors.blueAccent.shade200;
+
+  Color _back() =>
+      !isCountingInterval ? Colors.red.shade100 : Colors.blue.shade100;
+
+  return <Widget>[
+    CircularPercentIndicator(
+      radius: width * 0.45,
+      lineWidth: 15,
+      percent: ref.read(timerTKState.notifier).rate(ref: ref),
+      center: const SizedBox(),
+      progressColor: _front(),
+      backgroundColor: _back(),
+      circularStrokeCap: CircularStrokeCap.square,
+      reverse: false,
+    ),
+    AutoSizeText(
+      indicator,
+      style: TextStyle(
+        fontSize: 60,
+        fontWeight: FontWeight.bold,
+        color: isLight ? _front() : _back(),
+      ),
+      maxLines: 1,
+    )
+  ];
+}
+
+/*
 Widget count({required BuildContext context, required WidgetRef ref}) {
   final timerstate = ref.read(timerState);
   final timerTKstate = ref.read(timerTKState);
@@ -190,3 +252,4 @@ Widget count({required BuildContext context, required WidgetRef ref}) {
           ),
   );
 }
+*/

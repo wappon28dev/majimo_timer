@@ -31,12 +31,12 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                   fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
                 ),
               ),
-              Text(
-                'current => ${ref.watch(currentValueState).currentDuration}',
-                style: TextStyle(
-                  fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
-                ),
-              ),
+              // Text(
+              //   'current => ${ref.watch(currentValueState).currentDuration}',
+              //   style: TextStyle(
+              //     fontFamily: Platform.isAndroid ? 'monospace' : 'Menlo',
+              //   ),
+              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -46,9 +46,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                   const SizedBox(width: 20),
                   const Text('・'),
                   const SizedBox(width: 20),
-                  Text(
-                    'あと${ref.watch(currentValueState).currentDuration.inMinutes}分',
-                  )
+                  // Text(
+                  //   'あと${ref.watch(currentValueState).currentDuration.inMinutes}分',
+                  // ),
                 ],
               ),
             ],

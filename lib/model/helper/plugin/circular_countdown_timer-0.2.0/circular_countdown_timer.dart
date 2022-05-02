@@ -251,10 +251,6 @@ class CircularCountDownTimerState extends ConsumerState<CircularCountDownTimer>
   Widget build(BuildContext context) {
     Future<void>.delayed(
       const Duration(milliseconds: 100),
-      () => ref.read(currentValueState.notifier).updateCurrentDuration(
-            value: _controller!.duration! * _controller!.value,
-            isUpCount: widget.isUpCount,
-          ),
     );
 
     return SizedBox(
