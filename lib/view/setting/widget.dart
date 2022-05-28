@@ -43,9 +43,7 @@ dynamic change_lang(BuildContext context, WidgetRef ref) {
           color: style(pref, 0)[1] as Color?,
         ),
         trailing: style(pref, 0)[2] as Widget?,
-        onTap: () {
-          func(lang: 0);
-        },
+        onTap: () => func(lang: 0),
       ),
       ListTile(
         title: AutoSizeText(
@@ -55,9 +53,7 @@ dynamic change_lang(BuildContext context, WidgetRef ref) {
         ),
         leading: const Flag.fromString('JP', height: 25, width: 25),
         trailing: style(pref, 1)[2] as Widget?,
-        onTap: () {
-          func(lang: 1);
-        },
+        onTap: () => func(lang: 1),
       ),
       ListTile(
         title: AutoSizeText(
@@ -67,9 +63,7 @@ dynamic change_lang(BuildContext context, WidgetRef ref) {
         ),
         leading: const Flag.fromString('US', height: 25, width: 25),
         trailing: style(pref, 2)[2] as Widget?,
-        onTap: () {
-          func(lang: 2);
-        },
+        onTap: () => func(lang: 2),
       ),
     ],
   );
@@ -100,9 +94,7 @@ dynamic app_theme(BuildContext context, WidgetRef ref) {
         leading:
             Icon(Icons.settings_brightness, color: style(pref, 0)[1] as Color?),
         trailing: style(pref, 0)[2] as Widget?,
-        onTap: () {
-          func(theme: 0);
-        },
+        onTap: () => func(theme: 0),
       ),
       ListTile(
         title: AutoSizeText(
@@ -112,9 +104,7 @@ dynamic app_theme(BuildContext context, WidgetRef ref) {
         ),
         leading: Icon(Icons.brightness_7, color: style(pref, 1)[1] as Color?),
         trailing: style(pref, 1)[2] as Widget?,
-        onTap: () {
-          func(theme: 1);
-        },
+        onTap: () => func(theme: 1),
       ),
       ListTile(
         title: AutoSizeText(
@@ -124,8 +114,85 @@ dynamic app_theme(BuildContext context, WidgetRef ref) {
         ),
         leading: Icon(Icons.nights_stay, color: style(pref, 2)[1] as Color?),
         trailing: style(pref, 2)[2] as Widget?,
+        onTap: () => func(theme: 2),
+      ),
+    ],
+  );
+}
+
+dynamic app_seed_color(BuildContext context, WidgetRef ref) {
+  void func({required bool value}) {
+    ref.read(themeState.notifier).updateIsUsingMaterialYou(value: value);
+    Navigator.pop(context);
+  }
+
+  final pref = ref.read(themeState).isUsingMaterialYou;
+  final isDefault = ref.read(themeState).seedColor == Colors.deepOrange;
+
+  return modal(
+    context,
+    ref,
+    Icons.palette_outlined,
+    t.app_seed_color.t,
+    t.app_seed_color_sub.t,
+    [
+      ListTile(
+        title: AutoSizeText(
+          t.use_material_you.t,
+          maxLines: 1,
+          style: style(pref, true)[0] as TextStyle?,
+        ),
+        enabled: false,
+        leading:
+            Icon(Icons.auto_fix_high, color: style(pref, true)[1] as Color?),
+        trailing: style(pref, true)[2] as Widget?,
+        onTap: () => func(value: true),
+      ),
+      ListTile(
+        title: AutoSizeText(
+          t.pick_default_color.t,
+          maxLines: 1,
+          style: style(isDefault, true)[0] as TextStyle?,
+        ),
+        leading: Icon(
+          Icons.settings_backup_restore,
+          color: style(isDefault, true)[1] as Color?,
+        ),
+        trailing: style(isDefault, true)[2] as Widget?,
         onTap: () {
-          func(theme: 2);
+          ref
+              .read(themeState.notifier)
+              .updateSeedColor(context: context, value: Colors.deepOrange);
+
+          func(value: false);
+        },
+      ),
+      ListTile(
+        title: AutoSizeText(
+          t.pick_seed_color.t,
+          maxLines: 1,
+          style: style(pref, false)[0] as TextStyle?,
+        ),
+        leading:
+            Icon(Icons.format_paint, color: style(pref, false)[1] as Color?),
+        trailing:
+            Icon(Icons.arrow_forward, color: style(pref, false)[1] as Color?),
+        onTap: () {
+          final color = ref.read(themeState).seedColor;
+          showMaterialPalettePicker(
+            context: context,
+            selectedColor: color,
+            onChanged: (value) {
+              ref
+                  .read(themeState.notifier)
+                  .updateSeedColor(context: context, value: value);
+              ref
+                  .read(themeState.notifier)
+                  .updateIsUsingMaterialYou(value: false);
+
+              Navigator.pop(context);
+            },
+          );
         },
       ),
     ],
@@ -202,9 +269,7 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
           color: style(pref, false)[1] as Color?,
         ),
         trailing: style(pref, false)[2] as Widget?,
-        onTap: () {
-          func(value: false);
-        },
+        onTap: () => func(value: false),
       ),
       clock(mode: false),
       ListTile(
@@ -218,9 +283,7 @@ dynamic clock_style(BuildContext context, WidgetRef ref) {
           color: style(pref, true)[1] as Color?,
         ),
         trailing: style(pref, true)[2] as Widget?,
-        onTap: () {
-          func(value: true);
-        },
+        onTap: () => func(value: true),
       ),
       clock(mode: true),
       const SizedBox(height: 10),
@@ -301,9 +364,7 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
         leading:
             Icon(Icons.timer_outlined, color: style(pref, true)[1] as Color?),
         trailing: style(pref, true)[2] as Widget?,
-        onTap: () {
-          func(value: true);
-        },
+        onTap: () => func(value: true),
       ),
       clock(mode: true),
       ListTile(
@@ -317,9 +378,7 @@ dynamic clock_showSec(BuildContext context, WidgetRef ref) {
           color: style(pref, false)[1] as Color?,
         ),
         trailing: style(pref, false)[2] as Widget?,
-        onTap: () {
-          func(value: false);
-        },
+        onTap: () => func(value: false),
       ),
       clock(mode: false),
       const SizedBox(height: 10),
@@ -420,9 +479,7 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
         ),
         leading: Icon(Icons.moving, color: style(pref, 0)[1] as Color?),
         trailing: style(pref, 0)[2] as Widget?,
-        onTap: () {
-          func(value: 0);
-        },
+        onTap: () => func(value: 0),
       ),
       clock(mode: 0),
       ListTile(
@@ -433,9 +490,7 @@ dynamic clock_animation(BuildContext context, WidgetRef ref) {
         ),
         leading: Icon(Icons.bubble_chart, color: style(pref, 1)[1] as Color?),
         trailing: style(pref, 1)[2] as Widget?,
-        onTap: () {
-          func(value: 1);
-        },
+        onTap: () => func(value: 1),
       ),
       clock(mode: 1),
       const SizedBox(height: 10),
@@ -476,9 +531,7 @@ dynamic toast_position(BuildContext context, WidgetRef ref) {
           color: style(pref, true)[1] as Color?,
         ),
         trailing: style(pref, true)[2] as Widget?,
-        onTap: () {
-          func(value: true);
-        },
+        onTap: () => func(value: true),
       ),
       ListTile(
         title: AutoSizeText(
@@ -491,9 +544,7 @@ dynamic toast_position(BuildContext context, WidgetRef ref) {
           color: style(pref, false)[1] as Color?,
         ),
         trailing: style(pref, false)[2] as Widget?,
-        onTap: () {
-          func(value: false);
-        },
+        onTap: () => func(value: false),
       ),
     ],
   );
@@ -523,9 +574,7 @@ dynamic toast_duration(BuildContext context, WidgetRef ref) {
         ),
         leading: Icon(Icons.looks_3, color: style(pref, 3)[1] as Color?),
         trailing: style(pref, 3)[2] as Widget?,
-        onTap: () {
-          func(sec: 3);
-        },
+        onTap: () => func(sec: 3),
       ),
       ListTile(
         title: AutoSizeText(
@@ -535,9 +584,7 @@ dynamic toast_duration(BuildContext context, WidgetRef ref) {
         ),
         leading: Icon(Icons.looks_4, color: style(pref, 4)[1] as Color?),
         trailing: style(pref, 4)[2] as Widget?,
-        onTap: () {
-          func(sec: 4);
-        },
+        onTap: () => func(sec: 4),
       ),
       ListTile(
         title: AutoSizeText(
@@ -547,9 +594,7 @@ dynamic toast_duration(BuildContext context, WidgetRef ref) {
         ),
         leading: Icon(Icons.looks_5, color: style(pref, 5)[1] as Color?),
         trailing: style(pref, 5)[2] as Widget?,
-        onTap: () {
-          func(sec: 5);
-        },
+        onTap: () => func(sec: 5),
       ),
     ],
   );

@@ -3,11 +3,13 @@ library flutter_analog_clock;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/main.dart';
 
 import 'flutter_analog_clock_painter.dart';
 
 /// A analog clock.
-class FlutterAnalogClock extends StatefulWidget {
+class FlutterAnalogClock extends ConsumerStatefulWidget {
   final DateTime? dateTime;
   final Color dialPlateColor;
   final Color hourHandColor;
@@ -87,7 +89,7 @@ class FlutterAnalogClock extends StatefulWidget {
       _FlutterAnalogClockState(this.dateTime);
 }
 
-class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
+class _FlutterAnalogClockState extends ConsumerState<FlutterAnalogClock> {
   Timer? _timer;
   DateTime? _dateTime;
   _FlutterAnalogClockState(this._dateTime);
@@ -95,16 +97,17 @@ class _FlutterAnalogClockState extends State<FlutterAnalogClock> {
   @override
   void initState() {
     super.initState();
-    if (!widget.isLive && this._dateTime == null)
-      this._dateTime = DateTime.now();
-    _timer = widget.isLive
-        ? Timer.periodic(Duration(seconds: 1), (Timer timer) {
-            _dateTime = _dateTime?.add(Duration(seconds: 1));
-            if (mounted) {
-              setState(() {});
-            }
-          })
-        : null;
+    if (!widget.isLive && this._dateTime == null) {
+      _dateTime = ref.watch(nowStream).value;
+    }
+    // _timer = widget.isLive
+    //     ? Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    //         _dateTime = _dateTime?.add(Duration(seconds: 1));
+    //         if (mounted) {
+    //           setState(() {});
+    //         }
+    //       })
+    //     : null;
   }
 
   @override

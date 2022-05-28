@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flag/flag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_material_pickers/helpers/show_palette_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/main.dart';
@@ -14,6 +15,7 @@ import 'package:majimo_timer/model/helper/pref.dart';
 import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/view/components/appbar.dart';
 import 'package:majimo_timer/view/components/modal.dart';
 import 'package:majimo_timer/view/setting/about.dart';
 
@@ -22,42 +24,62 @@ part 'widget.dart';
 class Setting extends HookConsumerWidget {
   const Setting({Key? key}) : super(key: key);
 
-  Widget section(String title) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '　$title',
-          style: TextStyle(
-            color: ColorKey.orange.value,
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themestate = ref.watch(themeState);
     final clockstate = ref.watch(clockState);
     final langstate = ref.watch(langState);
     final generalstate = ref.watch(generalState);
+
+    Widget section(String title) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '　$title',
+            style: TextStyle(
+              color: getColorScheme(ref: ref, context: context).primary,
+            ),
+          ),
+        ],
+      );
+    }
+
+    List<Widget> actions() => <Widget>[
+          IconButton(
+            onPressed: () {
+              PrefManager().allremove();
+              Logger.e(
+                '- from majimo_timer/lib/view/setting/body.dart \n'
+                ' >> ! SharedPreferences All Removed ! <<',
+              );
+              PrefManager().restore(ref, context);
+            },
+            icon: const Icon(Icons.settings_backup_restore),
+          ),
+        ];
+
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: MyTheme().lightTheme,
-      darkTheme: MyTheme().darkTheme,
+      theme: MyTheme().lightTheme(ref: ref),
+      darkTheme: MyTheme().darkTheme(ref: ref),
       themeMode: ref.read(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: _appbar(context: context, ref: ref),
+        appBar: commonAppbar(
+          context: context,
+          ref: ref,
+          title: t.prefer.t,
+          actions: actions(),
+        ),
         body: CupertinoScrollbar(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 section(t.app_appearance.t),
                 ListTile(
                   title: Text(t.change_lang.t),
@@ -70,6 +92,12 @@ class Setting extends HookConsumerWidget {
                   subtitle: Text(themestate.themeCaption),
                   leading: Icon(themestate.themeIcon),
                   onTap: () => app_theme(context, ref),
+                ),
+                ListTile(
+                  title: Text(t.app_seed_color.t),
+                  subtitle: Text(themestate.themeCaption),
+                  leading: const Icon(Icons.palette_outlined),
+                  onTap: () => app_seed_color(context, ref),
                 ),
                 section(t.clock_appearance.t),
                 ListTile(
@@ -109,7 +137,7 @@ class Setting extends HookConsumerWidget {
                       ToastManager().toast(context: context, ref: ref, id: 0),
                   label: const Text('test toast'),
                 ),
-                section(t.about.t),
+                section(t.notification.t),
                 const SizedBox(height: 20),
                 section(t.about.t),
                 ListTile(
@@ -154,6 +182,7 @@ class Setting extends HookConsumerWidget {
                   onTap: () =>
                       RouteManager().runURL(url: PathStore().licenseURL),
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -161,36 +190,4 @@ class Setting extends HookConsumerWidget {
       ),
     );
   }
-}
-
-AppBar _appbar({required BuildContext context, required WidgetRef ref}) {
-  return AppBar(
-    centerTitle: true,
-    leading: IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    ),
-    title: AutoSizeText(
-      t.prefer.t,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-      ),
-      maxLines: 1,
-    ),
-    actions: [
-      IconButton(
-        onPressed: () {
-          PrefManager().allremove();
-          Logger.e(
-            '- from majimo_timer/lib/view/setting/body.dart \n'
-            ' >> ! SharedPreferences All Removed ! <<',
-          );
-          PrefManager().restore(ref, context);
-        },
-        icon: const Icon(Icons.settings_backup_restore),
-      )
-    ],
-  );
 }

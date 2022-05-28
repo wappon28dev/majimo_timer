@@ -37,7 +37,7 @@ class HomePage extends HookConsumerWidget {
     final isLandscape = orientation == Orientation.landscape;
 
     useEffect(() {
-      GlobalController.switchFullScreen(value: false);
+      GlobalController.switchOverlayMode(value: false);
       return null;
     });
 
@@ -45,8 +45,8 @@ class HomePage extends HookConsumerWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: MyTheme().lightTheme,
-      darkTheme: MyTheme().darkTheme,
+      theme: MyTheme().lightTheme(ref: ref),
+      darkTheme: MyTheme().darkTheme(ref: ref),
       themeMode: ref.watch(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home:
@@ -73,24 +73,21 @@ Widget analogclock({required BuildContext context, required WidgetRef ref}) {
 }
 
 Widget fab({required BuildContext context, required WidgetRef ref}) {
-  return SizedBox(
+  return Container(
     height: 80,
     width: 80,
-    child: GestureDetector(
-      onLongPressUp: null,
-      child: FloatingActionButton(
-        heroTag: 'global',
-        onPressed: () => RouteManager().runPush(
-          context: context,
-          page: const Tutorial(),
-          isReplace: true,
-        ),
-        splashColor: Colors.green.shade300,
-        backgroundColor: Colors.tealAccent,
-        child: const Icon(
-          Icons.accessibility_new_sharp,
-          color: Colors.black,
-        ),
+    child: FloatingActionButton(
+      heroTag: 'global',
+      onPressed: () => RouteManager().runPush(
+        context: context,
+        page: const Tutorial(),
+        isReplace: true,
+      ),
+      splashColor: Colors.green.shade300,
+      backgroundColor: Colors.tealAccent,
+      child: const Icon(
+        Icons.accessibility_new_sharp,
+        color: Colors.black,
       ),
     ),
   );

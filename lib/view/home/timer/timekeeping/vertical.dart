@@ -19,7 +19,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   // }
   Widget content() {
     if (timerTKstate.isCountingInterval && diff.inSeconds == 0) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         (!timerTKstate.isCountingInterval)
             ? ref.read(timerTKState.notifier).whenFinished()
             : ref

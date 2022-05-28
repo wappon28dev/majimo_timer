@@ -136,6 +136,10 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         ),
         const SizedBox(height: 20),
         ElevatedButton.icon(
+          style: ElevatedButton.styleFrom(
+            primary: getColorScheme(ref: ref, context: context).primary,
+            onPrimary: getColorScheme(ref: ref, context: context).onPrimary,
+          ),
           onPressed: () => NotificationManager().alarmFinish(
             target: DateTime.now().add(
               const Duration(seconds: 5),
@@ -198,7 +202,10 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   return DraggableHome(
     title: Text(
       t.app_name.t,
-      style: const TextStyle(fontWeight: FontWeight.bold),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
     ),
     actions: [
       IconButton(

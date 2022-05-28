@@ -12,9 +12,7 @@ Widget roundedCard({
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
     ),
-    color: isOrange
-        ? MyTheme().getThemeData(context: context, ref: ref).backgroundColor
-        : Colors.white,
+    color: isOrange ? ColorKey.orange.value : Colors.white,
     elevation: 2,
     child: Container(
       margin: const EdgeInsets.all(10),

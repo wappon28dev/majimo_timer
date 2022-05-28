@@ -33,26 +33,30 @@ class AppTeam extends AboutAppTeam {
     'aisukeee': 'assets/images/me.png',
     'moto0701': 'assets/images/me.png',
     'Yoyoyoyoyoyo': 'assets/images/me.png',
+    'gu': 'assets/images/me.png',
+    'katoso': 'assets/images/me.png',
   };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.5.4 β';
-  final String buildDate = '2022/05/03 2:30';
+  final String versionStr = 'majimo_timer v0.6.0 β';
+  final String buildDate = '2022/05/29 2:47';
   final String changeLog = '''
 [fix]
-  1. Changed all logic based on TIME-STAMP
-  2. Changed to countdown Widget without state
-  3. Changed freezed objects timer and goal 
-  4. Added function delayedNotification (create/cancel)
-  5. Added callback function view and controller
-  6. Added some tester
-  7. Added Future<void> function
-  8. Followed some lint rules
+  !!! A BIG VISUAL UPDATE !!!
+  1.  Migrated Material 3
+  2.  Changed Color Swatch to Color Scheme
+  3.  Added seedSchemeColor in themeState
+  4.  Added material color picker
+  5.  Changed screen in about app page
+  6.  Added some translations
+  7.  Added dynamic coloring
+  8.  Made some class Consuming
+  9.  Followed some lint rules
+  10. Updated Flutter 3.0.1 & Dart 2.17.1
 
 [known-bug]
   1. Overlay TK screen always applied
-  2. native splash appears twice on A12
-  3. home shortcut icons are blank
+  2. home shortcut icons are blank
     ''';
 }

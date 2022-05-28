@@ -8,7 +8,7 @@ class GlobalController extends StateNotifier<GlobalState> {
     Logger.s('- from GlobalState \n >> save bool isFirst = ${state.isFirst}');
   }
 
-  static void switchFullScreen({required bool value}) {
+  static void switchOverlayMode({required bool value}) {
     if (Platform.isAndroid) {
       if (value) {
         FlutterWindowManager.clearFlags(
@@ -26,5 +26,31 @@ class GlobalController extends StateNotifier<GlobalState> {
         );
       }
     }
+  }
+
+  static Future<void> updateWakelock({required bool value}) async {
+    if (value) {
+      await Wakelock.enable();
+      Logger.i(
+        '- from GeneralState \n >> Wakelock enabled',
+      );
+    } else {
+      await Wakelock.disable();
+      Logger.i(
+        '- from GeneralState \n >> Wakelock disabled',
+      );
+    }
+  }
+
+  static void makeNavBarTransparent() {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.transparent, // navigation bar color
+        statusBarColor: Colors.transparent, // status bar color
+        systemStatusBarContrastEnforced: false,
+        systemNavigationBarDividerColor: Colors.transparent,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+    );
   }
 }

@@ -9,6 +9,7 @@ import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/view/components/appbar.dart';
 import 'package:majimo_timer/view/components/rounded_card.dart';
 
 class AboutApp extends HookConsumerWidget {
@@ -41,12 +42,12 @@ class AboutApp extends HookConsumerWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: MyTheme().lightTheme,
-      darkTheme: MyTheme().darkTheme,
+      theme: MyTheme().lightTheme(ref: ref),
+      darkTheme: MyTheme().darkTheme(ref: ref),
       themeMode: ref.read(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: appbar(context: context, ref: ref),
+        appBar: commonAppbar(context: context, ref: ref, title: t.about.t),
         body: CupertinoScrollbar(
           child: SingleChildScrollView(
             child: Column(
@@ -73,29 +74,11 @@ class AboutApp extends HookConsumerWidget {
                   icon: const Icon(Icons.launch),
                   label: Text(t.privacy_policy.t),
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  AppBar appbar({required BuildContext context, required WidgetRef ref}) {
-    return AppBar(
-      centerTitle: true,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-      title: AutoSizeText(
-        t.about.t,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        maxLines: 1,
       ),
     );
   }
@@ -107,16 +90,14 @@ class AboutAppTeam extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
+    final isLight = ref.read(themeState.notifier).isLight(context: context);
 
     Widget schoolHeader() {
-      final size = MediaQuery.of(context).size;
-
       return Container(
         width: size.width,
-        color: Colors.purple,
+        color: isLight ? Colors.purple : Colors.purple.shade700,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.all(20),
@@ -188,16 +169,19 @@ class AboutAppTeam extends HookConsumerWidget {
     }
 
     Widget developer() {
+      final colorScheme = getColorScheme(ref: ref, context: context);
       return Card(
-        elevation: 4,
+        elevation: 0,
+        color: colorScheme.tertiaryContainer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
+          side: BorderSide(
+            color: colorScheme.tertiary,
+          ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(7),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 10),
               Text(
@@ -210,81 +194,70 @@ class AboutAppTeam extends HookConsumerWidget {
               const Divider(
                 thickness: 2,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: size.width / 3,
-                    height: size.width / 3,
-                    child: Image.asset('assets/images/me.png'),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Image.asset(
+                    'assets/images/me.png',
+                    height: 150,
+                    width: 150,
                   ),
-                  const Text(
-                    'wappon_28_dev',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+                ),
               ),
+              const SizedBox(height: 10),
+              const Text(
+                'wappon_28_dev',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),
       );
     }
 
-    Widget debugger() {
+    Widget tester() {
       List<Widget> listWidget() {
         final iterableWidget = AppTeam().debuggers.entries.map((entry) {
           final widgets = <Widget>[
-            const SizedBox(height: 10),
             ListTile(
-              title: Text(
-                entry.key,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              contentPadding: EdgeInsets.zero,
+              title: Text(entry.key),
+              subtitle: const Text('caption'),
               leading: CircleAvatar(
                 backgroundColor: Colors.blue,
-                radius: 50,
-                child: Image.asset(entry.value),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(7),
+                  child: Image.asset(entry.value),
+                ),
               ),
             ),
-            const SizedBox(height: 10),
           ];
           return widgets.toList();
         });
         return iterableWidget.toList().expand((element) => element).toList();
       }
 
-      return Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-                  const SizedBox(height: 10),
-                  Text(
-                    t.debugger.t,
-                    style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
+      return Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+                const SizedBox(height: 10),
+                Text(
+                  t.debugger.t,
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const Divider(
-                    thickness: 2,
-                  ),
-                ] +
-                listWidget(),
-          ),
+                ),
+                const Divider(
+                  thickness: 2,
+                ),
+              ] +
+              listWidget(),
         ),
       );
     }
@@ -293,12 +266,16 @@ class AboutAppTeam extends HookConsumerWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: MyTheme().lightTheme,
-      darkTheme: MyTheme().darkTheme,
+      theme: MyTheme().lightTheme(ref: ref),
+      darkTheme: MyTheme().darkTheme(ref: ref),
       themeMode: ref.read(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: appbar(context: context, ref: ref),
+        appBar: commonAppbar(
+          context: context,
+          ref: ref,
+          title: t.about_app_team.t,
+        ),
         body: CupertinoScrollbar(
           child: SingleChildScrollView(
             child: Column(
@@ -309,33 +286,14 @@ class AboutAppTeam extends HookConsumerWidget {
                   child: developer(),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: debugger(),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: tester(),
                 ),
                 const SizedBox(height: 20),
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  AppBar appbar({required BuildContext context, required WidgetRef ref}) {
-    return AppBar(
-      centerTitle: true,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-      title: AutoSizeText(
-        t.about_app_team.t,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        maxLines: 1,
       ),
     );
   }

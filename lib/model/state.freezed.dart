@@ -422,9 +422,14 @@ abstract class _GeneralState extends GeneralState {
 class _$ThemeStateTearOff {
   const _$ThemeStateTearOff();
 
-  _ThemeState call({int theme = 0}) {
+  _ThemeState call(
+      {int theme = 0,
+      bool isUsingMaterialYou = false,
+      Color seedColor = Colors.white}) {
     return _ThemeState(
       theme: theme,
+      isUsingMaterialYou: isUsingMaterialYou,
+      seedColor: seedColor,
     );
   }
 }
@@ -435,6 +440,8 @@ const $ThemeState = _$ThemeStateTearOff();
 /// @nodoc
 mixin _$ThemeState {
   int get theme => throw _privateConstructorUsedError;
+  bool get isUsingMaterialYou => throw _privateConstructorUsedError;
+  Color get seedColor => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ThemeStateCopyWith<ThemeState> get copyWith =>
@@ -446,7 +453,7 @@ abstract class $ThemeStateCopyWith<$Res> {
   factory $ThemeStateCopyWith(
           ThemeState value, $Res Function(ThemeState) then) =
       _$ThemeStateCopyWithImpl<$Res>;
-  $Res call({int theme});
+  $Res call({int theme, bool isUsingMaterialYou, Color seedColor});
 }
 
 /// @nodoc
@@ -460,12 +467,22 @@ class _$ThemeStateCopyWithImpl<$Res> implements $ThemeStateCopyWith<$Res> {
   @override
   $Res call({
     Object? theme = freezed,
+    Object? isUsingMaterialYou = freezed,
+    Object? seedColor = freezed,
   }) {
     return _then(_value.copyWith(
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as int,
+      isUsingMaterialYou: isUsingMaterialYou == freezed
+          ? _value.isUsingMaterialYou
+          : isUsingMaterialYou // ignore: cast_nullable_to_non_nullable
+              as bool,
+      seedColor: seedColor == freezed
+          ? _value.seedColor
+          : seedColor // ignore: cast_nullable_to_non_nullable
+              as Color,
     ));
   }
 }
@@ -476,7 +493,7 @@ abstract class _$ThemeStateCopyWith<$Res> implements $ThemeStateCopyWith<$Res> {
           _ThemeState value, $Res Function(_ThemeState) then) =
       __$ThemeStateCopyWithImpl<$Res>;
   @override
-  $Res call({int theme});
+  $Res call({int theme, bool isUsingMaterialYou, Color seedColor});
 }
 
 /// @nodoc
@@ -492,12 +509,22 @@ class __$ThemeStateCopyWithImpl<$Res> extends _$ThemeStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? theme = freezed,
+    Object? isUsingMaterialYou = freezed,
+    Object? seedColor = freezed,
   }) {
     return _then(_ThemeState(
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as int,
+      isUsingMaterialYou: isUsingMaterialYou == freezed
+          ? _value.isUsingMaterialYou
+          : isUsingMaterialYou // ignore: cast_nullable_to_non_nullable
+              as bool,
+      seedColor: seedColor == freezed
+          ? _value.seedColor
+          : seedColor // ignore: cast_nullable_to_non_nullable
+              as Color,
     ));
   }
 }
@@ -505,15 +532,25 @@ class __$ThemeStateCopyWithImpl<$Res> extends _$ThemeStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ThemeState extends _ThemeState with DiagnosticableTreeMixin {
-  const _$_ThemeState({this.theme = 0}) : super._();
+  const _$_ThemeState(
+      {this.theme = 0,
+      this.isUsingMaterialYou = false,
+      this.seedColor = Colors.white})
+      : super._();
 
   @JsonKey()
   @override
   final int theme;
+  @JsonKey()
+  @override
+  final bool isUsingMaterialYou;
+  @JsonKey()
+  @override
+  final Color seedColor;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ThemeState(theme: $theme)';
+    return 'ThemeState(theme: $theme, isUsingMaterialYou: $isUsingMaterialYou, seedColor: $seedColor)';
   }
 
   @override
@@ -521,7 +558,9 @@ class _$_ThemeState extends _ThemeState with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ThemeState'))
-      ..add(DiagnosticsProperty('theme', theme));
+      ..add(DiagnosticsProperty('theme', theme))
+      ..add(DiagnosticsProperty('isUsingMaterialYou', isUsingMaterialYou))
+      ..add(DiagnosticsProperty('seedColor', seedColor));
   }
 
   @override
@@ -529,12 +568,18 @@ class _$_ThemeState extends _ThemeState with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ThemeState &&
-            const DeepCollectionEquality().equals(other.theme, theme));
+            const DeepCollectionEquality().equals(other.theme, theme) &&
+            const DeepCollectionEquality()
+                .equals(other.isUsingMaterialYou, isUsingMaterialYou) &&
+            const DeepCollectionEquality().equals(other.seedColor, seedColor));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(theme));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(theme),
+      const DeepCollectionEquality().hash(isUsingMaterialYou),
+      const DeepCollectionEquality().hash(seedColor));
 
   @JsonKey(ignore: true)
   @override
@@ -543,11 +588,16 @@ class _$_ThemeState extends _ThemeState with DiagnosticableTreeMixin {
 }
 
 abstract class _ThemeState extends ThemeState {
-  const factory _ThemeState({int theme}) = _$_ThemeState;
+  const factory _ThemeState(
+      {int theme, bool isUsingMaterialYou, Color seedColor}) = _$_ThemeState;
   const _ThemeState._() : super._();
 
   @override
   int get theme;
+  @override
+  bool get isUsingMaterialYou;
+  @override
+  Color get seedColor;
   @override
   @JsonKey(ignore: true)
   _$ThemeStateCopyWith<_ThemeState> get copyWith =>

@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
@@ -57,6 +58,7 @@ final nowStream = StreamProvider.autoDispose<DateTime>((ref) async* {
     yield DateTime.now();
   }
 });
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationManager().initialize();
@@ -70,14 +72,14 @@ Future<void> main() async {
       supportedLocales: const [Locale('en', 'US'), Locale('ja', 'JP')],
       fallbackLocale: const Locale('en', 'US'),
       path: PathStore().translationJSON,
-      useOnlyLangCode: false,
       // 追加するとなぜか動かない
       // assetLoader: JsonAssetLoader(),
       child: const ProviderScope(child: MyApp()),
     ),
   );
+  GlobalController.switchOverlayMode(value: false);
+  GlobalController.makeNavBarTransparent();
   Logger.i(' -- Start Majimo_Timer -- ');
-  GlobalController.switchFullScreen(value: false);
 }
 
 class MyApp extends HookConsumerWidget {
@@ -96,8 +98,8 @@ class MyApp extends HookConsumerWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        theme: MyTheme().lightTheme,
-        darkTheme: MyTheme().darkTheme,
+        theme: MyTheme().lightTheme(ref: ref),
+        darkTheme: MyTheme().darkTheme(ref: ref),
         themeMode: ref.read(themeState).themeMode,
         debugShowCheckedModeBanner: false,
         home: const Splash(),

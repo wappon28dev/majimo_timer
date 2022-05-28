@@ -70,6 +70,7 @@ class AlarmPage extends HookConsumerWidget {
                 t.alarm.t,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
                 maxLines: 1,
               ),

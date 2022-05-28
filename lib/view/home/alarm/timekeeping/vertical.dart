@@ -91,12 +91,6 @@ AppBar appbar({required BuildContext context, required WidgetRef ref}) {
         maxLines: 1,
       ),
     ),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(10),
-        bottomRight: Radius.circular(10),
-      ),
-    ),
     backgroundColor: Colors.blue,
   );
 }

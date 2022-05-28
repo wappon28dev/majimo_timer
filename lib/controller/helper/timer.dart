@@ -78,7 +78,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
       }
 
       if (value.inSeconds == 0) {
-        WidgetsBinding.instance!.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           ref.read(timerTKState.notifier).whenFinished();
         });
       }
@@ -146,7 +146,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
       'targetTime   => $targetTime',
     );
     _createNotification(isInterval: false);
-    GeneralController.updateWakelock(value: true);
+    GlobalController.updateWakelock(value: true);
   }
 
   void runInitialStart() {
@@ -163,7 +163,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     );
     state = state.copyWith(isCountingInterval: true);
     _createNotification(isInterval: true);
-    GeneralController.updateWakelock(value: true);
+    GlobalController.updateWakelock(value: true);
   }
 
   void runPause() {
@@ -175,7 +175,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
       'pausedTime => $now',
     );
 
-    GeneralController.updateWakelock(value: false);
+    GlobalController.updateWakelock(value: false);
   }
 
   void runIntervalPause() {
@@ -188,7 +188,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
       'pausedTime => $now',
     );
 
-    GeneralController.updateWakelock(value: false);
+    GlobalController.updateWakelock(value: false);
   }
 
   void runResume() {
@@ -203,7 +203,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
       ' >> save Duration pausedDuration = ${state.pausedDuration}',
     );
     _createNotification(isInterval: false);
-    GeneralController.updateWakelock(value: true);
+    GlobalController.updateWakelock(value: true);
   }
 
   void runIntervalResume() {
@@ -220,7 +220,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
       ' >> save Duration pausedDuration = ${state.pausedIntervalDuration}',
     );
     _createNotification(isInterval: true);
-    GeneralController.updateWakelock(value: true);
+    GlobalController.updateWakelock(value: true);
   }
 
   void whenFinished() {
@@ -250,7 +250,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     );
     _delayedCancelNotification();
     _read(generalState.notifier).whenHome();
-    GeneralController.updateWakelock(value: false);
+    GlobalController.updateWakelock(value: false);
   }
 
   Future<void> _delayedCancelNotification() async {

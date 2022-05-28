@@ -99,7 +99,7 @@ class AlarmTimeKeepingController extends StateNotifier<AlarmTimeKeepingState> {
     _state();
     NotificationManager().alarmFinish(target: tar);
     NotificationManager().alarmTimeKeeping(target: tar);
-    GlobalController.switchFullScreen(value: false);
+    GlobalController.switchOverlayMode(value: false);
   }
 
   Future<void> _state() async {

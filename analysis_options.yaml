@@ -30,4 +30,4 @@ linter:
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
 exclude:
-   - "lib/model/state.freezed.dart"
+  - "lib/model/state.freezed.dart"

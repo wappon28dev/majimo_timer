@@ -78,6 +78,7 @@ class GoalPage extends HookConsumerWidget {
                 t.goal.t,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
                 maxLines: 1,
               ),

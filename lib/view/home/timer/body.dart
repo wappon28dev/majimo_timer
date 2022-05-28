@@ -69,9 +69,6 @@ class TimerPage extends HookConsumerWidget {
             Navigator.of(context).pop();
           },
         ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
-        ),
         elevation: 0,
         title: Center(
           child: Row(
@@ -82,6 +79,7 @@ class TimerPage extends HookConsumerWidget {
                 t.timer.t,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
                 maxLines: 1,
               ),

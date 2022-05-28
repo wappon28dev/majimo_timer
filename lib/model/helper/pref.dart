@@ -6,17 +6,19 @@ import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum PrefKey {
-  isFirst, // bool isFirst ?
-  changeLanguage, //int 0 = system, 1 = Japanese, 2 = English
-  clockStyle, //bool true = 24h, false = 12h
-  appTheme, //int 0 = system, 1 = light, 2 = dark
-  topToast, //bool toptoast
-  toastDuration, //int Duration of toast notification
-  clockAnimation, //int Curve of Clock Animation
-  showSec, // bool show clock seconds
-  timerTarget, // int timerTarget in minute
-  timerInterval, // int timerInterval in minute
-  timerIntervalNum, // int how many intervals of timer
+  isFirst, // bool: isFirst ?
+  changeLanguage, //int: 0 = system, 1 = Japanese, 2 = English
+  clockStyle, //bool: true = 24h, false = 12h
+  appTheme, //int: 0 = system, 1 = light, 2 = dark
+  topToast, //bool: toptoast
+  toastDuration, //int: Duration of toast notification
+  clockAnimation, //int: Curve of Clock Animation
+  showSec, // bool: show clock seconds
+  timerTarget, // int: timerTarget in minute
+  timerInterval, // int: timerInterval in minute
+  timerIntervalNum, // int: how many intervals of timer
+  isUsingMaterialYou, // bool: is using Material You (Android 12 only)
+  seedColor, // Color: app's seedColor
 }
 
 class PrefManager {
@@ -32,21 +34,25 @@ class PrefManager {
     var timerTarget = await getInt(key: PrefKey.timerTarget);
     var timerInterval = await getInt(key: PrefKey.timerInterval);
     var timerIntervalNum = await getInt(key: PrefKey.timerIntervalNum);
+    var isUsingMaterialYou = await getBool(key: PrefKey.isUsingMaterialYou);
+    var seedColor = await getInt(key: PrefKey.seedColor);
 
     Logger.r(
       '''
       restore values :
-        >> bool  isFirst           =   $isFirst
-        >> bool  is24              =   $is24
-        >> int   theme             =   $theme
-        >> int   lang              =   $lang
-        >> bool  topToast          =   $topToast
-        >> int   toastDuration     =   $toastDuration 
-        >> int   clockAnimation    =   $clockAnimation
-        >> bool  showSec           =   $showSec
-        >> int   timerTarget       =   $timerTarget
-        >> int   timerInterval     =   $timerInterval
-        >> int   timerIntervalNum  =   $timerIntervalNum
+        >> bool  isFirst             =   $isFirst
+        >> bool  is24                =   $is24
+        >> int   theme               =   $theme
+        >> int   lang                =   $lang
+        >> bool  topToast            =   $topToast
+        >> int   toastDuration       =   $toastDuration 
+        >> int   clockAnimation      =   $clockAnimation
+        >> bool  showSec             =   $showSec
+        >> int   timerTarget         =   $timerTarget
+        >> int   timerInterval       =   $timerInterval
+        >> int   timerIntervalNum    =   $timerIntervalNum
+        >> bool  isUsingMaterialYou  =   $isUsingMaterialYou
+        >> int   seedColor           =   $seedColor
       ''',
     );
 
@@ -83,6 +89,12 @@ class PrefManager {
     if (timerIntervalNum == null) {
       Logger.e('Warning! : timerIntervalNum is null! => 1');
     }
+    if (isUsingMaterialYou == null) {
+      Logger.e('Warning! : isUsingMaterialYou is null! => false');
+    }
+    if (seedColor == null) {
+      Logger.e('Warning! : seedColor is null! => 0xffff5722');
+    }
 
     isFirst ??= true;
     is24 ??= true;
@@ -95,20 +107,22 @@ class PrefManager {
     timerTarget ??= 30;
     timerInterval ??= 30;
     timerIntervalNum ??= 1;
+    isUsingMaterialYou ??= false;
+    seedColor ??= 0xffff5722;
 
     final globalFunc = ref.read(globalState.notifier);
     final generalFunc = ref.read(generalState.notifier);
-    // final currentFunc = ref.read(currentValueState.notifier);
     final themeFunc = ref.read(themeState.notifier);
     final langFunc = ref.read(langState.notifier);
     final clockFunc = ref.read(clockState.notifier);
-    // final colorFunc = ref.read(clockState.notifier);
-    // final alarmFunc = ref.read(alarmState.notifier);
     final timerFunc = ref.read(timerState.notifier);
 
     globalFunc.updateIsFirst(value: isFirst);
     clockFunc.updateIs24(value: is24);
-    themeFunc.updateTheme(value: theme);
+    themeFunc
+      ..updateTheme(value: theme)
+      ..updateIsUsingMaterialYou(value: isUsingMaterialYou)
+      ..updateSeedColor(context: context, value: Color(seedColor));
     langFunc.updateLang(context: context, value: lang);
     generalFunc
       ..updateTopToast(value: topToast)

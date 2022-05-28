@@ -84,7 +84,7 @@ Widget smallclock(BuildContext context, WidgetRef ref, bool value) {
   );
 }
 
-class DigitalClock extends StatefulWidget {
+class DigitalClock extends ConsumerStatefulWidget {
   DigitalClock({
     this.is24HourTimeFormat,
     this.showSecondsDigit,
@@ -119,7 +119,7 @@ class DigitalClock extends StatefulWidget {
   _DigitalClockState createState() => _DigitalClockState();
 }
 
-class _DigitalClockState extends State<DigitalClock> {
+class _DigitalClockState extends ConsumerState<DigitalClock> {
   late DateTime _dateTime;
   late ClockModel _clockModel;
   late Timer _timer;

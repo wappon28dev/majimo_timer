@@ -271,7 +271,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                   ? () async {
                       if (streams[1] == false) {
                         isFullyExpanded.add(true);
-                        WidgetsBinding.instance!.addPostFrameCallback((_) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
                           ref.read(generalState.notifier).whenExpand();
 
                           ref.read(colorState.notifier).updateColor(

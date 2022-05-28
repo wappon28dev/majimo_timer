@@ -10,7 +10,9 @@ import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 
 enum NotificationChannelKey { ringtone, interval, timekeeping }
+
 enum NotificationActionKey { terminate, timerAdd, intervalAdd }
+
 enum NotificationIdKey {
   test,
   alarmFinish,
@@ -296,12 +298,13 @@ class ToastManager {
     final duration = ref.read(generalState).toastDuration;
     switch (id) {
       case 0:
-        array = <dynamic>[Colors.green[600]!, Icons.check, 'テスト通知'];
+        array = <dynamic>[Colors.green[600], Icons.check, 'テスト通知'];
         break;
       case 1:
         array = <dynamic>[Colors.blue, Icons.light, '画面の消灯を一時的にOFFにしました'];
         break;
     }
+    final color = array[0] as Color;
 
     a.showToastWidget(
       GestureDetector(
@@ -312,7 +315,15 @@ class ToastManager {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            color: array[0] as Color,
+            shadows: [
+              BoxShadow(
+                color: color.withOpacity(0.3),
+                spreadRadius: 5,
+                blurRadius: 5,
+                offset: const Offset(1, 1),
+              ),
+            ],
+            color: color,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,

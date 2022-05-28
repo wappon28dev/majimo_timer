@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/config.dart';
+import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 
 part 'state.freezed.dart';
@@ -35,14 +36,18 @@ class GeneralState with _$GeneralState {
 
 @freezed
 class ThemeState with _$ThemeState {
-  const factory ThemeState({@Default(0) int theme}) = _ThemeState;
+  const factory ThemeState({
+    @Default(0) int theme,
+    @Default(false) bool isUsingMaterialYou,
+    @Default(Colors.white) Color seedColor,
+  }) = _ThemeState;
   const ThemeState._();
 
-  ThemeMode get themeMode => get()[0] as ThemeMode;
-  String get themeCaption => get()[1] as String;
-  IconData get themeIcon => get()[2] as IconData;
+  ThemeMode get themeMode => getThemeArray()[0] as ThemeMode;
+  String get themeCaption => getThemeArray()[1] as String;
+  IconData get themeIcon => getThemeArray()[2] as IconData;
 
-  List<dynamic> get() {
+  List<dynamic> getThemeArray() {
     var array = <dynamic>[]..length = 3;
     switch (theme) {
       case 0:
@@ -219,16 +224,20 @@ class ColorState with _$ColorState {
   }) {
     List<dynamic>? array;
     final isLight = ref.read(themeState.notifier).isLight(context: context);
+    final color = MyTheme()
+        .getThemeData(context: context, ref: ref)
+        .appBarTheme
+        .backgroundColor;
     isLight
         ? array = <dynamic>[
             Colors.black,
-            Colors.deepOrange,
+            color,
             Colors.orangeAccent.shade200,
             PathStore().expandedPictureSun
           ]
         : array = <dynamic>[
             Colors.white,
-            Colors.deepOrange.shade800,
+            color,
             Colors.blue.shade900,
             PathStore().expandedPictureNight
           ];
@@ -298,7 +307,6 @@ class TimerTimeKeepingState with _$TimerTimeKeepingState {
     @Default(0) int currentIntervalLoopingNum,
   }) = _TimerTimeKeepingState;
   const TimerTimeKeepingState._();
-  
 }
 
 @freezed

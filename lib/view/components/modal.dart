@@ -16,7 +16,6 @@ Future<dynamic> modal(
   List<Widget> widget,
 ) {
   const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
-  final value = ref.read(themeState.notifier).isLight(context: context);
   final header = <Widget>[
     Theme(
       data: MyTheme().getThemeData(context: context, ref: ref),
@@ -32,12 +31,15 @@ Future<dynamic> modal(
             ),
           ),
           const SizedBox(height: 10),
-          Icon(icon),
+          Icon(
+            icon,
+            color: MyTheme().getOnBackgroundColor(context: context, ref: ref),
+          ),
           const SizedBox(height: 8),
           AutoSizeText(
             title,
             style: TextStyle(
-              color: value ? Colors.black : Colors.white,
+              color: MyTheme().getOnBackgroundColor(context: context, ref: ref),
               fontWeight: FontWeight.w600,
             ),
             minFontSize: 20,
@@ -46,7 +48,9 @@ Future<dynamic> modal(
           const SizedBox(height: 5),
           AutoSizeText(
             subtitle,
-            style: TextStyle(color: value ? Colors.black : Colors.white),
+            style: TextStyle(
+              color: MyTheme().getOnBackgroundColor(context: context, ref: ref),
+            ),
             maxLines: 1,
             minFontSize: 10,
           ),
@@ -71,9 +75,7 @@ Future<dynamic> modal(
           data: MyTheme().getThemeData(context: context, ref: ref),
           child: Ink(
             padding: padding,
-            color: value
-                ? Colors.deepOrange.shade100.lighter(12)
-                : Colors.deepOrange.shade50.darker(70),
+            color: MyTheme().getBackgroundColor(context: context, ref: ref),
             child: Column(children: header + widget + bottom),
           ),
         ),
