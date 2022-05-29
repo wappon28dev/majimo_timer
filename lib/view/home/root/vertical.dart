@@ -114,7 +114,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     );
   }
 
-  Widget content(BuildContext context) {
+  Widget content() {
     return Column(
       children: [
         AnimatedOpacity(
@@ -261,7 +261,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         ),
       ],
     ),
-    body: [content(context), debug(context: context, ref: ref)],
+    body: [content(), debug(context: context, ref: ref)],
     fullyStretchable: true,
     expandedBody: expand(context),
     backgroundColor: MyTheme().getBackgroundColor(context: context, ref: ref),

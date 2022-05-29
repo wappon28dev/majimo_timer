@@ -162,7 +162,7 @@ dynamic app_seed_color(BuildContext context, WidgetRef ref) {
         onTap: () {
           ref
               .read(themeState.notifier)
-              .updateSeedColor(context: context, value: Colors.deepOrange);
+              .updateSeedColor(value: Colors.deepOrange);
 
           func(value: false);
         },
@@ -179,19 +179,48 @@ dynamic app_seed_color(BuildContext context, WidgetRef ref) {
             Icon(Icons.arrow_forward, color: style(pref, false)[1] as Color?),
         onTap: () {
           final color = ref.read(themeState).seedColor;
-          showMaterialPalettePicker(
-            context: context,
-            selectedColor: color,
-            onChanged: (value) {
-              ref
-                  .read(themeState.notifier)
-                  .updateSeedColor(context: context, value: value);
-              ref
-                  .read(themeState.notifier)
-                  .updateIsUsingMaterialYou(value: false);
+          Color selectedColor = Colors.deepOrange;
+          // showMaterialPalettePicker(
+          //   context: context,
+          //   selectedColor: color,
+          //   onChanged: (value) {
+          //     ref
+          //         .read(themeState.notifier)
+          //         .updateSeedColor(context: context, value: value);
+          //     ref
+          //         .read(themeState.notifier)
+          //         .updateIsUsingMaterialYou(value: false);
 
-              Navigator.pop(context);
-            },
+          //     Navigator.pop(context);
+          //   },
+          // );
+          showDialog<void>(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: const Text('Pick a color!'),
+              content: SingleChildScrollView(
+                child: MaterialPicker(
+                  pickerColor: color,
+                  enableLabel: true,
+                  onColorChanged: (value) => selectedColor = value,
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('決定'),
+                  onPressed: () {
+                    ref.read(themeState.notifier).updateSeedColor(
+                          value: selectedColor,
+                        );
+                    ref
+                        .read(themeState.notifier)
+                        .updateIsUsingMaterialYou(value: false);
+
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
           );
         },
       ),

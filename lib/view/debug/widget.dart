@@ -16,6 +16,7 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
   return Column(
     children: [
       Card(
+        elevation: 0,
         margin: const EdgeInsets.all(20),
         color: colorScheme.tertiaryContainer,
         shape: RoundedRectangleBorder(
@@ -125,6 +126,7 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
         ),
       ),
       Card(
+        elevation: 0,
         margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
         color: colorScheme.tertiaryContainer,
         shape: RoundedRectangleBorder(

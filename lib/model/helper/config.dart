@@ -39,8 +39,8 @@ class AppTeam extends AboutAppTeam {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.6.0 β';
-  final String buildDate = '2022/05/29 2:47';
+  final String versionStr = 'majimo_timer v0.6.2 β';
+  final String buildDate = '2022/05/30 2:20';
   final String changeLog = '''
 [fix]
   !!! A BIG VISUAL UPDATE !!!
@@ -54,6 +54,7 @@ class AppDataStore {
   8.  Made some class Consuming
   9.  Followed some lint rules
   10. Updated Flutter 3.0.1 & Dart 2.17.1
+  11. Improved performance (v0.6.2)
 
 [known-bug]
   1. Overlay TK screen always applied

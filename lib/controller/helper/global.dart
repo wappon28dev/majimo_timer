@@ -43,14 +43,14 @@ class GlobalController extends StateNotifier<GlobalState> {
   }
 
   static void makeNavBarTransparent() {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.transparent, // navigation bar color
-        statusBarColor: Colors.transparent, // status bar color
-        systemStatusBarContrastEnforced: false,
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
-    );
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   const SystemUiOverlayStyle(
+    //     systemNavigationBarColor: Colors.transparent, // navigation bar color
+    //     statusBarColor: Colors.transparent, // status bar color
+    //     systemStatusBarContrastEnforced: false,
+    //     systemNavigationBarDividerColor: Colors.transparent,
+    //     systemNavigationBarIconBrightness: Brightness.dark,
+    //   ),
+    // );
   }
 }

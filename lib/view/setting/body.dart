@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flag/flag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_pickers/helpers/show_palette_picker.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/main.dart';
@@ -95,7 +95,10 @@ class Setting extends HookConsumerWidget {
                 ),
                 ListTile(
                   title: Text(t.app_seed_color.t),
-                  subtitle: Text(themestate.themeCaption),
+                  subtitle: Text(
+                    themestate.seedColorCaption,
+                    style: TextStyle(color: themestate.seedColor),
+                  ),
                   leading: const Icon(Icons.palette_outlined),
                   onTap: () => app_seed_color(context, ref),
                 ),
@@ -154,7 +157,7 @@ class Setting extends HookConsumerWidget {
                   title: Text(t.change_log.t),
                   subtitle: Text(t.change_log_sub.t),
                   leading: const Icon(Icons.edit_note),
-                  onTap: null,
+                  enabled: false,
                 ),
                 ListTile(
                   title: Text(t.about_app_team.t),
@@ -171,16 +174,22 @@ class Setting extends HookConsumerWidget {
                   subtitle: Text(t.github_sub.t),
                   leading: const Icon(Icons.receipt_long),
                   trailing: const Icon(Icons.launch),
-                  onTap: () =>
-                      RouteManager().runURL(url: PathStore().githubURL),
+                  onTap: () => RouteManager().runURL(
+                    context: context,
+                    ref: ref,
+                    url: PathStore().githubURL,
+                  ),
                 ),
                 ListTile(
                   title: Text(t.license.t),
                   subtitle: Text(t.license_sub.t),
                   leading: const Icon(Icons.balance),
                   trailing: const Icon(Icons.launch),
-                  onTap: () =>
-                      RouteManager().runURL(url: PathStore().licenseURL),
+                  onTap: () => RouteManager().runURL(
+                    context: context,
+                    ref: ref,
+                    url: PathStore().licenseURL,
+                  ),
                 ),
                 const SizedBox(height: 20),
               ],

@@ -47,6 +47,9 @@ class ThemeState with _$ThemeState {
   String get themeCaption => getThemeArray()[1] as String;
   IconData get themeIcon => getThemeArray()[2] as IconData;
 
+  String get seedColorCaption =>
+      isUsingMaterialYou ? t.use_material_you.t : 'こんな色';
+
   List<dynamic> getThemeArray() {
     var array = <dynamic>[]..length = 3;
     switch (theme) {

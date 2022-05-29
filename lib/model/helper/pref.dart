@@ -122,7 +122,7 @@ class PrefManager {
     themeFunc
       ..updateTheme(value: theme)
       ..updateIsUsingMaterialYou(value: isUsingMaterialYou)
-      ..updateSeedColor(context: context, value: Color(seedColor));
+      ..updateSeedColor(value: Color(seedColor));
     langFunc.updateLang(context: context, value: lang);
     generalFunc
       ..updateTopToast(value: topToast)

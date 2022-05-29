@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/view/components/appbar.dart';
 
 part 'log_widget.dart';
 
@@ -55,30 +56,15 @@ class Logger extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-        theme: MyTheme().lightTheme(ref: ref),
-        darkTheme: MyTheme().darkTheme(ref: ref),
-        themeMode: ref.read(themeState).themeMode,
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(appBar: appbar(context), body: const LogWidget()));
-  }
-
-  AppBar appbar(BuildContext context) {
-    return AppBar(
-      leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          }),
-      title: const AutoSizeText(
-        'Majimo_Timer-Log',
-        maxLines: 1,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
+      theme: MyTheme().lightTheme(ref: ref),
+      darkTheme: MyTheme().darkTheme(ref: ref),
+      themeMode: ref.read(themeState).themeMode,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar:
+            commonAppbar(context: context, ref: ref, title: 'majimo_timer_log'),
+        body: const LogWidget(),
       ),
-      centerTitle: true,
-      backgroundColor: Colors.deepOrange,
-      systemOverlayStyle: SystemUiOverlayStyle.light,
     );
   }
 

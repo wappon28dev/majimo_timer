@@ -18,7 +18,7 @@ class ThemeController extends StateNotifier<ThemeState> {
     );
   }
 
-  void updateSeedColor({required BuildContext context, required Color value}) {
+  void updateSeedColor({required Color value}) {
     state = state.copyWith(seedColor: value);
     PrefManager().setInt(key: PrefKey.seedColor, value: value.value);
     Logger.s(

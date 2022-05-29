@@ -1,13 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_color/flutter_color.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:dynamic_color/dynamic_color.dart';
-
-import '../../main.dart';
+import 'package:majimo_timer/main.dart';
 
 enum ColorKey {
   red,
