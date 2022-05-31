@@ -16,9 +16,10 @@ Future<dynamic> modal(
   List<Widget> widget,
 ) {
   const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
+  final onBackground = MyTheme(context: context, ref: ref).getOnBackgroundColor;
   final header = <Widget>[
     Theme(
-      data: MyTheme().getThemeData(context: context, ref: ref),
+      data: MyTheme(context: context, ref: ref).getThemeData,
       child: Column(
         children: <Widget>[
           Container(
@@ -33,13 +34,13 @@ Future<dynamic> modal(
           const SizedBox(height: 10),
           Icon(
             icon,
-            color: MyTheme().getOnBackgroundColor(context: context, ref: ref),
+            color: onBackground,
           ),
           const SizedBox(height: 8),
           AutoSizeText(
             title,
             style: TextStyle(
-              color: MyTheme().getOnBackgroundColor(context: context, ref: ref),
+              color: onBackground,
               fontWeight: FontWeight.w600,
             ),
             minFontSize: 20,
@@ -49,7 +50,7 @@ Future<dynamic> modal(
           AutoSizeText(
             subtitle,
             style: TextStyle(
-              color: MyTheme().getOnBackgroundColor(context: context, ref: ref),
+              color: onBackground,
             ),
             maxLines: 1,
             minFontSize: 10,
@@ -72,10 +73,10 @@ Future<dynamic> modal(
       controller: ModalScrollController.of(context),
       child: Material(
         child: Theme(
-          data: MyTheme().getThemeData(context: context, ref: ref),
+          data: MyTheme(context: context, ref: ref).getThemeData,
           child: Ink(
             padding: padding,
-            color: MyTheme().getBackgroundColor(context: context, ref: ref),
+            color: MyTheme(context: context, ref: ref).getBackgroundColor,
             child: Column(children: header + widget + bottom),
           ),
         ),
@@ -84,13 +85,15 @@ Future<dynamic> modal(
   );
 }
 
-Future<dynamic> numberPad(
-    {required BuildContext context, required WidgetRef ref}) {
+Future<dynamic> numberPad({
+  required BuildContext context,
+  required WidgetRef ref,
+}) {
   const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
   final value = ref.read(themeState.notifier).isLight(context: context);
-  final _header = <Widget>[
+  final header = <Widget>[
     Theme(
-      data: MyTheme().getThemeData(context: context, ref: ref),
+      data: MyTheme(context: context, ref: ref).getThemeData,
       child: Column(
         children: <Widget>[
           Container(
@@ -108,8 +111,9 @@ Future<dynamic> numberPad(
           AutoSizeText(
             'アラームをセットしましょう',
             style: TextStyle(
-                color: value ? Colors.black : Colors.white,
-                fontWeight: FontWeight.w600),
+              color: value ? Colors.black : Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
             minFontSize: 20,
             maxLines: 1,
           ),
@@ -129,7 +133,7 @@ Future<dynamic> numberPad(
     )
   ];
 
-  final _pad = <Widget>[
+  final pad = <Widget>[
     Text(
       ref.read(alarmState).targetTime.toString(),
       style: const TextStyle(
@@ -141,7 +145,7 @@ Future<dynamic> numberPad(
     SizedBox(
       height: 300,
       child: Padding(
-        padding: const EdgeInsets.all(18.0),
+        padding: const EdgeInsets.all(18),
         child: GridButton(
           borderColor: Colors.transparent,
           borderWidth: 2,
@@ -186,7 +190,7 @@ Future<dynamic> numberPad(
       controller: ModalScrollController.of(context),
       child: Material(
         child: Theme(
-          data: MyTheme().getThemeData(context: context, ref: ref),
+          data: MyTheme(context: context, ref: ref).getThemeData,
           child: Ink(
             padding: padding,
             color: value
@@ -194,7 +198,7 @@ Future<dynamic> numberPad(
                 : Colors.deepOrange.shade50.darker(70),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: _header + _pad,
+              children: header + pad,
             ),
           ),
         ),

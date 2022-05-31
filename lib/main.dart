@@ -83,7 +83,7 @@ Future<void> main() async {
 }
 
 class MyApp extends HookConsumerWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -98,8 +98,8 @@ class MyApp extends HookConsumerWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        theme: MyTheme().lightTheme(ref: ref),
-        darkTheme: MyTheme().darkTheme(ref: ref),
+        theme: MyTheme(context: context, ref: ref).lightTheme,
+        darkTheme: MyTheme(context: context, ref: ref).darkTheme,
         themeMode: ref.read(themeState).themeMode,
         debugShowCheckedModeBanner: false,
         home: const Splash(),

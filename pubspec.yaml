@@ -3,10 +3,10 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 0.6.2
+version: 0.6.3
 
 environment:
-  sdk: ">=2.16.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   app_links: ^2.2.0

@@ -12,7 +12,7 @@ import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/view/debug/body.dart';
 
 Widget debug({required BuildContext context, required WidgetRef ref}) {
-  final colorScheme = getColorScheme(ref: ref, context: context);
+  final colorScheme = MyTheme(context: context, ref: ref).getColorScheme;
   return Column(
     children: [
       Card(
@@ -22,7 +22,7 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(
-            color: getColorScheme(ref: ref, context: context).tertiary,
+            color: MyTheme(context: context, ref: ref).getColorScheme.tertiary,
           ),
         ),
         child: Padding(
@@ -132,7 +132,7 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(
-            color: getColorScheme(ref: ref, context: context).tertiary,
+            color: MyTheme(context: context, ref: ref).getColorScheme.tertiary,
           ),
         ),
         child: Padding(

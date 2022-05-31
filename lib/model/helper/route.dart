@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 
 class RouteManager {
@@ -22,11 +23,10 @@ class RouteManager {
             );
 
   Future<void> runURL({
-    required BuildContext context,
     required WidgetRef ref,
     required String url,
   }) async {
-    final color = MyTheme().getBackgroundColor(context: context, ref: ref);
+    final color = ref.read(themeState).seedColor;
     await launch(
       url,
       customTabsOption: CustomTabsOption(

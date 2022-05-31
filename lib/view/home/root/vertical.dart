@@ -1,118 +1,26 @@
 part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
-  final width = MediaQuery.of(context).size.width;
   final show = ref.watch(generalState).showFAB;
-  useEffect(() {
-    LinkManager().initQuickAction(context: context, ref: ref);
-    LinkManager().initDeepLinks(ref, context);
-    return null;
-
-    // AwesomeNotifications().actionStream.listen((receivedNotification) {
-    //   if (receivedNotification.channelKey == "basic_channel") {
-    //     Logger.e("received!");
-    //     Navigator.of(context).pushNamed(
-    //       '/setting',
-    //     );
-    //   }
-    // });
-  });
+  // useEffect(() {
+  //   LinkManager().initQuickAction(context: context, ref: ref);
+  //   LinkManager().initDeepLinks(ref, context);
+  //   return null;
+  //
+  //   // AwesomeNotifications().actionStream.listen((receivedNotification) {
+  //   //   if (receivedNotification.channelKey == "basic_channel") {
+  //   //     Logger.e("received!");
+  //   //     Navigator.of(context).pushNamed(
+  //   //       '/setting',
+  //   //     );
+  //   //   }
+  //   // });
+  // });
 
   // ignore: avoid_unnecessary_containers
   Container headerWidget(BuildContext context) => Container(
         child: Container(child: largeclock(context, ref, false)),
       );
-
-  Widget button({required String tag}) {
-    late Color value;
-    switch (tag) {
-      case 'alarm':
-        value = ColorKey.blue.value;
-        break;
-      case 'timer':
-        value = ColorKey.red.value;
-        break;
-      case 'goal':
-        value = ColorKey.green.value;
-        break;
-    }
-
-    /// ```
-    ///  int mode 0 => define onTap()
-    ///           1 => return Color
-    ///           2 => return Icon
-    /// ```
-    dynamic func({required int mode}) {
-      switch (mode) {
-        case 0:
-          switch (tag) {
-            case 'alarm':
-              context.pushTransparentRoute(const AlarmPage());
-              ref.read(alarmState.notifier).runInitialize();
-              ref.read(generalState.notifier).runFAB();
-
-              break;
-            case 'timer':
-              context.pushTransparentRoute(const TimerPage());
-              if (ref.read(timerState).canStart) {
-                ref.read(generalState.notifier).runFAB();
-              } else {
-                ref.read(generalState.notifier).updateShowFAB(value: false);
-              }
-              break;
-            case 'goal':
-              context.pushTransparentRoute(const GoalPage());
-              ref.read(generalState.notifier).runFAB();
-
-              break;
-          }
-          break;
-        case 1:
-          switch (tag) {
-            case 'alarm':
-              return Icons.alarm;
-            case 'timer':
-              return Icons.hourglass_top;
-            case 'goal':
-              return Icons.flag;
-          }
-          break;
-        default:
-          throw Exception('error!');
-      }
-    }
-
-    return GestureDetector(
-      onTap: () => func(mode: 0),
-      child: Hero(
-        tag: tag,
-        child: Material(
-          color: Colors.transparent,
-          child: SizedBox.square(
-            dimension: width / 3.6,
-            child: Container(
-              margin: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: value,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(func(mode: 1) as IconData, color: Colors.white),
-                  Text(
-                    tag.tr(),
-                    style: const TextStyle(color: Colors.white, fontSize: 15),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget content() {
     return Column(
@@ -128,17 +36,14 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            button(tag: 'alarm'),
-            button(tag: 'timer'),
-            button(tag: 'goal'),
-          ],
+          children: button(context: context, ref: ref),
         ),
         const SizedBox(height: 20),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            primary: getColorScheme(ref: ref, context: context).primary,
-            onPrimary: getColorScheme(ref: ref, context: context).onPrimary,
+            primary: MyTheme(context: context, ref: ref).getColorScheme.primary,
+            onPrimary:
+                MyTheme(context: context, ref: ref).getColorScheme.onPrimary,
           ),
           onPressed: () => NotificationManager().alarmFinish(
             target: DateTime.now().add(
@@ -153,9 +58,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   }
 
   Widget expand(BuildContext context) {
-    final color = ref.read(colorState).colorTween(context: context, ref: ref);
+    final color = ref.watch(colorState).colorTween(context: context, ref: ref);
     final opacity = ref.watch(colorState).opacity;
-    final path = ref.read(colorState).picturePath(context: context, ref: ref);
+    final path = ref.watch(colorState).picturePath(context: context, ref: ref);
     return PlayAnimation<Color?>(
       tween: color,
       builder: (context, child, value) {
@@ -264,7 +169,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     body: [content(), debug(context: context, ref: ref)],
     fullyStretchable: true,
     expandedBody: expand(context),
-    backgroundColor: MyTheme().getBackgroundColor(context: context, ref: ref),
+    backgroundColor: MyTheme(context: context, ref: ref).getBackgroundColor,
     floatingActionButton: show ? fab(context: context, ref: ref) : null,
   );
 }

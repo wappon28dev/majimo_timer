@@ -26,13 +26,11 @@ extension TypeExtension on ColorKey {
   Color get value => colorKeys[this]!;
 }
 
-ColorScheme getColorScheme({
-  required WidgetRef ref,
-  required BuildContext context,
-}) =>
-    MyTheme().getThemeData(context: context, ref: ref).colorScheme;
-
 class MyTheme {
+  const MyTheme({required this.context, required this.ref});
+  final BuildContext context;
+  final WidgetRef ref;
+
   static const back = PageTransitionsTheme(
     builders: {
       TargetPlatform.android:
@@ -48,7 +46,7 @@ class MyTheme {
     },
   );
 
-  ThemeData lightTheme({required WidgetRef ref}) {
+  ThemeData get lightTheme {
     final seedColor = ref.read(themeState).seedColor;
     final colorScheme = ColorScheme.fromSeed(
       seedColor: seedColor,
@@ -83,7 +81,7 @@ class MyTheme {
     );
   }
 
-  ThemeData darkTheme({required WidgetRef ref}) {
+  ThemeData get darkTheme {
     final seedColor = ref.read(themeState).seedColor;
 
     final colorSchemeDark = ColorScheme.fromSeed(
@@ -117,37 +115,26 @@ class MyTheme {
     );
   }
 
-  ThemeData getThemeData({
-    required BuildContext context,
-    required WidgetRef ref,
-  }) {
+  ThemeData get getThemeData {
     final value = ref.read(themeState.notifier).isLight(context: context);
-    return value ? lightTheme(ref: ref) : darkTheme(ref: ref);
+    return value ? lightTheme : darkTheme;
   }
 
-  Color getBackgroundColor({
-    required BuildContext context,
-    required WidgetRef ref,
-  }) {
+  Color get getBackgroundColor {
     final value = ref.read(themeState.notifier).isLight(context: context);
     return value
-        ? lightTheme(ref: ref).scaffoldBackgroundColor
-        : darkTheme(ref: ref).scaffoldBackgroundColor;
+        ? lightTheme.scaffoldBackgroundColor
+        : darkTheme.scaffoldBackgroundColor;
   }
 
-  Color getOnBackgroundColor({
-    required BuildContext context,
-    required WidgetRef ref,
-  }) {
+  Color get getOnBackgroundColor {
     final value = ref.read(themeState.notifier).isLight(context: context);
     return value
-        ? lightTheme(ref: ref).colorScheme.onPrimaryContainer
-        : darkTheme(ref: ref).colorScheme.primary;
+        ? lightTheme.colorScheme.onPrimaryContainer
+        : darkTheme.colorScheme.primary;
   }
 
-  static Color getColor(ColorKey color) {
-    return color.value;
-  }
+  ColorScheme get getColorScheme => getThemeData.colorScheme;
 
   void foo() {}
 }

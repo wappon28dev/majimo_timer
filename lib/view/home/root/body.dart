@@ -16,6 +16,7 @@ import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digit
 import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/view/components/button.dart';
 import 'package:majimo_timer/view/debug/body.dart';
 import 'package:majimo_timer/view/debug/widget.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
@@ -45,8 +46,8 @@ class HomePage extends HookConsumerWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: MyTheme().lightTheme(ref: ref),
-      darkTheme: MyTheme().darkTheme(ref: ref),
+      theme: MyTheme(context: context, ref: ref).lightTheme,
+      darkTheme: MyTheme(context: context, ref: ref).darkTheme,
       themeMode: ref.watch(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home:

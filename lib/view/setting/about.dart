@@ -42,8 +42,8 @@ class AboutApp extends HookConsumerWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: MyTheme().lightTheme(ref: ref),
-      darkTheme: MyTheme().darkTheme(ref: ref),
+      theme: MyTheme(context: context, ref: ref).lightTheme,
+      darkTheme: MyTheme(context: context, ref: ref).darkTheme,
       themeMode: ref.read(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -70,7 +70,6 @@ class AboutApp extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 ElevatedButton.icon(
                   onPressed: () => RouteManager().runURL(
-                    context: context,
                     ref: ref,
                     url: PathStore().privacyURL,
                   ),
@@ -137,7 +136,6 @@ class AboutAppTeam extends HookConsumerWidget {
                   ],
                 ),
                 onPressed: () => RouteManager().runURL(
-                  context: context,
                   ref: ref,
                   url: PathStore().meidenURL,
                 ),
@@ -166,7 +164,6 @@ class AboutAppTeam extends HookConsumerWidget {
                   ],
                 ),
                 onPressed: () => RouteManager().runURL(
-                  context: context,
                   ref: ref,
                   url: PathStore().miscURL,
                 ),
@@ -178,7 +175,7 @@ class AboutAppTeam extends HookConsumerWidget {
     }
 
     Widget developer() {
-      final colorScheme = getColorScheme(ref: ref, context: context);
+      final colorScheme = MyTheme(context: context, ref: ref).getColorScheme;
       return Card(
         elevation: 0,
         color: colorScheme.tertiaryContainer,
@@ -275,8 +272,8 @@ class AboutAppTeam extends HookConsumerWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: MyTheme().lightTheme(ref: ref),
-      darkTheme: MyTheme().darkTheme(ref: ref),
+      theme: MyTheme(context: context, ref: ref).lightTheme,
+      darkTheme: MyTheme(context: context, ref: ref).darkTheme,
       themeMode: ref.read(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home: Scaffold(

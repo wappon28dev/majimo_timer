@@ -39,25 +39,18 @@ class AppTeam extends AboutAppTeam {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.6.2 β';
-  final String buildDate = '2022/05/30 2:20';
+  final String versionStr = 'majimo_timer v0.6.3 β';
+  final String buildDate = '2022/06/01 2:12';
   final String changeLog = '''
 [fix]
-  !!! A BIG VISUAL UPDATE !!!
-  1.  Migrated Material 3
-  2.  Changed Color Swatch to Color Scheme
-  3.  Added seedSchemeColor in themeState
-  4.  Added material color picker
-  5.  Changed screen in about app page
-  6.  Added some translations
-  7.  Added dynamic coloring
-  8.  Made some class Consuming
-  9.  Followed some lint rules
-  10. Updated Flutter 3.0.1 & Dart 2.17.1
-  11. Improved performance (v0.6.2)
+  1. Added arguments in MyTheme
+  2. Separated button List<Widget>
+  3. Updated minimum SDK version
+  4. Improved performance
 
 [known-bug]
   1. Overlay TK screen always applied
   2. home shortcut icons are blank
+  3. Appear performance issue sometime
     ''';
 }

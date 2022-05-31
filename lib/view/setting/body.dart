@@ -39,7 +39,7 @@ class Setting extends HookConsumerWidget {
           Text(
             '　$title',
             style: TextStyle(
-              color: getColorScheme(ref: ref, context: context).primary,
+              color: MyTheme(context: context, ref: ref).getColorScheme.primary,
             ),
           ),
         ],
@@ -64,8 +64,8 @@ class Setting extends HookConsumerWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: MyTheme().lightTheme(ref: ref),
-      darkTheme: MyTheme().darkTheme(ref: ref),
+      theme: MyTheme(context: context, ref: ref).lightTheme,
+      darkTheme: MyTheme(context: context, ref: ref).darkTheme,
       themeMode: ref.read(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -175,7 +175,6 @@ class Setting extends HookConsumerWidget {
                   leading: const Icon(Icons.receipt_long),
                   trailing: const Icon(Icons.launch),
                   onTap: () => RouteManager().runURL(
-                    context: context,
                     ref: ref,
                     url: PathStore().githubURL,
                   ),
@@ -186,7 +185,6 @@ class Setting extends HookConsumerWidget {
                   leading: const Icon(Icons.balance),
                   trailing: const Icon(Icons.launch),
                   onTap: () => RouteManager().runURL(
-                    context: context,
                     ref: ref,
                     url: PathStore().licenseURL,
                   ),

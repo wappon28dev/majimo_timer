@@ -188,7 +188,6 @@ class ColorState with _$ColorState {
   const factory ColorState({@Default(0) double opacity}) = _ColorState;
   const ColorState._();
 
-  // create values
   Color clockColor({
     required BuildContext context,
     required WidgetRef ref,
@@ -227,8 +226,8 @@ class ColorState with _$ColorState {
   }) {
     List<dynamic>? array;
     final isLight = ref.read(themeState.notifier).isLight(context: context);
-    final color = MyTheme()
-        .getThemeData(context: context, ref: ref)
+    final color = MyTheme(context: context, ref: ref)
+        .getThemeData
         .appBarTheme
         .backgroundColor;
     isLight

@@ -27,8 +27,8 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
     final show = ref.watch(generalState).showFAB;
 
     return MaterialApp(
-      theme: MyTheme().lightTheme(ref: ref),
-      darkTheme: MyTheme().darkTheme(ref: ref),
+      theme: MyTheme(context: context, ref: ref).lightTheme,
+      darkTheme: MyTheme(context: context, ref: ref).darkTheme,
       themeMode: ref.watch(themeState).themeMode,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
