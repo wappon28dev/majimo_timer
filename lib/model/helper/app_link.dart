@@ -18,13 +18,7 @@ late AppLinks _appLinks;
 class LinkManager {
   Future<void> initDeepLinks(WidgetRef ref, BuildContext context) async {
     //receive
-    _appLinks = AppLinks(
-      onAppLink: (Uri uri, String stringUri) async {
-        receiver(stringUri, context, ref);
-        Logger.i(' >> not late => $uri');
-      },
-    );
-
+    _appLinks = AppLinks();
     final appLink = await _appLinks.getInitialAppLink();
     if (appLink != null && appLink.hasFragment) {
       receiver(appLink.toString(), context, ref);
@@ -33,13 +27,14 @@ class LinkManager {
   }
 
   void receiver(String uri, BuildContext context, WidgetRef ref) {
+    var routableUri = '';
     if (uri.startsWith('m')) {
-      uri = uri.replaceAll('majimo://app/', '');
+      routableUri = uri.replaceAll('majimo://app/', '');
     }
     if (uri.startsWith('h')) {
-      uri = uri.replaceAll('https://majimo.jp/app/', '');
+      routableUri = uri.replaceAll('https://majimo.jp/app/', '');
     }
-    Logger.i('transferred -> $uri');
+    Logger.i('transferred -> $routableUri');
     launcher(context, ref, uri);
   }
 
@@ -53,7 +48,7 @@ class LinkManager {
       case 'a':
         RouteManager()
             .runPush(context: context, page: const HomePage(), isReplace: true);
-        context.pushTransparentRoute(const AlarmPage());
+        context.pushTransparentRoute<void>(const AlarmPage());
         ref.read(alarmState.notifier).runInitialize();
         ref.read(generalState.notifier).runFAB();
         break;
@@ -61,13 +56,13 @@ class LinkManager {
       case 't':
         RouteManager()
             .runPush(context: context, page: const HomePage(), isReplace: true);
-        context.pushTransparentRoute(const TimerPage());
+        context.pushTransparentRoute<void>(const TimerPage());
         break;
 
       case 'g':
         RouteManager()
             .runPush(context: context, page: const HomePage(), isReplace: true);
-        context.pushTransparentRoute(const GoalPage());
+        context.pushTransparentRoute<void>(const GoalPage());
         break;
 
       case 's':

@@ -91,7 +91,7 @@ class AlarmPage extends HookConsumerWidget {
     return Hero(
       tag: tag,
       child: DismissiblePage(
-        onDismiss: () {
+        onDismissed: () {
           Navigator.of(context).pop();
         },
         isFullScreen: true,

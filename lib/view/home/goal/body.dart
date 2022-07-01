@@ -99,8 +99,7 @@ class GoalPage extends HookConsumerWidget {
     return Hero(
       tag: tag,
       child: DismissiblePage(
-        onDismiss: () => Navigator.of(context).pop(),
-        isFullScreen: true,
+        onDismissed: () => Navigator.of(context).pop(),
         child: Scaffold(
           appBar: _appbar(),
           floatingActionButtonLocation:

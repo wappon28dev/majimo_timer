@@ -12,13 +12,13 @@ List<Widget> button({required BuildContext context, required WidgetRef ref}) {
   final width = MediaQuery.of(context).size.width;
 
   void _alarm() {
-    context.pushTransparentRoute(const AlarmPage());
+    context.pushTransparentRoute<void>(const AlarmPage());
     ref.read(alarmState.notifier).runInitialize();
     ref.read(generalState.notifier).runFAB();
   }
 
   void _timer() {
-    context.pushTransparentRoute(const TimerPage());
+    context.pushTransparentRoute<void>(const TimerPage());
     if (ref.read(timerState).canStart) {
       ref.read(generalState.notifier).runFAB();
     } else {
@@ -27,7 +27,7 @@ List<Widget> button({required BuildContext context, required WidgetRef ref}) {
   }
 
   void _goal() {
-    context.pushTransparentRoute(const GoalPage());
+    context.pushTransparentRoute<void>(const GoalPage());
     ref.read(generalState.notifier).runFAB();
   }
 

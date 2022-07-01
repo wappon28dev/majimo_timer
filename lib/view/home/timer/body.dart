@@ -100,13 +100,12 @@ class TimerPage extends HookConsumerWidget {
     return Hero(
       tag: tag,
       child: DismissiblePage(
-        onDismiss: () {
+        onDismissed: () {
           if (!ref.read(timerState).canStart) {
             ref.read(generalState.notifier).runFAB();
           }
           Navigator.of(context).pop();
         },
-        isFullScreen: true,
         child: Scaffold(
           appBar: _appbar(),
           floatingActionButtonLocation:
