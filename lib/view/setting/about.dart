@@ -1,19 +1,15 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/controller/controller.dart';
-import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/route.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/components/appbar.dart';
 import 'package:majimo_timer/view/components/rounded_card.dart';
 
 class AboutApp extends HookConsumerWidget {
-  const AboutApp({Key? key}) : super(key: key);
+  const AboutApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,47 +34,38 @@ class AboutApp extends HookConsumerWidget {
           ],
         );
 
-    return MaterialApp(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      theme: MyTheme(context: context, ref: ref).lightTheme,
-      darkTheme: MyTheme(context: context, ref: ref).darkTheme,
-      themeMode: ref.read(themeState).themeMode,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: commonAppbar(context: context, ref: ref, title: t.about.t),
-        body: CupertinoScrollbar(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: roundedCard(
-                    context: context,
-                    ref: ref,
-                    isOrange: true,
-                    body: <Widget>[
-                      Image.asset(PathStore().appIcon),
-                      Text(
-                        AppDataStore().versionStr,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
+    return Scaffold(
+      appBar: commonAppbar(context: context, ref: ref, title: t.about.t),
+      body: CupertinoScrollbar(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: roundedCard(
+                  context: context,
+                  ref: ref,
+                  isOrange: true,
+                  body: <Widget>[
+                    Image.asset(PathStore().appIcon),
+                    Text(
+                      AppDataStore().versionStr,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton.icon(
-                  onPressed: () => RouteManager().runURL(
-                    ref: ref,
-                    url: PathStore().privacyURL,
-                  ),
-                  icon: const Icon(Icons.launch),
-                  label: Text(t.privacy_policy.t),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: () => RouteManager().runURL(
+                  ref: ref,
+                  url: PathStore().privacyURL,
                 ),
-                const SizedBox(height: 20),
-              ],
-            ),
+                icon: const Icon(Icons.launch),
+                label: Text(t.privacy_policy.t),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       ),
@@ -87,7 +74,7 @@ class AboutApp extends HookConsumerWidget {
 }
 
 class AboutAppTeam extends HookConsumerWidget {
-  const AboutAppTeam({Key? key}) : super(key: key);
+  const AboutAppTeam({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -175,7 +162,7 @@ class AboutAppTeam extends HookConsumerWidget {
     }
 
     Widget developer() {
-      final colorScheme = MyTheme(context: context, ref: ref).getColorScheme;
+      final colorScheme = Theme.of(context).colorScheme;
       return Card(
         elevation: 0,
         color: colorScheme.tertiaryContainer,
@@ -268,36 +255,27 @@ class AboutAppTeam extends HookConsumerWidget {
       );
     }
 
-    return MaterialApp(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      theme: MyTheme(context: context, ref: ref).lightTheme,
-      darkTheme: MyTheme(context: context, ref: ref).darkTheme,
-      themeMode: ref.read(themeState).themeMode,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: commonAppbar(
-          context: context,
-          ref: ref,
-          title: t.about_app_team.t,
-        ),
-        body: CupertinoScrollbar(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                schoolHeader(),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: developer(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: tester(),
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
+    return Scaffold(
+      appBar: commonAppbar(
+        context: context,
+        ref: ref,
+        title: t.about_app_team.t,
+      ),
+      body: CupertinoScrollbar(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              schoolHeader(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                child: developer(),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: tester(),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       ),

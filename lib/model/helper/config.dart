@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:majimo_timer/view/setting/about.dart';
 
 class PathStore {
@@ -19,7 +18,7 @@ class PathStore {
 }
 
 class AppTeam extends AboutAppTeam {
-  AppTeam({Key? key}) : super(key: key);
+  AppTeam({super.key});
   final Map<String, String> debuggers = {
     'nagi65536': 'assets/images/me.png',
     'yukina': 'assets/images/me.png',
@@ -35,22 +34,26 @@ class AppTeam extends AboutAppTeam {
     'Yoyoyoyoyoyo': 'assets/images/me.png',
     'gu': 'assets/images/me.png',
     'katoso': 'assets/images/me.png',
+    'roto' : 'assets/images/me.png',
   };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.6.3 β';
-  final String buildDate = '2022/06/01 2:12';
+  final String versionStr = 'majimo_timer v0.6.5 β';
+  final String buildDate = '2022/07/02 15:17';
   final String changeLog = '''
 [fix]
-  1. Added arguments in MyTheme
-  2. Separated button List<Widget>
-  3. Updated minimum SDK version
-  4. Improved performance
+  !!! Performance issue is now fixed! !!!
+  1. Deleted boiler access to ThemeState.
+  2. Improved state management.
+  3. Changed color of FAB.
+  4. Fixed lang bug. (used single lang code)
+  5. Available AdHoc distribute on slack.
+  6. follow and fixed some lints
+  7. Updated minimum SDK version
 
 [known-bug]
   1. Overlay TK screen always applied
   2. home shortcut icons are blank
-  3. Appear performance issue sometime
     ''';
 }

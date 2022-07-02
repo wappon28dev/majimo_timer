@@ -7,8 +7,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
             Container(

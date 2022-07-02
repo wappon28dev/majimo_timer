@@ -4,7 +4,7 @@ class ClockModel {
   late int second;
   late bool is24HourFormat;
 
-  bool get is24HourTimeFormat => this.is24HourFormat;
+  bool get is24HourTimeFormat => is24HourFormat;
 }
 
 String hTOhh_24hTrue(int hour) {
@@ -20,7 +20,7 @@ String hTOhh_24hTrue(int hour) {
 List hTOhh_24hFalse(int hour) {
   late String sHour;
   late String h12State;
-  var times = <String>[];
+  final times = <String>[];
   if (hour < 10) {
     sHour = '$hour';
     h12State = 'AM';

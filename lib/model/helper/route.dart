@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/state.dart';
 
 class RouteManager {
   void runPush({

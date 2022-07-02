@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class SpinnerText extends StatefulWidget {
-  SpinnerText({required this.text,  this.textStyle, this.animationStyle});
+  const SpinnerText({required this.text,  this.textStyle, this.animationStyle});
 
   final String text;
   final TextStyle? textStyle;
   final Curve? animationStyle;
 
+  @override
   _SpinnerTextState createState() => _SpinnerTextState();
 }
 
 class _SpinnerTextState extends State<SpinnerText>
     with SingleTickerProviderStateMixin {
-  String topText = "";
-  String bottomText = "";
+  String topText = '';
+  String bottomText = '';
 
   late AnimationController _spinTextAnimationController;
   late Animation<double> _spinAnimation;
@@ -22,14 +23,14 @@ class _SpinnerTextState extends State<SpinnerText>
   void initState() {
     super.initState();
     bottomText = widget.text;
-    _spinTextAnimationController = new AnimationController(
-        duration: const Duration(milliseconds: 750), vsync: this)
+    _spinTextAnimationController = AnimationController(
+        duration: const Duration(milliseconds: 750), vsync: this,)
       ..addListener(() => setState(() {}))
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
           setState(() {
             bottomText = topText;
-            topText = "";
+            topText = '';
             _spinTextAnimationController.value = 0.0;
           });
         }
@@ -37,7 +38,7 @@ class _SpinnerTextState extends State<SpinnerText>
 
     _spinAnimation = CurvedAnimation(
         parent: _spinTextAnimationController,
-        curve: widget.animationStyle ?? Curves.decelerate);
+        curve: widget.animationStyle ?? Curves.decelerate,);
   }
 
   @override
@@ -64,20 +65,20 @@ class _SpinnerTextState extends State<SpinnerText>
       child: Stack(
         children: <Widget>[
           FractionalTranslation(
-            translation: Offset(0.0, _spinAnimation.value - 1.0),
+            translation: Offset(0, _spinAnimation.value - 1.0),
             child: Text(
               topText,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: widget.textStyle ?? TextStyle(color: Colors.white, fontSize: 30),
+              style: widget.textStyle ?? const TextStyle(color: Colors.white, fontSize: 30),
             ),
           ),
           FractionalTranslation(
-            translation: Offset(0.0, _spinAnimation.value),
+            translation: Offset(0, _spinAnimation.value),
             child: Text(bottomText,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: widget.textStyle ?? TextStyle(color: Colors.white, fontSize: 30)),
+                style: widget.textStyle ?? const TextStyle(color: Colors.white, fontSize: 30),),
           ),
         ],
       ),
@@ -88,7 +89,7 @@ class _SpinnerTextState extends State<SpinnerText>
 class RectClipper extends CustomClipper<Rect> {
   @override
   Rect getClip(Size size) {
-    return Rect.fromLTWH(0.0, 0.0, size.width, size.height + 1);
+    return Rect.fromLTWH(0, 0, size.width, size.height + 1);
   }
 
   @override

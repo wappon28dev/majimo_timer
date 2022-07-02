@@ -12,22 +12,7 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$GlobalStateTearOff {
-  const _$GlobalStateTearOff();
-
-  _GlobalState call({bool isFirst = true, bool isTimeKeeping = false}) {
-    return _GlobalState(
-      isFirst: isFirst,
-      isTimeKeeping: isTimeKeeping,
-    );
-  }
-}
-
-/// @nodoc
-const $GlobalState = _$GlobalStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$GlobalState {
@@ -74,31 +59,31 @@ class _$GlobalStateCopyWithImpl<$Res> implements $GlobalStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$GlobalStateCopyWith<$Res>
+abstract class _$$_GlobalStateCopyWith<$Res>
     implements $GlobalStateCopyWith<$Res> {
-  factory _$GlobalStateCopyWith(
-          _GlobalState value, $Res Function(_GlobalState) then) =
-      __$GlobalStateCopyWithImpl<$Res>;
+  factory _$$_GlobalStateCopyWith(
+          _$_GlobalState value, $Res Function(_$_GlobalState) then) =
+      __$$_GlobalStateCopyWithImpl<$Res>;
   @override
   $Res call({bool isFirst, bool isTimeKeeping});
 }
 
 /// @nodoc
-class __$GlobalStateCopyWithImpl<$Res> extends _$GlobalStateCopyWithImpl<$Res>
-    implements _$GlobalStateCopyWith<$Res> {
-  __$GlobalStateCopyWithImpl(
-      _GlobalState _value, $Res Function(_GlobalState) _then)
-      : super(_value, (v) => _then(v as _GlobalState));
+class __$$_GlobalStateCopyWithImpl<$Res> extends _$GlobalStateCopyWithImpl<$Res>
+    implements _$$_GlobalStateCopyWith<$Res> {
+  __$$_GlobalStateCopyWithImpl(
+      _$_GlobalState _value, $Res Function(_$_GlobalState) _then)
+      : super(_value, (v) => _then(v as _$_GlobalState));
 
   @override
-  _GlobalState get _value => super._value as _GlobalState;
+  _$_GlobalState get _value => super._value as _$_GlobalState;
 
   @override
   $Res call({
     Object? isFirst = freezed,
     Object? isTimeKeeping = freezed,
   }) {
-    return _then(_GlobalState(
+    return _then(_$_GlobalState(
       isFirst: isFirst == freezed
           ? _value.isFirst
           : isFirst // ignore: cast_nullable_to_non_nullable
@@ -116,11 +101,11 @@ class __$GlobalStateCopyWithImpl<$Res> extends _$GlobalStateCopyWithImpl<$Res>
 class _$_GlobalState with DiagnosticableTreeMixin implements _GlobalState {
   const _$_GlobalState({this.isFirst = true, this.isTimeKeeping = false});
 
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isFirst;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isTimeKeeping;
 
   @override
@@ -141,7 +126,7 @@ class _$_GlobalState with DiagnosticableTreeMixin implements _GlobalState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _GlobalState &&
+            other is _$_GlobalState &&
             const DeepCollectionEquality().equals(other.isFirst, isFirst) &&
             const DeepCollectionEquality()
                 .equals(other.isTimeKeeping, isTimeKeeping));
@@ -155,46 +140,23 @@ class _$_GlobalState with DiagnosticableTreeMixin implements _GlobalState {
 
   @JsonKey(ignore: true)
   @override
-  _$GlobalStateCopyWith<_GlobalState> get copyWith =>
-      __$GlobalStateCopyWithImpl<_GlobalState>(this, _$identity);
+  _$$_GlobalStateCopyWith<_$_GlobalState> get copyWith =>
+      __$$_GlobalStateCopyWithImpl<_$_GlobalState>(this, _$identity);
 }
 
 abstract class _GlobalState implements GlobalState {
-  const factory _GlobalState({bool isFirst, bool isTimeKeeping}) =
+  const factory _GlobalState({final bool isFirst, final bool isTimeKeeping}) =
       _$_GlobalState;
 
   @override
-  bool get isFirst;
+  bool get isFirst => throw _privateConstructorUsedError;
   @override
-  bool get isTimeKeeping;
+  bool get isTimeKeeping => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$GlobalStateCopyWith<_GlobalState> get copyWith =>
+  _$$_GlobalStateCopyWith<_$_GlobalState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$GeneralStateTearOff {
-  const _$GeneralStateTearOff();
-
-  _GeneralState call(
-      {String status = 'まじもタイマーへようこそ！',
-      bool topToast = false,
-      int toastDuration = 3,
-      double opacity = 1,
-      bool showFAB = false}) {
-    return _GeneralState(
-      status: status,
-      topToast: topToast,
-      toastDuration: toastDuration,
-      opacity: opacity,
-      showFAB: showFAB,
-    );
-  }
-}
-
-/// @nodoc
-const $GeneralState = _$GeneralStateTearOff();
 
 /// @nodoc
 mixin _$GeneralState {
@@ -264,11 +226,11 @@ class _$GeneralStateCopyWithImpl<$Res> implements $GeneralStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$GeneralStateCopyWith<$Res>
+abstract class _$$_GeneralStateCopyWith<$Res>
     implements $GeneralStateCopyWith<$Res> {
-  factory _$GeneralStateCopyWith(
-          _GeneralState value, $Res Function(_GeneralState) then) =
-      __$GeneralStateCopyWithImpl<$Res>;
+  factory _$$_GeneralStateCopyWith(
+          _$_GeneralState value, $Res Function(_$_GeneralState) then) =
+      __$$_GeneralStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {String status,
@@ -279,14 +241,15 @@ abstract class _$GeneralStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GeneralStateCopyWithImpl<$Res> extends _$GeneralStateCopyWithImpl<$Res>
-    implements _$GeneralStateCopyWith<$Res> {
-  __$GeneralStateCopyWithImpl(
-      _GeneralState _value, $Res Function(_GeneralState) _then)
-      : super(_value, (v) => _then(v as _GeneralState));
+class __$$_GeneralStateCopyWithImpl<$Res>
+    extends _$GeneralStateCopyWithImpl<$Res>
+    implements _$$_GeneralStateCopyWith<$Res> {
+  __$$_GeneralStateCopyWithImpl(
+      _$_GeneralState _value, $Res Function(_$_GeneralState) _then)
+      : super(_value, (v) => _then(v as _$_GeneralState));
 
   @override
-  _GeneralState get _value => super._value as _GeneralState;
+  _$_GeneralState get _value => super._value as _$_GeneralState;
 
   @override
   $Res call({
@@ -296,7 +259,7 @@ class __$GeneralStateCopyWithImpl<$Res> extends _$GeneralStateCopyWithImpl<$Res>
     Object? opacity = freezed,
     Object? showFAB = freezed,
   }) {
-    return _then(_GeneralState(
+    return _then(_$_GeneralState(
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -332,20 +295,20 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
       this.showFAB = false})
       : super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final String status;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool topToast;
-  @JsonKey()
   @override
+  @JsonKey()
   final int toastDuration;
-  @JsonKey()
   @override
+  @JsonKey()
   final double opacity;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool showFAB;
 
   @override
@@ -369,7 +332,7 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _GeneralState &&
+            other is _$_GeneralState &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.topToast, topToast) &&
             const DeepCollectionEquality()
@@ -389,53 +352,34 @@ class _$_GeneralState extends _GeneralState with DiagnosticableTreeMixin {
 
   @JsonKey(ignore: true)
   @override
-  _$GeneralStateCopyWith<_GeneralState> get copyWith =>
-      __$GeneralStateCopyWithImpl<_GeneralState>(this, _$identity);
+  _$$_GeneralStateCopyWith<_$_GeneralState> get copyWith =>
+      __$$_GeneralStateCopyWithImpl<_$_GeneralState>(this, _$identity);
 }
 
 abstract class _GeneralState extends GeneralState {
   const factory _GeneralState(
-      {String status,
-      bool topToast,
-      int toastDuration,
-      double opacity,
-      bool showFAB}) = _$_GeneralState;
+      {final String status,
+      final bool topToast,
+      final int toastDuration,
+      final double opacity,
+      final bool showFAB}) = _$_GeneralState;
   const _GeneralState._() : super._();
 
   @override
-  String get status;
+  String get status => throw _privateConstructorUsedError;
   @override
-  bool get topToast;
+  bool get topToast => throw _privateConstructorUsedError;
   @override
-  int get toastDuration;
+  int get toastDuration => throw _privateConstructorUsedError;
   @override
-  double get opacity;
+  double get opacity => throw _privateConstructorUsedError;
   @override
-  bool get showFAB;
+  bool get showFAB => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$GeneralStateCopyWith<_GeneralState> get copyWith =>
+  _$$_GeneralStateCopyWith<_$_GeneralState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$ThemeStateTearOff {
-  const _$ThemeStateTearOff();
-
-  _ThemeState call(
-      {int theme = 0,
-      bool isUsingMaterialYou = false,
-      Color seedColor = Colors.white}) {
-    return _ThemeState(
-      theme: theme,
-      isUsingMaterialYou: isUsingMaterialYou,
-      seedColor: seedColor,
-    );
-  }
-}
-
-/// @nodoc
-const $ThemeState = _$ThemeStateTearOff();
 
 /// @nodoc
 mixin _$ThemeState {
@@ -488,23 +432,24 @@ class _$ThemeStateCopyWithImpl<$Res> implements $ThemeStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ThemeStateCopyWith<$Res> implements $ThemeStateCopyWith<$Res> {
-  factory _$ThemeStateCopyWith(
-          _ThemeState value, $Res Function(_ThemeState) then) =
-      __$ThemeStateCopyWithImpl<$Res>;
+abstract class _$$_ThemeStateCopyWith<$Res>
+    implements $ThemeStateCopyWith<$Res> {
+  factory _$$_ThemeStateCopyWith(
+          _$_ThemeState value, $Res Function(_$_ThemeState) then) =
+      __$$_ThemeStateCopyWithImpl<$Res>;
   @override
   $Res call({int theme, bool isUsingMaterialYou, Color seedColor});
 }
 
 /// @nodoc
-class __$ThemeStateCopyWithImpl<$Res> extends _$ThemeStateCopyWithImpl<$Res>
-    implements _$ThemeStateCopyWith<$Res> {
-  __$ThemeStateCopyWithImpl(
-      _ThemeState _value, $Res Function(_ThemeState) _then)
-      : super(_value, (v) => _then(v as _ThemeState));
+class __$$_ThemeStateCopyWithImpl<$Res> extends _$ThemeStateCopyWithImpl<$Res>
+    implements _$$_ThemeStateCopyWith<$Res> {
+  __$$_ThemeStateCopyWithImpl(
+      _$_ThemeState _value, $Res Function(_$_ThemeState) _then)
+      : super(_value, (v) => _then(v as _$_ThemeState));
 
   @override
-  _ThemeState get _value => super._value as _ThemeState;
+  _$_ThemeState get _value => super._value as _$_ThemeState;
 
   @override
   $Res call({
@@ -512,7 +457,7 @@ class __$ThemeStateCopyWithImpl<$Res> extends _$ThemeStateCopyWithImpl<$Res>
     Object? isUsingMaterialYou = freezed,
     Object? seedColor = freezed,
   }) {
-    return _then(_ThemeState(
+    return _then(_$_ThemeState(
       theme: theme == freezed
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
@@ -538,14 +483,14 @@ class _$_ThemeState extends _ThemeState with DiagnosticableTreeMixin {
       this.seedColor = Colors.white})
       : super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final int theme;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isUsingMaterialYou;
-  @JsonKey()
   @override
+  @JsonKey()
   final Color seedColor;
 
   @override
@@ -567,7 +512,7 @@ class _$_ThemeState extends _ThemeState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ThemeState &&
+            other is _$_ThemeState &&
             const DeepCollectionEquality().equals(other.theme, theme) &&
             const DeepCollectionEquality()
                 .equals(other.isUsingMaterialYou, isUsingMaterialYou) &&
@@ -583,40 +528,28 @@ class _$_ThemeState extends _ThemeState with DiagnosticableTreeMixin {
 
   @JsonKey(ignore: true)
   @override
-  _$ThemeStateCopyWith<_ThemeState> get copyWith =>
-      __$ThemeStateCopyWithImpl<_ThemeState>(this, _$identity);
+  _$$_ThemeStateCopyWith<_$_ThemeState> get copyWith =>
+      __$$_ThemeStateCopyWithImpl<_$_ThemeState>(this, _$identity);
 }
 
 abstract class _ThemeState extends ThemeState {
   const factory _ThemeState(
-      {int theme, bool isUsingMaterialYou, Color seedColor}) = _$_ThemeState;
+      {final int theme,
+      final bool isUsingMaterialYou,
+      final Color seedColor}) = _$_ThemeState;
   const _ThemeState._() : super._();
 
   @override
-  int get theme;
+  int get theme => throw _privateConstructorUsedError;
   @override
-  bool get isUsingMaterialYou;
+  bool get isUsingMaterialYou => throw _privateConstructorUsedError;
   @override
-  Color get seedColor;
+  Color get seedColor => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ThemeStateCopyWith<_ThemeState> get copyWith =>
+  _$$_ThemeStateCopyWith<_$_ThemeState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$LangStateTearOff {
-  const _$LangStateTearOff();
-
-  _LangState call({int lang = 0}) {
-    return _LangState(
-      lang: lang,
-    );
-  }
-}
-
-/// @nodoc
-const $LangState = _$LangStateTearOff();
 
 /// @nodoc
 mixin _$LangState {
@@ -656,28 +589,29 @@ class _$LangStateCopyWithImpl<$Res> implements $LangStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$LangStateCopyWith<$Res> implements $LangStateCopyWith<$Res> {
-  factory _$LangStateCopyWith(
-          _LangState value, $Res Function(_LangState) then) =
-      __$LangStateCopyWithImpl<$Res>;
+abstract class _$$_LangStateCopyWith<$Res> implements $LangStateCopyWith<$Res> {
+  factory _$$_LangStateCopyWith(
+          _$_LangState value, $Res Function(_$_LangState) then) =
+      __$$_LangStateCopyWithImpl<$Res>;
   @override
   $Res call({int lang});
 }
 
 /// @nodoc
-class __$LangStateCopyWithImpl<$Res> extends _$LangStateCopyWithImpl<$Res>
-    implements _$LangStateCopyWith<$Res> {
-  __$LangStateCopyWithImpl(_LangState _value, $Res Function(_LangState) _then)
-      : super(_value, (v) => _then(v as _LangState));
+class __$$_LangStateCopyWithImpl<$Res> extends _$LangStateCopyWithImpl<$Res>
+    implements _$$_LangStateCopyWith<$Res> {
+  __$$_LangStateCopyWithImpl(
+      _$_LangState _value, $Res Function(_$_LangState) _then)
+      : super(_value, (v) => _then(v as _$_LangState));
 
   @override
-  _LangState get _value => super._value as _LangState;
+  _$_LangState get _value => super._value as _$_LangState;
 
   @override
   $Res call({
     Object? lang = freezed,
   }) {
-    return _then(_LangState(
+    return _then(_$_LangState(
       lang: lang == freezed
           ? _value.lang
           : lang // ignore: cast_nullable_to_non_nullable
@@ -691,8 +625,8 @@ class __$LangStateCopyWithImpl<$Res> extends _$LangStateCopyWithImpl<$Res>
 class _$_LangState extends _LangState with DiagnosticableTreeMixin {
   const _$_LangState({this.lang = 0}) : super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final int lang;
 
   @override
@@ -712,7 +646,7 @@ class _$_LangState extends _LangState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LangState &&
+            other is _$_LangState &&
             const DeepCollectionEquality().equals(other.lang, lang));
   }
 
@@ -722,37 +656,21 @@ class _$_LangState extends _LangState with DiagnosticableTreeMixin {
 
   @JsonKey(ignore: true)
   @override
-  _$LangStateCopyWith<_LangState> get copyWith =>
-      __$LangStateCopyWithImpl<_LangState>(this, _$identity);
+  _$$_LangStateCopyWith<_$_LangState> get copyWith =>
+      __$$_LangStateCopyWithImpl<_$_LangState>(this, _$identity);
 }
 
 abstract class _LangState extends LangState {
-  const factory _LangState({int lang}) = _$_LangState;
+  const factory _LangState({final int lang}) = _$_LangState;
   const _LangState._() : super._();
 
   @override
-  int get lang;
+  int get lang => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$LangStateCopyWith<_LangState> get copyWith =>
+  _$$_LangStateCopyWith<_$_LangState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$ClockStateTearOff {
-  const _$ClockStateTearOff();
-
-  _ClockState call({bool is24 = true, bool showSec = true, int animation = 0}) {
-    return _ClockState(
-      is24: is24,
-      showSec: showSec,
-      animation: animation,
-    );
-  }
-}
-
-/// @nodoc
-const $ClockState = _$ClockStateTearOff();
 
 /// @nodoc
 mixin _$ClockState {
@@ -805,23 +723,24 @@ class _$ClockStateCopyWithImpl<$Res> implements $ClockStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ClockStateCopyWith<$Res> implements $ClockStateCopyWith<$Res> {
-  factory _$ClockStateCopyWith(
-          _ClockState value, $Res Function(_ClockState) then) =
-      __$ClockStateCopyWithImpl<$Res>;
+abstract class _$$_ClockStateCopyWith<$Res>
+    implements $ClockStateCopyWith<$Res> {
+  factory _$$_ClockStateCopyWith(
+          _$_ClockState value, $Res Function(_$_ClockState) then) =
+      __$$_ClockStateCopyWithImpl<$Res>;
   @override
   $Res call({bool is24, bool showSec, int animation});
 }
 
 /// @nodoc
-class __$ClockStateCopyWithImpl<$Res> extends _$ClockStateCopyWithImpl<$Res>
-    implements _$ClockStateCopyWith<$Res> {
-  __$ClockStateCopyWithImpl(
-      _ClockState _value, $Res Function(_ClockState) _then)
-      : super(_value, (v) => _then(v as _ClockState));
+class __$$_ClockStateCopyWithImpl<$Res> extends _$ClockStateCopyWithImpl<$Res>
+    implements _$$_ClockStateCopyWith<$Res> {
+  __$$_ClockStateCopyWithImpl(
+      _$_ClockState _value, $Res Function(_$_ClockState) _then)
+      : super(_value, (v) => _then(v as _$_ClockState));
 
   @override
-  _ClockState get _value => super._value as _ClockState;
+  _$_ClockState get _value => super._value as _$_ClockState;
 
   @override
   $Res call({
@@ -829,7 +748,7 @@ class __$ClockStateCopyWithImpl<$Res> extends _$ClockStateCopyWithImpl<$Res>
     Object? showSec = freezed,
     Object? animation = freezed,
   }) {
-    return _then(_ClockState(
+    return _then(_$_ClockState(
       is24: is24 == freezed
           ? _value.is24
           : is24 // ignore: cast_nullable_to_non_nullable
@@ -853,14 +772,14 @@ class _$_ClockState extends _ClockState with DiagnosticableTreeMixin {
       {this.is24 = true, this.showSec = true, this.animation = 0})
       : super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final bool is24;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool showSec;
-  @JsonKey()
   @override
+  @JsonKey()
   final int animation;
 
   @override
@@ -882,7 +801,7 @@ class _$_ClockState extends _ClockState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ClockState &&
+            other is _$_ClockState &&
             const DeepCollectionEquality().equals(other.is24, is24) &&
             const DeepCollectionEquality().equals(other.showSec, showSec) &&
             const DeepCollectionEquality().equals(other.animation, animation));
@@ -897,40 +816,28 @@ class _$_ClockState extends _ClockState with DiagnosticableTreeMixin {
 
   @JsonKey(ignore: true)
   @override
-  _$ClockStateCopyWith<_ClockState> get copyWith =>
-      __$ClockStateCopyWithImpl<_ClockState>(this, _$identity);
+  _$$_ClockStateCopyWith<_$_ClockState> get copyWith =>
+      __$$_ClockStateCopyWithImpl<_$_ClockState>(this, _$identity);
 }
 
 abstract class _ClockState extends ClockState {
-  const factory _ClockState({bool is24, bool showSec, int animation}) =
-      _$_ClockState;
+  const factory _ClockState(
+      {final bool is24,
+      final bool showSec,
+      final int animation}) = _$_ClockState;
   const _ClockState._() : super._();
 
   @override
-  bool get is24;
+  bool get is24 => throw _privateConstructorUsedError;
   @override
-  bool get showSec;
+  bool get showSec => throw _privateConstructorUsedError;
   @override
-  int get animation;
+  int get animation => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ClockStateCopyWith<_ClockState> get copyWith =>
+  _$$_ClockStateCopyWith<_$_ClockState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$ColorStateTearOff {
-  const _$ColorStateTearOff();
-
-  _ColorState call({double opacity = 0}) {
-    return _ColorState(
-      opacity: opacity,
-    );
-  }
-}
-
-/// @nodoc
-const $ColorState = _$ColorStateTearOff();
 
 /// @nodoc
 mixin _$ColorState {
@@ -971,29 +878,30 @@ class _$ColorStateCopyWithImpl<$Res> implements $ColorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ColorStateCopyWith<$Res> implements $ColorStateCopyWith<$Res> {
-  factory _$ColorStateCopyWith(
-          _ColorState value, $Res Function(_ColorState) then) =
-      __$ColorStateCopyWithImpl<$Res>;
+abstract class _$$_ColorStateCopyWith<$Res>
+    implements $ColorStateCopyWith<$Res> {
+  factory _$$_ColorStateCopyWith(
+          _$_ColorState value, $Res Function(_$_ColorState) then) =
+      __$$_ColorStateCopyWithImpl<$Res>;
   @override
   $Res call({double opacity});
 }
 
 /// @nodoc
-class __$ColorStateCopyWithImpl<$Res> extends _$ColorStateCopyWithImpl<$Res>
-    implements _$ColorStateCopyWith<$Res> {
-  __$ColorStateCopyWithImpl(
-      _ColorState _value, $Res Function(_ColorState) _then)
-      : super(_value, (v) => _then(v as _ColorState));
+class __$$_ColorStateCopyWithImpl<$Res> extends _$ColorStateCopyWithImpl<$Res>
+    implements _$$_ColorStateCopyWith<$Res> {
+  __$$_ColorStateCopyWithImpl(
+      _$_ColorState _value, $Res Function(_$_ColorState) _then)
+      : super(_value, (v) => _then(v as _$_ColorState));
 
   @override
-  _ColorState get _value => super._value as _ColorState;
+  _$_ColorState get _value => super._value as _$_ColorState;
 
   @override
   $Res call({
     Object? opacity = freezed,
   }) {
-    return _then(_ColorState(
+    return _then(_$_ColorState(
       opacity: opacity == freezed
           ? _value.opacity
           : opacity // ignore: cast_nullable_to_non_nullable
@@ -1007,8 +915,8 @@ class __$ColorStateCopyWithImpl<$Res> extends _$ColorStateCopyWithImpl<$Res>
 class _$_ColorState extends _ColorState with DiagnosticableTreeMixin {
   const _$_ColorState({this.opacity = 0}) : super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final double opacity;
 
   @override
@@ -1028,7 +936,7 @@ class _$_ColorState extends _ColorState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ColorState &&
+            other is _$_ColorState &&
             const DeepCollectionEquality().equals(other.opacity, opacity));
   }
 
@@ -1038,36 +946,21 @@ class _$_ColorState extends _ColorState with DiagnosticableTreeMixin {
 
   @JsonKey(ignore: true)
   @override
-  _$ColorStateCopyWith<_ColorState> get copyWith =>
-      __$ColorStateCopyWithImpl<_ColorState>(this, _$identity);
+  _$$_ColorStateCopyWith<_$_ColorState> get copyWith =>
+      __$$_ColorStateCopyWithImpl<_$_ColorState>(this, _$identity);
 }
 
 abstract class _ColorState extends ColorState {
-  const factory _ColorState({double opacity}) = _$_ColorState;
+  const factory _ColorState({final double opacity}) = _$_ColorState;
   const _ColorState._() : super._();
 
   @override
-  double get opacity;
+  double get opacity => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ColorStateCopyWith<_ColorState> get copyWith =>
+  _$$_ColorStateCopyWith<_$_ColorState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$AlarmStateTearOff {
-  const _$AlarmStateTearOff();
-
-  _AlarmState call(
-      {TimeOfDay targetTime = const TimeOfDay(hour: 12, minute: 00)}) {
-    return _AlarmState(
-      targetTime: targetTime,
-    );
-  }
-}
-
-/// @nodoc
-const $AlarmState = _$AlarmStateTearOff();
 
 /// @nodoc
 mixin _$AlarmState {
@@ -1108,29 +1001,30 @@ class _$AlarmStateCopyWithImpl<$Res> implements $AlarmStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$AlarmStateCopyWith<$Res> implements $AlarmStateCopyWith<$Res> {
-  factory _$AlarmStateCopyWith(
-          _AlarmState value, $Res Function(_AlarmState) then) =
-      __$AlarmStateCopyWithImpl<$Res>;
+abstract class _$$_AlarmStateCopyWith<$Res>
+    implements $AlarmStateCopyWith<$Res> {
+  factory _$$_AlarmStateCopyWith(
+          _$_AlarmState value, $Res Function(_$_AlarmState) then) =
+      __$$_AlarmStateCopyWithImpl<$Res>;
   @override
   $Res call({TimeOfDay targetTime});
 }
 
 /// @nodoc
-class __$AlarmStateCopyWithImpl<$Res> extends _$AlarmStateCopyWithImpl<$Res>
-    implements _$AlarmStateCopyWith<$Res> {
-  __$AlarmStateCopyWithImpl(
-      _AlarmState _value, $Res Function(_AlarmState) _then)
-      : super(_value, (v) => _then(v as _AlarmState));
+class __$$_AlarmStateCopyWithImpl<$Res> extends _$AlarmStateCopyWithImpl<$Res>
+    implements _$$_AlarmStateCopyWith<$Res> {
+  __$$_AlarmStateCopyWithImpl(
+      _$_AlarmState _value, $Res Function(_$_AlarmState) _then)
+      : super(_value, (v) => _then(v as _$_AlarmState));
 
   @override
-  _AlarmState get _value => super._value as _AlarmState;
+  _$_AlarmState get _value => super._value as _$_AlarmState;
 
   @override
   $Res call({
     Object? targetTime = freezed,
   }) {
-    return _then(_AlarmState(
+    return _then(_$_AlarmState(
       targetTime: targetTime == freezed
           ? _value.targetTime
           : targetTime // ignore: cast_nullable_to_non_nullable
@@ -1145,8 +1039,8 @@ class _$_AlarmState extends _AlarmState with DiagnosticableTreeMixin {
   const _$_AlarmState({this.targetTime = const TimeOfDay(hour: 12, minute: 00)})
       : super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final TimeOfDay targetTime;
 
   @override
@@ -1166,7 +1060,7 @@ class _$_AlarmState extends _AlarmState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AlarmState &&
+            other is _$_AlarmState &&
             const DeepCollectionEquality()
                 .equals(other.targetTime, targetTime));
   }
@@ -1177,40 +1071,21 @@ class _$_AlarmState extends _AlarmState with DiagnosticableTreeMixin {
 
   @JsonKey(ignore: true)
   @override
-  _$AlarmStateCopyWith<_AlarmState> get copyWith =>
-      __$AlarmStateCopyWithImpl<_AlarmState>(this, _$identity);
+  _$$_AlarmStateCopyWith<_$_AlarmState> get copyWith =>
+      __$$_AlarmStateCopyWithImpl<_$_AlarmState>(this, _$identity);
 }
 
 abstract class _AlarmState extends AlarmState {
-  const factory _AlarmState({TimeOfDay targetTime}) = _$_AlarmState;
+  const factory _AlarmState({final TimeOfDay targetTime}) = _$_AlarmState;
   const _AlarmState._() : super._();
 
   @override
-  TimeOfDay get targetTime;
+  TimeOfDay get targetTime => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$AlarmStateCopyWith<_AlarmState> get copyWith =>
+  _$$_AlarmStateCopyWith<_$_AlarmState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$AlarmTimeKeepingStateTearOff {
-  const _$AlarmTimeKeepingStateTearOff();
-
-  _AlarmTimeKeepingState call(
-      {Duration targetDuration = const Duration(seconds: 1),
-      TimeOfDay startedTime = const TimeOfDay(hour: 12, minute: 00),
-      String headerText = ''}) {
-    return _AlarmTimeKeepingState(
-      targetDuration: targetDuration,
-      startedTime: startedTime,
-      headerText: headerText,
-    );
-  }
-}
-
-/// @nodoc
-const $AlarmTimeKeepingState = _$AlarmTimeKeepingStateTearOff();
 
 /// @nodoc
 mixin _$AlarmTimeKeepingState {
@@ -1265,26 +1140,27 @@ class _$AlarmTimeKeepingStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$AlarmTimeKeepingStateCopyWith<$Res>
+abstract class _$$_AlarmTimeKeepingStateCopyWith<$Res>
     implements $AlarmTimeKeepingStateCopyWith<$Res> {
-  factory _$AlarmTimeKeepingStateCopyWith(_AlarmTimeKeepingState value,
-          $Res Function(_AlarmTimeKeepingState) then) =
-      __$AlarmTimeKeepingStateCopyWithImpl<$Res>;
+  factory _$$_AlarmTimeKeepingStateCopyWith(_$_AlarmTimeKeepingState value,
+          $Res Function(_$_AlarmTimeKeepingState) then) =
+      __$$_AlarmTimeKeepingStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {Duration targetDuration, TimeOfDay startedTime, String headerText});
 }
 
 /// @nodoc
-class __$AlarmTimeKeepingStateCopyWithImpl<$Res>
+class __$$_AlarmTimeKeepingStateCopyWithImpl<$Res>
     extends _$AlarmTimeKeepingStateCopyWithImpl<$Res>
-    implements _$AlarmTimeKeepingStateCopyWith<$Res> {
-  __$AlarmTimeKeepingStateCopyWithImpl(_AlarmTimeKeepingState _value,
-      $Res Function(_AlarmTimeKeepingState) _then)
-      : super(_value, (v) => _then(v as _AlarmTimeKeepingState));
+    implements _$$_AlarmTimeKeepingStateCopyWith<$Res> {
+  __$$_AlarmTimeKeepingStateCopyWithImpl(_$_AlarmTimeKeepingState _value,
+      $Res Function(_$_AlarmTimeKeepingState) _then)
+      : super(_value, (v) => _then(v as _$_AlarmTimeKeepingState));
 
   @override
-  _AlarmTimeKeepingState get _value => super._value as _AlarmTimeKeepingState;
+  _$_AlarmTimeKeepingState get _value =>
+      super._value as _$_AlarmTimeKeepingState;
 
   @override
   $Res call({
@@ -1292,7 +1168,7 @@ class __$AlarmTimeKeepingStateCopyWithImpl<$Res>
     Object? startedTime = freezed,
     Object? headerText = freezed,
   }) {
-    return _then(_AlarmTimeKeepingState(
+    return _then(_$_AlarmTimeKeepingState(
       targetDuration: targetDuration == freezed
           ? _value.targetDuration
           : targetDuration // ignore: cast_nullable_to_non_nullable
@@ -1319,14 +1195,14 @@ class _$_AlarmTimeKeepingState extends _AlarmTimeKeepingState
       this.headerText = ''})
       : super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final Duration targetDuration;
-  @JsonKey()
   @override
+  @JsonKey()
   final TimeOfDay startedTime;
-  @JsonKey()
   @override
+  @JsonKey()
   final String headerText;
 
   @override
@@ -1348,7 +1224,7 @@ class _$_AlarmTimeKeepingState extends _AlarmTimeKeepingState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AlarmTimeKeepingState &&
+            other is _$_AlarmTimeKeepingState &&
             const DeepCollectionEquality()
                 .equals(other.targetDuration, targetDuration) &&
             const DeepCollectionEquality()
@@ -1366,48 +1242,29 @@ class _$_AlarmTimeKeepingState extends _AlarmTimeKeepingState
 
   @JsonKey(ignore: true)
   @override
-  _$AlarmTimeKeepingStateCopyWith<_AlarmTimeKeepingState> get copyWith =>
-      __$AlarmTimeKeepingStateCopyWithImpl<_AlarmTimeKeepingState>(
+  _$$_AlarmTimeKeepingStateCopyWith<_$_AlarmTimeKeepingState> get copyWith =>
+      __$$_AlarmTimeKeepingStateCopyWithImpl<_$_AlarmTimeKeepingState>(
           this, _$identity);
 }
 
 abstract class _AlarmTimeKeepingState extends AlarmTimeKeepingState {
   const factory _AlarmTimeKeepingState(
-      {Duration targetDuration,
-      TimeOfDay startedTime,
-      String headerText}) = _$_AlarmTimeKeepingState;
+      {final Duration targetDuration,
+      final TimeOfDay startedTime,
+      final String headerText}) = _$_AlarmTimeKeepingState;
   const _AlarmTimeKeepingState._() : super._();
 
   @override
-  Duration get targetDuration;
+  Duration get targetDuration => throw _privateConstructorUsedError;
   @override
-  TimeOfDay get startedTime;
+  TimeOfDay get startedTime => throw _privateConstructorUsedError;
   @override
-  String get headerText;
+  String get headerText => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$AlarmTimeKeepingStateCopyWith<_AlarmTimeKeepingState> get copyWith =>
+  _$$_AlarmTimeKeepingStateCopyWith<_$_AlarmTimeKeepingState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$TimerStateTearOff {
-  const _$TimerStateTearOff();
-
-  _TimerState call(
-      {Duration targetDuration = const Duration(minutes: 1),
-      Duration targetIntervalDuration = const Duration(minutes: 1),
-      int targetIntervalLoopingNum = 0}) {
-    return _TimerState(
-      targetDuration: targetDuration,
-      targetIntervalDuration: targetIntervalDuration,
-      targetIntervalLoopingNum: targetIntervalLoopingNum,
-    );
-  }
-}
-
-/// @nodoc
-const $TimerState = _$TimerStateTearOff();
 
 /// @nodoc
 mixin _$TimerState {
@@ -1463,10 +1320,11 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$TimerStateCopyWith<$Res> implements $TimerStateCopyWith<$Res> {
-  factory _$TimerStateCopyWith(
-          _TimerState value, $Res Function(_TimerState) then) =
-      __$TimerStateCopyWithImpl<$Res>;
+abstract class _$$_TimerStateCopyWith<$Res>
+    implements $TimerStateCopyWith<$Res> {
+  factory _$$_TimerStateCopyWith(
+          _$_TimerState value, $Res Function(_$_TimerState) then) =
+      __$$_TimerStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {Duration targetDuration,
@@ -1475,14 +1333,14 @@ abstract class _$TimerStateCopyWith<$Res> implements $TimerStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
-    implements _$TimerStateCopyWith<$Res> {
-  __$TimerStateCopyWithImpl(
-      _TimerState _value, $Res Function(_TimerState) _then)
-      : super(_value, (v) => _then(v as _TimerState));
+class __$$_TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
+    implements _$$_TimerStateCopyWith<$Res> {
+  __$$_TimerStateCopyWithImpl(
+      _$_TimerState _value, $Res Function(_$_TimerState) _then)
+      : super(_value, (v) => _then(v as _$_TimerState));
 
   @override
-  _TimerState get _value => super._value as _TimerState;
+  _$_TimerState get _value => super._value as _$_TimerState;
 
   @override
   $Res call({
@@ -1490,7 +1348,7 @@ class __$TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
     Object? targetIntervalDuration = freezed,
     Object? targetIntervalLoopingNum = freezed,
   }) {
-    return _then(_TimerState(
+    return _then(_$_TimerState(
       targetDuration: targetDuration == freezed
           ? _value.targetDuration
           : targetDuration // ignore: cast_nullable_to_non_nullable
@@ -1516,14 +1374,14 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
       this.targetIntervalLoopingNum = 0})
       : super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final Duration targetDuration;
-  @JsonKey()
   @override
+  @JsonKey()
   final Duration targetIntervalDuration;
-  @JsonKey()
   @override
+  @JsonKey()
   final int targetIntervalLoopingNum;
 
   @override
@@ -1547,7 +1405,7 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TimerState &&
+            other is _$_TimerState &&
             const DeepCollectionEquality()
                 .equals(other.targetDuration, targetDuration) &&
             const DeepCollectionEquality()
@@ -1565,59 +1423,28 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
 
   @JsonKey(ignore: true)
   @override
-  _$TimerStateCopyWith<_TimerState> get copyWith =>
-      __$TimerStateCopyWithImpl<_TimerState>(this, _$identity);
+  _$$_TimerStateCopyWith<_$_TimerState> get copyWith =>
+      __$$_TimerStateCopyWithImpl<_$_TimerState>(this, _$identity);
 }
 
 abstract class _TimerState extends TimerState {
   const factory _TimerState(
-      {Duration targetDuration,
-      Duration targetIntervalDuration,
-      int targetIntervalLoopingNum}) = _$_TimerState;
+      {final Duration targetDuration,
+      final Duration targetIntervalDuration,
+      final int targetIntervalLoopingNum}) = _$_TimerState;
   const _TimerState._() : super._();
 
   @override
-  Duration get targetDuration;
+  Duration get targetDuration => throw _privateConstructorUsedError;
   @override
-  Duration get targetIntervalDuration;
+  Duration get targetIntervalDuration => throw _privateConstructorUsedError;
   @override
-  int get targetIntervalLoopingNum;
+  int get targetIntervalLoopingNum => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$TimerStateCopyWith<_TimerState> get copyWith =>
+  _$$_TimerStateCopyWith<_$_TimerState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$TimerTimeKeepingStateTearOff {
-  const _$TimerTimeKeepingStateTearOff();
-
-  _TimerTimeKeepingState call(
-      {DateTime? startedTime,
-      DateTime? startedIntervalTime,
-      bool isPaused = false,
-      DateTime? pausedTime,
-      DateTime? pausedIntervalTime,
-      Duration pausedDuration = Duration.zero,
-      Duration pausedIntervalDuration = Duration.zero,
-      bool isCountingInterval = false,
-      int currentIntervalLoopingNum = 0}) {
-    return _TimerTimeKeepingState(
-      startedTime: startedTime,
-      startedIntervalTime: startedIntervalTime,
-      isPaused: isPaused,
-      pausedTime: pausedTime,
-      pausedIntervalTime: pausedIntervalTime,
-      pausedDuration: pausedDuration,
-      pausedIntervalDuration: pausedIntervalDuration,
-      isCountingInterval: isCountingInterval,
-      currentIntervalLoopingNum: currentIntervalLoopingNum,
-    );
-  }
-}
-
-/// @nodoc
-const $TimerTimeKeepingState = _$TimerTimeKeepingStateTearOff();
 
 /// @nodoc
 mixin _$TimerTimeKeepingState {
@@ -1719,11 +1546,11 @@ class _$TimerTimeKeepingStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$TimerTimeKeepingStateCopyWith<$Res>
+abstract class _$$_TimerTimeKeepingStateCopyWith<$Res>
     implements $TimerTimeKeepingStateCopyWith<$Res> {
-  factory _$TimerTimeKeepingStateCopyWith(_TimerTimeKeepingState value,
-          $Res Function(_TimerTimeKeepingState) then) =
-      __$TimerTimeKeepingStateCopyWithImpl<$Res>;
+  factory _$$_TimerTimeKeepingStateCopyWith(_$_TimerTimeKeepingState value,
+          $Res Function(_$_TimerTimeKeepingState) then) =
+      __$$_TimerTimeKeepingStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {DateTime? startedTime,
@@ -1738,15 +1565,16 @@ abstract class _$TimerTimeKeepingStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$TimerTimeKeepingStateCopyWithImpl<$Res>
+class __$$_TimerTimeKeepingStateCopyWithImpl<$Res>
     extends _$TimerTimeKeepingStateCopyWithImpl<$Res>
-    implements _$TimerTimeKeepingStateCopyWith<$Res> {
-  __$TimerTimeKeepingStateCopyWithImpl(_TimerTimeKeepingState _value,
-      $Res Function(_TimerTimeKeepingState) _then)
-      : super(_value, (v) => _then(v as _TimerTimeKeepingState));
+    implements _$$_TimerTimeKeepingStateCopyWith<$Res> {
+  __$$_TimerTimeKeepingStateCopyWithImpl(_$_TimerTimeKeepingState _value,
+      $Res Function(_$_TimerTimeKeepingState) _then)
+      : super(_value, (v) => _then(v as _$_TimerTimeKeepingState));
 
   @override
-  _TimerTimeKeepingState get _value => super._value as _TimerTimeKeepingState;
+  _$_TimerTimeKeepingState get _value =>
+      super._value as _$_TimerTimeKeepingState;
 
   @override
   $Res call({
@@ -1760,7 +1588,7 @@ class __$TimerTimeKeepingStateCopyWithImpl<$Res>
     Object? isCountingInterval = freezed,
     Object? currentIntervalLoopingNum = freezed,
   }) {
-    return _then(_TimerTimeKeepingState(
+    return _then(_$_TimerTimeKeepingState(
       startedTime: startedTime == freezed
           ? _value.startedTime
           : startedTime // ignore: cast_nullable_to_non_nullable
@@ -1817,28 +1645,31 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
       this.currentIntervalLoopingNum = 0})
       : super._();
 
-  @override // started
+// started
+  @override
   final DateTime? startedTime;
   @override
   final DateTime? startedIntervalTime;
+// paused
+  @override
   @JsonKey()
-  @override // paused
   final bool isPaused;
   @override
   final DateTime? pausedTime;
   @override
   final DateTime? pausedIntervalTime;
-  @JsonKey()
   @override
+  @JsonKey()
   final Duration pausedDuration;
-  @JsonKey()
   @override
+  @JsonKey()
   final Duration pausedIntervalDuration;
-  @JsonKey()
-  @override // interval
-  final bool isCountingInterval;
-  @JsonKey()
+// interval
   @override
+  @JsonKey()
+  final bool isCountingInterval;
+  @override
+  @JsonKey()
   final int currentIntervalLoopingNum;
 
   @override
@@ -1868,7 +1699,7 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TimerTimeKeepingState &&
+            other is _$_TimerTimeKeepingState &&
             const DeepCollectionEquality()
                 .equals(other.startedTime, startedTime) &&
             const DeepCollectionEquality()
@@ -1903,61 +1734,47 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
 
   @JsonKey(ignore: true)
   @override
-  _$TimerTimeKeepingStateCopyWith<_TimerTimeKeepingState> get copyWith =>
-      __$TimerTimeKeepingStateCopyWithImpl<_TimerTimeKeepingState>(
+  _$$_TimerTimeKeepingStateCopyWith<_$_TimerTimeKeepingState> get copyWith =>
+      __$$_TimerTimeKeepingStateCopyWithImpl<_$_TimerTimeKeepingState>(
           this, _$identity);
 }
 
 abstract class _TimerTimeKeepingState extends TimerTimeKeepingState {
   const factory _TimerTimeKeepingState(
-      {DateTime? startedTime,
-      DateTime? startedIntervalTime,
-      bool isPaused,
-      DateTime? pausedTime,
-      DateTime? pausedIntervalTime,
-      Duration pausedDuration,
-      Duration pausedIntervalDuration,
-      bool isCountingInterval,
-      int currentIntervalLoopingNum}) = _$_TimerTimeKeepingState;
+      {final DateTime? startedTime,
+      final DateTime? startedIntervalTime,
+      final bool isPaused,
+      final DateTime? pausedTime,
+      final DateTime? pausedIntervalTime,
+      final Duration pausedDuration,
+      final Duration pausedIntervalDuration,
+      final bool isCountingInterval,
+      final int currentIntervalLoopingNum}) = _$_TimerTimeKeepingState;
   const _TimerTimeKeepingState._() : super._();
 
   @override // started
-  DateTime? get startedTime;
+  DateTime? get startedTime => throw _privateConstructorUsedError;
   @override
-  DateTime? get startedIntervalTime;
+  DateTime? get startedIntervalTime => throw _privateConstructorUsedError;
   @override // paused
-  bool get isPaused;
+  bool get isPaused => throw _privateConstructorUsedError;
   @override
-  DateTime? get pausedTime;
+  DateTime? get pausedTime => throw _privateConstructorUsedError;
   @override
-  DateTime? get pausedIntervalTime;
+  DateTime? get pausedIntervalTime => throw _privateConstructorUsedError;
   @override
-  Duration get pausedDuration;
+  Duration get pausedDuration => throw _privateConstructorUsedError;
   @override
-  Duration get pausedIntervalDuration;
+  Duration get pausedIntervalDuration => throw _privateConstructorUsedError;
   @override // interval
-  bool get isCountingInterval;
+  bool get isCountingInterval => throw _privateConstructorUsedError;
   @override
-  int get currentIntervalLoopingNum;
+  int get currentIntervalLoopingNum => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$TimerTimeKeepingStateCopyWith<_TimerTimeKeepingState> get copyWith =>
+  _$$_TimerTimeKeepingStateCopyWith<_$_TimerTimeKeepingState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$GoalStateTearOff {
-  const _$GoalStateTearOff();
-
-  _GoalState call({String goal = ''}) {
-    return _GoalState(
-      goal: goal,
-    );
-  }
-}
-
-/// @nodoc
-const $GoalState = _$GoalStateTearOff();
 
 /// @nodoc
 mixin _$GoalState {
@@ -1997,28 +1814,29 @@ class _$GoalStateCopyWithImpl<$Res> implements $GoalStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$GoalStateCopyWith<$Res> implements $GoalStateCopyWith<$Res> {
-  factory _$GoalStateCopyWith(
-          _GoalState value, $Res Function(_GoalState) then) =
-      __$GoalStateCopyWithImpl<$Res>;
+abstract class _$$_GoalStateCopyWith<$Res> implements $GoalStateCopyWith<$Res> {
+  factory _$$_GoalStateCopyWith(
+          _$_GoalState value, $Res Function(_$_GoalState) then) =
+      __$$_GoalStateCopyWithImpl<$Res>;
   @override
   $Res call({String goal});
 }
 
 /// @nodoc
-class __$GoalStateCopyWithImpl<$Res> extends _$GoalStateCopyWithImpl<$Res>
-    implements _$GoalStateCopyWith<$Res> {
-  __$GoalStateCopyWithImpl(_GoalState _value, $Res Function(_GoalState) _then)
-      : super(_value, (v) => _then(v as _GoalState));
+class __$$_GoalStateCopyWithImpl<$Res> extends _$GoalStateCopyWithImpl<$Res>
+    implements _$$_GoalStateCopyWith<$Res> {
+  __$$_GoalStateCopyWithImpl(
+      _$_GoalState _value, $Res Function(_$_GoalState) _then)
+      : super(_value, (v) => _then(v as _$_GoalState));
 
   @override
-  _GoalState get _value => super._value as _GoalState;
+  _$_GoalState get _value => super._value as _$_GoalState;
 
   @override
   $Res call({
     Object? goal = freezed,
   }) {
-    return _then(_GoalState(
+    return _then(_$_GoalState(
       goal: goal == freezed
           ? _value.goal
           : goal // ignore: cast_nullable_to_non_nullable
@@ -2032,8 +1850,8 @@ class __$GoalStateCopyWithImpl<$Res> extends _$GoalStateCopyWithImpl<$Res>
 class _$_GoalState extends _GoalState with DiagnosticableTreeMixin {
   const _$_GoalState({this.goal = ''}) : super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final String goal;
 
   @override
@@ -2053,7 +1871,7 @@ class _$_GoalState extends _GoalState with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _GoalState &&
+            other is _$_GoalState &&
             const DeepCollectionEquality().equals(other.goal, goal));
   }
 
@@ -2063,44 +1881,21 @@ class _$_GoalState extends _GoalState with DiagnosticableTreeMixin {
 
   @JsonKey(ignore: true)
   @override
-  _$GoalStateCopyWith<_GoalState> get copyWith =>
-      __$GoalStateCopyWithImpl<_GoalState>(this, _$identity);
+  _$$_GoalStateCopyWith<_$_GoalState> get copyWith =>
+      __$$_GoalStateCopyWithImpl<_$_GoalState>(this, _$identity);
 }
 
 abstract class _GoalState extends GoalState {
-  const factory _GoalState({String goal}) = _$_GoalState;
+  const factory _GoalState({final String goal}) = _$_GoalState;
   const _GoalState._() : super._();
 
   @override
-  String get goal;
+  String get goal => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$GoalStateCopyWith<_GoalState> get copyWith =>
+  _$$_GoalStateCopyWith<_$_GoalState> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$GoalTimeKeepingStateTearOff {
-  const _$GoalTimeKeepingStateTearOff();
-
-  _GoalTimeKeepingState call(
-      {int fabMode = 0,
-      DateTime? startedTime,
-      bool isPaused = false,
-      DateTime? pausedTime,
-      Duration pausedDuration = Duration.zero}) {
-    return _GoalTimeKeepingState(
-      fabMode: fabMode,
-      startedTime: startedTime,
-      isPaused: isPaused,
-      pausedTime: pausedTime,
-      pausedDuration: pausedDuration,
-    );
-  }
-}
-
-/// @nodoc
-const $GoalTimeKeepingState = _$GoalTimeKeepingStateTearOff();
 
 /// @nodoc
 mixin _$GoalTimeKeepingState {
@@ -2172,11 +1967,11 @@ class _$GoalTimeKeepingStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$GoalTimeKeepingStateCopyWith<$Res>
+abstract class _$$_GoalTimeKeepingStateCopyWith<$Res>
     implements $GoalTimeKeepingStateCopyWith<$Res> {
-  factory _$GoalTimeKeepingStateCopyWith(_GoalTimeKeepingState value,
-          $Res Function(_GoalTimeKeepingState) then) =
-      __$GoalTimeKeepingStateCopyWithImpl<$Res>;
+  factory _$$_GoalTimeKeepingStateCopyWith(_$_GoalTimeKeepingState value,
+          $Res Function(_$_GoalTimeKeepingState) then) =
+      __$$_GoalTimeKeepingStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {int fabMode,
@@ -2187,15 +1982,15 @@ abstract class _$GoalTimeKeepingStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GoalTimeKeepingStateCopyWithImpl<$Res>
+class __$$_GoalTimeKeepingStateCopyWithImpl<$Res>
     extends _$GoalTimeKeepingStateCopyWithImpl<$Res>
-    implements _$GoalTimeKeepingStateCopyWith<$Res> {
-  __$GoalTimeKeepingStateCopyWithImpl(
-      _GoalTimeKeepingState _value, $Res Function(_GoalTimeKeepingState) _then)
-      : super(_value, (v) => _then(v as _GoalTimeKeepingState));
+    implements _$$_GoalTimeKeepingStateCopyWith<$Res> {
+  __$$_GoalTimeKeepingStateCopyWithImpl(_$_GoalTimeKeepingState _value,
+      $Res Function(_$_GoalTimeKeepingState) _then)
+      : super(_value, (v) => _then(v as _$_GoalTimeKeepingState));
 
   @override
-  _GoalTimeKeepingState get _value => super._value as _GoalTimeKeepingState;
+  _$_GoalTimeKeepingState get _value => super._value as _$_GoalTimeKeepingState;
 
   @override
   $Res call({
@@ -2205,7 +2000,7 @@ class __$GoalTimeKeepingStateCopyWithImpl<$Res>
     Object? pausedTime = freezed,
     Object? pausedDuration = freezed,
   }) {
-    return _then(_GoalTimeKeepingState(
+    return _then(_$_GoalTimeKeepingState(
       fabMode: fabMode == freezed
           ? _value.fabMode
           : fabMode // ignore: cast_nullable_to_non_nullable
@@ -2242,18 +2037,21 @@ class _$_GoalTimeKeepingState extends _GoalTimeKeepingState
       this.pausedDuration = Duration.zero})
       : super._();
 
+// fab
+  @override
   @JsonKey()
-  @override // fab
   final int fabMode;
-  @override // started
+// started
+  @override
   final DateTime? startedTime;
+// paused
+  @override
   @JsonKey()
-  @override // paused
   final bool isPaused;
   @override
   final DateTime? pausedTime;
-  @JsonKey()
   @override
+  @JsonKey()
   final Duration pausedDuration;
 
   @override
@@ -2277,7 +2075,7 @@ class _$_GoalTimeKeepingState extends _GoalTimeKeepingState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _GoalTimeKeepingState &&
+            other is _$_GoalTimeKeepingState &&
             const DeepCollectionEquality().equals(other.fabMode, fabMode) &&
             const DeepCollectionEquality()
                 .equals(other.startedTime, startedTime) &&
@@ -2299,32 +2097,32 @@ class _$_GoalTimeKeepingState extends _GoalTimeKeepingState
 
   @JsonKey(ignore: true)
   @override
-  _$GoalTimeKeepingStateCopyWith<_GoalTimeKeepingState> get copyWith =>
-      __$GoalTimeKeepingStateCopyWithImpl<_GoalTimeKeepingState>(
+  _$$_GoalTimeKeepingStateCopyWith<_$_GoalTimeKeepingState> get copyWith =>
+      __$$_GoalTimeKeepingStateCopyWithImpl<_$_GoalTimeKeepingState>(
           this, _$identity);
 }
 
 abstract class _GoalTimeKeepingState extends GoalTimeKeepingState {
   const factory _GoalTimeKeepingState(
-      {int fabMode,
-      DateTime? startedTime,
-      bool isPaused,
-      DateTime? pausedTime,
-      Duration pausedDuration}) = _$_GoalTimeKeepingState;
+      {final int fabMode,
+      final DateTime? startedTime,
+      final bool isPaused,
+      final DateTime? pausedTime,
+      final Duration pausedDuration}) = _$_GoalTimeKeepingState;
   const _GoalTimeKeepingState._() : super._();
 
   @override // fab
-  int get fabMode;
+  int get fabMode => throw _privateConstructorUsedError;
   @override // started
-  DateTime? get startedTime;
+  DateTime? get startedTime => throw _privateConstructorUsedError;
   @override // paused
-  bool get isPaused;
+  bool get isPaused => throw _privateConstructorUsedError;
   @override
-  DateTime? get pausedTime;
+  DateTime? get pausedTime => throw _privateConstructorUsedError;
   @override
-  Duration get pausedDuration;
+  Duration get pausedDuration => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$GoalTimeKeepingStateCopyWith<_GoalTimeKeepingState> get copyWith =>
+  _$$_GoalTimeKeepingStateCopyWith<_$_GoalTimeKeepingState> get copyWith =>
       throw _privateConstructorUsedError;
 }

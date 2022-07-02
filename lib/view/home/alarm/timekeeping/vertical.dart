@@ -8,8 +8,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       children: [
         Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 20),
               Container(
@@ -101,27 +99,20 @@ Widget percent({required WidgetRef ref, required double width}) {
 
   return CircularCountDownTimer(
     duration: duration.inSeconds,
-    initialDuration: 0,
     controller: ref.read(alarmTKState.notifier).controller,
     width: width,
     height: width,
     ringColor: Colors.blue.shade100,
-    ringGradient: null,
     fillColor: Colors.blue,
-    fillGradient: null,
     backgroundColor: Colors.transparent,
-    backgroundGradient: null,
     strokeWidth: 10,
-    strokeCap: StrokeCap.butt,
     textStyle: const TextStyle(
       fontSize: 33,
       fontWeight: FontWeight.bold,
     ),
     textFormat: CountdownTextFormat.MM_SS,
     isReverse: true,
-    isReverseAnimation: false,
     isTimerTextShown: false,
-    autoStart: true,
     onStart: () {
       print('Countdown Started');
     },

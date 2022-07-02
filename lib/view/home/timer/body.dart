@@ -5,11 +5,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
-import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/components/rounded_card.dart';
 import 'package:majimo_timer/view/home/timer/timekeeping/body.dart';
 
@@ -17,7 +17,7 @@ part 'horizontal.dart';
 part 'vertical.dart';
 
 class TimerPage extends HookConsumerWidget {
-  const TimerPage({Key? key}) : super(key: key);
+  const TimerPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

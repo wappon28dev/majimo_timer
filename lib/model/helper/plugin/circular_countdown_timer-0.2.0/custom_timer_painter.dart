@@ -12,7 +12,7 @@ class CustomTimerPainter extends CustomPainter {
       this.strokeWidth,
       this.strokeCap,
       this.backgroundColor,
-      this.backgroundGradient})
+      this.backgroundGradient,})
       : super(repaint: animation);
 
   final Animation<double>? animation;

@@ -2,6 +2,7 @@ part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final show = ref.watch(generalState).showFAB;
+  final colorScheme = Theme.of(context).colorScheme;
   // useEffect(() {
   //   LinkManager().initQuickAction(context: context, ref: ref);
   //   LinkManager().initDeepLinks(ref, context);
@@ -18,8 +19,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   // });
 
   // ignore: avoid_unnecessary_containers
-  Container headerWidget(BuildContext context) => Container(
-        child: Container(child: largeclock(context, ref, false)),
+  Widget headerWidget(BuildContext context) => ColoredBox(
+        color: Theme.of(context).appBarTheme.backgroundColor!,
+        child: Container(
+          child: largeclock(context, ref, false),
+        ),
       );
 
   Widget content() {
@@ -41,9 +45,8 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         const SizedBox(height: 20),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            primary: MyTheme(context: context, ref: ref).getColorScheme.primary,
-            onPrimary:
-                MyTheme(context: context, ref: ref).getColorScheme.onPrimary,
+            primary: colorScheme.primary,
+            onPrimary: colorScheme.onPrimary,
           ),
           onPressed: () => NotificationManager().alarmFinish(
             target: DateTime.now().add(
@@ -84,7 +87,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                 opacity: opacity,
                 duration: const Duration(seconds: 1),
                 child: Align(
-                  alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.all(30),
                     child: analogclock(context: context, ref: ref),
@@ -134,9 +136,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     ],
     headerWidget: headerWidget(context),
     headerBottomBar: Row(
-      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         IconButton(
           onPressed: () {
@@ -169,7 +169,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     body: [content(), debug(context: context, ref: ref)],
     fullyStretchable: true,
     expandedBody: expand(context),
-    backgroundColor: MyTheme(context: context, ref: ref).getBackgroundColor,
     floatingActionButton: show ? fab(context: context, ref: ref) : null,
   );
 }

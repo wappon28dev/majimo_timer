@@ -1,15 +1,9 @@
-library let_log;
-
 import 'dart:convert';
-import 'dart:ui';
 import 'dart:io';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/view/components/appbar.dart';
 
 part 'log_widget.dart';
@@ -55,16 +49,10 @@ class _Config {
 class Logger extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
-      theme: MyTheme(context: context, ref: ref).lightTheme,
-      darkTheme: MyTheme(context: context, ref: ref).darkTheme,
-      themeMode: ref.read(themeState).themeMode,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar:
-            commonAppbar(context: context, ref: ref, title: 'majimo_timer_log'),
-        body: const LogWidget(),
-      ),
+    return Scaffold(
+      appBar:
+          commonAppbar(context: context, ref: ref, title: 'majimo_timer_log'),
+      body: const LogWidget(),
     );
   }
 
@@ -108,18 +96,20 @@ class Logger extends HookConsumerWidget {
 
   /// Recording network information
   static void net(String api,
-      {String type = 'Http', int status = 100, Object? data}) {
+      {String type = 'Http', int status = 100, Object? data,}) {
     if (enabled) _Net.request(api, type, status, data);
   }
 
   /// End of record network information, with statistics on duration and size.
   static void endNet(String api,
-      {int status = 200, Object? data, Object? headers, String? type}) {
+      {int status = 200, Object? data, Object? headers, String? type,}) {
     if (enabled) _Net.response(api, status, data, headers, type);
   }
 }
 
 class _Log {
+
+  const _Log({this.type, this.message, this.detail, this.start});
   static final List<_Log> list = [];
   static final ValueNotifier<int> length = ValueNotifier(0);
   static final Map<Object, Object> _map = {};
@@ -128,8 +118,6 @@ class _Log {
   final String? message;
   final String? detail;
   final DateTime? start;
-
-  const _Log({this.type, this.message, this.detail, this.start});
 
   String get typeName {
     return _printNames[type!.index];
@@ -147,7 +135,7 @@ class _Log {
 
   @override
   String toString() {
-    final StringBuffer sb = StringBuffer();
+    final sb = StringBuffer();
     sb.writeln('Message: $message');
     sb.writeln('Time: $start');
     if (detail != null && detail!.length > 100) {
@@ -172,7 +160,7 @@ class _Log {
     length.value++;
     if (Logger.config.printLog) {
       debugPrint(
-          "--------------------------------\n${log.typeName}\n${log.message}${log.detail == null ? '' : '\n${log.detail}'}\n--------------------------------");
+          "--------------------------------\n${log.typeName}\n${log.message}${log.detail == null ? '' : '\n${log.detail}'}\n--------------------------------",);
     }
   }
 
@@ -203,6 +191,17 @@ class _Log {
 }
 
 class _Net extends ChangeNotifier {
+
+  _Net({
+    this.api,
+    this.type,
+    this.req,
+    this.headers,
+    this.start,
+    this.res,
+    this.spend = 0,
+    this.status = 100,
+  });
   static const all = 'All';
   static final List<_Net> list = [];
   static final ValueNotifier<int> length = ValueNotifier(0);
@@ -221,17 +220,6 @@ class _Net extends ChangeNotifier {
   bool showDetail = false;
   int _reqSize = -1;
   int _resSize = -1;
-
-  _Net({
-    this.api,
-    this.type,
-    this.req,
-    this.headers,
-    this.start,
-    this.res,
-    this.spend = 0,
-    this.status = 100,
-  });
 
   int getReqSize() {
     if (_reqSize > -1) return _reqSize;
@@ -266,7 +254,7 @@ class _Net extends ChangeNotifier {
 
   @override
   String toString() {
-    final StringBuffer sb = StringBuffer();
+    final sb = StringBuffer();
     sb.writeln('[$status] $api');
     sb.writeln('Start: $start');
     sb.writeln('Spend: $spend ms');
@@ -294,7 +282,7 @@ class _Net extends ChangeNotifier {
     length.value++;
     if (Logger.config.printNet) {
       debugPrint(
-          "${_printNames[4]} ${'$type: '}${net.api}${net.req == null ? '' : '\nData: ${net.req}'}\n--------------------------------");
+          "${_printNames[4]} ${'$type: '}${net.api}${net.req == null ? '' : '\nData: ${net.req}'}\n--------------------------------",);
     }
   }
 
@@ -305,8 +293,8 @@ class _Net extends ChangeNotifier {
   }
 
   static void response(
-      String api, int status, Object? data, Object? headers, String? type) {
-    _Net? net = _map[api];
+      String api, int status, Object? data, Object? headers, String? type,) {
+    var net = _map[api];
     if (net != null) {
       _map.remove(net);
       net.spend = DateTime.now().difference(net.start!).inMilliseconds;
@@ -325,7 +313,7 @@ class _Net extends ChangeNotifier {
     }
     if (Logger.config.printNet) {
       debugPrint(
-          "${_printNames[5]} ${net.type == null ? '' : '${net.type}: '}${net.api}${net.res == null ? '' : '\nData: ${net.res}'}\nSpend: ${net.spend} ms\n--------------------------------");
+          "${_printNames[5]} ${net.type == null ? '' : '${net.type}: '}${net.api}${net.res == null ? '' : '\nData: ${net.res}'}\nSpend: ${net.spend} ms\n--------------------------------",);
     }
   }
 

@@ -10,59 +10,36 @@ import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/src/pag
 enum SwipeDirection { LEFT_TO_RIGHT, RIGHT_TO_LEFT, SKIP_TO_LAST }
 
 class OverBoard extends StatefulWidget {
-  /// List of pages to render on-boarding
+  const OverBoard({
+    super.key,
+    required this.pages,
+    this.center,
+    this.showBullets = true,
+    this.skipText,
+    this.nextText,
+    this.finishText,
+    required this.finishCallback,
+    this.skipCallback,
+    this.buttonColor = Colors.white,
+    this.activeBulletColor = Colors.white,
+    this.inactiveBulletColor = Colors.white30,
+    this.backgroundProvider,
+    this.allowScroll = false,
+  });
+
   final List<PageModel> pages;
-
-  /// Offset to set center point of revealing circle
   final Offset? center;
-
-  /// Enable/disable bullets visibility
   final bool showBullets;
-
-  /// Callback method to capture finish button click
   final VoidCallback finishCallback;
-
-  /// Callback method to capture skip button click
   final VoidCallback? skipCallback;
-
-  /// Customize skip button text
   final String? skipText;
-
-  /// Customize next button text
   final String? nextText;
-
-  /// Customize finish button text
   final String? finishText;
-
-  /// Change action button colors
   final Color buttonColor;
   final bool allowScroll;
-
-  /// Change active bullet color
   final Color activeBulletColor;
-
-  /// Change inactive bullet color
   final Color inactiveBulletColor;
-
-  // Overboard background provider
   final ImageProvider<Object>? backgroundProvider;
-
-  OverBoard(
-      {Key? key,
-      required this.pages,
-      this.center,
-      this.showBullets = true,
-      this.skipText,
-      this.nextText,
-      this.finishText,
-      required this.finishCallback,
-      this.skipCallback,
-      this.buttonColor = Colors.white,
-      this.activeBulletColor = Colors.white,
-      this.inactiveBulletColor = Colors.white30,
-      this.backgroundProvider,
-      this.allowScroll = false})
-      : super(key: key);
 
   @override
   _OverBoardState createState() => _OverBoardState();
@@ -71,12 +48,16 @@ class OverBoard extends StatefulWidget {
 class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
   late OverBoardAnimator _animator;
 
-  ScrollController _scrollController = ScrollController();
-  double _bulletPadding = 5, _bulletSize = 5, _bulletContainerWidth = 0;
+  final ScrollController _scrollController = ScrollController();
+  final double _bulletPadding = 5;
+  final double _bulletSize = 5;
+  double _bulletContainerWidth = 0;
 
-  int _counter = 0, _last = 0;
+  int _counter = 0;
+  int _last = 0;
   int _total = 0;
-  double initial = 0, distance = 0;
+  double initial = 0;
+  double distance = 0;
   Random random = Random();
   SwipeDirection _swipeDirection = SwipeDirection.RIGHT_TO_LEFT;
 
@@ -93,7 +74,7 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
 
     if (widget.backgroundProvider != null) {
       _boxDecoration = BoxDecoration(
-          image: DecorationImage(image: widget.backgroundProvider!));
+          image: DecorationImage(image: widget.backgroundProvider!),);
     }
   }
 
@@ -172,8 +153,8 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
             builder: (context, child) {
               return ClipOval(
                   clipper: CircularClipper(
-                      _animator.getAnimator().value as double, widget.center),
-                  child: _getPage(_counter));
+                      _animator.getAnimator().value as double, widget.center,),
+                  child: _getPage(_counter),);
             },
             child: Container(),
           ),
@@ -185,12 +166,10 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Opacity(
-                  child: _getTextButton(
-                      widget.skipText ?? "SKIP",
-                      widget.skipCallback != null
-                          ? widget.skipCallback
-                          : _skip),
                   opacity: (_counter < _total - 1) ? 1.0 : 0.0,
+                  child: _getTextButton(
+                      widget.skipText ?? 'SKIP',
+                      widget.skipCallback ?? _skip,),
                 ),
                 Expanded(
                   child: Center(child: LayoutBuilder(
@@ -216,7 +195,7 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
                                               shape: BoxShape.circle,
                                               color: i == _counter
                                                   ? widget.activeBulletColor
-                                                  : widget.inactiveBulletColor),
+                                                  : widget.inactiveBulletColor,),
                                         ),
                                       )
                                   ],
@@ -225,15 +204,15 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
                             : Container(),
                       );
                     },
-                  )),
+                  ),),
                 ),
                 (_counter < _total - 1
                     ? _getTextButton(
-                        widget.nextText ?? "NEXT",
+                        widget.nextText ?? 'NEXT',
                         _next,
                       )
                     : _getTextButton(
-                        widget.finishText ?? "FINISH", widget.finishCallback)),
+                        widget.finishText ?? 'FINISH', widget.finishCallback,)),
               ],
             ),
           ),
@@ -267,16 +246,16 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
                     ? AnimatedBoard(
                         animator: _animator,
                         child: Padding(
-                          padding: const EdgeInsets.only(bottom: 0),
+                          padding: const EdgeInsets.only(),
                           child: Image.asset(page.imageAssetPath!,
-                              width: 300, height: 300),
+                              width: 300, height: 300,),
                         ),
                       )
                     : Image.asset(page.imageAssetPath!,
-                        width: 300, height: 300),
+                        width: 300, height: 300,),
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 10, bottom: 10, left: 30, right: 30),
+                      top: 10, bottom: 10, left: 30, right: 30,),
                   child: Text(
                     page.title!,
                     textAlign: TextAlign.center,
@@ -304,16 +283,16 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
     );
   }
 
-  TextButton _getTextButton(String _text, void Function()? _onPress) {
+  TextButton _getTextButton(String text, void Function()? onPress) {
     return TextButton(
       style: TextButton.styleFrom(
         padding: const EdgeInsets.all(20),
       ),
+      onPressed: onPress,
       child: Text(
-        _text,
+        text,
         style: TextStyle(color: widget.buttonColor),
       ),
-      onPressed: _onPress,
     );
   }
 
@@ -354,38 +333,37 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
   void _animate() {
     _animator.getController().forward(from: 0);
 
-    final _bulletDimension = (_bulletPadding * 2) + _bulletSize;
-    final _scroll = _bulletDimension * _counter;
-    final _maxScroll = _bulletDimension * _total - 1;
-    if (_scroll > _bulletContainerWidth &&
+    final bulletDimension = (_bulletPadding * 2) + _bulletSize;
+    final scroll = bulletDimension * _counter;
+    final maxScroll = bulletDimension * _total - 1;
+    if (scroll > _bulletContainerWidth &&
         _swipeDirection == SwipeDirection.RIGHT_TO_LEFT) {
-      final _scrollDistance =
-          (((_scroll - _bulletContainerWidth) ~/ _bulletDimension) + 1) *
-              _bulletDimension;
-      _scrollController.animateTo(_scrollDistance,
-          curve: Curves.easeIn, duration: const Duration(milliseconds: 100));
-    } else if (_scroll < (_maxScroll - _bulletContainerWidth) &&
+      final scrollDistance =
+          (((scroll - _bulletContainerWidth) ~/ bulletDimension) + 1) *
+              bulletDimension;
+      _scrollController.animateTo(scrollDistance,
+          curve: Curves.easeIn, duration: const Duration(milliseconds: 100),);
+    } else if (scroll < (maxScroll - _bulletContainerWidth) &&
         _swipeDirection == SwipeDirection.LEFT_TO_RIGHT) {
-      _scrollController.animateTo(_scroll,
-          curve: Curves.easeIn, duration: const Duration(milliseconds: 100));
+      _scrollController.animateTo(scroll,
+          curve: Curves.easeIn, duration: const Duration(milliseconds: 100),);
     } else if (_swipeDirection == SwipeDirection.SKIP_TO_LAST) {
-      _scrollController.animateTo(_maxScroll,
-          curve: Curves.easeIn, duration: const Duration(milliseconds: 100));
+      _scrollController.animateTo(maxScroll,
+          curve: Curves.easeIn, duration: const Duration(milliseconds: 100),);
     }
   }
 }
 
 class AnimatedBoard extends StatelessWidget {
+
+  const AnimatedBoard({super.key, required this.animator, required this.child});
   final Widget? child;
   final OverBoardAnimator animator;
-
-  const AnimatedBoard({Key? key, required this.animator, required this.child})
-      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Transform(
       transform: Matrix4.translationValues(
-          0, 50.0 * (1.0 - (animator.getAnimator().value as num)), 0),
+          0, 50.0 * (1.0 - (animator.getAnimator().value as num)), 0,),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 25),
         child: child,

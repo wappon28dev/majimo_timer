@@ -1,7 +1,7 @@
-part of let_log;
+part of 'let_log.dart';
 
 class LogWidget extends StatefulWidget {
-  const LogWidget({Key? key}) : super(key: key);
+  const LogWidget({super.key});
 
   @override
   _LogWidgetState createState() => _LogWidgetState();
@@ -9,7 +9,7 @@ class LogWidget extends StatefulWidget {
 
 class _LogWidgetState extends State<LogWidget> {
   bool _showSearch = false;
-  String _keyword = "";
+  String _keyword = '';
   TextEditingController? _textController;
   ScrollController? _scrollController;
   FocusNode? _focusNode;
@@ -42,7 +42,7 @@ class _LogWidgetState extends State<LogWidget> {
             child: ValueListenableBuilder<int>(
               valueListenable: _Log.length,
               builder: (context, value, child) {
-                List<_Log> logs = _Log.list;
+                var logs = _Log.list;
                 if (_selectTypes.length < 4 || _keyword.isNotEmpty) {
                   logs = _Log.list.where((test) {
                     return _selectTypes.contains(test.type) &&
@@ -99,7 +99,7 @@ class _LogWidgetState extends State<LogWidget> {
   Widget _buildItem(_Log item, Color? color) {
     return InkWell(
       onTap: () {
-        final ClipboardData data = ClipboardData(text: item.toString());
+        final data = ClipboardData(text: item.toString());
         Clipboard.setData(data);
         showDialog<void>(
           context: context,
@@ -109,7 +109,7 @@ class _LogWidgetState extends State<LogWidget> {
               child: Material(
                 color: Colors.transparent,
                 child: Text(
-                  "copy success!",
+                  'copy success!',
                   style: TextStyle(color: Colors.white, fontSize: 30),
                 ),
               ),
@@ -169,8 +169,8 @@ class _LogWidgetState extends State<LogWidget> {
   ];
 
   Widget _buildTools() {
-    final List<ChoiceChip> arr = [];
-    _Type.values.forEach((f) {
+    final arr = <ChoiceChip>[];
+    for (final f in _Type.values) {
       arr.add(
         ChoiceChip(
           label: Text(
@@ -187,7 +187,7 @@ class _LogWidgetState extends State<LogWidget> {
           },
         ),
       );
-    });
+    }
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 5, 0, 5),
       child: AnimatedCrossFade(

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_color/src/helper.dart';
 import 'package:flutter_grid_button/flutter_grid_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/state.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 Future<dynamic> modal(
@@ -16,54 +15,55 @@ Future<dynamic> modal(
   List<Widget> widget,
 ) {
   const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
-  final onBackground = MyTheme(context: context, ref: ref).getOnBackgroundColor;
+  final colorScheme = Theme.of(context).colorScheme;
+  final onBackground = ref
+      .read(themeState.notifier)
+      .getOnBackgroundColor(context: context, ref: ref);
   final header = <Widget>[
-    Theme(
-      data: MyTheme(context: context, ref: ref).getThemeData,
-      child: Column(
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 3),
-            width: 35,
-            height: 4,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.grey[400],
-            ),
+    Column(
+      children: <Widget>[
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 3),
+          width: 35,
+          height: 4,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.grey[400],
           ),
-          const SizedBox(height: 10),
-          Icon(
-            icon,
+        ),
+        const SizedBox(height: 10),
+        Icon(
+          icon,
+          color: onBackground,
+        ),
+        const SizedBox(height: 8),
+        AutoSizeText(
+          title,
+          style: TextStyle(
+            color: onBackground,
+            fontWeight: FontWeight.w600,
+          ),
+          minFontSize: 20,
+          maxLines: 1,
+        ),
+        const SizedBox(height: 5),
+        AutoSizeText(
+          subtitle,
+          style: TextStyle(
             color: onBackground,
           ),
-          const SizedBox(height: 8),
-          AutoSizeText(
-            title,
-            style: TextStyle(
-              color: onBackground,
-              fontWeight: FontWeight.w600,
-            ),
-            minFontSize: 20,
-            maxLines: 1,
-          ),
-          const SizedBox(height: 5),
-          AutoSizeText(
-            subtitle,
-            style: TextStyle(
-              color: onBackground,
-            ),
-            maxLines: 1,
-            minFontSize: 10,
-          ),
-          const SizedBox(height: 5),
-          const Divider(
-            thickness: 2,
-          ),
-        ],
-      ),
+          maxLines: 1,
+          minFontSize: 10,
+        ),
+        const SizedBox(height: 5),
+        const Divider(
+          thickness: 2,
+        ),
+      ],
     )
   ];
   final bottom = <Widget>[];
+  print(Theme.of(context).scaffoldBackgroundColor);
   return showCupertinoModalBottomSheet<dynamic>(
     context: context,
     barrierColor: Colors.black54,
@@ -72,13 +72,10 @@ Future<dynamic> modal(
     builder: (context) => SingleChildScrollView(
       controller: ModalScrollController.of(context),
       child: Material(
-        child: Theme(
-          data: MyTheme(context: context, ref: ref).getThemeData,
-          child: Ink(
-            padding: padding,
-            color: MyTheme(context: context, ref: ref).getBackgroundColor,
-            child: Column(children: header + widget + bottom),
-          ),
+        child: Ink(
+          padding: padding,
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Column(children: header + widget + bottom),
         ),
       ),
     ),
@@ -92,44 +89,41 @@ Future<dynamic> numberPad({
   const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
   final value = ref.read(themeState.notifier).isLight(context: context);
   final header = <Widget>[
-    Theme(
-      data: MyTheme(context: context, ref: ref).getThemeData,
-      child: Column(
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 3),
-            width: 35,
-            height: 4,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.grey[400],
-            ),
+    Column(
+      children: <Widget>[
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 3),
+          width: 35,
+          height: 4,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.grey[400],
           ),
-          const SizedBox(height: 10),
-          const Icon(Icons.alarm_add),
-          const SizedBox(height: 8),
-          AutoSizeText(
-            'アラームをセットしましょう',
-            style: TextStyle(
-              color: value ? Colors.black : Colors.white,
-              fontWeight: FontWeight.w600,
-            ),
-            minFontSize: 20,
-            maxLines: 1,
+        ),
+        const SizedBox(height: 10),
+        const Icon(Icons.alarm_add),
+        const SizedBox(height: 8),
+        AutoSizeText(
+          'アラームをセットしましょう',
+          style: TextStyle(
+            color: value ? Colors.black : Colors.white,
+            fontWeight: FontWeight.w600,
           ),
-          const SizedBox(height: 5),
-          AutoSizeText(
-            'subtitle',
-            style: TextStyle(color: value ? Colors.black : Colors.white),
-            maxLines: 1,
-            minFontSize: 10,
-          ),
-          const SizedBox(height: 5),
-          const Divider(
-            thickness: 2,
-          ),
-        ],
-      ),
+          minFontSize: 20,
+          maxLines: 1,
+        ),
+        const SizedBox(height: 5),
+        AutoSizeText(
+          'subtitle',
+          style: TextStyle(color: value ? Colors.black : Colors.white),
+          maxLines: 1,
+          minFontSize: 10,
+        ),
+        const SizedBox(height: 5),
+        const Divider(
+          thickness: 2,
+        ),
+      ],
     )
   ];
 
@@ -189,17 +183,14 @@ Future<dynamic> numberPad({
     builder: (context) => SingleChildScrollView(
       controller: ModalScrollController.of(context),
       child: Material(
-        child: Theme(
-          data: MyTheme(context: context, ref: ref).getThemeData,
-          child: Ink(
-            padding: padding,
-            color: value
-                ? Colors.deepOrange.shade100.lighter(12)
-                : Colors.deepOrange.shade50.darker(70),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: header + pad,
-            ),
+        child: Ink(
+          padding: padding,
+          color: value
+              ? Colors.deepOrange.shade100.lighter(12)
+              : Colors.deepOrange.shade50.darker(70),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: header + pad,
           ),
         ),
       ),

@@ -4,6 +4,27 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class FlutterAnalogClockPainter extends CustomPainter {
+
+  FlutterAnalogClockPainter(
+    this._datetime, {
+    this.dialPlateColor = Colors.transparent,
+    this.hourHandColor = Colors.black,
+    this.minuteHandColor = Colors.black,
+    this.secondHandColor = Colors.black,
+    this.numberColor = Colors.black,
+    this.borderColor = Colors.black,
+    this.tickColor = Colors.black,
+    this.centerPointColor = Colors.black,
+    this.showBorder = true,
+    this.showTicks = true,
+    this.showMinuteHand = true,
+    this.showSecondHand = true,
+    this.showNumber = true,
+    this.hourNumberScale = 1.0,
+    this.hourNumbers = defaultHourNumbers,
+    double? borderWidth,
+  })  : assert(hourNumbers.length == 12),
+        _borderWidth = borderWidth;
   static const List<String> defaultHourNumbers = [
     '1',
     '2',
@@ -39,27 +60,6 @@ class FlutterAnalogClockPainter extends CustomPainter {
     textAlign: TextAlign.center,
     textDirection: TextDirection.ltr,
   );
-
-  FlutterAnalogClockPainter(
-    this._datetime, {
-    this.dialPlateColor = Colors.transparent,
-    this.hourHandColor = Colors.black,
-    this.minuteHandColor = Colors.black,
-    this.secondHandColor = Colors.black,
-    this.numberColor = Colors.black,
-    this.borderColor = Colors.black,
-    this.tickColor = Colors.black,
-    this.centerPointColor = Colors.black,
-    this.showBorder = true,
-    this.showTicks = true,
-    this.showMinuteHand = true,
-    this.showSecondHand = true,
-    this.showNumber = true,
-    this.hourNumberScale = 1.0,
-    this.hourNumbers = defaultHourNumbers,
-    double? borderWidth,
-  })  : assert(hourNumbers == null || hourNumbers.length == 12),
-        _borderWidth = borderWidth;
 
   @override
   void paint(Canvas canvas, Size size) {

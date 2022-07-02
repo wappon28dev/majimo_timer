@@ -32,8 +32,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       children: [
         Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 20),
               SizedBox(
@@ -162,7 +160,6 @@ List<Widget> count({required BuildContext context, required WidgetRef ref}) {
       progressColor: _front(),
       backgroundColor: _back(),
       circularStrokeCap: CircularStrokeCap.square,
-      reverse: false,
     ),
     AutoSizeText(
       indicator,

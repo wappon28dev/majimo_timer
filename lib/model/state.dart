@@ -2,12 +2,56 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/main.dart';
+import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/model/helper/config.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 
 part 'state.freezed.dart';
+
+//global
+final globalState = StateNotifierProvider<GlobalController, GlobalState>(
+  (ref) => GlobalController(),
+);
+final generalState = StateNotifierProvider<GeneralController, GeneralState>(
+  (ref) => GeneralController(),
+);
+final themeState = StateNotifierProvider<ThemeController, ThemeState>(
+  (ref) => ThemeController(),
+);
+final langState =
+    StateNotifierProvider<LangController, LangState>((ref) => LangController());
+final clockState = StateNotifierProvider<ClockController, ClockState>(
+  (ref) => ClockController(),
+);
+final colorState = StateNotifierProvider<ColorController, ColorState>(
+  (ref) => ColorController(),
+);
+final alarmState = StateNotifierProvider<AlarmController, AlarmState>(
+  (ref) => AlarmController(ref.read),
+);
+final alarmTKState =
+    StateNotifierProvider<AlarmTimeKeepingController, AlarmTimeKeepingState>(
+  (ref) => AlarmTimeKeepingController(ref.read),
+);
+final timerState = StateNotifierProvider<TimerController, TimerState>(
+  (ref) => TimerController(ref.read),
+);
+final timerTKState =
+    StateNotifierProvider<TimerTimeKeepingController, TimerTimeKeepingState>(
+  (ref) => TimerTimeKeepingController(ref.read),
+);
+final goalState =
+    StateNotifierProvider<GoalController, GoalState>((ref) => GoalController());
+final goalTKState =
+    StateNotifierProvider<GoalTimeKeepingController, GoalTimeKeepingState>(
+  (ref) => GoalTimeKeepingController(ref.read),
+);
+final nowStream = StreamProvider.autoDispose<DateTime>((ref) async* {
+  while (true) {
+    await Future<void>.delayed(const Duration(milliseconds: 10));
+    yield DateTime.now();
+  }
+});
 
 @freezed
 class GlobalState with _$GlobalState {
@@ -226,10 +270,7 @@ class ColorState with _$ColorState {
   }) {
     List<dynamic>? array;
     final isLight = ref.read(themeState.notifier).isLight(context: context);
-    final color = MyTheme(context: context, ref: ref)
-        .getThemeData
-        .appBarTheme
-        .backgroundColor;
+    final color = Theme.of(context).appBarTheme.backgroundColor!;
     isLight
         ? array = <dynamic>[
             Colors.black,

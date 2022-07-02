@@ -3,16 +3,15 @@ import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/main.dart';
 import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/route.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/view/debug/body.dart';
 
 Widget debug({required BuildContext context, required WidgetRef ref}) {
-  final colorScheme = MyTheme(context: context, ref: ref).getColorScheme;
+  final colorScheme = Theme.of(context).colorScheme;
+
   return Column(
     children: [
       Card(
@@ -22,7 +21,7 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(
-            color: MyTheme(context: context, ref: ref).getColorScheme.tertiary,
+            color: colorScheme.tertiary,
           ),
         ),
         child: Padding(
@@ -132,7 +131,7 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(
-            color: MyTheme(context: context, ref: ref).getColorScheme.tertiary,
+            color: colorScheme.tertiary,
           ),
         ),
         child: Padding(

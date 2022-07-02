@@ -3,20 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_color/flutter_color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
-import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/helper/route.dart';
-import 'package:majimo_timer/model/helper/theme.dart';
+import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:simple_animations/stateless_animation/play_animation.dart';
-
-import '../../../../main.dart';
 
 part 'vertical.dart';
 
 class GoalTimeKeepingPage extends HookConsumerWidget {
-  const GoalTimeKeepingPage({Key? key}) : super(key: key);
+  const GoalTimeKeepingPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orientation = MediaQuery.of(context).orientation;
@@ -159,18 +156,11 @@ class GoalTimeKeepingPage extends HookConsumerWidget {
       }
     }
 
-    return MaterialApp(
-      theme: MyTheme(context: context, ref: ref).lightTheme,
-      darkTheme: MyTheme(context: context, ref: ref).darkTheme,
-      themeMode: ref.read(themeState).themeMode,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: show ? fab() : null,
-        body: !isLandscape
-            ? buildVertical(context, ref)
-            : buildHorizontal(context),
-      ),
+    return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: show ? fab() : null,
+      body:
+          !isLandscape ? buildVertical(context, ref) : buildHorizontal(context),
     );
   }
 }
@@ -190,7 +180,6 @@ Widget analogclockTimekeeping({
   final isLight = ref.read(themeState.notifier).isLight(context: context);
   final showSec = ref.read(clockState).showSec;
   return FlutterAnalogClock(
-    showNumber: true,
     dialPlateColor: Colors.transparent,
     hourHandColor: isLight ? Colors.black.lighter(60) : Colors.white.darker(20),
     minuteHandColor:

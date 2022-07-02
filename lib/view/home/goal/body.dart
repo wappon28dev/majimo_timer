@@ -2,15 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
-import 'package:majimo_timer/main.dart';
-import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
+import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/components/rounded_card.dart';
 import 'package:majimo_timer/view/home/goal/timekeeping/body.dart';
 
@@ -18,7 +16,7 @@ part 'horizontal.dart';
 part 'vertical.dart';
 
 class GoalPage extends HookConsumerWidget {
-  const GoalPage({Key? key}) : super(key: key);
+  const GoalPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -66,7 +64,7 @@ class GoalPage extends HookConsumerWidget {
           },
         ),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
+          
         ),
         elevation: 0,
         title: Center(

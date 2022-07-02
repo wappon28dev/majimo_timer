@@ -21,7 +21,6 @@ class AlarmController extends StateNotifier<AlarmState> {
     RippleBackdropAnimatePage.show(
       context: context,
       childFade: true,
-      duration: 300,
       blurRadius: 20,
       bottomHeight: 110,
       child: GestureDetector(

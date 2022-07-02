@@ -2,14 +2,34 @@ library circular_countdown_timer;
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:majimo_timer/main.dart';
 import 'custom_timer_painter.dart';
 
 /// Create a Circular Countdown Timer.
 class CircularCountDownTimer extends ConsumerStatefulWidget {
-  /// Key for Countdown Timer.
-  @override
-  final Key? key;
+  const CircularCountDownTimer({
+    required this.width,
+    required this.height,
+    required this.duration,
+    required this.fillColor,
+    required this.ringColor,
+    this.backgroundColor,
+    this.fillGradient,
+    this.ringGradient,
+    this.backgroundGradient,
+    this.initialDuration = 0,
+    this.isReverse = false,
+    this.isReverseAnimation = false,
+    this.onComplete,
+    this.onStart,
+    this.strokeWidth = 5.0,
+    this.strokeCap = StrokeCap.butt,
+    this.textStyle,
+    this.isTimerTextShown = true,
+    this.autoStart = true,
+    this.textFormat,
+    this.isUpCount = false,
+    required this.controller,
+  }) : assert(initialDuration <= duration);
 
   /// Filling Color for Countdown Widget.
   final Color fillColor;
@@ -75,33 +95,6 @@ class CircularCountDownTimer extends ConsumerStatefulWidget {
   final bool autoStart;
 
   final bool isUpCount;
-
-  const CircularCountDownTimer({
-    required this.width,
-    required this.height,
-    required this.duration,
-    required this.fillColor,
-    required this.ringColor,
-    this.backgroundColor,
-    this.fillGradient,
-    this.ringGradient,
-    this.backgroundGradient,
-    this.initialDuration = 0,
-    this.isReverse = false,
-    this.isReverseAnimation = false,
-    this.onComplete,
-    this.onStart,
-    this.strokeWidth = 5.0,
-    this.strokeCap = StrokeCap.butt,
-    this.textStyle,
-    this.key,
-    this.isTimerTextShown = true,
-    this.autoStart = true,
-    this.textFormat,
-    this.isUpCount = false,
-    required this.controller,
-  })  : assert(initialDuration <= duration),
-        super(key: key);
 
   @override
   CircularCountDownTimerState createState() => CircularCountDownTimerState();

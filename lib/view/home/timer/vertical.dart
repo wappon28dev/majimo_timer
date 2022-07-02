@@ -25,7 +25,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     final result = await showDurationPicker(
                       context: context,
                       initialTime: timerstate.targetDuration,
-                      baseUnit: BaseUnit.minute,
                     );
                     if (result != null && result != timerstate.targetDuration) {
                       ref
@@ -54,7 +53,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                     final result = await showDurationPicker(
                       context: context,
                       initialTime: timerstate.targetIntervalDuration,
-                      baseUnit: BaseUnit.minute,
                     );
                     if (result != null &&
                         result != timerstate.targetIntervalDuration) {
@@ -88,7 +86,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             Text(ref.read(timerState).targetIntervalLoopingNum.toString()),
             Slider(
               label: timerstate.targetIntervalLoopingNum.toString(),
-              min: 0,
               max: 10,
               value: timerstate.targetIntervalLoopingNum.toDouble(),
               activeColor: Colors.orange,

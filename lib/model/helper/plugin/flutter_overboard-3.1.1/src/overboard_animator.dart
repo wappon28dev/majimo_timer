@@ -1,9 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 class OverBoardAnimator {
-  late TickerProvider _vsync;
-  late AnimationController _controller;
-  late Animation _animation;
 
   //  static final OverBoardAnimator _singleton = new OverBoardAnimator._internal();
 
@@ -20,11 +17,14 @@ class OverBoardAnimator {
   OverBoardAnimator(TickerProvider vsync) {
     _vsync = vsync;
     _controller = AnimationController(
-        vsync: _vsync, duration: const Duration(milliseconds: 300));
+        vsync: _vsync, duration: const Duration(milliseconds: 300),);
     _animation =
         CurvedAnimation(parent: _controller, curve: Curves.easeInOutQuart);
     print('creating new animator');
   }
+  late TickerProvider _vsync;
+  late AnimationController _controller;
+  late Animation _animation;
 
   AnimationController getController() {
     return _controller;
