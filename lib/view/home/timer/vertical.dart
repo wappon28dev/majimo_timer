@@ -2,101 +2,123 @@ part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final timerstate = ref.read(timerState);
+  final timerstateFunc = ref.read(timerState.notifier);
+  final targetDuration = timerstate.targetDuration;
+  final targetLN = ref.read(timerState).targetLoopingNum;
+  final colorScheme = Theme.of(context).colorScheme;
+
+  final header = Column(
+    children: const [
+      SizedBox(height: 20),
+      Icon(Icons.u_turn_left, color: Colors.white),
+    ],
+  );
+
+  final footer = Column(
+    children: [
+      const SizedBox(height: 10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              // Foreground color
+              onPrimary: colorScheme.onPrimary,
+              // Background color
+              primary: colorScheme.primary,
+            ).copyWith(elevation: ButtonStyleButton.allOrNull(0)),
+            onPressed: timerstateFunc.addTargetDuration,
+            icon: const Icon(Icons.add),
+            label: const Text('新しいタイマーを追加'),
+          ),
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              // Foreground color
+              onPrimary: colorScheme.onPrimary,
+              // Background color
+              primary: colorScheme.primary,
+            ).copyWith(elevation: ButtonStyleButton.allOrNull(0)),
+            onPressed: timerstateFunc.resetTargetDuration,
+            icon: const Icon(Icons.delete_forever),
+            label: const Text('タイマーのリセット'),
+          ),
+        ],
+      ),
+      const SizedBox(height: 10),
+      const RotatedBox(
+        quarterTurns: 2,
+        child: Icon(Icons.u_turn_left, color: Colors.white),
+      ),
+    ],
+  );
+
+  Widget flow() {
+    final rows = List<Widget>.generate(targetDuration.length, (int i) {
+      if (i != 0) {
+        return TapToExpand(
+          content: Center(
+            child: Text((targetDuration[i]).toString()),
+          ),
+          title: Text(targetDuration[i].toString()),
+          color: Theme.of(context).cardColor,
+          iconColor: Colors.black,
+          isExpand: false,
+          leading: Text((i).toString()),
+          key: ValueKey(i),
+        );
+      } else {
+        return SizedBox(key: ValueKey(i));
+      }
+    });
+
+    void _onReorder(int oldIndex, int newIndex) {
+      final row = rows.removeAt(oldIndex);
+      rows.insert(newIndex, row);
+      timerstateFunc.sortTargetDuration(oldIndex, newIndex);
+    }
+
+    return ReorderableColumn(
+      onReorder: _onReorder,
+      children: rows,
+    );
+  }
+
   Widget content() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-      child: Center(
-        child: Column(
-          children: [
-            roundedCard(
-              context: context,
-              ref: ref,
-              body: <Widget>[
-                GestureDetector(
-                  child: Text(
-                    ref.watch(timerState).targetDurationStr,
-                    style: TextStyle(
-                      fontSize: 70,
-                      color: ColorKey.red.value,
-                      fontFamily: 'M-plus-B',
-                    ),
-                  ),
-                  onTap: () async {
-                    final result = await showDurationPicker(
-                      context: context,
-                      initialTime: timerstate.targetDuration,
-                    );
-                    if (result != null && result != timerstate.targetDuration) {
-                      ref
-                          .read(timerState.notifier)
-                          .updateTargetDuration(value: result.inMinutes);
-                      Logger.i(
-                        '- from majimo_timer/lib/view/home/timer/widget.dart \n >> receive result => $result',
-                      );
-                    }
-                  },
+      child: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              header,
+              flow(),
+              footer,
+              const SizedBox(height: 20),
+              OutlinedButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.repeat_one, color: Colors.white),
+                label: const Text(
+                  '繰り返し回数を指定',
+                  style: TextStyle(color: Colors.white),
                 ),
-                const Icon(
-                  Icons.import_export,
-                  size: 50,
-                ),
-                GestureDetector(
-                  child: Text(
-                    ref.watch(timerState).targetIntervalDurationStr,
-                    style: TextStyle(
-                      fontSize: 70,
-                      color: ColorKey.red.value,
-                      fontFamily: 'M-plus-B',
-                    ),
-                  ),
-                  onTap: () async {
-                    final result = await showDurationPicker(
-                      context: context,
-                      initialTime: timerstate.targetIntervalDuration,
-                    );
-                    if (result != null &&
-                        result != timerstate.targetIntervalDuration) {
-                      ref
-                          .read(timerState.notifier)
-                          .updateTargetIntervalDuration(
-                            value: result.inMinutes,
-                          );
-                      Logger.i(
-                        '- from majimo_timer/lib/view/home/timer/widget.dart \n >> receive result => $result',
-                      );
-                    }
-                  },
-                ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     Text(
-                //       'something',
-                //       style: TextStyle(
-                //         fontSize: 30,
-                //         fontWeight: FontWeight.bold,
-                //         color: ColorKey.red.value,
-                //       ),
-                //     ),
-                //   ],
-                // ),
-              ],
-            ),
-            const Text('\n\n set targetIntervalLoopingNum !'),
-            Text(ref.read(timerState).targetIntervalLoopingNum.toString()),
-            Slider(
-              label: timerstate.targetIntervalLoopingNum.toString(),
-              max: 10,
-              value: timerstate.targetIntervalLoopingNum.toDouble(),
-              activeColor: Colors.orange,
-              inactiveColor: Colors.blueAccent,
-              divisions: 10,
-              onChanged: (value) => ref
-                  .read(timerState.notifier)
-                  .updateIntervalLoopingNum(value: value.toInt()),
-            ),
-            Text(timerstate.canStart.toString()),
-          ],
+              ),
+              const Text('\n\n set targetIntervalLoopingNum !'),
+              Text(targetLN.toString()),
+              // Slider(
+              //   label: targetLN.toString(),
+              //   max: 10,
+              //   value: targetLN.toDouble(),
+              //   activeColor: Colors.orange,
+              //   inactiveColor: Colors.blueAccent,
+              //   divisions: 10,
+              //   onChanged: (value) => ref
+              //       .read(timerState.notifier)
+              //       .updateTargetLoopingNum(value: value.toInt()),
+              // ),
+              Text(timerstate.canStart.toString()),
+              const SizedBox(height: 80),
+            ],
+          ),
         ),
       ),
     );

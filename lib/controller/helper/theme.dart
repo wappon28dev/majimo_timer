@@ -57,8 +57,8 @@ class ThemeController extends StateNotifier<ThemeState> {
       brightness: Brightness.light,
       useMaterial3: true,
       colorSchemeSeed: state.seedColor,
-      scaffoldBackgroundColor: colorScheme.primaryContainer,
-      backgroundColor: colorScheme.primaryContainer,
+      scaffoldBackgroundColor: colorScheme.secondaryContainer,
+      backgroundColor: colorScheme.secondaryContainer,
       appBarTheme: AppBarTheme(
         centerTitle: true,
         backgroundColor: colorScheme.inversePrimary,

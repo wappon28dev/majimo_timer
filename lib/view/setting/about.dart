@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/config.dart';
-import 'package:majimo_timer/model/helper/route.dart';
+
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/components/appbar.dart';
 import 'package:majimo_timer/view/components/rounded_card.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 
 class AboutApp extends HookConsumerWidget {
   const AboutApp({super.key});
@@ -57,8 +58,7 @@ class AboutApp extends HookConsumerWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(
-                onPressed: () => RouteManager().runURL(
-                  ref: ref,
+                onPressed: () => RouteManager(context, ref).runURL(
                   url: PathStore().privacyURL,
                 ),
                 icon: const Icon(Icons.launch),
@@ -122,8 +122,7 @@ class AboutAppTeam extends HookConsumerWidget {
                     const Icon(Icons.launch, color: Colors.purple),
                   ],
                 ),
-                onPressed: () => RouteManager().runURL(
-                  ref: ref,
+                onPressed: () => RouteManager(context, ref).runURL(
                   url: PathStore().meidenURL,
                 ),
               ),
@@ -150,8 +149,7 @@ class AboutAppTeam extends HookConsumerWidget {
                     const Icon(Icons.launch, color: Colors.purple),
                   ],
                 ),
-                onPressed: () => RouteManager().runURL(
-                  ref: ref,
+                onPressed: () => RouteManager(context, ref).runURL(
                   url: PathStore().miscURL,
                 ),
               ),

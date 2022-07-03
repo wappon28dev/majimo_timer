@@ -3,11 +3,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/flutter_overboard.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_overboard-3.1.1/src/overboard.dart';
-import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 
 class Tutorial extends ConsumerStatefulWidget {
   const Tutorial({super.key});
@@ -26,15 +26,13 @@ class _TutorialState extends ConsumerState<Tutorial> {
       body: OverBoard(
         pages: pages,
         skipCallback: () {
-          RouteManager().runPush(
-            context: context,
+          RouteManager(context, ref).runPush(
             page: const HomePage(),
             isReplace: true,
           );
         },
         finishCallback: () {
-          RouteManager().runPush(
-            context: context,
+          RouteManager(context, ref).runPush(
             page: const HomePage(),
             isReplace: true,
           );

@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 0.6.5
+version: 0.6.8
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -27,6 +27,7 @@ dependencies:
   flutter_hooks: ^0.18.0
   flutter_styled_toast: ^2.0.0
   flutter_windowmanager: ^0.2.0
+  flutter_expanded_tile: ^0.3.6
   freezed_annotation: ^2.0.3
   fullscreen: ^1.0.3
   hooks_riverpod: ^1.0.0
@@ -34,11 +35,13 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   percent_indicator: ^4.0.0
   quick_actions: ^0.6.0+8
+  reorderables: ^0.5.0
   ripple_backdrop_animate_route: ^1.0.0
   rive: ^0.9.0
   rxdart: ^0.27.4
   simple_animations: ^4.0.1
   slide_digital_clock: ^1.0.2
+  tap_to_expand: ^0.5.7
   wakelock: ^0.6.1+2
 
 dev_dependencies:

@@ -9,12 +9,13 @@ import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
 import 'package:majimo_timer/model/helper/pref.dart';
-import 'package:majimo_timer/model/helper/route.dart';
+
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/components/appbar.dart';
 import 'package:majimo_timer/view/components/modal.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 import 'package:majimo_timer/view/setting/about.dart';
 
 part 'widget.dart';
@@ -137,8 +138,7 @@ class Setting extends HookConsumerWidget {
                 title: Text('${t.app_name.t} - ${t.beta.t}'),
                 subtitle: Text(AppDataStore().versionStr),
                 leading: const Icon(Icons.info_outline),
-                onTap: () => RouteManager().runPush(
-                  context: context,
+                onTap: () => RouteManager(context, ref).runPush(
                   page: const AboutApp(),
                   isReplace: false,
                 ),
@@ -153,8 +153,7 @@ class Setting extends HookConsumerWidget {
                 title: Text(t.about_app_team.t),
                 subtitle: Text(t.about_app_team_sub.t),
                 leading: const Icon(Icons.emoji_people),
-                onTap: () => RouteManager().runPush(
-                  context: context,
+                onTap: () => RouteManager(context, ref).runPush(
                   page: const AboutAppTeam(),
                   isReplace: false,
                 ),
@@ -164,8 +163,7 @@ class Setting extends HookConsumerWidget {
                 subtitle: Text(t.github_sub.t),
                 leading: const Icon(Icons.receipt_long),
                 trailing: const Icon(Icons.launch),
-                onTap: () => RouteManager().runURL(
-                  ref: ref,
+                onTap: () => RouteManager(context, ref).runURL(
                   url: PathStore().githubURL,
                 ),
               ),
@@ -174,8 +172,7 @@ class Setting extends HookConsumerWidget {
                 subtitle: Text(t.license_sub.t),
                 leading: const Icon(Icons.balance),
                 trailing: const Icon(Icons.launch),
-                onTap: () => RouteManager().runURL(
-                  ref: ref,
+                onTap: () => RouteManager(context, ref).runURL(
                   url: PathStore().licenseURL,
                 ),
               ),

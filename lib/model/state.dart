@@ -13,7 +13,7 @@ final globalState = StateNotifierProvider<GlobalController, GlobalState>(
   (ref) => GlobalController(),
 );
 final generalState = StateNotifierProvider<GeneralController, GeneralState>(
-  (ref) => GeneralController(),
+  (ref) => GeneralController(ref.read),
 );
 final themeState = StateNotifierProvider<ThemeController, ThemeState>(
   (ref) => ThemeController(),
@@ -306,27 +306,34 @@ class AlarmTimeKeepingState with _$AlarmTimeKeepingState {
   const AlarmTimeKeepingState._();
 }
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class TimerState with _$TimerState {
   const factory TimerState({
-    @Default(Duration(minutes: 1)) Duration targetDuration,
-    @Default(Duration(minutes: 1)) Duration targetIntervalDuration,
-    @Default(0) int targetIntervalLoopingNum,
+    @Default([
+      Duration(minutes: 1),
+      Duration(minutes: 2),
+    ])
+        List<Duration> targetDuration,
+
+    // targetIntervalLoopingNumber aka targetILN
+    @Default(0)
+        int targetIntervalLoopingNum,
   }) = _TimerState;
 
   const TimerState._();
 
-  String get targetDurationStr =>
-      '${targetDuration.inHours.toString().padLeft(2, '0')}h:'
-      '${targetDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
-  String get targetIntervalDurationStr =>
-      '${targetIntervalDuration.inHours.toString().padLeft(2, '0')}h:'
-      '${targetIntervalDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
+  // String get targetDurationStr =>
+  //     '${targetDuration.f.inHours.toString().padLeft(2, '0')}h:'
+  //     '${targetDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
+  // String get targetIntervalDurationStr =>
+  //     '${targetIntervalDuration.inHours.toString().padLeft(2, '0')}h:'
+  //     '${targetIntervalDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}m';
+
+  /// targetLoopingNumber aka targetLN
+  int get targetLoopingNum => targetDuration.length;
 
   bool get canStart {
-    final value = targetDuration != Duration.zero &&
-        targetIntervalDuration != Duration.zero &&
-        targetIntervalLoopingNum != 0;
+    final value = targetDuration != Duration.zero;
     return value;
   }
 }
@@ -336,18 +343,14 @@ class TimerTimeKeepingState with _$TimerTimeKeepingState {
   const factory TimerTimeKeepingState({
     // started
     DateTime? startedTime,
-    DateTime? startedIntervalTime,
 
     // paused
     @Default(false) bool isPaused,
     DateTime? pausedTime,
-    DateTime? pausedIntervalTime,
     @Default(Duration.zero) Duration pausedDuration,
-    @Default(Duration.zero) Duration pausedIntervalDuration,
 
-    // interval
-    @Default(false) bool isCountingInterval,
-    @Default(0) int currentIntervalLoopingNum,
+    // currentLoopingNumber aka currentLN
+    @Default(0) int currentLoopingNum,
   }) = _TimerTimeKeepingState;
   const TimerTimeKeepingState._();
 }

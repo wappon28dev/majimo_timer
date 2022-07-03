@@ -1,11 +1,43 @@
+import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/state.dart';
+import 'package:majimo_timer/view/home/alarm/body.dart';
+import 'package:majimo_timer/view/home/goal/body.dart';
+import 'package:majimo_timer/view/home/timer/body.dart';
+import 'package:majimo_timer/view/setting/body.dart';
 
 class RouteManager {
+  RouteManager(this.context, this.ref);
+  BuildContext context;
+  WidgetRef ref;
+
+  void home2alarm() {
+    context.pushTransparentRoute<void>(const AlarmPage());
+    ref.read(alarmState.notifier).runInitialize();
+    ref.read(generalState.notifier).runFAB();
+  }
+
+  void home2timer() {
+    context.pushTransparentRoute<void>(const TimerPage());
+    if (ref.read(timerState).canStart) {
+      ref.read(generalState.notifier).runFAB();
+    } else {
+      ref.read(generalState.notifier).updateShowFAB(value: false);
+    }
+  }
+
+  void home2goal() {
+    context.pushTransparentRoute<void>(const GoalPage());
+    ref.read(generalState.notifier).runFAB();
+  }
+
+  void home2setting() {
+    runPush(page: const Setting(), isReplace: false);
+  }
+
   void runPush({
-    required BuildContext context,
     required Widget page,
     required bool isReplace,
   }) =>
@@ -22,7 +54,6 @@ class RouteManager {
             );
 
   Future<void> runURL({
-    required WidgetRef ref,
     required String url,
   }) async {
     final color = ref.read(themeState).seedColor;

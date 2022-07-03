@@ -7,35 +7,20 @@ import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 
 List<Widget> button({required BuildContext context, required WidgetRef ref}) {
   final width = MediaQuery.of(context).size.width;
 
-  void _alarm() {
-    context.pushTransparentRoute<void>(const AlarmPage());
-    ref.read(alarmState.notifier).runInitialize();
-    ref.read(generalState.notifier).runFAB();
-  }
-
-  void _timer() {
-    context.pushTransparentRoute<void>(const TimerPage());
-    if (ref.read(timerState).canStart) {
-      ref.read(generalState.notifier).runFAB();
-    } else {
-      ref.read(generalState.notifier).updateShowFAB(value: false);
-    }
-  }
-
-  void _goal() {
-    context.pushTransparentRoute<void>(const GoalPage());
-    ref.read(generalState.notifier).runFAB();
-  }
+  void _alarm() => RouteManager(context, ref).home2alarm();
+  void _timer() => RouteManager(context, ref).home2timer();
+  void _setting() => RouteManager(context, ref).home2goal();
 
   final array = [
     <String>['alarm', 'timer', 'goal'],
     <Color>[ColorKey.blue.value, ColorKey.red.value, ColorKey.green.value],
     <IconData>[Icons.alarm, Icons.hourglass_top, Icons.flag],
-    <void Function()>[_alarm, _timer, _goal],
+    <void Function()>[_alarm, _timer, _setting],
   ];
   final widgets = <Widget>[];
 

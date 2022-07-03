@@ -131,9 +131,9 @@ class PrefManager {
       ..updateAnimation(value: clockAnimation)
       ..updateShowSec(value: showSec);
     timerFunc
-      ..updateTargetDuration(value: timerTarget)
-      ..updateTargetIntervalDuration(value: timerInterval)
-      ..updateIntervalLoopingNum(value: timerIntervalNum);
+        // ..updateTargetDuration(value: timerTarget)
+        // ..updateTargetIntervalDuration(value: timerInterval)
+        .updateIntervalTargetLoopingNum(value: timerIntervalNum);
   }
 
   Future<bool?> getBool({required PrefKey key}) async {

@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/components/rounded_card.dart';
 import 'package:majimo_timer/view/home/goal/timekeeping/body.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 
 part 'horizontal.dart';
 part 'vertical.dart';
@@ -33,8 +33,7 @@ class GoalPage extends HookConsumerWidget {
             onLongPressUp: () => Navigator.pop(context),
             child: FloatingActionButton(
               onPressed: () {
-                RouteManager().runPush(
-                  context: context,
+                RouteManager(context, ref).runPush(
                   page: const GoalTimeKeepingPage(),
                   isReplace: true,
                 );
@@ -63,9 +62,7 @@ class GoalPage extends HookConsumerWidget {
             Navigator.pop(context);
           },
         ),
-        shape: const RoundedRectangleBorder(
-          
-        ),
+        shape: const RoundedRectangleBorder(),
         elevation: 0,
         title: Center(
           child: Row(

@@ -8,9 +8,10 @@ import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/model/helper/route.dart';
+
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 part 'vertical.dart';
@@ -34,8 +35,7 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
                 splashColor: Colors.red.shade400,
                 backgroundColor: Colors.red,
                 onPressed: () {
-                  RouteManager().runPush(
-                    context: context,
+                  RouteManager(context, ref).runPush(
                     page: const HomePage(),
                     isReplace: true,
                   );

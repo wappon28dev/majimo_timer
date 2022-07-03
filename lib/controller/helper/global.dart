@@ -2,11 +2,6 @@ part of '../controller.dart';
 
 class GlobalController extends StateNotifier<GlobalState> {
   GlobalController() : super(const GlobalState());
-  void updateIsFirst({required bool value}) {
-    state = state.copyWith(isFirst: value);
-    PrefManager().setBool(key: PrefKey.isFirst, value: value);
-    Logger.s('- from GlobalState \n >> save bool isFirst = ${state.isFirst}');
-  }
 
   static void switchOverlayMode({required bool value}) {
     if (Platform.isAndroid) {
@@ -41,6 +36,15 @@ class GlobalController extends StateNotifier<GlobalState> {
       );
     }
   }
+
+  void updateIsFirst({required bool value}) {
+    state = state.copyWith(isFirst: value);
+    PrefManager().setBool(key: PrefKey.isFirst, value: value);
+    Logger.s('- from GlobalState \n >> save bool isFirst = ${state.isFirst}');
+  }
+
+  void updateIsTimeKeeping({required bool value}) =>
+      state = state.copyWith(isTimeKeeping: value);
 
   static void makeNavBarTransparent() {
     // SystemChrome.setSystemUIOverlayStyle(

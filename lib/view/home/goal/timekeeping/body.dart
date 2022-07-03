@@ -5,9 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/model/helper/route.dart';
+
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 import 'package:simple_animations/stateless_animation/play_animation.dart';
 
 part 'vertical.dart';
@@ -50,8 +51,7 @@ class GoalTimeKeepingPage extends HookConsumerWidget {
                   backgroundColor: Colors.red,
                   heroTag: null,
                   onPressed: () {
-                    RouteManager().runPush(
-                      context: context,
+                    RouteManager(context, ref).runPush(
                       page: const HomePage(),
                       isReplace: true,
                     );
@@ -80,19 +80,19 @@ class GoalTimeKeepingPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(width: 20),
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.amber.shade900,
-                  heroTag: null,
-                  onPressed: timerTKstate.whenFinished,
-                  child: const Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   height: 50,
+              //   width: 50,
+              //   child: FloatingActionButton(
+              //     backgroundColor: Colors.amber.shade900,
+              //     heroTag: null,
+              //     onPressed: timerTKstate.runNext,
+              //     child: const Icon(
+              //       Icons.arrow_forward,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              // ),
             ],
           );
         case 2:
@@ -106,8 +106,7 @@ class GoalTimeKeepingPage extends HookConsumerWidget {
                   backgroundColor: Colors.red,
                   heroTag: null,
                   onPressed: () {
-                    RouteManager().runPush(
-                      context: context,
+                    RouteManager(context, ref).runPush(
                       page: const HomePage(),
                       isReplace: true,
                     );

@@ -117,8 +117,8 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     actions: [
       IconButton(
         onPressed: () {
-          RouteManager()
-              .runPush(context: context, page: const Debug(), isReplace: false);
+          RouteManager(context, ref)
+              .runPush(page: const Debug(), isReplace: false);
           Logger.e(
             '- from majimo_timer/lib/view/home/root/widget.dart \n'
             ' > debug page opened',
@@ -128,8 +128,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         color: Colors.white,
       ),
       IconButton(
-        onPressed: () => RouteManager()
-            .runPush(context: context, page: const Setting(), isReplace: false),
+        onPressed: () => RouteManager(context, ref).home2setting(),
         icon: const Icon(Icons.settings),
         color: Colors.white,
       ),
@@ -140,8 +139,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       children: [
         IconButton(
           onPressed: () {
-            RouteManager().runPush(
-              context: context,
+            RouteManager(context, ref).runPush(
               page: const Debug(),
               isReplace: false,
             );
@@ -155,8 +153,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         ),
         IconButton(
           onPressed: () {
-            RouteManager().runPush(
-              context: context,
+            RouteManager(context, ref).runPush(
               page: const Setting(),
               isReplace: false,
             );

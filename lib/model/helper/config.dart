@@ -34,23 +34,21 @@ class AppTeam extends AboutAppTeam {
     'Yoyoyoyoyoyo': 'assets/images/me.png',
     'gu': 'assets/images/me.png',
     'katoso': 'assets/images/me.png',
-    'roto' : 'assets/images/me.png',
+    'roto': 'assets/images/me.png',
   };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.6.5 β';
-  final String buildDate = '2022/07/02 15:17';
+  final String versionStr = 'majimo_timer v0.6.8 β';
+  final String buildDate = '2022/07/04 03:15';
   final String changeLog = '''
 [fix]
-  !!! Performance issue is now fixed! !!!
-  1. Deleted boiler access to ThemeState.
-  2. Improved state management.
-  3. Changed color of FAB.
-  4. Fixed lang bug. (used single lang code)
-  5. Available AdHoc distribute on slack.
-  6. follow and fixed some lints
-  7. Updated minimum SDK version
+  1. Added programmed-timer on TimerMode.
+  2. Migrated List based Timer logic.
+  3. Added flow UI on TimerMode
+  4. Moved RouteManager to /view/routes.
+  5. Fixed showing negative diff.
+  7. Updated flutter & dart ver.
 
 [known-bug]
   1. Overlay TK screen always applied

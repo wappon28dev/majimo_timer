@@ -9,12 +9,12 @@ import 'package:majimo_timer/model/helper/plugin/draggable_home/draggable_home.d
 import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
-import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/components/button.dart';
 import 'package:majimo_timer/view/debug/body.dart';
 import 'package:majimo_timer/view/debug/widget.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 import 'package:majimo_timer/view/routes/tutorial.dart';
 import 'package:majimo_timer/view/setting/body.dart';
 import 'package:simple_animations/simple_animations.dart';
@@ -65,8 +65,7 @@ Widget fab({required BuildContext context, required WidgetRef ref}) {
     width: 80,
     child: FloatingActionButton(
       heroTag: 'global',
-      onPressed: () => RouteManager().runPush(
-        context: context,
+      onPressed: () => RouteManager(context, ref).runPush(
         page: const Tutorial(),
         isReplace: true,
       ),

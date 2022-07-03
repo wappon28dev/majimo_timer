@@ -3,13 +3,13 @@ import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/alarm/body.dart';
 import 'package:majimo_timer/view/home/goal/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:majimo_timer/view/home/timer/body.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 import 'package:majimo_timer/view/setting/body.dart';
 import 'package:quick_actions/quick_actions.dart';
 
@@ -41,35 +41,35 @@ class LinkManager {
   void launcher(BuildContext context, WidgetRef ref, String mode) {
     switch (mode) {
       case 'h':
-        RouteManager()
-            .runPush(context: context, page: const HomePage(), isReplace: true);
+        RouteManager(context, ref)
+            .runPush(page: const HomePage(), isReplace: true);
         break;
 
       case 'a':
-        RouteManager()
-            .runPush(context: context, page: const HomePage(), isReplace: true);
+        RouteManager(context, ref)
+            .runPush(page: const HomePage(), isReplace: true);
         context.pushTransparentRoute<void>(const AlarmPage());
         ref.read(alarmState.notifier).runInitialize();
         ref.read(generalState.notifier).runFAB();
         break;
 
       case 't':
-        RouteManager()
-            .runPush(context: context, page: const HomePage(), isReplace: true);
+        RouteManager(context, ref)
+            .runPush(page: const HomePage(), isReplace: true);
         context.pushTransparentRoute<void>(const TimerPage());
         break;
 
       case 'g':
-        RouteManager()
-            .runPush(context: context, page: const HomePage(), isReplace: true);
+        RouteManager(context, ref)
+            .runPush(page: const HomePage(), isReplace: true);
         context.pushTransparentRoute<void>(const GoalPage());
         break;
 
       case 's':
-        RouteManager()
-            .runPush(context: context, page: const HomePage(), isReplace: true);
-        RouteManager()
-            .runPush(context: context, page: const Setting(), isReplace: false);
+        RouteManager(context, ref)
+            .runPush(page: const HomePage(), isReplace: true);
+        RouteManager(context, ref)
+            .runPush(page: const Setting(), isReplace: false);
         break;
     }
   }

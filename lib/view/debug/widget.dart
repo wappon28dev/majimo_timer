@@ -6,8 +6,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/config.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
-import 'package:majimo_timer/model/helper/route.dart';
 import 'package:majimo_timer/view/debug/body.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 
 Widget debug({required BuildContext context, required WidgetRef ref}) {
   final colorScheme = Theme.of(context).colorScheme;
@@ -93,8 +93,7 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                     children: [
                       IconButton(
                         onPressed: () {
-                          RouteManager().runPush(
-                            context: context,
+                          RouteManager(context, ref).runPush(
                             page: const Debug(),
                             isReplace: false,
                           );

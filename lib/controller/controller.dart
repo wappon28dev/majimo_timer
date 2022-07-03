@@ -13,12 +13,13 @@ import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/circular_countdown_timer-0.2.0/circular_countdown_timer.dart';
 import 'package:majimo_timer/model/helper/plugin/let_log/let_log.dart';
 import 'package:majimo_timer/model/helper/pref.dart';
-import 'package:majimo_timer/model/helper/route.dart';
+
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/alarm/timekeeping/body.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 import 'package:ripple_backdrop_animate_route/ripple_backdrop_animate_route.dart';
 import 'package:wakelock/wakelock.dart';
 
