@@ -41,19 +41,9 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(() {
-      PrefManager().restore(ref, context);
-      return null;
-    });
-
-    final light = ref.watch(
-      themeState.select((_) => ref.read(themeState.notifier).lightTheme),
-    );
-    final dark = ref.watch(
-      (themeState.notifier)
-          .select((_) => ref.read(themeState.notifier).darkTheme),
-    );
-    final themeMode = ref.watch(themeState.select((s) => s.themeMode));
+    final light = ref.watch(themeState.notifier).lightTheme;
+    final dark = ref.watch(themeState.notifier).darkTheme;
+    final themeMode = ref.watch(themeState).themeMode;
 
     return BackGestureWidthTheme(
       backGestureWidth: BackGestureWidth.fraction(1 / 2),

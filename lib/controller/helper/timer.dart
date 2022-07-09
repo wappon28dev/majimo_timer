@@ -13,6 +13,15 @@ class TimerController extends StateNotifier<TimerState> {
     _detectCanRun();
   }
 
+  void updateTargetIndexedDuration({
+    required int index,
+    required Duration value,
+  }) {
+    final removedList = state.targetDuration.removeAt(index);
+    state.targetDuration.insert(index, value);
+    Logger.i(state.targetDuration);
+  }
+
   void addTargetDuration() {
     final value = state.targetDuration + [const Duration(minutes: 30)];
     updateTargetDuration(value: value);
@@ -20,7 +29,8 @@ class TimerController extends StateNotifier<TimerState> {
 
   void resetTargetDuration() {
     updateTargetDuration(
-        value: [const Duration(minutes: 1), const Duration(minutes: 2)]);
+      value: [const Duration(minutes: 1), const Duration(minutes: 2)],
+    );
   }
 
   void sortTargetDuration(int oldIndex, int newIndex) {

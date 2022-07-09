@@ -30,6 +30,7 @@ class Setting extends HookConsumerWidget {
     final langstate = ref.watch(langState);
     final generalstate = ref.watch(generalState);
     final colorScheme = Theme.of(context).colorScheme;
+    final settingModals = SettingModals(context, ref);
 
     Widget section(String title) {
       return Row(
@@ -76,13 +77,13 @@ class Setting extends HookConsumerWidget {
                 title: Text(t.change_lang.t),
                 subtitle: Text(langstate.langCaption),
                 leading: const Icon(Icons.language),
-                onTap: () => change_lang(context, ref),
+                onTap: settingModals.change_lang,
               ),
               ListTile(
                 title: Text(t.app_theme.t),
                 subtitle: Text(themestate.themeCaption),
                 leading: Icon(themestate.themeIcon),
-                onTap: () => app_theme(context, ref),
+                onTap: settingModals.app_theme,
               ),
               ListTile(
                 title: Text(t.app_seed_color.t),
@@ -91,39 +92,39 @@ class Setting extends HookConsumerWidget {
                   style: TextStyle(color: themestate.seedColor),
                 ),
                 leading: const Icon(Icons.palette_outlined),
-                onTap: () => app_seed_color(context, ref),
+                onTap: settingModals.app_seed_color,
               ),
               section(t.clock_appearance.t),
               ListTile(
                 title: Text(t.clock_style.t),
                 subtitle: Text(clockstate.is24Caption),
                 leading: Icon(clockstate.is24Icon),
-                onTap: () => clock_style(context, ref),
+                onTap: settingModals.clock_style,
               ),
               ListTile(
                 title: Text(t.clock_seconds.t),
                 subtitle: Text(clockstate.showSecCaption),
                 leading: Icon(clockstate.showSecIcon),
-                onTap: () => clock_showSec(context, ref),
+                onTap: settingModals.clock_showSec,
               ),
               ListTile(
                 title: Text(t.clock_animation.t),
                 subtitle: Text(clockstate.animationCaption),
                 leading: Icon(clockstate.animationIcon),
-                onTap: () => clock_animation(context, ref),
+                onTap: settingModals.clock_animation,
               ),
               section(t.toast.t),
               ListTile(
                 title: Text(t.toast_position.t),
                 subtitle: Text(generalstate.topToastCaption),
                 leading: Icon(generalstate.topToastIcon),
-                onTap: () => toast_position(context, ref),
+                onTap: settingModals.toast_position,
               ),
               ListTile(
                 title: Text(t.toast_duration.t),
                 subtitle: Text(generalstate.toastDurationCaption),
                 leading: const Icon(Icons.timelapse),
-                onTap: () => toast_duration(context, ref),
+                onTap: settingModals.toast_duration,
               ),
               OutlinedButton.icon(
                 icon: const Icon(Icons.notifications_active_outlined),

@@ -15,10 +15,6 @@ Future<dynamic> modal(
   List<Widget> widget,
 ) {
   const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
-  final colorScheme = Theme.of(context).colorScheme;
-  final onBackground = ref
-      .read(themeState.notifier)
-      .getOnBackgroundColor(context: context, ref: ref);
   final header = <Widget>[
     Column(
       children: <Widget>[
@@ -32,26 +28,17 @@ Future<dynamic> modal(
           ),
         ),
         const SizedBox(height: 10),
-        Icon(
-          icon,
-          color: onBackground,
-        ),
+        Icon(icon),
         const SizedBox(height: 8),
         AutoSizeText(
           title,
-          style: TextStyle(
-            color: onBackground,
-            fontWeight: FontWeight.w600,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold),
           minFontSize: 20,
           maxLines: 1,
         ),
         const SizedBox(height: 5),
         AutoSizeText(
           subtitle,
-          style: TextStyle(
-            color: onBackground,
-          ),
           maxLines: 1,
           minFontSize: 10,
         ),
@@ -69,6 +56,7 @@ Future<dynamic> modal(
     barrierColor: Colors.black54,
     duration: const Duration(milliseconds: 300),
     topRadius: const Radius.circular(20),
+    animationCurve: Curves.easeOutQuint,
     builder: (context) => SingleChildScrollView(
       controller: ModalScrollController.of(context),
       child: Material(

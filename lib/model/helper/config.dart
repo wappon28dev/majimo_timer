@@ -39,16 +39,17 @@ class AppTeam extends AboutAppTeam {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.6.8 β';
-  final String buildDate = '2022/07/04 03:15';
+  final String versionStr = 'majimo_timer v0.6.9 β';
+  final String buildDate = '2022/07/09 23:56';
   final String changeLog = '''
+-- Next alpha ver released on v0.7.0 β --
+
 [fix]
-  1. Added programmed-timer on TimerMode.
-  2. Migrated List based Timer logic.
-  3. Added flow UI on TimerMode
-  4. Moved RouteManager to /view/routes.
-  5. Fixed showing negative diff.
-  7. Updated flutter & dart ver.
+  1. Changed color orange to primaryColor in SettingModals.
+  2. Make SettingWidgets in class: SettingModals.
+  3. Changed popup motion when opening modals.
+  4. Created targetDurationListStr for flow UI.
+  5. Fixed showing targetLoopingNum.
 
 [known-bug]
   1. Overlay TK screen always applied

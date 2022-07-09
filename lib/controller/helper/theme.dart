@@ -36,15 +36,16 @@ class ThemeController extends StateNotifier<ThemeState> {
     return (pref != 0) ? (pref == 1) : isLightMode;
   }
 
-  Color getOnBackgroundColor({
-    required BuildContext context,
-    required WidgetRef ref,
-  }) {
-    final value = ref.read(themeState.notifier).isLight(context: context);
-    return value
-        ? lightTheme.colorScheme.onPrimaryContainer
-        : darkTheme.colorScheme.primary;
-  }
+  // Color getOnBackgroundColor({
+  //   required BuildContext context,
+  //   required WidgetRef ref,
+  // }) {
+  //   final value = ref.read(themeState.notifier).isLight(context: context);
+  //   final seedColor = ref.read(themeState).seedColor;
+  //   return value
+  //       ? lightTheme.colorScheme.primary
+  //       : darkTheme.colorScheme.primary;
+  // }
 
   ThemeData get lightTheme {
     final colorScheme = ColorScheme.fromSeed(

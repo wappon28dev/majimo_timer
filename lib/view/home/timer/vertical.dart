@@ -1,7 +1,7 @@
 part of 'body.dart';
 
 Widget buildVertical(BuildContext context, WidgetRef ref) {
-  final timerstate = ref.read(timerState);
+  final timerstate = ref.watch(timerState);
   final timerstateFunc = ref.read(timerState.notifier);
   final targetDuration = timerstate.targetDuration;
   final targetLN = ref.read(timerState).targetLoopingNum;
@@ -52,19 +52,26 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     ],
   );
 
+  Widget setTimer(int i) {
+    final targetDuration = timerstate.targetDurationListStr[i];
+
+    return GestureDetector(
+      child: Text(targetDuration),
+    );
+  }
+
   Widget flow() {
     final rows = List<Widget>.generate(targetDuration.length, (int i) {
       if (i != 0) {
         return TapToExpand(
-          content: Center(
-            child: Text((targetDuration[i]).toString()),
-          ),
-          title: Text(targetDuration[i].toString()),
+          content: Center(child: setTimer(i)),
+          title: Text(timerstate.targetDurationListStr[i]),
           color: Theme.of(context).cardColor,
           iconColor: Colors.black,
           isExpand: false,
           leading: Text((i).toString()),
           key: ValueKey(i),
+          openedHeight: 500,
         );
       } else {
         return SizedBox(key: ValueKey(i));
@@ -102,8 +109,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-              const Text('\n\n set targetIntervalLoopingNum !'),
-              Text(targetLN.toString()),
+              Text('\n\n タイマーの数: ${targetLN - 1}'),
               // Slider(
               //   label: targetLN.toString(),
               //   max: 10,

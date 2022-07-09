@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/controller/controller.dart';
 import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digital_clock.dart';
@@ -10,10 +10,8 @@ import 'package:majimo_timer/model/helper/plugin/tap_to_expand-0.5.7/tap_to_expa
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
-import 'package:majimo_timer/view/components/rounded_card.dart';
 import 'package:majimo_timer/view/home/timer/timekeeping/body.dart';
 import 'package:majimo_timer/view/routes/transition.dart';
-import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:reorderables/reorderables.dart';
 
 part 'horizontal.dart';
