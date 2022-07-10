@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 0.6.9
+version: 0.7.0
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -23,11 +23,11 @@ dependencies:
   flutter_color: ^2.0.0
   flutter_colorpicker: ^1.0.3
   flutter_custom_tabs: ^1.0.4
+  flutter_expanded_tile: ^0.3.6
   flutter_grid_button: ^2.0.0
   flutter_hooks: ^0.18.0
   flutter_styled_toast: ^2.0.0
   flutter_windowmanager: ^0.2.0
-  flutter_expanded_tile: ^0.3.6
   freezed_annotation: ^2.0.3
   fullscreen: ^1.0.3
   hooks_riverpod: ^1.0.0

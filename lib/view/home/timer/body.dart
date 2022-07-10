@@ -10,6 +10,7 @@ import 'package:majimo_timer/model/helper/plugin/tap_to_expand-0.5.7/tap_to_expa
 import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
+import 'package:majimo_timer/view/home/timer/modal.dart';
 import 'package:majimo_timer/view/home/timer/timekeeping/body.dart';
 import 'package:majimo_timer/view/routes/transition.dart';
 import 'package:reorderables/reorderables.dart';
@@ -35,7 +36,8 @@ class TimerPage extends HookConsumerWidget {
             onLongPressUp: () => Navigator.pop(context),
             child: FloatingActionButton(
               onPressed: () {
-                RouteManager(context, ref).runPush(
+                RouteManager.runPush(
+                  context: context,
                   page: const TimerTimeKeepingPage(),
                   isReplace: true,
                 );

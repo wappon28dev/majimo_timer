@@ -11,6 +11,7 @@ import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/components/modal.dart';
 import 'package:majimo_timer/view/components/rounded_card.dart';
+import 'package:majimo_timer/view/routes/transition.dart';
 
 part 'horizontal.dart';
 part 'vertical.dart';
@@ -55,9 +56,7 @@ class AlarmPage extends HookConsumerWidget {
             Navigator.pop(context);
           },
         ),
-        shape: const RoundedRectangleBorder(
-          
-        ),
+        shape: const RoundedRectangleBorder(),
         elevation: 0,
         title: Center(
           child: Row(
@@ -89,9 +88,7 @@ class AlarmPage extends HookConsumerWidget {
     return Hero(
       tag: tag,
       child: DismissiblePage(
-        onDismissed: () {
-          Navigator.of(context).pop();
-        },
+        onDismissed: () => RouteManager.runPop(context),
         child: Scaffold(
           appBar: _appbar(),
           floatingActionButtonLocation:

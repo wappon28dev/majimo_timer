@@ -18,7 +18,7 @@ import 'package:majimo_timer/view/components/modal.dart';
 import 'package:majimo_timer/view/routes/transition.dart';
 import 'package:majimo_timer/view/setting/about.dart';
 
-part 'widget.dart';
+part 'modal.dart';
 
 class Setting extends HookConsumerWidget {
   const Setting({super.key});
@@ -139,7 +139,8 @@ class Setting extends HookConsumerWidget {
                 title: Text('${t.app_name.t} - ${t.beta.t}'),
                 subtitle: Text(AppDataStore().versionStr),
                 leading: const Icon(Icons.info_outline),
-                onTap: () => RouteManager(context, ref).runPush(
+                onTap: () => RouteManager.runPush(
+                  context: context,
                   page: const AboutApp(),
                   isReplace: false,
                 ),
@@ -154,7 +155,8 @@ class Setting extends HookConsumerWidget {
                 title: Text(t.about_app_team.t),
                 subtitle: Text(t.about_app_team_sub.t),
                 leading: const Icon(Icons.emoji_people),
-                onTap: () => RouteManager(context, ref).runPush(
+                onTap: () => RouteManager.runPush(
+                  context: context,
                   page: const AboutAppTeam(),
                   isReplace: false,
                 ),
@@ -164,18 +166,14 @@ class Setting extends HookConsumerWidget {
                 subtitle: Text(t.github_sub.t),
                 leading: const Icon(Icons.receipt_long),
                 trailing: const Icon(Icons.launch),
-                onTap: () => RouteManager(context, ref).runURL(
-                  url: PathStore().githubURL,
-                ),
+                onTap: () => RouteManager.runURL(url: PathStore().githubURL),
               ),
               ListTile(
                 title: Text(t.license.t),
                 subtitle: Text(t.license_sub.t),
                 leading: const Icon(Icons.balance),
                 trailing: const Icon(Icons.launch),
-                onTap: () => RouteManager(context, ref).runURL(
-                  url: PathStore().licenseURL,
-                ),
+                onTap: () => RouteManager.runURL(url: PathStore().licenseURL),
               ),
               const SizedBox(height: 20),
             ],

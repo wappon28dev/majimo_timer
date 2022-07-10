@@ -113,12 +113,8 @@ Widget percent({required WidgetRef ref, required double width}) {
     textFormat: CountdownTextFormat.MM_SS,
     isReverse: true,
     isTimerTextShown: false,
-    onStart: () {
-      print('Countdown Started');
-    },
-    onComplete: () {
-      print('Countdown Ended');
-    },
+    onStart: () {},
+    onComplete: () {},
   );
 
   // return PlayAnimation<double>(

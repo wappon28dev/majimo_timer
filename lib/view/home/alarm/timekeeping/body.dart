@@ -35,7 +35,8 @@ class AlarmTimeKeepingPage extends HookConsumerWidget {
                 splashColor: Colors.red.shade400,
                 backgroundColor: Colors.red,
                 onPressed: () {
-                  RouteManager(context, ref).runPush(
+                  RouteManager.runPush(
+                    context: context,
                     page: const HomePage(),
                     isReplace: true,
                   );

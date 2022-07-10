@@ -65,7 +65,8 @@ Widget fab({required BuildContext context, required WidgetRef ref}) {
     width: 80,
     child: FloatingActionButton(
       heroTag: 'global',
-      onPressed: () => RouteManager(context, ref).runPush(
+      onPressed: () => RouteManager.runPush(
+        context: context,
         page: const Tutorial(),
         isReplace: true,
       ),

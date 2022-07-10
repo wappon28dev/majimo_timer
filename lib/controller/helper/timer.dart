@@ -4,11 +4,71 @@ class TimerController extends StateNotifier<TimerState> {
   TimerController(this._read) : super(const TimerState());
   final Reader _read;
 
-  void updateTargetDuration({required List<Duration> value}) {
-    state = state.copyWith(targetDuration: value);
+  List<String> targetDurationListStr({required bool isUsingColon}) {
+    final value = <String>[];
+
+    for (final element in state.targetDurationList) {
+      String formattedStr({required int index}) {
+        final unit = [
+          [t.hour.t, t.hours.t],
+          [t.minute.t, t.minutes.t],
+          [t.second.t, t.seconds.t]
+        ];
+        const space = ' ';
+        var str = '';
+
+        if (!isUsingColon) {
+          if (element[index] != 0) {
+            if (element[index] == 1) {
+              str = element[index].toString() + space + unit[index][0] + space;
+            } else {
+              str = element[index].toString() + space + unit[index][1] + space;
+            }
+          }
+        } else {
+          if (index != 2) {
+            str = '${element[index].toString().padLeft(2, '0')}:';
+          } else {
+            str = element[index].toString().padLeft(2, '0');
+          }
+        }
+        return str;
+      }
+
+      final hours = formattedStr(index: 0);
+      final minutes = formattedStr(index: 1);
+      final seconds = formattedStr(index: 2);
+
+      value.add(hours + minutes + seconds);
+    }
+
+    return value;
+  }
+
+  void toggleShouldAskContinue(int index) {
+    final list = state.shouldAskContinue.toList();
+    list[index] = !list[index];
+    state = state.copyWith(shouldAskContinue: list);
+
+    Logger.s(
+      '- from TimerState \n'
+      'save List<bool> shouldAskContinue = ${state.shouldAskContinue}',
+    );
+  }
+
+  void updateShouldAskContinue({required List<bool> listBool}) {
+    state = state.copyWith(shouldAskContinue: listBool);
+    Logger.s(
+      '- from TimerState \n'
+      'save List<Duration> shouldAskContinue = $listBool',
+    );
+  }
+
+  void updateTargetDuration({required List<Duration> listDur}) {
+    state = state.copyWith(targetDuration: listDur);
     // PrefManager().setInt(key: PrefKey.timerTarget, value: listDuration);
     Logger.s(
-      '- from TimerState \n >> save List<Duration> timerTarget = $value',
+      '- from TimerState \n >> save List<Duration> timerTarget = $listDur',
     );
     _detectCanRun();
   }
@@ -17,20 +77,29 @@ class TimerController extends StateNotifier<TimerState> {
     required int index,
     required Duration value,
   }) {
-    final removedList = state.targetDuration.removeAt(index);
-    state.targetDuration.insert(index, value);
+    final list = state.targetDuration.toList();
+    list[index] = value;
+    state = state.copyWith(targetDuration: list);
     Logger.i(state.targetDuration);
+    _detectCanRun();
   }
 
   void addTargetDuration() {
-    final value = state.targetDuration + [const Duration(minutes: 30)];
-    updateTargetDuration(value: value);
+    final newTargetDurationList =
+        state.targetDuration + [const Duration(minutes: 30)];
+    final newShouldAskContinueList = state.shouldAskContinue + [false];
+    updateTargetDuration(listDur: newTargetDurationList);
+    updateShouldAskContinue(listBool: newShouldAskContinueList);
   }
 
   void resetTargetDuration() {
     updateTargetDuration(
-      value: [const Duration(minutes: 1), const Duration(minutes: 2)],
+      listDur: [const Duration(minutes: 1), const Duration(minutes: 2)],
     );
+    updateShouldAskContinue(
+      listBool: [false, false],
+    );
+    _detectCanRun();
   }
 
   void sortTargetDuration(int oldIndex, int newIndex) {
@@ -182,7 +251,8 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
   }
 
   void _runExit(BuildContext context, WidgetRef ref) {
-    RouteManager(context, ref).runPush(
+    RouteManager.runPush(
+      context: context,
       page: const HomePage(),
       isReplace: true,
     );

@@ -4,8 +4,9 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   final timerstate = ref.watch(timerState);
   final timerstateFunc = ref.read(timerState.notifier);
   final targetDuration = timerstate.targetDuration;
-  final targetLN = ref.read(timerState).targetLoopingNum;
+  final targetLN = ref.watch(timerState).targetLoopingNum;
   final colorScheme = Theme.of(context).colorScheme;
+  final shouldAskContinue = ref.watch(timerState).shouldAskContinue;
 
   final header = Column(
     children: const [
@@ -53,10 +54,35 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   );
 
   Widget setTimer(int i) {
-    final targetDuration = timerstate.targetDurationListStr[i];
+    final strDuration =
+        timerstateFunc.targetDurationListStr(isUsingColon: true);
 
-    return GestureDetector(
-      child: Text(targetDuration),
+    final timerPicker = GestureDetector(
+      child: AutoSizeText(
+        strDuration[i],
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+        maxLines: 1,
+        minFontSize: 50,
+      ),
+      onTap: () => TimerModals(context, ref).showSettingTimer(i),
+    );
+
+    final timerSetting = CheckboxListTile(
+      title: const Text('タイマー終了時にモーダルを出して止める'),
+      value: shouldAskContinue[i],
+      onChanged: (_) => timerstateFunc.toggleShouldAskContinue(i),
+      secondary: const Icon(Icons.add_task),
+    );
+
+    return Column(
+      children: [
+        timerPicker,
+        const SizedBox(height: 20),
+        const Divider(thickness: 2),
+        timerSetting,
+      ],
     );
   }
 
@@ -65,13 +91,14 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       if (i != 0) {
         return TapToExpand(
           content: Center(child: setTimer(i)),
-          title: Text(timerstate.targetDurationListStr[i]),
+          title: Text(
+            timerstateFunc.targetDurationListStr(isUsingColon: false)[i],
+          ),
           color: Theme.of(context).cardColor,
           iconColor: Colors.black,
-          isExpand: false,
           leading: Text((i).toString()),
           key: ValueKey(i),
-          openedHeight: 500,
+          openedHeight: 300,
         );
       } else {
         return SizedBox(key: ValueKey(i));

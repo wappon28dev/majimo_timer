@@ -39,17 +39,23 @@ class AppTeam extends AboutAppTeam {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.6.9 β';
-  final String buildDate = '2022/07/09 23:56';
+  final String versionStr = 'majimo_timer v0.7.0 β';
+  final String buildDate = '2022/07/10 23:56';
   final String changeLog = '''
--- Next alpha ver released on v0.7.0 β --
 
+  -- showing diff v0.6.9 & v0.7.0 --
 [fix]
-  1. Changed color orange to primaryColor in SettingModals.
-  2. Make SettingWidgets in class: SettingModals.
+  1. Changed color orange to primaryColor in `SettingModals`.
+  2. Make SettingWidgets in class: `SettingModals`.
   3. Changed popup motion when opening modals.
-  4. Created targetDurationListStr for flow UI.
+  4. Created `targetDurationListStr` for flow UI.
   5. Fixed showing targetLoopingNum.
+  6. Added setting duration UI in flow UI.
+  7. Added `CupertinoTimerPicker` in flow UI.
+  8. Added some setting in flow UI.
+  9. Added `shouldAskContinue` flag in timerState.
+ 10. Renamed some classes & file name.
+ 11. Updated some translations.
 
 [known-bug]
   1. Overlay TK screen always applied

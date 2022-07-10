@@ -41,35 +41,53 @@ class LinkManager {
   void launcher(BuildContext context, WidgetRef ref, String mode) {
     switch (mode) {
       case 'h':
-        RouteManager(context, ref)
-            .runPush(page: const HomePage(), isReplace: true);
+        RouteManager.runPush(
+          context: context,
+          page: const HomePage(),
+          isReplace: true,
+        );
         break;
 
       case 'a':
-        RouteManager(context, ref)
-            .runPush(page: const HomePage(), isReplace: true);
+        RouteManager.runPush(
+          context: context,
+          page: const HomePage(),
+          isReplace: true,
+        );
         context.pushTransparentRoute<void>(const AlarmPage());
         ref.read(alarmState.notifier).runInitialize();
         ref.read(generalState.notifier).runFAB();
         break;
 
       case 't':
-        RouteManager(context, ref)
-            .runPush(page: const HomePage(), isReplace: true);
+        RouteManager.runPush(
+          context: context,
+          page: const HomePage(),
+          isReplace: true,
+        );
         context.pushTransparentRoute<void>(const TimerPage());
         break;
 
       case 'g':
-        RouteManager(context, ref)
-            .runPush(page: const HomePage(), isReplace: true);
+        RouteManager.runPush(
+          context: context,
+          page: const HomePage(),
+          isReplace: true,
+        );
         context.pushTransparentRoute<void>(const GoalPage());
         break;
 
       case 's':
-        RouteManager(context, ref)
-            .runPush(page: const HomePage(), isReplace: true);
-        RouteManager(context, ref)
-            .runPush(page: const Setting(), isReplace: false);
+        RouteManager.runPush(
+          context: context,
+          page: const HomePage(),
+          isReplace: true,
+        );
+        RouteManager.runPush(
+          context: context,
+          page: const Setting(),
+          isReplace: false,
+        );
         break;
     }
   }

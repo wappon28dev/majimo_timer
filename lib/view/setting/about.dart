@@ -58,9 +58,8 @@ class AboutApp extends HookConsumerWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(
-                onPressed: () => RouteManager(context, ref).runURL(
-                  url: PathStore().privacyURL,
-                ),
+                onPressed: () =>
+                    RouteManager.runURL(url: PathStore().privacyURL),
                 icon: const Icon(Icons.launch),
                 label: Text(t.privacy_policy.t),
               ),
@@ -122,9 +121,8 @@ class AboutAppTeam extends HookConsumerWidget {
                     const Icon(Icons.launch, color: Colors.purple),
                   ],
                 ),
-                onPressed: () => RouteManager(context, ref).runURL(
-                  url: PathStore().meidenURL,
-                ),
+                onPressed: () =>
+                    RouteManager.runURL(url: PathStore().meidenURL),
               ),
             ),
             Padding(
@@ -149,9 +147,7 @@ class AboutAppTeam extends HookConsumerWidget {
                     const Icon(Icons.launch, color: Colors.purple),
                   ],
                 ),
-                onPressed: () => RouteManager(context, ref).runURL(
-                  url: PathStore().miscURL,
-                ),
+                onPressed: () => RouteManager.runURL(url: PathStore().miscURL),
               ),
             ),
           ],
@@ -238,7 +234,7 @@ class AboutAppTeam extends HookConsumerWidget {
           children: [
                 const SizedBox(height: 10),
                 Text(
-                  t.debugger.t,
+                  t.tester.t,
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,

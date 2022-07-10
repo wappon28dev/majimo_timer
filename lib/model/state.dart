@@ -315,6 +315,13 @@ class TimerState with _$TimerState {
     ])
         List<Duration> targetDuration,
 
+    // fragment whether asking continue timer by showing done modal
+    @Default([
+      false,
+      false,
+    ])
+        List<bool> shouldAskContinue,
+
     // targetIntervalLoopingNumber aka targetILN
     @Default(0)
         int targetIntervalLoopingNum,
@@ -325,42 +332,25 @@ class TimerState with _$TimerState {
   /// targetLoopingNumber aka targetLN
   int get targetLoopingNum => targetDuration.length;
 
-  List<List<String>> get targetDurationList {
-    print(targetDuration);
-    final value = [<String>[]];
+  List<List<int>> get targetDurationList {
+    final value = [<int>[]];
 
     for (final element in targetDuration) {
-      final hours = element.inHours.toString();
-      final minute = element.inMinutes.remainder(60).toString();
-      final seconds = element.inSeconds.remainder(120).toString();
+      final hours = element.inHours;
+      final minute = element.inMinutes.remainder(60);
+      final seconds = element.inSeconds.remainder(60);
 
       value.add([hours, minute, seconds]);
     }
 
     value.removeAt(0);
 
-    print(value);
-    return value;
-  }
-
-  List<String> get targetDurationListStr {
-    final value = <String>[];
-    for (final element in targetDurationList) {
-      final hours = element[0] != '0' ? '${element[0]}時間 ' : '';
-      final minutes = element[1] != '0' ? '${element[1]}分 ' : '';
-      final seconds = element[2] != '0' ? '${element[2]}秒' : '';
-
-      value.add(hours + minutes + seconds);
-    }
-
-    print(value);
-
     return value;
   }
 
   bool get canStart {
-    final value = targetDuration != Duration.zero;
-    return value;
+    final hasDurationZero = targetDuration.contains(Duration.zero);
+    return !hasDurationZero;
   }
 }
 

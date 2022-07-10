@@ -34,10 +34,11 @@ class RouteManager {
   }
 
   void home2setting() {
-    runPush(page: const Setting(), isReplace: false);
+    runPush(context: context, page: const Setting(), isReplace: false);
   }
 
-  void runPush({
+  static void runPush({
+    required BuildContext context,
     required Widget page,
     required bool isReplace,
   }) =>
@@ -53,25 +54,24 @@ class RouteManager {
               (_) => false,
             );
 
-  Future<void> runURL({
+  static Future<void> runURL({
     required String url,
   }) async {
-    final color = ref.read(themeState).seedColor;
     await launch(
       url,
       customTabsOption: CustomTabsOption(
-        toolbarColor: color,
         enableDefaultShare: true,
         enableInstantApps: true,
         enableUrlBarHiding: true,
         showPageTitle: true,
         animation: CustomTabsSystemAnimation.fade(),
       ),
-      safariVCOption: SafariViewControllerOption(
-        preferredBarTintColor: color,
+      safariVCOption: const SafariViewControllerOption(
         barCollapsingEnabled: true,
         dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
       ),
     );
   }
+
+  static void runPop(BuildContext context) => Navigator.of(context).pop();
 }

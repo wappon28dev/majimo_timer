@@ -117,8 +117,11 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     actions: [
       IconButton(
         onPressed: () {
-          RouteManager(context, ref)
-              .runPush(page: const Debug(), isReplace: false);
+          RouteManager.runPush(
+            context: context,
+            page: const Debug(),
+            isReplace: false,
+          );
           Logger.e(
             '- from majimo_timer/lib/view/home/root/widget.dart \n'
             ' > debug page opened',
@@ -139,7 +142,8 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       children: [
         IconButton(
           onPressed: () {
-            RouteManager(context, ref).runPush(
+            RouteManager.runPush(
+              context: context,
               page: const Debug(),
               isReplace: false,
             );
@@ -153,7 +157,8 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         ),
         IconButton(
           onPressed: () {
-            RouteManager(context, ref).runPush(
+            RouteManager.runPush(
+              context: context,
               page: const Setting(),
               isReplace: false,
             );

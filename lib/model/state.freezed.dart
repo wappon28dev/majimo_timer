@@ -149,9 +149,9 @@ abstract class _GlobalState implements GlobalState {
       _$_GlobalState;
 
   @override
-  bool get isFirst => throw _privateConstructorUsedError;
+  bool get isFirst;
   @override
-  bool get isTimeKeeping => throw _privateConstructorUsedError;
+  bool get isTimeKeeping;
   @override
   @JsonKey(ignore: true)
   _$$_GlobalStateCopyWith<_$_GlobalState> get copyWith =>
@@ -366,15 +366,15 @@ abstract class _GeneralState extends GeneralState {
   const _GeneralState._() : super._();
 
   @override
-  String get status => throw _privateConstructorUsedError;
+  String get status;
   @override
-  bool get topToast => throw _privateConstructorUsedError;
+  bool get topToast;
   @override
-  int get toastDuration => throw _privateConstructorUsedError;
+  int get toastDuration;
   @override
-  double get opacity => throw _privateConstructorUsedError;
+  double get opacity;
   @override
-  bool get showFAB => throw _privateConstructorUsedError;
+  bool get showFAB;
   @override
   @JsonKey(ignore: true)
   _$$_GeneralStateCopyWith<_$_GeneralState> get copyWith =>
@@ -540,11 +540,11 @@ abstract class _ThemeState extends ThemeState {
   const _ThemeState._() : super._();
 
   @override
-  int get theme => throw _privateConstructorUsedError;
+  int get theme;
   @override
-  bool get isUsingMaterialYou => throw _privateConstructorUsedError;
+  bool get isUsingMaterialYou;
   @override
-  Color get seedColor => throw _privateConstructorUsedError;
+  Color get seedColor;
   @override
   @JsonKey(ignore: true)
   _$$_ThemeStateCopyWith<_$_ThemeState> get copyWith =>
@@ -665,7 +665,7 @@ abstract class _LangState extends LangState {
   const _LangState._() : super._();
 
   @override
-  int get lang => throw _privateConstructorUsedError;
+  int get lang;
   @override
   @JsonKey(ignore: true)
   _$$_LangStateCopyWith<_$_LangState> get copyWith =>
@@ -828,11 +828,11 @@ abstract class _ClockState extends ClockState {
   const _ClockState._() : super._();
 
   @override
-  bool get is24 => throw _privateConstructorUsedError;
+  bool get is24;
   @override
-  bool get showSec => throw _privateConstructorUsedError;
+  bool get showSec;
   @override
-  int get animation => throw _privateConstructorUsedError;
+  int get animation;
   @override
   @JsonKey(ignore: true)
   _$$_ClockStateCopyWith<_$_ClockState> get copyWith =>
@@ -955,7 +955,7 @@ abstract class _ColorState extends ColorState {
   const _ColorState._() : super._();
 
   @override
-  double get opacity => throw _privateConstructorUsedError;
+  double get opacity;
   @override
   @JsonKey(ignore: true)
   _$$_ColorStateCopyWith<_$_ColorState> get copyWith =>
@@ -1080,7 +1080,7 @@ abstract class _AlarmState extends AlarmState {
   const _AlarmState._() : super._();
 
   @override
-  TimeOfDay get targetTime => throw _privateConstructorUsedError;
+  TimeOfDay get targetTime;
   @override
   @JsonKey(ignore: true)
   _$$_AlarmStateCopyWith<_$_AlarmState> get copyWith =>
@@ -1255,11 +1255,11 @@ abstract class _AlarmTimeKeepingState extends AlarmTimeKeepingState {
   const _AlarmTimeKeepingState._() : super._();
 
   @override
-  Duration get targetDuration => throw _privateConstructorUsedError;
+  Duration get targetDuration;
   @override
-  TimeOfDay get startedTime => throw _privateConstructorUsedError;
+  TimeOfDay get startedTime;
   @override
-  String get headerText => throw _privateConstructorUsedError;
+  String get headerText;
   @override
   @JsonKey(ignore: true)
   _$$_AlarmTimeKeepingStateCopyWith<_$_AlarmTimeKeepingState> get copyWith =>
@@ -1269,6 +1269,8 @@ abstract class _AlarmTimeKeepingState extends AlarmTimeKeepingState {
 /// @nodoc
 mixin _$TimerState {
   List<Duration> get targetDuration =>
+      throw _privateConstructorUsedError; // fragment whether asking continue timer by showing done modal
+  List<bool> get shouldAskContinue =>
       throw _privateConstructorUsedError; // targetIntervalLoopingNumber aka targetILN
   int get targetIntervalLoopingNum => throw _privateConstructorUsedError;
 
@@ -1282,7 +1284,10 @@ abstract class $TimerStateCopyWith<$Res> {
   factory $TimerStateCopyWith(
           TimerState value, $Res Function(TimerState) then) =
       _$TimerStateCopyWithImpl<$Res>;
-  $Res call({List<Duration> targetDuration, int targetIntervalLoopingNum});
+  $Res call(
+      {List<Duration> targetDuration,
+      List<bool> shouldAskContinue,
+      int targetIntervalLoopingNum});
 }
 
 /// @nodoc
@@ -1296,6 +1301,7 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
   @override
   $Res call({
     Object? targetDuration = freezed,
+    Object? shouldAskContinue = freezed,
     Object? targetIntervalLoopingNum = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1303,6 +1309,10 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
           ? _value.targetDuration
           : targetDuration // ignore: cast_nullable_to_non_nullable
               as List<Duration>,
+      shouldAskContinue: shouldAskContinue == freezed
+          ? _value.shouldAskContinue
+          : shouldAskContinue // ignore: cast_nullable_to_non_nullable
+              as List<bool>,
       targetIntervalLoopingNum: targetIntervalLoopingNum == freezed
           ? _value.targetIntervalLoopingNum
           : targetIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
@@ -1318,7 +1328,10 @@ abstract class _$$_TimerStateCopyWith<$Res>
           _$_TimerState value, $Res Function(_$_TimerState) then) =
       __$$_TimerStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<Duration> targetDuration, int targetIntervalLoopingNum});
+  $Res call(
+      {List<Duration> targetDuration,
+      List<bool> shouldAskContinue,
+      int targetIntervalLoopingNum});
 }
 
 /// @nodoc
@@ -1334,6 +1347,7 @@ class __$$_TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? targetDuration = freezed,
+    Object? shouldAskContinue = freezed,
     Object? targetIntervalLoopingNum = freezed,
   }) {
     return _then(_$_TimerState(
@@ -1341,6 +1355,10 @@ class __$$_TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
           ? _value.targetDuration
           : targetDuration // ignore: cast_nullable_to_non_nullable
               as List<Duration>,
+      shouldAskContinue: shouldAskContinue == freezed
+          ? _value.shouldAskContinue
+          : shouldAskContinue // ignore: cast_nullable_to_non_nullable
+              as List<bool>,
       targetIntervalLoopingNum: targetIntervalLoopingNum == freezed
           ? _value.targetIntervalLoopingNum
           : targetIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
@@ -1354,12 +1372,17 @@ class __$$_TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
 class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
   const _$_TimerState(
       {this.targetDuration = const [Duration(minutes: 1), Duration(minutes: 2)],
+      this.shouldAskContinue = const [false, false],
       this.targetIntervalLoopingNum = 0})
       : super._();
 
   @override
   @JsonKey()
   final List<Duration> targetDuration;
+// fragment whether asking continue timer by showing done modal
+  @override
+  @JsonKey()
+  final List<bool> shouldAskContinue;
 // targetIntervalLoopingNumber aka targetILN
   @override
   @JsonKey()
@@ -1367,7 +1390,7 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerState(targetDuration: $targetDuration, targetIntervalLoopingNum: $targetIntervalLoopingNum)';
+    return 'TimerState(targetDuration: $targetDuration, shouldAskContinue: $shouldAskContinue, targetIntervalLoopingNum: $targetIntervalLoopingNum)';
   }
 
   @override
@@ -1376,6 +1399,7 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'TimerState'))
       ..add(DiagnosticsProperty('targetDuration', targetDuration))
+      ..add(DiagnosticsProperty('shouldAskContinue', shouldAskContinue))
       ..add(DiagnosticsProperty(
           'targetIntervalLoopingNum', targetIntervalLoopingNum));
   }
@@ -1387,6 +1411,8 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
             other is _$_TimerState &&
             const DeepCollectionEquality()
                 .equals(other.targetDuration, targetDuration) &&
+            const DeepCollectionEquality()
+                .equals(other.shouldAskContinue, shouldAskContinue) &&
             const DeepCollectionEquality().equals(
                 other.targetIntervalLoopingNum, targetIntervalLoopingNum));
   }
@@ -1395,6 +1421,7 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(targetDuration),
+      const DeepCollectionEquality().hash(shouldAskContinue),
       const DeepCollectionEquality().hash(targetIntervalLoopingNum));
 
   @JsonKey(ignore: true)
@@ -1406,13 +1433,16 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
 abstract class _TimerState extends TimerState {
   const factory _TimerState(
       {final List<Duration> targetDuration,
+      final List<bool> shouldAskContinue,
       final int targetIntervalLoopingNum}) = _$_TimerState;
   const _TimerState._() : super._();
 
   @override
-  List<Duration> get targetDuration => throw _privateConstructorUsedError;
+  List<Duration> get targetDuration;
+  @override // fragment whether asking continue timer by showing done modal
+  List<bool> get shouldAskContinue;
   @override // targetIntervalLoopingNumber aka targetILN
-  int get targetIntervalLoopingNum => throw _privateConstructorUsedError;
+  int get targetIntervalLoopingNum;
   @override
   @JsonKey(ignore: true)
   _$$_TimerStateCopyWith<_$_TimerState> get copyWith =>
@@ -1637,15 +1667,15 @@ abstract class _TimerTimeKeepingState extends TimerTimeKeepingState {
   const _TimerTimeKeepingState._() : super._();
 
   @override // started
-  DateTime? get startedTime => throw _privateConstructorUsedError;
+  DateTime? get startedTime;
   @override // paused
-  bool get isPaused => throw _privateConstructorUsedError;
+  bool get isPaused;
   @override
-  DateTime? get pausedTime => throw _privateConstructorUsedError;
+  DateTime? get pausedTime;
   @override
-  Duration get pausedDuration => throw _privateConstructorUsedError;
+  Duration get pausedDuration;
   @override // currentLoopingNumber aka currentLN
-  int get currentLoopingNum => throw _privateConstructorUsedError;
+  int get currentLoopingNum;
   @override
   @JsonKey(ignore: true)
   _$$_TimerTimeKeepingStateCopyWith<_$_TimerTimeKeepingState> get copyWith =>
@@ -1766,7 +1796,7 @@ abstract class _GoalState extends GoalState {
   const _GoalState._() : super._();
 
   @override
-  String get goal => throw _privateConstructorUsedError;
+  String get goal;
   @override
   @JsonKey(ignore: true)
   _$$_GoalStateCopyWith<_$_GoalState> get copyWith =>
@@ -1988,15 +2018,15 @@ abstract class _GoalTimeKeepingState extends GoalTimeKeepingState {
   const _GoalTimeKeepingState._() : super._();
 
   @override // fab
-  int get fabMode => throw _privateConstructorUsedError;
+  int get fabMode;
   @override // started
-  DateTime? get startedTime => throw _privateConstructorUsedError;
+  DateTime? get startedTime;
   @override // paused
-  bool get isPaused => throw _privateConstructorUsedError;
+  bool get isPaused;
   @override
-  DateTime? get pausedTime => throw _privateConstructorUsedError;
+  DateTime? get pausedTime;
   @override
-  Duration get pausedDuration => throw _privateConstructorUsedError;
+  Duration get pausedDuration;
   @override
   @JsonKey(ignore: true)
   _$$_GoalTimeKeepingStateCopyWith<_$_GoalTimeKeepingState> get copyWith =>

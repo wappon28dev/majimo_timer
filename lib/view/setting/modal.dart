@@ -30,7 +30,7 @@ class SettingModals {
     }
 
     final pref = ref.read(langState).lang;
-    return modal(
+    return showModal(
       context,
       ref,
       Icons.language,
@@ -83,7 +83,7 @@ class SettingModals {
 
     final pref = ref.read(themeState).theme;
 
-    return modal(
+    return showModal(
       context,
       ref,
       Icons.brightness_4,
@@ -137,7 +137,7 @@ class SettingModals {
     final pref = ref.read(themeState).isUsingMaterialYou;
     final isDefault = ref.read(themeState).seedColor == Colors.deepOrange;
 
-    return modal(
+    return showModal(
       context,
       ref,
       Icons.palette_outlined,
@@ -291,7 +291,7 @@ class SettingModals {
       );
     }
 
-    return modal(
+    return showModal(
       context,
       ref,
       Icons.access_time,
@@ -389,7 +389,7 @@ class SettingModals {
       );
     }
 
-    return modal(
+    return showModal(
       context,
       ref,
       Icons.av_timer,
@@ -488,7 +488,7 @@ class SettingModals {
       );
     }
 
-    return modal(
+    return showModal(
       context,
       ref,
       Icons.auto_graph,
@@ -558,7 +558,7 @@ class SettingModals {
 
     final pref = ref.read(generalState).topToast;
 
-    return modal(
+    return showModal(
       context,
       ref,
       Icons.unfold_more_sharp,
@@ -604,7 +604,7 @@ class SettingModals {
 
     final pref = ref.read(generalState).toastDuration;
 
-    return modal(
+    return showModal(
       context,
       ref,
       Icons.timelapse,

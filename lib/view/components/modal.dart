@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-Future<dynamic> modal(
+Future<dynamic> showModal(
   BuildContext context,
   WidgetRef ref,
   IconData icon,
@@ -43,14 +43,11 @@ Future<dynamic> modal(
           minFontSize: 10,
         ),
         const SizedBox(height: 5),
-        const Divider(
-          thickness: 2,
-        ),
+        const Divider(thickness: 2),
       ],
     )
   ];
   final bottom = <Widget>[];
-  print(Theme.of(context).scaffoldBackgroundColor);
   return showCupertinoModalBottomSheet<dynamic>(
     context: context,
     barrierColor: Colors.black54,

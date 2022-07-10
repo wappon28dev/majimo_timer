@@ -51,7 +51,8 @@ class GoalTimeKeepingPage extends HookConsumerWidget {
                   backgroundColor: Colors.red,
                   heroTag: null,
                   onPressed: () {
-                    RouteManager(context, ref).runPush(
+                    RouteManager.runPush(
+                      context: context,
                       page: const HomePage(),
                       isReplace: true,
                     );
@@ -106,7 +107,8 @@ class GoalTimeKeepingPage extends HookConsumerWidget {
                   backgroundColor: Colors.red,
                   heroTag: null,
                   onPressed: () {
-                    RouteManager(context, ref).runPush(
+                    RouteManager.runPush(
+                      context: context,
                       page: const HomePage(),
                       isReplace: true,
                     );

@@ -26,13 +26,15 @@ class _TutorialState extends ConsumerState<Tutorial> {
       body: OverBoard(
         pages: pages,
         skipCallback: () {
-          RouteManager(context, ref).runPush(
+          RouteManager.runPush(
+            context: context,
             page: const HomePage(),
             isReplace: true,
           );
         },
         finishCallback: () {
-          RouteManager(context, ref).runPush(
+          RouteManager.runPush(
+            context: context,
             page: const HomePage(),
             isReplace: true,
           );

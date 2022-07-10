@@ -33,7 +33,8 @@ class GoalPage extends HookConsumerWidget {
             onLongPressUp: () => Navigator.pop(context),
             child: FloatingActionButton(
               onPressed: () {
-                RouteManager(context, ref).runPush(
+                RouteManager.runPush(
+                  context: context,
                   page: const GoalTimeKeepingPage(),
                   isReplace: true,
                 );

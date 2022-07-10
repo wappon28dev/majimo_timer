@@ -93,7 +93,8 @@ Widget debug({required BuildContext context, required WidgetRef ref}) {
                     children: [
                       IconButton(
                         onPressed: () {
-                          RouteManager(context, ref).runPush(
+                          RouteManager.runPush(
+                            context: context,
                             page: const Debug(),
                             isReplace: false,
                           );
