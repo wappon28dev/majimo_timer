@@ -1,12 +1,7 @@
-import 'package:dismissible_page/dismissible_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/theme.dart';
-import 'package:majimo_timer/model/state.dart';
-import 'package:majimo_timer/view/home/alarm/body.dart';
-import 'package:majimo_timer/view/home/goal/body.dart';
-import 'package:majimo_timer/view/home/timer/body.dart';
 import 'package:majimo_timer/view/routes/transition.dart';
 
 List<Widget> button({required BuildContext context, required WidgetRef ref}) {

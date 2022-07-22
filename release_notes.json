@@ -1,10 +1,10 @@
 [
     {
         "language": "en-US",
-        "text": " -- showing diff v0.6.9 & v0.7.0 --\n 1. Changed color orange to primaryColor in `SettingModals`.\n 2. Make SettingWidgets in class: `SettingModals`.\n 3. Changed popup motion when opening modals.\n 4. Created `targetDurationListStr` for flow UI.\n 5. Fixed showing targetLoopingNum.\n 6. Added setting duration UI in flow UI.\n 7. Added `CupertinoTimerPicker` in flow UI.\n 8. Added some setting in flow UI.\n 9. Added `shouldAskContinue` flag in timerState.\n10. Renamed some classes & file name.\n11. Updated some translations.\n"
+        "text": "1. Upgraded kotlin & gradle version.\n2. Added `askContinueModal` in timerTKMode.\n3. Fixed behaves of onTap modal in flow UI.\n4. Created `StateProvider` for `isExpanded` variable.\n5. Added state `targetRepeatNum` in `TimerState`.\n6. Optimized `NotificationManager` class.\n7. Optimized `initialize` & `lateInitialize` functions.\n8. Fixed showing countries flag (svg -> png).\n9. Updated some translations (/ID) of notifications.\n"
     },
     {
         "language": "ja-JP",
-        "text": " -- v0.6.9 と v0.7.0 での差分 --\n 1. `SettingModals` でのアクセント色を, オレンジからプライマリー色へ変更しました.\n 2. 設定モーダルの集合として, `SettingModals` クラスを作成しました.\n 3. モーダルを開くときのモーションを変更しました.\n 4. flow UI で使うために `targetDurationListStr`を作成しました.\n 5. タイマーの繰り返しの数の表示を修正しました.\n 6. flow UI にわかりやすい時間設定を追加しました.\n 7. flow UI に `CupertinoTimerPicker` を追加しました.\n 8. flow UI に いくつかの設定を追加しました.\n 9. timerState に, `shouldAskContinue`フラグ を追加しました.\n10. クラス/ファイル の名前を変更しました.\n11. アプリの翻訳を更新しました.\n"
+        "text": "1. kotlin と gradle のバージョンを上げました.\n2. timerTKモードに `askContinueModal` を追加しました.\n3. flow UIにおいて, onTapイベントのモーダルの挙動を修正しました.\n4. `StateProvider` に `isExpanded` 変数を追加しました.\n5. `TimerState` に `targetRepeatNum` ステートを追加しました.\n6. `NotificationManager` クラスを整理しました.\n7. `initialize` と `lateInitialize` 関数を整理しました.\n8. 国旗の表示についての問題を解決しました (svg -> png).\n9. アプリの通知についての翻訳(/ID) を更新しました.\n"
     }
 ]

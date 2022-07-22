@@ -1,5 +1,7 @@
 part of 'body.dart';
 
+final isExpandedState = StateProvider<bool>((ref) => false);
+
 Widget buildVertical(BuildContext context, WidgetRef ref) {
   final timerstate = ref.watch(timerState);
   final timerstateFunc = ref.read(timerState.notifier);
@@ -18,32 +20,34 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   final footer = Column(
     children: [
       const SizedBox(height: 10),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              // Foreground color
-              onPrimary: colorScheme.onPrimary,
-              // Background color
-              primary: colorScheme.primary,
-            ).copyWith(elevation: ButtonStyleButton.allOrNull(0)),
-            onPressed: timerstateFunc.addTargetDuration,
-            icon: const Icon(Icons.add),
-            label: const Text('新しいタイマーを追加'),
-          ),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              // Foreground color
-              onPrimary: colorScheme.onPrimary,
-              // Background color
-              primary: colorScheme.primary,
-            ).copyWith(elevation: ButtonStyleButton.allOrNull(0)),
-            onPressed: timerstateFunc.resetTargetDuration,
-            icon: const Icon(Icons.delete_forever),
-            label: const Text('タイマーのリセット'),
-          ),
-        ],
+      SingleChildScrollView(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                // Foreground color
+                onPrimary: colorScheme.onPrimary,
+                // Background color
+                primary: colorScheme.primary,
+              ).copyWith(elevation: ButtonStyleButton.allOrNull(0)),
+              onPressed: timerstateFunc.addTargetDuration,
+              icon: const Icon(Icons.add),
+              label: const Text('新しいタイマーを追加'),
+            ),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                // Foreground color
+                onPrimary: colorScheme.onPrimary,
+                // Background color
+                primary: colorScheme.primary,
+              ).copyWith(elevation: ButtonStyleButton.allOrNull(0)),
+              onPressed: timerstateFunc.resetTargetDuration,
+              icon: const Icon(Icons.delete_forever),
+              label: const Text('タイマーのリセット'),
+            ),
+          ],
+        ),
       ),
       const SizedBox(height: 10),
       const RotatedBox(
@@ -74,6 +78,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
       value: shouldAskContinue[i],
       onChanged: (_) => timerstateFunc.toggleShouldAskContinue(i),
       secondary: const Icon(Icons.add_task),
+      controlAffinity: ListTileControlAffinity.trailing,
     );
 
     return Column(

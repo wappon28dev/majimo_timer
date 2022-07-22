@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 0.7.0
+version: 0.7.1
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -12,12 +12,12 @@ dependencies:
   app_links: ^3.2.0
   auto_size_text: ^3.0.0
   awesome_notifications: ^0.6.17
+  country_icons: ^2.0.2
   cupertino_back_gesture: ^0.1.0
   dart_date: ^1.1.0
   dismissible_page: ^0.7.3
   duration_picker: ^1.1.0+1
   easy_localization: ^3.0.0
-  flag: ^6.0.0
   flutter:
     sdk: flutter
   flutter_color: ^2.0.0
@@ -38,7 +38,7 @@ dependencies:
   reorderables: ^0.5.0
   ripple_backdrop_animate_route: ^1.0.0
   rive: ^0.9.0
-  rxdart: ^0.27.4
+  rxdart: ^0.27.5
   simple_animations: ^4.0.1
   slide_digital_clock: ^1.0.2
   tap_to_expand: ^0.5.7

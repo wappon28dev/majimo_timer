@@ -325,6 +325,8 @@ class TimerState with _$TimerState {
     // targetIntervalLoopingNumber aka targetILN
     @Default(0)
         int targetIntervalLoopingNum,
+    @Default(1)
+        int targetRepeatNum,
   }) = _TimerState;
 
   const TimerState._();

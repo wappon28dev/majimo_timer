@@ -35,27 +35,25 @@ class AppTeam extends AboutAppTeam {
     'gu': 'assets/images/me.png',
     'katoso': 'assets/images/me.png',
     'roto': 'assets/images/me.png',
+    'hyodosyun': 'assets/images/me.png',
   };
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.7.0 β';
-  final String buildDate = '2022/07/10 23:56';
+  final String versionStr = 'majimo_timer v0.7.1 β';
+  final String buildDate = '2022/07/23 1:40';
   final String changeLog = '''
 
-  -- showing diff v0.6.9 & v0.7.0 --
 [fix]
-  1. Changed color orange to primaryColor in `SettingModals`.
-  2. Make SettingWidgets in class: `SettingModals`.
-  3. Changed popup motion when opening modals.
-  4. Created `targetDurationListStr` for flow UI.
-  5. Fixed showing targetLoopingNum.
-  6. Added setting duration UI in flow UI.
-  7. Added `CupertinoTimerPicker` in flow UI.
-  8. Added some setting in flow UI.
-  9. Added `shouldAskContinue` flag in timerState.
- 10. Renamed some classes & file name.
- 11. Updated some translations.
+  1. Upgraded kotlin & gradle version.
+  2. Added `askContinueModal` in timerTKMode.
+  3. Fixed behaves of onTap modal in flow UI.
+  4. Created `StateProvider` for `isExpanded` variable.
+  5. Added state `targetRepeatNum` in `TimerState`.
+  6. Optimized `NotificationManager` class.
+  7. Optimized `initialize` & `lateInitialize` functions.
+  8. Fixed showing countries flag (svg -> png).
+  9. Updated some translations (/ID) of notifications.
 
 [known-bug]
   1. Overlay TK screen always applied

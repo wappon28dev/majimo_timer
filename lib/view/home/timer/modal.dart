@@ -40,4 +40,23 @@ class TimerModals {
       ],
     );
   }
+
+  Future<void> showAskContinue() {
+    return showModal(
+      context,
+      ref,
+      Icons.contact_support,
+      'お疲れ様でした！',
+      '次のタイマーを開始しますか？',
+      [
+        const SizedBox(
+          height: 70,
+        ),
+        ElevatedButton(
+          onPressed: () => print('ok'),
+          child: const Text('GO!'),
+        ),
+      ],
+    );
+  }
 }

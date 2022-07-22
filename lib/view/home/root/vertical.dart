@@ -48,11 +48,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             primary: colorScheme.primary,
             onPrimary: colorScheme.onPrimary,
           ),
-          onPressed: () => NotificationManager().alarmFinish(
-            target: DateTime.now().add(
-              const Duration(seconds: 5),
-            ),
-          ),
+          onPressed: () => NotificationManager().test(),
           icon: const Icon(Icons.abc),
           label: const Text('test Device Notification'),
         ),

@@ -11,7 +11,7 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
 
   Widget content() {
     // Excuse `runNext` Func when isTimeKeeping && diff <= 0
-    if (isTimeKeeping && diff.inSeconds <= 0) {
+    if (isTimeKeeping && diff.inMilliseconds <= 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ref.read(timerTKState.notifier).runNext(context, ref);
       });

@@ -9,9 +9,18 @@ import 'package:majimo_timer/model/helper/theme.dart';
 import 'package:majimo_timer/model/helper/translations.dart';
 import 'package:majimo_timer/model/state.dart';
 
-enum NotificationChannelKey { ringtone, interval, timekeeping }
+enum NotificationChannelKey { test, ringtone, timekeeping }
 
-enum NotificationActionKey { terminate, timerAdd, intervalAdd }
+enum NotificationActionKey { terminate, add10min, runNext }
+
+enum NotificationType {
+  normal(NotificationCategory.Reminder),
+  alarm(NotificationCategory.Alarm),
+  timekeeping(NotificationCategory.StopWatch);
+
+  const NotificationType(this.value);
+  final NotificationCategory value;
+}
 
 enum NotificationIdKey {
   test,
@@ -23,82 +32,12 @@ enum NotificationIdKey {
 }
 
 class NotificationManager {
-  Map<NotificationIdKey, int> key = {
-    NotificationIdKey.test: 0,
-    NotificationIdKey.alarmFinish: 1,
-    NotificationIdKey.timerFinish: 2,
-    NotificationIdKey.alarmTimeKeeping: 3,
-    NotificationIdKey.timerAlarmKeeping: 4,
-    NotificationIdKey.goalTimeKeeping: 5
-  };
-
   void initialize() {
-    AwesomeNotifications().initialize(
-        // set the icon to null if you want to use the default app icon
-        null,
-        [
-          NotificationChannel(
-            channelKey: NotificationChannelKey.ringtone.name,
-            channelName: t.notification_ringtone.name,
-            channelDescription: t.notification_ringtone_sub.t,
-            ledColor: Colors.orange,
-            onlyAlertOnce: false,
-            defaultPrivacy: NotificationPrivacy.Public,
-            defaultRingtoneType: DefaultRingtoneType.Alarm,
-            importance: NotificationImportance.Max,
-            playSound: true,
-          )
-        ]);
-    AwesomeNotifications().initialize(
-        // set the icon to null if you want to use the default app icon
-        null,
-        [
-          NotificationChannel(
-            channelKey: NotificationChannelKey.interval.name,
-            channelName: t.notification_interval.name,
-            channelDescription: t.notification_interval_sub.t,
-            defaultColor: const Color(0xFF9D50DD),
-            ledColor: Colors.orange,
-            onlyAlertOnce: false,
-            defaultPrivacy: NotificationPrivacy.Public,
-            defaultRingtoneType: DefaultRingtoneType.Alarm,
-            importance: NotificationImportance.Max,
-            playSound: true,
-          )
-        ]);
-    AwesomeNotifications().initialize(
-        // set the icon to null if you want to use the default app icon
-        null,
-        [
-          NotificationChannel(
-            channelKey: NotificationChannelKey.timekeeping.name,
-            channelName: t.notification_timekeeping.name,
-            channelDescription: t.notification_timekeeping_sub.t,
-            defaultColor: const Color(0xFF9D50DD),
-            ledColor: Colors.white,
-            onlyAlertOnce: false,
-            defaultPrivacy: NotificationPrivacy.Public,
-            defaultRingtoneType: DefaultRingtoneType.Notification,
-            importance: NotificationImportance.Min,
-            playSound: false,
-          )
-        ]);
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        // Insert here your friendly dialog box before call the request method
-        // This is very important to not harm the user experience
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
-  }
-
-  void lateInitialize() {
-    AwesomeNotifications().cancelAllSchedules();
-    AwesomeNotifications().setChannel(
+    AwesomeNotifications().initialize(null, [
       NotificationChannel(
         channelKey: NotificationChannelKey.ringtone.name,
-        channelName: t.notification_ringtone.t,
-        channelDescription: t.notification_ringtone_sub.t,
+        channelName: t.notif_description_ringtone.name,
+        channelDescription: t.notif_description_ringtone_sub.t,
         ledColor: Colors.orange,
         onlyAlertOnce: false,
         defaultPrivacy: NotificationPrivacy.Public,
@@ -106,26 +45,10 @@ class NotificationManager {
         importance: NotificationImportance.Max,
         playSound: true,
       ),
-    );
-    AwesomeNotifications().setChannel(
-      NotificationChannel(
-        channelKey: NotificationChannelKey.interval.name,
-        channelName: t.notification_interval.t,
-        channelDescription: t.notification_interval_sub.t,
-        defaultColor: const Color(0xFF9D50DD),
-        ledColor: Colors.orange,
-        onlyAlertOnce: false,
-        defaultPrivacy: NotificationPrivacy.Public,
-        defaultRingtoneType: DefaultRingtoneType.Alarm,
-        importance: NotificationImportance.Max,
-        playSound: true,
-      ),
-    );
-    AwesomeNotifications().setChannel(
       NotificationChannel(
         channelKey: NotificationChannelKey.timekeeping.name,
-        channelName: t.notification_timekeeping.t,
-        channelDescription: t.notification_timekeeping_sub.t,
+        channelName: t.notif_description_timekeeping.name,
+        channelDescription: t.notif_description_timekeeping_sub.t,
         defaultColor: const Color(0xFF9D50DD),
         ledColor: Colors.white,
         onlyAlertOnce: false,
@@ -134,14 +57,73 @@ class NotificationManager {
         importance: NotificationImportance.Min,
         playSound: false,
       ),
-    );
+      NotificationChannel(
+        channelKey: NotificationChannelKey.test.name,
+        channelName: t.notif_description_test.name,
+        channelDescription: t.notif_description_test_sub.t,
+        defaultColor: const Color(0xFF9D50DD),
+        ledColor: Colors.orange,
+        onlyAlertOnce: false,
+        defaultPrivacy: NotificationPrivacy.Public,
+        defaultRingtoneType: DefaultRingtoneType.Alarm,
+        importance: NotificationImportance.Max,
+        playSound: true,
+      ),
+    ]);
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+  }
+
+  void lateInitialize() {
+    AwesomeNotifications().cancelAllSchedules();
+    AwesomeNotifications().initialize(null, [
+      NotificationChannel(
+        channelKey: NotificationChannelKey.ringtone.name,
+        channelName: t.notif_description_ringtone.name,
+        channelDescription: t.notif_description_ringtone_sub.t,
+        ledColor: Colors.orange,
+        onlyAlertOnce: false,
+        defaultPrivacy: NotificationPrivacy.Public,
+        defaultRingtoneType: DefaultRingtoneType.Alarm,
+        importance: NotificationImportance.Max,
+        playSound: true,
+      ),
+      NotificationChannel(
+        channelKey: NotificationChannelKey.timekeeping.name,
+        channelName: t.notif_description_timekeeping.name,
+        channelDescription: t.notif_description_timekeeping_sub.t,
+        defaultColor: const Color(0xFF9D50DD),
+        ledColor: Colors.white,
+        onlyAlertOnce: false,
+        defaultPrivacy: NotificationPrivacy.Public,
+        defaultRingtoneType: DefaultRingtoneType.Notification,
+        importance: NotificationImportance.Min,
+        playSound: false,
+      ),
+      NotificationChannel(
+        channelKey: NotificationChannelKey.test.name,
+        channelName: t.notif_description_test.name,
+        channelDescription: t.notif_description_test_sub.t,
+        defaultColor: const Color(0xFF9D50DD),
+        ledColor: Colors.orange,
+        onlyAlertOnce: false,
+        defaultPrivacy: NotificationPrivacy.Public,
+        defaultRingtoneType: DefaultRingtoneType.Alarm,
+        importance: NotificationImportance.Max,
+        playSound: true,
+      ),
+    ]);
   }
 
   void test() {
     AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: key[NotificationIdKey.test]!,
-        channelKey: NotificationChannelKey.interval.name,
+        id: NotificationIdKey.test.index,
+        channelKey: NotificationChannelKey.test.name,
+        category: NotificationType.normal.value,
         title: 'test',
       ),
     );
@@ -150,12 +132,12 @@ class NotificationManager {
   void alarmFinish({required DateTime target}) {
     AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: key[NotificationIdKey.alarmFinish]!,
+        id: NotificationIdKey.alarmFinish.index,
         channelKey: NotificationChannelKey.ringtone.name,
-        title: '時間です！',
-        body: 'from まじもタイマー',
+        title: t.notif_content_alarm_title.t,
+        body: t.notif_content_alarm_body.t,
         autoDismissible: true,
-        category: NotificationCategory.Alarm,
+        category: NotificationType.alarm.value,
         displayOnBackground: true,
         displayOnForeground: true,
         wakeUpScreen: true,
@@ -163,15 +145,15 @@ class NotificationManager {
       ),
       schedule: NotificationCalendar.fromDate(date: target),
       actionButtons: [
-        NotificationActionButton(
-          key: 'SHOW_SERVICE_DETAILS',
-          label: 'Show details',
-          showInCompactView: true,
-        ),
-        NotificationActionButton(
-          key: 'SHOW_SERVICE_DETAILS',
-          label: 'Show details',
-        ),
+        // NotificationActionButton(
+        //   key: NotificationActionKey.terminate.name,
+        //   label: t.notif_action_alarm_terminate.t,
+        //   showInCompactView: true,
+        // ),
+        // NotificationActionButton(
+        //   key: NotificationActionKey.add10min.name,
+        //   label: ,
+        // ),
       ],
     );
   }
@@ -179,12 +161,12 @@ class NotificationManager {
   Future<void> timerFinish({required DateTime target}) async {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: key[NotificationIdKey.timerFinish]!,
+        id: NotificationIdKey.timerFinish.index,
         channelKey: NotificationChannelKey.ringtone.name,
-        title: '時間です！',
-        body: 'from まじもタイマー',
+        title: t.notif_content_timer_title.t,
+        body: t.notif_content_timer_body.t,
         autoDismissible: true,
-        category: NotificationCategory.Alarm,
+        category: NotificationType.alarm.value,
         displayOnBackground: true,
         displayOnForeground: true,
         showWhen: true,
@@ -193,15 +175,15 @@ class NotificationManager {
       ),
       schedule: NotificationCalendar.fromDate(date: target),
       actionButtons: [
-        NotificationActionButton(
-          key: 'SHOW_SERVICE_DETAILS',
-          label: 'Show details',
-          showInCompactView: true,
-        ),
-        NotificationActionButton(
-          key: 'SHOW_SERVICE_DETAILS',
-          label: 'Show details',
-        ),
+        // NotificationActionButton(
+        //   key: 'SHOW_SERVICE_DETAILS',
+        //   label: 'Show details',
+        //   showInCompactView: true,
+        // ),
+        // NotificationActionButton(
+        //   key: 'SHOW_SERVICE_DETAILS',
+        //   label: 'Show details',
+        // ),
       ],
     );
   }
@@ -209,22 +191,28 @@ class NotificationManager {
   Future<void> alarmTimeKeeping({required DateTime target}) async {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: key[NotificationIdKey.alarmTimeKeeping]!,
+        id: NotificationIdKey.alarmTimeKeeping.index,
         channelKey: NotificationChannelKey.timekeeping.name,
-        title: 'じこくモードで計測中... ・ ${target.hour}:${target.minute}まで',
-        body: 'from まじもタイマー',
-        category: NotificationCategory.Service,
+        title: t.notif_content_alarmTK_title
+            .a(['${target.hour}:${target.minute}']),
+        body: t.notif_content_alarm_body.t,
+        category: NotificationType.timekeeping.value,
         backgroundColor: ColorKey.orange.value,
         notificationLayout: NotificationLayout.Default,
       ),
       actionButtons: [
         NotificationActionButton(
-          key: 'SHOW_SERVICE_DETAILS',
-          label: '中止',
+          key: NotificationActionKey.terminate.name,
+          label: t.notif_action_alarm_terminate.t,
           showInCompactView: true,
-          buttonType: ActionButtonType.DisabledAction,
+          buttonType: ActionButtonType.KeepOnTop,
         ),
-        NotificationActionButton(key: 'SHOW_SERVICE_DETAILS', label: '5分追加'),
+        NotificationActionButton(
+          key: NotificationActionKey.add10min.name,
+          label: t.notif_action_alarm_add10min.t,
+          showInCompactView: true,
+          buttonType: ActionButtonType.KeepOnTop,
+        ),
       ],
     );
   }
@@ -232,23 +220,33 @@ class NotificationManager {
   Future<void> timerTimeKeeping({required DateTime target}) async {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: key[NotificationIdKey.timerAlarmKeeping]!,
+        id: NotificationIdKey.timerAlarmKeeping.index,
         channelKey: NotificationChannelKey.timekeeping.name,
-        title: 'じかんモードで計測中... ・ ${target.hour}:${target.minute}まで',
-        body: 'from まじもタイマー',
-        category: NotificationCategory.StopWatch,
+        title: t.notif_content_timerTK_title
+            .a(['${target.hour}:${target.minute}']),
+        body: t.notif_content_timerTK_body.t,
+        category: NotificationType.timekeeping.value,
         backgroundColor: ColorKey.orange.value,
         notificationLayout: NotificationLayout.Default,
       ),
       actionButtons: [
         NotificationActionButton(
           key: NotificationActionKey.terminate.name,
-          label: '中止',
+          label: t.notif_action_timer_terminate.t,
           showInCompactView: true,
+          buttonType: ActionButtonType.KeepOnTop,
         ),
         NotificationActionButton(
-          key: NotificationActionKey.timerAdd.name,
-          label: '5分追加',
+          key: NotificationActionKey.add10min.name,
+          label: t.notif_action_timer_add10min.t,
+          showInCompactView: true,
+          buttonType: ActionButtonType.KeepOnTop,
+        ),
+        NotificationActionButton(
+          key: NotificationActionKey.runNext.name,
+          label: t.notif_action_timer_runNext.t,
+          showInCompactView: true,
+          buttonType: ActionButtonType.KeepOnTop,
         ),
       ],
     );
@@ -257,25 +255,15 @@ class NotificationManager {
   Future<void> goalTimeKeeping({required DateTime from}) async {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: key[NotificationIdKey.goalTimeKeeping]!,
+        id: NotificationIdKey.goalTimeKeeping.index,
         channelKey: NotificationChannelKey.timekeeping.name,
-        title: 'もくひょうモードで計測中... ${from.hour}:${from.minute}から',
-        body: 'from まじもタイマー',
-        category: NotificationCategory.StopWatch,
+        title: t.notif_content_goal_title.a(['${from.hour}:${from.minute}']),
+        body: t.notif_content_goal_body.t,
+        category: NotificationType.timekeeping.value,
         backgroundColor: ColorKey.orange.value,
         notificationLayout: NotificationLayout.Default,
       ),
-      actionButtons: [
-        NotificationActionButton(
-          key: NotificationActionKey.terminate.name,
-          label: '中止',
-          showInCompactView: true,
-        ),
-        NotificationActionButton(
-          key: NotificationActionKey.timerAdd.name,
-          label: '5分追加',
-        ),
-      ],
+      actionButtons: [],
     );
   }
 

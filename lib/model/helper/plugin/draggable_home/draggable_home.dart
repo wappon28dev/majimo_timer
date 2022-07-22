@@ -6,7 +6,6 @@ import 'package:majimo_timer/model/state.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DraggableHome extends ConsumerStatefulWidget {
-
   const DraggableHome({
     super.key,
     this.leading,
@@ -150,9 +149,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
             final streams = snapshot.data ?? [false, false];
 
             return SliverAppBar(
-              shape: const RoundedRectangleBorder(
-                
-              ),
+              shape: const RoundedRectangleBorder(),
               leading: widget.alwaysShowLeadingAndAction
                   ? widget.leading
                   : !streams[0]

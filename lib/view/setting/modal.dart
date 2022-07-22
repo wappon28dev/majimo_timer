@@ -56,7 +56,12 @@ class SettingModals {
             maxLines: 1,
             style: _style(pref, 1)[0] as TextStyle?,
           ),
-          leading: const Flag.fromString('JP', height: 25, width: 25),
+          leading: SizedBox(
+            height: 25,
+            width: 25,
+            child:
+                Image.asset('icons/flags/png/jp.png', package: 'country_icons'),
+          ),
           trailing: _style(pref, 1)[2] as Widget?,
           onTap: () => func(lang: 1),
         ),
@@ -66,7 +71,12 @@ class SettingModals {
             maxLines: 1,
             style: _style(pref, 2)[0] as TextStyle?,
           ),
-          leading: const Flag.fromString('US', height: 25, width: 25),
+          leading: SizedBox(
+            height: 25,
+            width: 25,
+            child:
+                Image.asset('icons/flags/png/us.png', package: 'country_icons'),
+          ),
           trailing: _style(pref, 2)[2] as Widget?,
           onTap: () => func(lang: 2),
         ),

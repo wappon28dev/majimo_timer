@@ -57,6 +57,7 @@ class TimerController extends StateNotifier<TimerState> {
   }
 
   void updateShouldAskContinue({required List<bool> listBool}) {
+    assert(listBool != <bool>[]);
     state = state.copyWith(shouldAskContinue: listBool);
     Logger.s(
       '- from TimerState \n'
@@ -64,7 +65,17 @@ class TimerController extends StateNotifier<TimerState> {
     );
   }
 
+  void updateTargetRepeatNum({required int value}) {
+    assert(value >= 0);
+    state = state.copyWith(targetRepeatNum: value);
+    Logger.s(
+      '- from TimerState \n'
+      'save int targetRepeatNum = $value',
+    );
+  }
+
   void updateTargetDuration({required List<Duration> listDur}) {
+    assert(listDur != <Duration>[]);
     state = state.copyWith(targetDuration: listDur);
     // PrefManager().setInt(key: PrefKey.timerTarget, value: listDuration);
     Logger.s(
@@ -174,8 +185,12 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     final value = diff(ref);
 
     final hour = value.inHours.toString();
-    final minute = value.inMinutes.remainder(60).toString().padLeft(2, '0');
-    final second = value.inSeconds.remainder(60).toString().padLeft(2, '0');
+    final minute = (value.inMinutes).remainder(60).toString().padLeft(2, '0');
+    final second = (value.inSeconds).remainder(60).toString().padLeft(2, '0');
+
+    if (value.inSeconds < 0) {
+      return 'pausing...';
+    }
 
     if (value.inHours > 0) {
       return '$hour:$minute:$second';
@@ -186,9 +201,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
 
   double rate({required WidgetRef ref}) {
     final target = currentTargetDuration;
-
     final value = 1 - diff(ref).inMicroseconds / target.inMicroseconds;
-
     return (value >= 0 && value <= 1) ? value : 0;
   }
 
@@ -241,10 +254,25 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     GlobalController.updateWakelock(value: true);
   }
 
-  void runNext(BuildContext context, WidgetRef ref) {
-    if (_currentLN + 1 != _targetLN) {
+  Future<void> runNext(BuildContext context, WidgetRef ref) async {
+    final currentShouldAskContinue =
+        _read(timerState).shouldAskContinue[_currentLN];
+
+    void _stepNext() {
       state = state.copyWith(currentLoopingNum: _currentLN + 1);
+      _read(globalState.notifier).updateIsTimeKeeping(value: true);
       _runStart();
+    }
+
+    if (_currentLN + 1 != _targetLN) {
+      if (currentShouldAskContinue) {
+        _read(globalState.notifier).updateIsTimeKeeping(value: false);
+        await TimerModals(context, ref)
+            .showAskContinue()
+            .then((_) => _stepNext());
+      } else {
+        _stepNext();
+      }
     } else {
       _runExit(context, ref);
     }

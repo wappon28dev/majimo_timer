@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:majimo_timer/view/home/timer/body.dart';
 
 class TapToExpand extends HookConsumerWidget {
   const TapToExpand({
@@ -37,13 +38,12 @@ class TapToExpand extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var isExpanded = false;
+    final isExpanded = ref.watch(isExpandedState);
+    void onTap() => ref.read(isExpandedState.notifier).state = !isExpanded;
     return InkWell(
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      onTap: () {
-        isExpanded = !isExpanded;
-      },
+      onTap: onTap,
       child: AnimatedContainer(
         margin: EdgeInsets.symmetric(
           horizontal: isExpanded ? 25 : onTapPadding ?? 10,

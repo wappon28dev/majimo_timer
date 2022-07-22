@@ -43,8 +43,9 @@ class GlobalController extends StateNotifier<GlobalState> {
     Logger.s('- from GlobalState \n >> save bool isFirst = ${state.isFirst}');
   }
 
-  void updateIsTimeKeeping({required bool value}) =>
-      state = state.copyWith(isTimeKeeping: value);
+  void updateIsTimeKeeping({required bool value}) {
+    state = state.copyWith(isTimeKeeping: value);
+  }
 
   static void makeNavBarTransparent() {
     // SystemChrome.setSystemUIOverlayStyle(

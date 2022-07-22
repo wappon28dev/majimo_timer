@@ -2,7 +2,7 @@ part of '../controller.dart';
 
 class GeneralController extends StateNotifier<GeneralState> {
   GeneralController(this._read) : super(const GeneralState());
-  Reader _read;
+  final Reader _read;
 
   // change_value function
   void updateTopToast({required bool value}) {
