@@ -9,7 +9,6 @@ import 'package:majimo_timer/model/helper/plugin/slide_digital_clock/slide_digit
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:majimo_timer/view/routes/transition.dart';
-import 'package:simple_animations/stateless_animation/play_animation.dart';
 
 part 'vertical.dart';
 

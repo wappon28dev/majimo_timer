@@ -18,7 +18,6 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
   //   // });
   // });
 
-  // ignore: avoid_unnecessary_containers
   Widget headerWidget(BuildContext context) => ColoredBox(
         color: Theme.of(context).appBarTheme.backgroundColor!,
         child: Container(
@@ -48,9 +47,13 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             primary: colorScheme.primary,
             onPrimary: colorScheme.onPrimary,
           ),
-          onPressed: () => NotificationManager().test(),
-          icon: const Icon(Icons.abc),
-          label: const Text('test Device Notification'),
+          // dev
+          onPressed: () => TimerModals(context, ref).showAskContinue(
+              doneDurationStr: '3:00',
+              doneDurationLocalStr: '3分',
+              next: '5:00'),
+          icon: const Icon(Icons.view_in_ar),
+          label: const Text('Open askContinue modal'),
         ),
       ],
     );
@@ -60,9 +63,10 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
     final color = ref.watch(colorState).colorTween(context: context, ref: ref);
     final opacity = ref.watch(colorState).opacity;
     final path = ref.watch(colorState).picturePath(context: context, ref: ref);
-    return PlayAnimation<Color?>(
+    return PlayAnimationBuilder<Color?>(
       tween: color,
-      builder: (context, child, value) {
+      duration: const Duration(seconds: 1),
+      builder: (context, value, _) {
         return Container(
           alignment: Alignment.center,
           color: value,

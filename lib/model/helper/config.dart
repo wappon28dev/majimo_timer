@@ -40,20 +40,19 @@ class AppTeam extends AboutAppTeam {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.7.1 β';
-  final String buildDate = '2022/07/23 1:40';
+  final String versionStr = 'majimo_timer v0.7.2 β';
+  final String buildDate = '2022/08/23 13:38';
   final String changeLog = '''
 
 [fix]
-  1. Upgraded kotlin & gradle version.
-  2. Added `askContinueModal` in timerTKMode.
-  3. Fixed behaves of onTap modal in flow UI.
-  4. Created `StateProvider` for `isExpanded` variable.
-  5. Added state `targetRepeatNum` in `TimerState`.
-  6. Optimized `NotificationManager` class.
-  7. Optimized `initialize` & `lateInitialize` functions.
-  8. Fixed showing countries flag (svg -> png).
-  9. Updated some translations (/ID) of notifications.
+  1. updated flutter & dart packages
+  2. fixed `simple_animation` package's syntax
+  3. fixed not showing shouldAskContinue modal
+  4. added UI shouldAskContinue modal 
+  5. hide hour digit if hour duration is zero
+  6. added button to navigate privacy policy in setting
+  7. follow some lint rules
+  8. dart fix applied
 
 [known-bug]
   1. Overlay TK screen always applied

@@ -350,10 +350,7 @@ class TimerState with _$TimerState {
     return value;
   }
 
-  bool get canStart {
-    final hasDurationZero = targetDuration.contains(Duration.zero);
-    return !hasDurationZero;
-  }
+  bool get canStart => !targetDuration.contains(Duration.zero);
 }
 
 @freezed

@@ -6,12 +6,10 @@ import 'package:flutter_color/flutter_color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_analog_clock.dart';
-
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:majimo_timer/view/routes/transition.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:simple_animations/stateless_animation/play_animation.dart';
 
 part 'vertical.dart';
 

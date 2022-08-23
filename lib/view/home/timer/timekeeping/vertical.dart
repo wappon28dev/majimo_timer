@@ -76,20 +76,13 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
 AppBar appbar({required BuildContext context, required WidgetRef ref}) {
   return AppBar(
     centerTitle: true,
-    leading: PlayAnimation(
-      tween: Tween<double>(begin: 0, end: 1),
-      delay: const Duration(milliseconds: 5900),
-      duration: const Duration(milliseconds: 300),
-      builder: (context, child, value) {
-        return Opacity(
-          opacity: value! as double,
-          child: IconButton(
-            icon: const Icon(Icons.alarm),
-            onPressed: () {},
-            enableFeedback: false,
-          ),
-        );
-      },
+    leading: Opacity(
+      opacity: 1,
+      child: IconButton(
+        icon: const Icon(Icons.alarm),
+        onPressed: () {},
+        enableFeedback: false,
+      ),
     ),
     title: AnimatedOpacity(
       opacity: ref.watch(generalState).opacity,

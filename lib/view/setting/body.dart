@@ -167,6 +167,12 @@ class Setting extends HookConsumerWidget {
                 onTap: () => RouteManager.runURL(url: PathStore().githubURL),
               ),
               ListTile(
+                title: Text(t.privacy_policy.t),
+                leading: const Icon(Icons.policy),
+                trailing: const Icon(Icons.launch),
+                onTap: () => RouteManager.runURL(url: PathStore().privacyURL),
+              ),
+              ListTile(
                 title: Text(t.license.t),
                 subtitle: Text(t.license_sub.t),
                 leading: const Icon(Icons.balance),

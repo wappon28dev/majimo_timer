@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -41,7 +42,15 @@ class TimerModals {
     );
   }
 
-  Future<void> showAskContinue() {
+  Future<void> showAskContinue({
+    required String doneDurationStr,
+    required String doneDurationLocalStr,
+    required String next,
+  }) {
+    final isLight = ref.read(themeState.notifier).isLight(context: context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final textColor = isLight ? Colors.green : Colors.greenAccent.shade200;
+
     return showModal(
       context,
       ref,
@@ -50,12 +59,55 @@ class TimerModals {
       '次のタイマーを開始しますか？',
       [
         const SizedBox(
-          height: 70,
+          height: 20,
         ),
-        ElevatedButton(
-          onPressed: () => print('ok'),
-          child: const Text('GO!'),
+        AutoSizeText(
+          doneDurationStr,
+          style: TextStyle(
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+            color: textColor,
+            decoration: TextDecoration.lineThrough,
+          ),
+          textAlign: TextAlign.justify,
+          maxLines: 1,
         ),
+        Text(
+          '$doneDurationLocalStr間を終えました!',
+          style: TextStyle(
+            color: textColor,
+          ),
+        ),
+        const SizedBox(height: 10),
+        const Icon(Icons.arrow_downward, size: 40),
+        const SizedBox(height: 10),
+        AutoSizeText(
+          next,
+          style: TextStyle(
+            fontSize: 60,
+            fontWeight: FontWeight.bold,
+            color: colorScheme.primary,
+          ),
+          maxLines: 1,
+        ),
+        const SizedBox(height: 20),
+        ElevatedButton.icon(
+          style: ElevatedButton.styleFrom(
+            primary: colorScheme.primary,
+            onPrimary: colorScheme.onPrimary,
+            minimumSize: const Size(64, 60),
+          ),
+          onPressed: Navigator.of(context).pop,
+          icon: const Icon(Icons.rocket_launch),
+          label: const Text('次のタイマーへ進もう！ →'),
+        ),
+        const SizedBox(height: 10),
+        OutlinedButton.icon(
+          icon: const Icon(Icons.stop),
+          onPressed: () => null,
+          label: const Text('ここでやめる'),
+        ),
+        const SizedBox(height: 20),
       ],
     );
   }

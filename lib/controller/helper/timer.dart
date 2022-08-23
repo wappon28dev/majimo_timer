@@ -31,6 +31,9 @@ class TimerController extends StateNotifier<TimerState> {
           } else {
             str = element[index].toString().padLeft(2, '0');
           }
+          if (index == 0 && element[index] == 0) {
+            str = '';
+          }
         }
         return str;
       }
@@ -258,6 +261,11 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
     final currentShouldAskContinue =
         _read(timerState).shouldAskContinue[_currentLN];
 
+    final durationStrList =
+        _read(timerState.notifier).targetDurationListStr(isUsingColon: true);
+    final durationLocalStrList =
+        _read(timerState.notifier).targetDurationListStr(isUsingColon: false);
+
     void _stepNext() {
       state = state.copyWith(currentLoopingNum: _currentLN + 1);
       _read(globalState.notifier).updateIsTimeKeeping(value: true);
@@ -266,14 +274,22 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
 
     if (_currentLN + 1 != _targetLN) {
       if (currentShouldAskContinue) {
+        final doneDurationStr = durationStrList[_currentLN];
+        final doneDurationLocalStr = durationLocalStrList[_currentLN];
+        final nextDurationStr = durationStrList[_currentLN + 1];
+
         _read(globalState.notifier).updateIsTimeKeeping(value: false);
         await TimerModals(context, ref)
-            .showAskContinue()
+            .showAskContinue(
+                doneDurationStr: doneDurationStr,
+                doneDurationLocalStr: doneDurationLocalStr,
+                next: nextDurationStr)
             .then((_) => _stepNext());
       } else {
         _stepNext();
       }
     } else {
+      print('exit processing : $_currentLN, $_targetLN');
       _runExit(context, ref);
     }
   }
