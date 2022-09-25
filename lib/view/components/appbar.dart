@@ -11,11 +11,8 @@ AppBar commonAppbar({
   return AppBar(
     centerTitle: true,
     leading: IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    ),
+        icon: const Icon(Icons.arrow_back, color: Colors.white),
+        onPressed: () => Navigator.pop(context)),
     title: AutoSizeText(
       title,
       style: const TextStyle(

@@ -54,7 +54,8 @@ class Setting extends HookConsumerWidget {
               );
               PrefManager().restore(ref, context);
             },
-            icon: const Icon(Icons.settings_backup_restore),
+            icon:
+                const Icon(Icons.settings_backup_restore, color: Colors.white),
           ),
         ];
 

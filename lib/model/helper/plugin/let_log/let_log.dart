@@ -196,10 +196,7 @@ class _Net extends ChangeNotifier {
     this.api,
     this.type,
     this.req,
-    this.headers,
     this.start,
-    this.res,
-    this.spend = 0,
     this.status = 100,
   });
   static const all = 'All';

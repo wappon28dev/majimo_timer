@@ -144,6 +144,29 @@ class SettingModals {
       Navigator.pop(context);
     }
 
+    const color = [
+      Colors.red,
+      Colors.pink,
+      Colors.purple,
+      Colors.deepPurple,
+      Colors.indigo,
+      Colors.blue,
+      Colors.lightBlue,
+      Colors.cyan,
+      Colors.teal,
+      Colors.green,
+      Colors.lightGreen,
+      Colors.lime,
+      Colors.yellow,
+      Colors.amber,
+      Colors.orange,
+      Colors.deepOrange,
+      Colors.brown,
+      Colors.grey,
+      Colors.blueGrey,
+      Colors.black
+    ];
+
     final pref = ref.read(themeState).isUsingMaterialYou;
     final isDefault = ref.read(themeState).seedColor == Colors.deepOrange;
 

@@ -93,8 +93,8 @@ class TimerModals {
         const SizedBox(height: 20),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            primary: colorScheme.primary,
-            onPrimary: colorScheme.onPrimary,
+            foregroundColor: colorScheme.onPrimary,
+            backgroundColor: colorScheme.primary,
             minimumSize: const Size(64, 60),
           ),
           onPressed: Navigator.of(context).pop,
@@ -104,7 +104,7 @@ class TimerModals {
         const SizedBox(height: 10),
         OutlinedButton.icon(
           icon: const Icon(Icons.stop),
-          onPressed: () => null,
+          onPressed: null,
           label: const Text('ここでやめる'),
         ),
         const SizedBox(height: 20),

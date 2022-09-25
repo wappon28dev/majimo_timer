@@ -283,7 +283,7 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
             .showAskContinue(
                 doneDurationStr: doneDurationStr,
                 doneDurationLocalStr: doneDurationLocalStr,
-                next: nextDurationStr)
+                next: nextDurationStr,)
             .then((_) => _stepNext());
       } else {
         _stepNext();

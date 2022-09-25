@@ -7,19 +7,19 @@ import 'package:majimo_timer/view/routes/transition.dart';
 List<Widget> button({required BuildContext context, required WidgetRef ref}) {
   final width = MediaQuery.of(context).size.width;
 
-  void _alarm() => RouteManager(context, ref).home2alarm();
-  void _timer() => RouteManager(context, ref).home2timer();
-  void _setting() => RouteManager(context, ref).home2goal();
-
   final array = [
     <String>['alarm', 'timer', 'goal'],
     <Color>[ColorKey.blue.value, ColorKey.red.value, ColorKey.green.value],
     <IconData>[Icons.alarm, Icons.hourglass_top, Icons.flag],
-    <void Function()>[_alarm, _timer, _setting],
+    <void Function()>[
+      () => RouteManager(context, ref).home2alarm(),
+      () => RouteManager(context, ref).home2timer(),
+      () => RouteManager(context, ref).home2goal()
+    ],
   ];
   final widgets = <Widget>[];
 
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < array[0].length; i++) {
     final widget = GestureDetector(
       onTap: array[3][i] as void Function(),
       child: Hero(

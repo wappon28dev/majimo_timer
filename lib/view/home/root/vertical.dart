@@ -44,14 +44,13 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
         const SizedBox(height: 20),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            primary: colorScheme.primary,
-            onPrimary: colorScheme.onPrimary,
+            foregroundColor: colorScheme.onPrimary, backgroundColor: colorScheme.primary,
           ),
           // dev
           onPressed: () => TimerModals(context, ref).showAskContinue(
               doneDurationStr: '3:00',
               doneDurationLocalStr: '3分',
-              next: '5:00'),
+              next: '5:00',),
           icon: const Icon(Icons.view_in_ar),
           label: const Text('Open askContinue modal'),
         ),

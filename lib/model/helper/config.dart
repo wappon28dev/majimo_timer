@@ -40,19 +40,16 @@ class AppTeam extends AboutAppTeam {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.7.2 β';
-  final String buildDate = '2022/08/23 13:38';
+  final String versionStr = 'majimo_timer v0.7.3 β';
+  final String buildDate = '2022/09/26 0:20';
   final String changeLog = '''
 
 [fix]
   1. updated flutter & dart packages
-  2. fixed `simple_animation` package's syntax
-  3. fixed not showing shouldAskContinue modal
-  4. added UI shouldAskContinue modal 
-  5. hide hour digit if hour duration is zero
-  6. added button to navigate privacy policy in setting
-  7. follow some lint rules
-  8. dart fix applied
+  2. added numberPad UI
+  3. fixed redundancy syntax for update
+  4. follow some lint rules
+  5. dart fix applied
 
 [known-bug]
   1. Overlay TK screen always applied

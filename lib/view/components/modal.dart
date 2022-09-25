@@ -71,53 +71,14 @@ Future<dynamic> numberPad({
   required BuildContext context,
   required WidgetRef ref,
 }) {
-  const padding = EdgeInsets.only(bottom: 15, left: 15, right: 15, top: 8);
-  final value = ref.read(themeState.notifier).isLight(context: context);
-  final header = <Widget>[
-    Column(
-      children: <Widget>[
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 3),
-          width: 35,
-          height: 4,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.grey[400],
-          ),
-        ),
-        const SizedBox(height: 10),
-        const Icon(Icons.alarm_add),
-        const SizedBox(height: 8),
-        AutoSizeText(
-          'アラームをセットしましょう',
-          style: TextStyle(
-            color: value ? Colors.black : Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
-          minFontSize: 20,
-          maxLines: 1,
-        ),
-        const SizedBox(height: 5),
-        AutoSizeText(
-          'subtitle',
-          style: TextStyle(color: value ? Colors.black : Colors.white),
-          maxLines: 1,
-          minFontSize: 10,
-        ),
-        const SizedBox(height: 5),
-        const Divider(
-          thickness: 2,
-        ),
-      ],
-    )
-  ];
+  var padNumList = <String>['0', '0', '0', '0'];
+  var latestDigit = 0;
 
   final pad = <Widget>[
     Text(
-      ref.read(alarmState).targetTime.toString(),
+      '${padNumList[0]}${padNumList[1]}:${padNumList[2]}${padNumList[3]}',
       style: const TextStyle(
         fontSize: 70,
-        color: Colors.white,
         fontFamily: 'M-plus-B',
       ),
     ),
@@ -132,7 +93,10 @@ Future<dynamic> numberPad({
               .textTheme
               .bodyLarge
               ?.copyWith(fontSize: 30, fontWeight: FontWeight.bold),
-          onPressed: (dynamic val) => print(val.toString()),
+          onPressed: (dynamic val) {
+            padNumList.insert(latestDigit, val.toString());
+            latestDigit++;
+          },
           items: const [
             [
               GridButtonItem(title: '1'),
@@ -152,7 +116,7 @@ Future<dynamic> numberPad({
             [
               GridButtonItem(title: '00'),
               GridButtonItem(title: '0'),
-              GridButtonItem(title: '✅'),
+              GridButtonItem(title: 'c', child: Icon(Icons.check)),
             ],
           ],
         ),
@@ -160,25 +124,5 @@ Future<dynamic> numberPad({
     ),
   ];
 
-  return showCupertinoModalBottomSheet<dynamic>(
-    context: context,
-    barrierColor: Colors.black54,
-    duration: const Duration(milliseconds: 200),
-    topRadius: const Radius.circular(20),
-    builder: (context) => SingleChildScrollView(
-      controller: ModalScrollController.of(context),
-      child: Material(
-        child: Ink(
-          padding: padding,
-          color: value
-              ? Colors.deepOrange.shade100.lighter(12)
-              : Colors.deepOrange.shade50.darker(70),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: header + pad,
-          ),
-        ),
-      ),
-    ),
-  );
+  return showModal(context, ref, Icons.add_alarm, '時間を入力しよう', 'わあ', pad);
 }

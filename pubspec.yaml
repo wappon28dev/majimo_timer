@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 0.7.2
+version: 0.7.3
 
 environment:
     sdk: ">=2.17.0 <3.0.0"
@@ -17,6 +17,7 @@ dependencies:
     dart_date: ^1.1.0
     dismissible_page: ^0.7.3
     duration_picker: ^1.1.0+1
+    dynamic_color: ^1.5.4
     easy_localization: ^3.0.0
     flutter:
         sdk: flutter
@@ -34,7 +35,7 @@ dependencies:
     lottie: ^1.2.1
     modal_bottom_sheet: ^2.0.0
     percent_indicator: ^4.0.0
-    quick_actions: ^0.6.0+8
+    quick_actions: ^1.0.0
     reorderables: ^0.5.0
     ripple_backdrop_animate_route: ^1.0.0
     rive: ^0.9.0
@@ -68,10 +69,7 @@ flutter_native_splash:
 flutter:
     uses-material-design: true
     assets:
-        - assets/images/
-        - assets/images/icons/
-        - assets/splash/
-        - assets/l10n/
+        - assets/
 
     fonts:
         - family: M-plus-B

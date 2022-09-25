@@ -58,10 +58,9 @@ class AboutApp extends HookConsumerWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton.icon(
-                onPressed: () =>
-                    RouteManager.runURL(url: PathStore().privacyURL),
-                icon: const Icon(Icons.launch),
-                label: Text(t.privacy_policy.t),
+                onPressed: () => about(context),
+                icon: const Icon(Icons.info_outline),
+                label: Text(t.about.t),
               ),
               const SizedBox(height: 20),
             ],
@@ -103,8 +102,8 @@ class AboutAppTeam extends HookConsumerWidget {
               padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  onPrimary: Colors.purple,
+                  foregroundColor: Colors.purple,
+                  backgroundColor: Colors.white,
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.all(10),
                 ),
@@ -129,8 +128,8 @@ class AboutAppTeam extends HookConsumerWidget {
               padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  onPrimary: Colors.purple,
+                  foregroundColor: Colors.purple,
+                  backgroundColor: Colors.white,
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.all(10),
                 ),

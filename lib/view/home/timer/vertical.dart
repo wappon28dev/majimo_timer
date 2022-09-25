@@ -27,9 +27,8 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 // Foreground color
-                onPrimary: colorScheme.onPrimary,
-                // Background color
-                primary: colorScheme.primary,
+                foregroundColor: colorScheme.onPrimary,
+                backgroundColor: colorScheme.primary,
               ).copyWith(elevation: ButtonStyleButton.allOrNull(0)),
               onPressed: timerstateFunc.addTargetDuration,
               icon: const Icon(Icons.add),
@@ -38,9 +37,8 @@ Widget buildVertical(BuildContext context, WidgetRef ref) {
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 // Foreground color
-                onPrimary: colorScheme.onPrimary,
-                // Background color
-                primary: colorScheme.primary,
+                foregroundColor: colorScheme.onPrimary,
+                backgroundColor: colorScheme.primary,
               ).copyWith(elevation: ButtonStyleButton.allOrNull(0)),
               onPressed: timerstateFunc.resetTargetDuration,
               icon: const Icon(Icons.delete_forever),

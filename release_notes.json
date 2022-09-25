@@ -1,10 +1,10 @@
 [
     {
         "language": "en-US",
-        "text": "1. updated flutter & dart packages\n2. fixed `simple_animation` package's syntax\n3. fixed not showing shouldAskContinue modal\n4. added UI shouldAskContinue modal \n5. hide hour digit if hour duration is zero\n6. added button to navigate privacy policy in setting\n7. follow some lint rules\n8. dart fix applied\n"
+        "text": "1. updated flutter & dart packages\n2. added numberPad UI\n3. fixed redundancy syntax for update\n4. follow some lint rules\n5. dart fix applied\n"
     },
     {
         "language": "ja-JP",
-        "text": "1. flutterとdartのバッケージを更新しました\n2. `simple_animation` パッケージの構文を修正しました\n3. 次のタイマーに進むかのモーダルが出ない不具合を修正しました\n4. 次のタイマーに進むかのモーダルにUIを追加しました\n5. タイマーの時間部分がゼロの場合、時間部分を非表示にしました\n6. 設定画面からプライバシーポリシーに遷移できるボタンを追加しました\n7. lint rule に従いました\n8. `dart fix` を適用しました\n"
+        "text": "1. flutterとdartのバッケージを更新しました\n2. テンキーのUIを追加しました\n3. 冗長的な構文を修正しました\n4. lint rule に従いました\n5. `dart fix` を適用しました\n"
     }
 ]
