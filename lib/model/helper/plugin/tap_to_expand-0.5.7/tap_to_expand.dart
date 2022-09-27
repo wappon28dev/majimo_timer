@@ -7,6 +7,7 @@ class TapToExpand extends HookConsumerWidget {
     super.key,
     required this.content,
     required this.title,
+    required this.index,
     this.color,
     this.iconColor,
     this.scrollable,
@@ -23,6 +24,7 @@ class TapToExpand extends HookConsumerWidget {
 
   final Widget content;
   final Widget title;
+  final int index;
   final Widget? trailing;
   final Color? color;
   final Color? iconColor;
@@ -39,25 +41,31 @@ class TapToExpand extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isExpanded = ref.watch(isExpandedState);
-    void onTap() => ref.read(isExpandedState.notifier).state = !isExpanded;
+    void onTap() {
+      final copiedIsExpanded = ref.read(isExpandedState).toList();
+      copiedIsExpanded[index] = !copiedIsExpanded[index];
+      ref.read(isExpandedState.notifier).state = copiedIsExpanded;
+      print('newList => $isExpanded');
+    }
+
     return InkWell(
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       onTap: onTap,
       child: AnimatedContainer(
         margin: EdgeInsets.symmetric(
-          horizontal: isExpanded ? 25 : onTapPadding ?? 10,
+          horizontal: isExpanded[index] ? 25 : onTapPadding ?? 10,
           vertical: 10,
         ),
         padding: const EdgeInsets.all(5),
-        height: isExpanded ? closedHeight ?? 85 : openedHeight ?? 150,
+        height: isExpanded[index] ? closedHeight ?? 85 : openedHeight ?? 150,
         curve: Curves.fastLinearToSlowEaseIn,
-        duration: duration ?? const Duration(milliseconds: 1200),
+        duration: duration ?? const Duration(milliseconds: 600),
         decoration: BoxDecoration(
           boxShadow: boxShadow ?? [],
           color: color ?? Theme.of(context).primaryColor,
           borderRadius: BorderRadius.all(
-            Radius.circular(isExpanded ? borderRadius ?? 10 : 5),
+            Radius.circular(isExpanded[index] ? borderRadius ?? 10 : 5),
           ),
         ),
         child: SingleChildScrollView(
@@ -67,7 +75,7 @@ class TapToExpand extends HookConsumerWidget {
                 title: title,
                 leading: leading,
                 trailing: Icon(
-                  isExpanded
+                  isExpanded[index]
                       ? Icons.keyboard_arrow_down
                       : Icons.keyboard_arrow_up,
                 ),
@@ -79,10 +87,10 @@ class TapToExpand extends HookConsumerWidget {
                   padding: const EdgeInsets.all(10),
                   child: content,
                 ),
-                crossFadeState: isExpanded
+                crossFadeState: isExpanded[index]
                     ? CrossFadeState.showFirst
                     : CrossFadeState.showSecond,
-                duration: duration ?? const Duration(milliseconds: 1200),
+                duration: duration ?? const Duration(milliseconds: 600),
                 reverseDuration: Duration.zero,
                 sizeCurve: Curves.fastLinearToSlowEaseIn,
               ),

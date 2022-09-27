@@ -117,7 +117,7 @@ List<Widget> count({required BuildContext context, required WidgetRef ref}) {
       radius: width * 0.45,
       lineWidth: 15,
       percent: ref.read(timerTKState.notifier).rate(ref: ref),
-      center: const SizedBox(),
+      center: nil,
       progressColor: _front(),
       backgroundColor: _back(),
       circularStrokeCap: CircularStrokeCap.square,

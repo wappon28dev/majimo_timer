@@ -12,6 +12,7 @@ import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/timer/modal.dart';
 import 'package:majimo_timer/view/home/timer/timekeeping/body.dart';
 import 'package:majimo_timer/view/routes/transition.dart';
+import 'package:nil/nil.dart';
 import 'package:reorderables/reorderables.dart';
 
 part 'horizontal.dart';
@@ -27,7 +28,7 @@ class TimerPage extends HookConsumerWidget {
     final show = ref.watch(generalState).showFAB;
     const tag = 'timer';
 
-    Widget _fab() => SizedBox(
+    Widget fab() => SizedBox(
           height: 80,
           width: 80,
           child: GestureDetector(
@@ -55,7 +56,7 @@ class TimerPage extends HookConsumerWidget {
           ),
         );
 
-    AppBar _appbar() {
+    AppBar appbar() {
       return AppBar(
         backgroundColor: ColorKey.red.value,
         centerTitle: true,
@@ -106,10 +107,10 @@ class TimerPage extends HookConsumerWidget {
           Navigator.of(context).pop();
         },
         child: Scaffold(
-          appBar: _appbar(),
+          appBar: appbar(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: show ? _fab() : null,
+          floatingActionButton: show ? fab() : null,
           backgroundColor: ColorKey.red.value,
           body: !isLandscape
               ? buildVertical(context, ref)

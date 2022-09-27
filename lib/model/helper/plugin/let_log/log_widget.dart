@@ -62,7 +62,7 @@ class _LogWidgetState extends State<LogWidget> {
                   itemCount: len,
                   controller: _scrollController,
                   separatorBuilder: (context, index) {
-                    return const SizedBox();
+                    return nil;
                   },
                 );
               },

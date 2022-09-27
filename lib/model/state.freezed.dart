@@ -1271,8 +1271,7 @@ mixin _$TimerState {
   List<Duration> get targetDuration =>
       throw _privateConstructorUsedError; // fragment whether asking continue timer by showing done modal
   List<bool> get shouldAskContinue =>
-      throw _privateConstructorUsedError; // targetIntervalLoopingNumber aka targetILN
-  int get targetIntervalLoopingNum => throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError; // targetRepeatNumber aka targetRN
   int get targetRepeatNum => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -1288,7 +1287,6 @@ abstract class $TimerStateCopyWith<$Res> {
   $Res call(
       {List<Duration> targetDuration,
       List<bool> shouldAskContinue,
-      int targetIntervalLoopingNum,
       int targetRepeatNum});
 }
 
@@ -1304,7 +1302,6 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
   $Res call({
     Object? targetDuration = freezed,
     Object? shouldAskContinue = freezed,
-    Object? targetIntervalLoopingNum = freezed,
     Object? targetRepeatNum = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1316,10 +1313,6 @@ class _$TimerStateCopyWithImpl<$Res> implements $TimerStateCopyWith<$Res> {
           ? _value.shouldAskContinue
           : shouldAskContinue // ignore: cast_nullable_to_non_nullable
               as List<bool>,
-      targetIntervalLoopingNum: targetIntervalLoopingNum == freezed
-          ? _value.targetIntervalLoopingNum
-          : targetIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
-              as int,
       targetRepeatNum: targetRepeatNum == freezed
           ? _value.targetRepeatNum
           : targetRepeatNum // ignore: cast_nullable_to_non_nullable
@@ -1338,7 +1331,6 @@ abstract class _$$_TimerStateCopyWith<$Res>
   $Res call(
       {List<Duration> targetDuration,
       List<bool> shouldAskContinue,
-      int targetIntervalLoopingNum,
       int targetRepeatNum});
 }
 
@@ -1356,7 +1348,6 @@ class __$$_TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
   $Res call({
     Object? targetDuration = freezed,
     Object? shouldAskContinue = freezed,
-    Object? targetIntervalLoopingNum = freezed,
     Object? targetRepeatNum = freezed,
   }) {
     return _then(_$_TimerState(
@@ -1368,10 +1359,6 @@ class __$$_TimerStateCopyWithImpl<$Res> extends _$TimerStateCopyWithImpl<$Res>
           ? _value.shouldAskContinue
           : shouldAskContinue // ignore: cast_nullable_to_non_nullable
               as List<bool>,
-      targetIntervalLoopingNum: targetIntervalLoopingNum == freezed
-          ? _value.targetIntervalLoopingNum
-          : targetIntervalLoopingNum // ignore: cast_nullable_to_non_nullable
-              as int,
       targetRepeatNum: targetRepeatNum == freezed
           ? _value.targetRepeatNum
           : targetRepeatNum // ignore: cast_nullable_to_non_nullable
@@ -1386,7 +1373,6 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
   const _$_TimerState(
       {this.targetDuration = const [Duration(minutes: 1), Duration(minutes: 2)],
       this.shouldAskContinue = const [false, false],
-      this.targetIntervalLoopingNum = 0,
       this.targetRepeatNum = 1})
       : super._();
 
@@ -1397,17 +1383,14 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final List<bool> shouldAskContinue;
-// targetIntervalLoopingNumber aka targetILN
-  @override
-  @JsonKey()
-  final int targetIntervalLoopingNum;
+// targetRepeatNumber aka targetRN
   @override
   @JsonKey()
   final int targetRepeatNum;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerState(targetDuration: $targetDuration, shouldAskContinue: $shouldAskContinue, targetIntervalLoopingNum: $targetIntervalLoopingNum, targetRepeatNum: $targetRepeatNum)';
+    return 'TimerState(targetDuration: $targetDuration, shouldAskContinue: $shouldAskContinue, targetRepeatNum: $targetRepeatNum)';
   }
 
   @override
@@ -1417,8 +1400,6 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'TimerState'))
       ..add(DiagnosticsProperty('targetDuration', targetDuration))
       ..add(DiagnosticsProperty('shouldAskContinue', shouldAskContinue))
-      ..add(DiagnosticsProperty(
-          'targetIntervalLoopingNum', targetIntervalLoopingNum))
       ..add(DiagnosticsProperty('targetRepeatNum', targetRepeatNum));
   }
 
@@ -1431,8 +1412,6 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
                 .equals(other.targetDuration, targetDuration) &&
             const DeepCollectionEquality()
                 .equals(other.shouldAskContinue, shouldAskContinue) &&
-            const DeepCollectionEquality().equals(
-                other.targetIntervalLoopingNum, targetIntervalLoopingNum) &&
             const DeepCollectionEquality()
                 .equals(other.targetRepeatNum, targetRepeatNum));
   }
@@ -1442,7 +1421,6 @@ class _$_TimerState extends _TimerState with DiagnosticableTreeMixin {
       runtimeType,
       const DeepCollectionEquality().hash(targetDuration),
       const DeepCollectionEquality().hash(shouldAskContinue),
-      const DeepCollectionEquality().hash(targetIntervalLoopingNum),
       const DeepCollectionEquality().hash(targetRepeatNum));
 
   @JsonKey(ignore: true)
@@ -1455,7 +1433,6 @@ abstract class _TimerState extends TimerState {
   const factory _TimerState(
       {final List<Duration> targetDuration,
       final List<bool> shouldAskContinue,
-      final int targetIntervalLoopingNum,
       final int targetRepeatNum}) = _$_TimerState;
   const _TimerState._() : super._();
 
@@ -1463,9 +1440,7 @@ abstract class _TimerState extends TimerState {
   List<Duration> get targetDuration;
   @override // fragment whether asking continue timer by showing done modal
   List<bool> get shouldAskContinue;
-  @override // targetIntervalLoopingNumber aka targetILN
-  int get targetIntervalLoopingNum;
-  @override
+  @override // targetRepeatNumber aka targetRN
   int get targetRepeatNum;
   @override
   @JsonKey(ignore: true)
@@ -1481,7 +1456,9 @@ mixin _$TimerTimeKeepingState {
   DateTime? get pausedTime => throw _privateConstructorUsedError;
   Duration get pausedDuration =>
       throw _privateConstructorUsedError; // currentLoopingNumber aka currentLN
-  int get currentLoopingNum => throw _privateConstructorUsedError;
+  int get currentLoopingNum =>
+      throw _privateConstructorUsedError; // currentRepeatNumber aka currentRN
+  int get currentRepeatNum => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TimerTimeKeepingStateCopyWith<TimerTimeKeepingState> get copyWith =>
@@ -1498,7 +1475,8 @@ abstract class $TimerTimeKeepingStateCopyWith<$Res> {
       bool isPaused,
       DateTime? pausedTime,
       Duration pausedDuration,
-      int currentLoopingNum});
+      int currentLoopingNum,
+      int currentRepeatNum});
 }
 
 /// @nodoc
@@ -1517,6 +1495,7 @@ class _$TimerTimeKeepingStateCopyWithImpl<$Res>
     Object? pausedTime = freezed,
     Object? pausedDuration = freezed,
     Object? currentLoopingNum = freezed,
+    Object? currentRepeatNum = freezed,
   }) {
     return _then(_value.copyWith(
       startedTime: startedTime == freezed
@@ -1539,6 +1518,10 @@ class _$TimerTimeKeepingStateCopyWithImpl<$Res>
           ? _value.currentLoopingNum
           : currentLoopingNum // ignore: cast_nullable_to_non_nullable
               as int,
+      currentRepeatNum: currentRepeatNum == freezed
+          ? _value.currentRepeatNum
+          : currentRepeatNum // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -1555,7 +1538,8 @@ abstract class _$$_TimerTimeKeepingStateCopyWith<$Res>
       bool isPaused,
       DateTime? pausedTime,
       Duration pausedDuration,
-      int currentLoopingNum});
+      int currentLoopingNum,
+      int currentRepeatNum});
 }
 
 /// @nodoc
@@ -1577,6 +1561,7 @@ class __$$_TimerTimeKeepingStateCopyWithImpl<$Res>
     Object? pausedTime = freezed,
     Object? pausedDuration = freezed,
     Object? currentLoopingNum = freezed,
+    Object? currentRepeatNum = freezed,
   }) {
     return _then(_$_TimerTimeKeepingState(
       startedTime: startedTime == freezed
@@ -1599,6 +1584,10 @@ class __$$_TimerTimeKeepingStateCopyWithImpl<$Res>
           ? _value.currentLoopingNum
           : currentLoopingNum // ignore: cast_nullable_to_non_nullable
               as int,
+      currentRepeatNum: currentRepeatNum == freezed
+          ? _value.currentRepeatNum
+          : currentRepeatNum // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -1612,7 +1601,8 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
       this.isPaused = false,
       this.pausedTime,
       this.pausedDuration = Duration.zero,
-      this.currentLoopingNum = 0})
+      this.currentLoopingNum = 0,
+      this.currentRepeatNum = 0})
       : super._();
 
 // started
@@ -1631,10 +1621,14 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
   @override
   @JsonKey()
   final int currentLoopingNum;
+// currentRepeatNumber aka currentRN
+  @override
+  @JsonKey()
+  final int currentRepeatNum;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerTimeKeepingState(startedTime: $startedTime, isPaused: $isPaused, pausedTime: $pausedTime, pausedDuration: $pausedDuration, currentLoopingNum: $currentLoopingNum)';
+    return 'TimerTimeKeepingState(startedTime: $startedTime, isPaused: $isPaused, pausedTime: $pausedTime, pausedDuration: $pausedDuration, currentLoopingNum: $currentLoopingNum, currentRepeatNum: $currentRepeatNum)';
   }
 
   @override
@@ -1646,7 +1640,8 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
       ..add(DiagnosticsProperty('isPaused', isPaused))
       ..add(DiagnosticsProperty('pausedTime', pausedTime))
       ..add(DiagnosticsProperty('pausedDuration', pausedDuration))
-      ..add(DiagnosticsProperty('currentLoopingNum', currentLoopingNum));
+      ..add(DiagnosticsProperty('currentLoopingNum', currentLoopingNum))
+      ..add(DiagnosticsProperty('currentRepeatNum', currentRepeatNum));
   }
 
   @override
@@ -1662,7 +1657,9 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
             const DeepCollectionEquality()
                 .equals(other.pausedDuration, pausedDuration) &&
             const DeepCollectionEquality()
-                .equals(other.currentLoopingNum, currentLoopingNum));
+                .equals(other.currentLoopingNum, currentLoopingNum) &&
+            const DeepCollectionEquality()
+                .equals(other.currentRepeatNum, currentRepeatNum));
   }
 
   @override
@@ -1672,7 +1669,8 @@ class _$_TimerTimeKeepingState extends _TimerTimeKeepingState
       const DeepCollectionEquality().hash(isPaused),
       const DeepCollectionEquality().hash(pausedTime),
       const DeepCollectionEquality().hash(pausedDuration),
-      const DeepCollectionEquality().hash(currentLoopingNum));
+      const DeepCollectionEquality().hash(currentLoopingNum),
+      const DeepCollectionEquality().hash(currentRepeatNum));
 
   @JsonKey(ignore: true)
   @override
@@ -1687,7 +1685,8 @@ abstract class _TimerTimeKeepingState extends TimerTimeKeepingState {
       final bool isPaused,
       final DateTime? pausedTime,
       final Duration pausedDuration,
-      final int currentLoopingNum}) = _$_TimerTimeKeepingState;
+      final int currentLoopingNum,
+      final int currentRepeatNum}) = _$_TimerTimeKeepingState;
   const _TimerTimeKeepingState._() : super._();
 
   @override // started
@@ -1700,6 +1699,8 @@ abstract class _TimerTimeKeepingState extends TimerTimeKeepingState {
   Duration get pausedDuration;
   @override // currentLoopingNumber aka currentLN
   int get currentLoopingNum;
+  @override // currentRepeatNumber aka currentRN
+  int get currentRepeatNum;
   @override
   @JsonKey(ignore: true)
   _$$_TimerTimeKeepingStateCopyWith<_$_TimerTimeKeepingState> get copyWith =>

@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-Future<dynamic> showModal(
+Future<void> showModal(
   BuildContext context,
   WidgetRef ref,
   IconData icon,

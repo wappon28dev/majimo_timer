@@ -3,6 +3,7 @@ import 'package:fullscreen/fullscreen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/helper/notification.dart';
 import 'package:majimo_timer/model/state.dart';
+import 'package:nil/nil.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DraggableHome extends ConsumerStatefulWidget {
@@ -153,7 +154,7 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
               leading: widget.alwaysShowLeadingAndAction
                   ? widget.leading
                   : !streams[0]
-                      ? const SizedBox()
+                      ? nil
                       : widget.leading,
               actions: widget.alwaysShowLeadingAndAction
                   ? widget.actions
@@ -203,9 +204,9 @@ class _DraggableHomeState extends ConsumerState<DraggableHome> {
                               : kToolbarHeight,
                       width: MediaQuery.of(context).size.width,
                       child: streams[0]
-                          ? const SizedBox()
+                          ? nil
                           : streams[1]
-                              ? const SizedBox()
+                              ? nil
                               : widget.headerBottomBar ?? Container(),
                     ),
                   )

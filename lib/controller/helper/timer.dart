@@ -106,6 +106,17 @@ class TimerController extends StateNotifier<TimerState> {
     updateShouldAskContinue(listBool: newShouldAskContinueList);
   }
 
+  void removeTargetDurationList(int index) {
+    final copiedTargetDuration = state.targetDuration.toList();
+    final copiedShouldAskContinue = state.shouldAskContinue.toList();
+
+    copiedTargetDuration.removeAt(index);
+    copiedShouldAskContinue.removeAt(index);
+
+    updateTargetDuration(listDur: copiedTargetDuration);
+    updateShouldAskContinue(listBool: copiedShouldAskContinue);
+  }
+
   void resetTargetDuration() {
     updateTargetDuration(
       listDur: [const Duration(minutes: 1), const Duration(minutes: 2)],
@@ -123,13 +134,6 @@ class TimerController extends StateNotifier<TimerState> {
       '- from TimerState\n'
       '>> save List<Duration> timerTarget = ${state.targetDuration}',
     );
-  }
-
-  void updateIntervalTargetLoopingNum({required int value}) {
-    state = state.copyWith(targetIntervalLoopingNum: value);
-    PrefManager().setInt(key: PrefKey.timerIntervalNum, value: value);
-    // Logger.s('- from TimerState \n >> save int intervalLoopingNum = $value');
-    _detectCanRun();
   }
 
   void _detectCanRun() =>
@@ -281,9 +285,10 @@ class TimerTimeKeepingController extends StateNotifier<TimerTimeKeepingState> {
         _read(globalState.notifier).updateIsTimeKeeping(value: false);
         await TimerModals(context, ref)
             .showAskContinue(
-                doneDurationStr: doneDurationStr,
-                doneDurationLocalStr: doneDurationLocalStr,
-                next: nextDurationStr,)
+              doneDurationStr: doneDurationStr,
+              doneDurationLocalStr: doneDurationLocalStr,
+              next: nextDurationStr,
+            )
             .then((_) => _stepNext());
       } else {
         _stepNext();

@@ -322,9 +322,7 @@ class TimerState with _$TimerState {
     ])
         List<bool> shouldAskContinue,
 
-    // targetIntervalLoopingNumber aka targetILN
-    @Default(0)
-        int targetIntervalLoopingNum,
+    // targetRepeatNumber aka targetRN
     @Default(1)
         int targetRepeatNum,
   }) = _TimerState;
@@ -366,6 +364,9 @@ class TimerTimeKeepingState with _$TimerTimeKeepingState {
 
     // currentLoopingNumber aka currentLN
     @Default(0) int currentLoopingNum,
+
+    // currentRepeatNumber aka currentRN
+    @Default(0) int currentRepeatNum,
   }) = _TimerTimeKeepingState;
   const TimerTimeKeepingState._();
 }

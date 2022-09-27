@@ -1,8 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/state.dart';
+import 'package:nil/nil.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart' as p;
+
 import 'helpers/clock_model.dart';
 import 'helpers/spinner_text.dart';
 
@@ -307,7 +310,7 @@ class _DigitalClockState extends State<DigitalClock> {
           ),
         )
       : (widget.is24HourTimeFormat ?? false)
-          ? const SizedBox()
+          ? nil
           : Container(
               padding: const EdgeInsets.only(left: 8, right: 8),
               decoration: widget.secondDigitDecoration ??
@@ -329,7 +332,7 @@ class _DigitalClockState extends State<DigitalClock> {
 
   Widget get _amPm => _clockModel.is24HourTimeFormat
       ? !(widget.showSecondsDigit ?? true)
-          ? const SizedBox()
+          ? nil
           : Stack(
               children: [
                 Text(

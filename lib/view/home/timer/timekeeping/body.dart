@@ -9,6 +9,7 @@ import 'package:majimo_timer/model/helper/plugin/flutter_analog_clock/flutter_an
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/home/root/body.dart';
 import 'package:majimo_timer/view/routes/transition.dart';
+import 'package:nil/nil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 part 'vertical.dart';

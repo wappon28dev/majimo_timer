@@ -1,10 +1,10 @@
 [
     {
         "language": "en-US",
-        "text": "1. updated flutter & dart packages\n2. added numberPad UI\n3. fixed redundancy syntax for update\n4. follow some lint rules\n5. dart fix applied\n"
+        "text": "1. fixed opening/closing all synced card.\n2. deleted state of `targetIntervalLoopingNum`.\n3. added state of `isExpanded`.\n4. migrated `SizedBox` to `nil` to express blank.\n5. renamed some function's name.\n6. updated gradle configuration.\n7. updated flutter & dart SDK version.\n"
     },
     {
         "language": "ja-JP",
-        "text": "1. flutterとdartのバッケージを更新しました\n2. テンキーのUIを追加しました\n3. 冗長的な構文を修正しました\n4. lint rule に従いました\n5. `dart fix` を適用しました\n"
+        "text": "1. 全てのカードが同期して開閉するバグを修正しました.\n2. `targetIntervalLoopingNum` ステートを削除しました.\n3. `isExpanded` ステートを追加しました.\n4. 空白を表すのに `SizedBox` を使っていたのを `nil` に移行しました.\n5. いくつかの関数の名前を変更しました.\n6. gradleの設定を更新しました.\n7. flutterとdartのSDKのバージョンを更新しました.\n"
     }
 ]

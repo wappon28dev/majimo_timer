@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/view/components/appbar.dart';
-
+import 'package:nil/nil.dart';
 part 'log_widget.dart';
 
 enum _Type { info, event, save, restore }
@@ -95,20 +95,28 @@ class Logger extends HookConsumerWidget {
   }
 
   /// Recording network information
-  static void net(String api,
-      {String type = 'Http', int status = 100, Object? data,}) {
+  static void net(
+    String api, {
+    String type = 'Http',
+    int status = 100,
+    Object? data,
+  }) {
     if (enabled) _Net.request(api, type, status, data);
   }
 
   /// End of record network information, with statistics on duration and size.
-  static void endNet(String api,
-      {int status = 200, Object? data, Object? headers, String? type,}) {
+  static void endNet(
+    String api, {
+    int status = 200,
+    Object? data,
+    Object? headers,
+    String? type,
+  }) {
     if (enabled) _Net.response(api, status, data, headers, type);
   }
 }
 
 class _Log {
-
   const _Log({this.type, this.message, this.detail, this.start});
   static final List<_Log> list = [];
   static final ValueNotifier<int> length = ValueNotifier(0);
@@ -160,7 +168,8 @@ class _Log {
     length.value++;
     if (Logger.config.printLog) {
       debugPrint(
-          "--------------------------------\n${log.typeName}\n${log.message}${log.detail == null ? '' : '\n${log.detail}'}\n--------------------------------",);
+        "--------------------------------\n${log.typeName}\n${log.message}${log.detail == null ? '' : '\n${log.detail}'}\n--------------------------------",
+      );
     }
   }
 
@@ -191,7 +200,6 @@ class _Log {
 }
 
 class _Net extends ChangeNotifier {
-
   _Net({
     this.api,
     this.type,
@@ -279,7 +287,8 @@ class _Net extends ChangeNotifier {
     length.value++;
     if (Logger.config.printNet) {
       debugPrint(
-          "${_printNames[4]} ${'$type: '}${net.api}${net.req == null ? '' : '\nData: ${net.req}'}\n--------------------------------",);
+        "${_printNames[4]} ${'$type: '}${net.api}${net.req == null ? '' : '\nData: ${net.req}'}\n--------------------------------",
+      );
     }
   }
 
@@ -290,7 +299,12 @@ class _Net extends ChangeNotifier {
   }
 
   static void response(
-      String api, int status, Object? data, Object? headers, String? type,) {
+    String api,
+    int status,
+    Object? data,
+    Object? headers,
+    String? type,
+  ) {
     var net = _map[api];
     if (net != null) {
       _map.remove(net);
@@ -310,7 +324,8 @@ class _Net extends ChangeNotifier {
     }
     if (Logger.config.printNet) {
       debugPrint(
-          "${_printNames[5]} ${net.type == null ? '' : '${net.type}: '}${net.api}${net.res == null ? '' : '\nData: ${net.res}'}\nSpend: ${net.spend} ms\n--------------------------------",);
+        "${_printNames[5]} ${net.type == null ? '' : '${net.type}: '}${net.api}${net.res == null ? '' : '\nData: ${net.res}'}\nSpend: ${net.spend} ms\n--------------------------------",
+      );
     }
   }
 

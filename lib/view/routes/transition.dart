@@ -21,7 +21,6 @@ class RouteManager {
 
   void home2timer() {
     final isExpanded = ref.read(isExpandedState);
-    ref.read(isExpandedState.notifier).state = !isExpanded;
     context.pushTransparentRoute<void>(const TimerPage());
     if (ref.read(timerState).canStart) {
       ref.read(generalState.notifier).runFAB();

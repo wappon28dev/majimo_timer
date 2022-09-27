@@ -40,16 +40,18 @@ class AppTeam extends AboutAppTeam {
 }
 
 class AppDataStore {
-  final String versionStr = 'majimo_timer v0.7.3 β';
-  final String buildDate = '2022/09/26 0:20';
+  final String versionStr = 'majimo_timer v0.7.4 β';
+  final String buildDate = '2022/09/27 23:40';
   final String changeLog = '''
 
 [fix]
-  1. updated flutter & dart packages
-  2. added numberPad UI
-  3. fixed redundancy syntax for update
-  4. follow some lint rules
-  5. dart fix applied
+  1. fixed opening/closing all synced card.
+  2. deleted state of `targetIntervalLoopingNum`.
+  3. added state of `isExpanded`.
+  4. migrated `SizedBox` to `nil` to express blank.
+  5. renamed some function's name.
+  6. updated gradle configuration.
+  7. updated flutter & dart SDK version.
 
 [known-bug]
   1. Overlay TK screen always applied

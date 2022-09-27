@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:majimo_timer/model/state.dart';
 import 'package:majimo_timer/view/components/modal.dart';
 import 'package:majimo_timer/view/routes/transition.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class TimerModals {
   const TimerModals(this.context, this.ref);
@@ -110,5 +111,39 @@ class TimerModals {
         const SizedBox(height: 20),
       ],
     );
+  }
+
+  Future<void> askTargetRepeatNum() {
+    var copiedRN = 10;
+
+    return showModal(
+      context,
+      ref,
+      Icons.loop,
+      '繰り返し回数の指定',
+      'どれだけ繰り返すか指定しよう',
+      [
+        NumberPicker(
+          value: copiedRN,
+          minValue: 0,
+          maxValue: 10,
+          infiniteLoop: true,
+          itemHeight: 200,
+          axis: Axis.horizontal,
+          onChanged: (newRN) {
+            print('newRN => $newRN');
+            copiedRN = newRN;
+            print('copiedRN => $copiedRN');
+          },
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Colors.black26),
+          ),
+        ),
+      ],
+    ).then((_) {
+      print('called!');
+      ref.read(timerState.notifier).updateTargetRepeatNum(value: copiedRN);
+    });
   }
 }
